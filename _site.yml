@@ -1,0 +1,74 @@
+name: "Wharton Moneyball Academy 2020"
+output_dir: "."
+navbar:
+  title: "WMA20"
+  left:
+    - text:
+      icon: fa-home
+      href: index.html
+    - text: "Lecture Notes"
+      icon: fa-futbol-o
+      menu:
+        - text: "Lecture 0"
+          href: lecture0.html      
+        - text: "Lecture 1"
+          href: lecture1.html
+        - text: "Lecture 2"
+          href: lecture2.html
+        - text: "Lecture 3"
+          href: lecture3.html
+        - text: "Lecture 4"
+          href: lecture4.html
+        - text: "Lecture 5"
+          href: lecture5.html
+        - text: "Lecture 6"
+          href: lecture6.html
+        - text: "Lecture 7"
+          href: lecture7.html
+        - text: "Lecture 8"
+          href: lecture8.html
+        - text: "nflscrapR lecture"
+          href: nfl_lecture.html
+    - text: "Problem Sets"
+      icon: fa-dribbble
+      menu:
+        - text: "Problem Set 0"
+          href: ps0.html
+        - text: "Problem Set 1"
+          href: ps1.html
+        - text: "Problem Set 2"
+          href: ps2.html
+        - text: "Problem Set 3"
+          href: ps3.html
+        - text: "Problem Set 4"
+          href: ps4.html
+        - text: "Problem Set 5"
+          href: ps5.html
+    - text: "Training Camp"
+      icon: fa-bar-chart
+      menu:
+        - text: "Installation"
+          href: install_setup.html
+        - text: "Lecture 1"
+          href: tc_lecture1.html
+        - text: "Problem Set 1"
+          href: tc_ps1.html
+        - text: "Lecture 2"
+          href: tc_lecture2.html
+        - text: "Problem Set 2"
+          href: tc_ps2.html
+        - text: "Lecture 3"
+          href: tc_lecture3.html
+        - text: "Problem Set 3"
+          href: tc_ps3.html
+        - text: "Lecture 4"
+          href: tc_lecture4.html
+        - text: "Lecture 5"
+          href: tc_lecture5.html
+        - text: "More resources"
+          href: more_resources.html
+output:
+  html_document:
+    theme: cerulean
+    highlight: tango
+    code_folding: show
