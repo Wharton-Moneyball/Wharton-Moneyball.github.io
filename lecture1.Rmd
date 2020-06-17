@@ -12,7 +12,7 @@ library(tidyverse)
 
 The *working directory* is a really powerful concept in R -- it is where R saves any output files you create during an analysis and it is the place where R looks for any data you want to read in.
 When you [installed R & RStudio](installation.html), we asked you to create a folder on your Desktop called Moneyball.
-This will be your working directory for the duration of the course.
+This will be your working directory for the duration of the course. 
 
 Everytime you open RStudio, it automatically sets the working directory to some default folder on your computer.
 To see what that is, we'll open RStudio and look at the console pane
