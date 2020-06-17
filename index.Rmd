@@ -21,7 +21,7 @@ To make our lifes a bit easier, we will use an integraded development environmen
 
 **So that we can start analyzing data right away, we'd like you to install R and RStudio before the first class**
 This can be done prior to arriving at the program or on the first night (Sunday July 7 for Academy, Sunday July 21 for Training Camp) with your project group and RTA. 
-Instructions for installing R and RStudio, as well as setting up your computer for the class are available [here](lecture0.html)
+Instructions for installing R and RStudio, as well as setting up your computer for the class are covered in [Lecture 0](lecture0.html).
 **Note: tablets and chromebooks may not have sufficient computing power to run R and RStudio. We highly recommend bringing a laptop**
 
 

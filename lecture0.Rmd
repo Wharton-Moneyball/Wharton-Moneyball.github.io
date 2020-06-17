@@ -6,35 +6,87 @@ output: html_document
 ```{r install-setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-## Installing R and RStudio
 
-So that we can jump right into working with data on the first day, we'd like for you to install R and RStudio onto your computer before you arrive. 
-You can install R by going to [this website](https://cloud.r-project.org) and following the links there, depending on your operating system. 
-If you have a Mac, you will be taken to a new page and about halfway down there will be a download link for a .pkg file. Download that and open that file; this should launch the installer.
-If you have a Windows machine, you will be taken to a new page and at the top there should be a link to download R 3.6.0 for Windows. Download the executable and run the installer.
-Once you download R, you can install RStudio by going [here](http://www.rstudio.com/products/rstudio/download/) and downloading the appropriate installer for your operating system.
-**Be sure to download RStudio Desktop (open source license). Do not download the commercial version and do not download RStudio Server.**
 
-### Creating a Working Directory
+
+## Installing R and R Studio on computer:
+
+So that we can jump right into working with data on the first day, we'd like for you to install R and RStudio onto your computer prior to the start of camp. 
+
+#### For Windows Users:
+
+**To Install R:**
+
+Open an internet browser and go to www.r-project.org.
+Click the "download R" link in the middle of the page under "Getting Started."
+Select a CRAN location (a mirror site) and click the corresponding link.
+Click on the "Download R for Windows" link at the top of the page.
+Click on the "install R for the first time" link at the top of the page.
+Click "Download R for Windows" and save the executable file somewhere on your computer. Run the .exe file and follow the installation instructions.
+Now that R is installed, you need to download and install RStudio. 
+
+**To Install RStudio:**
+
+Go to www.rstudio.com and click on the "Download RStudio" button.
+Click on "Download RStudio Desktop."
+Click on the version recommended for your system, or the latest Windows version, and save the executable file.
+Run the .exe file and follow the installation instructions.
+
+#### For Mac Users:
+
+**To Install R:**
+
+Open an internet browser and go to www.r-project.org.
+Click the "download R" link in the middle of the page under "Getting Started."
+Select a CRAN location (a mirror site) and click the corresponding link.
+Click on the "Download R for (Mac) OS X" link at the top of the page.
+Click on the file containing the latest version of R under "Files."
+Save the .pkg file, double-click it to open, and follow the installation instructions.
+Now that R is installed, you need to download and install RStudio. 
+
+**To Install RStudio:**
+
+Go to www.rstudio.com and click on the "Download RStudio" button.
+Click on "Download RStudio Desktop."
+Click on the version recommended for your system, or the latest Mac version, save the .dmg file on your computer, double-click it to open, and then drag and drop it to your applications folder.
+
+
+
+## Creating a Working Directory
 
 During this course, you will be writing code to analyze different data sets as well as generating lots of output. 
 The working directory is the place where R will save any output you generate.
 For the purpose of this course, you should keep all of your work in one place.
 So that everyone is on the same page, go to your Desktop and create a new folder called Moneyball.
+Then inside that folder, create a new folder named 'data'. You can do this either from your desktop or directly in RStudio with the 'New Folder' button in the bottom right pane.
+
+
+## Downloading data and saving into Moneyball/data folder
+
+After you get the folders ready, go to the following page: https://github.com/Wharton-Moneyball/Wharton-Moneyball.github.io/tree/master/data
+
+And from here, download the following files: 
+
++ nba_shooting_small.csv
++ nba_shooting.csv
++ mlb_relative_payrolls.csv
+
+To download each of these files, clink on their links in the page. Then click on the 'Raw' button. Once from there, right-click and 'Save As'. You should proceed to save the dataset in the Moneyball/data folder you created.
+
 
 ## Getting Started With R
 
-Now that you've installed R and RStudio, why not start playing around with it?
-We've put together a really short [problem set](ps0.html) that will give you a brief introduction R and contains a few exercises.
-If you can work your way through [Problem Set 0](ps0.html) before you get to camp, great!
+We'll come back to these sports datasets later in Lecture 1.
+For now, let's practice with some of the basic functions in R. 
+We've put together a really short [problem set](ps0.html) that will give you a brief introduction to R and contains a few exercises.
+If you can work your way through Problem Set 0 before you get to camp, great!
 But don't worry if you can't -- there will be plenty of time once you get here to go over them with your RTA and project team. 
 
 
 ## Discussion Questions
 
-Before getting into any actual coding, it is important for statisticians, analysts, etc., to learn how to propose research questions and develop unbiased strategies for answering them. Before getting into the real content of these lectures, we'd like you to think about the following questions.
+Prior to starting any type of statistical analysis, it is important for statisticians, analysts, etc., to learn how to propose research questions and develop unbiased strategies for answering them. Before getting into the real content of these lectures, we'd like you to think about the following questions:
 
 1. In the 2016-17 NBA regular season, Stephen Curry's field goal percentage was 46.8%. DeAndre Jordan's field goal percentage was 71.7%. One could argue, then, that Jordan is a much better shooter than Curry; after all, he makes a much higher percentage of shots. What is wrong with this argument (if anything)?
 
 2. The racehorse Secretariat won the Belmont Stakes by a total of 31 lengths. Ted Williams hit .406 in the 1941 baseball season. Which do you think was a more unusual outcome? How can we begin to compare the two events? 
-

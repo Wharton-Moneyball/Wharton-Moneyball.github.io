@@ -36,7 +36,7 @@ There are also some more whimsical packages, like one that allow you to display 
 
 For the rest of the course, we will be working within the [``tidyverse''](https://www.tidyverse.org/), which consists of several R packages for data manipulation, exploration, and visualization. 
 They are all based on a common design philosophy, mostly developed by Hadley Wickham (whose name you will encounter a lot as you gain more experience with R). 
-To access all of these packages, you first need to install them (if you have not already) with the following code:
+To access all of these packages, you first need to install them by running the following code in your R console:
 ```{r install-tidyverse, eval = FALSE}
 install.packages("tidyverse")
 ```
