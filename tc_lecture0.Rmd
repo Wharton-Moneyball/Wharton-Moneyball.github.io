@@ -1,5 +1,5 @@
 ---
-title: "Lecture 0"
+title: "Lecture 0: Installation and Setting up Workspace"
 output: html_document
 ---
 
