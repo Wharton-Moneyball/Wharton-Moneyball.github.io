@@ -29,9 +29,12 @@ We've put together a really short [problem set](ps0.html) that will give you a b
 If you can work your way through [Problem Set 0](ps0.html) before you get to camp, great!
 But don't worry if you can't -- there will be plenty of time once you get here to go over them with your RTA and project team. 
 
+
 ## Discussion Questions
 
 Before getting into any actual coding, it is important for statisticians, analysts, etc., to learn how to propose research questions and develop unbiased strategies for answering them. Before getting into the real content of these lectures, we'd like you to think about the following questions.
+
 1. In the 2016-17 NBA regular season, Stephen Curry's field goal percentage was 46.8%. DeAndre Jordan's field goal percentage was 71.7%. One could argue, then, that Jordan is a much better shooter than Curry; after all, he makes a much higher percentage of shots. What is wrong with this argument (if anything)?
+
 2. The racehorse Secretariat won the Belmont Stakes by a total of 31 lengths. Ted Williams hit .406 in the 1941 baseball season. Which do you think was a more unusual outcome? How can we begin to compare the two events? 
 
