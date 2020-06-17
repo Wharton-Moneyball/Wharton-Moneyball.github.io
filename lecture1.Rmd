@@ -1,5 +1,5 @@
 ---
-title: "Lecture 1: R Basics & the tidyverse "
+title: "Lecture 1: R Basics & the tidyverse"
 output: html_document
 ---
   
