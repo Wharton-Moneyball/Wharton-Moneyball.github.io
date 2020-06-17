@@ -187,7 +187,7 @@ In order to permanently add a column for field goal percentages to `nba_shooting
 
 It turns out that we can add *multiple* columns to a tbl at once by passing more arguments to `mutate()`, one for each column we wish to define.
 ```{r mutate-fgp-2}
-mutate(nba_shooting_small, FGP = FGA/FGM, TPP = TPM/TPA, FTP = FTM/FTA)
+mutate(nba_shooting_small, FGP = FGM/FGA, TPP = TPM/TPA, FTP = FTM/FTA)
 ```
 
 ## A quick digression: R Scripts
