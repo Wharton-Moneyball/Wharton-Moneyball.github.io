@@ -17,30 +17,107 @@ This will be your working directory for the duration of the course.
 Everytime you open RStudio, it automatically sets the working directory to some default folder on your computer.
 To see what that is, we'll open RStudio and look at the console pane
 <!-- show console pane -->
+We can also check our working directory with the code `getwd()`
 
 Once we open RStudio, before we do anything, we need to tell R to change the working directory to our Moneyball folder.
-We can do this in several ways.
+We can do this in a couple of ways:
 <!-- show the different ways to do this -->
 
-** Important: for the next three weeks, everytime you open up RStudio, the first thing you should do is set your working directory to the Moneyball folder.**
+1. In the top toolbar, Session/Set Working Directory/Choose Working Directory allows us to select and set our working directory from our files.  
+2. The code `setwd("~/Desktop/Moneyball")` sets our working directory to the Moneyball folder, and can be edited for any file location.
 
-## The tidyverse
+**Important: for the next three weeks, every time you open up RStudio, the first thing you should do is set your working directory to the Moneyball folder.**
 
+## Base R
+Now that we have set our working directory, we can work with data. The basic functionality included with R is called Base R. Simple arithmetic such as `2*3` and `mean(3:9)` are included as initial functionality in base R. We can also assign values to vectors and plot graphs.
+
+```{r}
+x <- 1:8
+y <- c(5,7,8,10,14,15,18,20)
+plot(x,y)
+```
+In the above code, we assigned the numbers 1-8 to x and assigned the numbers 5, 7, ..., 18, 20 to y. Then we plotted the graph with x and y, as if they were coordinate points.
+
+We did all that with Base R. However, the functionality provided by a fresh install of R is only a small fraction of the computing power available with R. Extra functionality comes from add-ons, or packages, created by developers.
+
+## Packages
 So far we have seen only the most basic of R's functionality. 
-Arguable, one of the things that makes R so powerful is the ease with which users are able to define their own functions and release them to the public.
+Arguably, one of the things that makes R so powerful is the ease with which users are able to define their own functions and release them to the public.
 As [Hadley Wickhamn](http://hadley.nz) defines them, "[R] packages are fundamental units of reproducible code. They include reusable R functions, the documentation that describes how to use them, and sample data." 
-As of July 8, 2018, there are 12,725 packages available from the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org). 
+As of June 18, 2020, there are 15,805 packages available from the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org). 
 The scope of these packages is vast: there are some designed for scraping data from the web, pre-processing data to get it into an analyzable format, performing standard and specialized statistical analyses, and to publish your results.
 People have also released packages tailored to very specific applications like analyzing baseball data.
 There are also some more whimsical packages, like one that allow you to display your favorite [XKCD](https://xkcd.com) comic strip! 
 
+We can install packages in several ways:  
+
+1. In the top toolbar, Tools/Install Packages allows us to search and install packages to our library.
+
+2. In the bottom right pane, the Packages tab has an install button. After clicking this button, we can search for and install a package and its dependencies (for now, always leave the 'Install dependencies' box checked).  
+3. The code `install.packages("tidyverse")` will install tidyverse, or any other package.
+
+After installing a package, we have to load the package before using it. Again, we have two options for loading a package:  
+
+1. In bottom right pane, the Packages tab allows us to search and scroll for packages. The checkbox to the left of the package name indicates if the package is loaded. By checking that box, we can load the package.  
+2. The code `library(tidyverse)` will load tidyverse, or any other package.
+
+## A quick digression: R Scripts
+
+Up to this point, we have been working strictly within the R console, proceeding line-by-line.
+In the previous code block, we tried to add three columns to our tbl and the mutate call got a little bit over-whelming.
+Imagine trying to add five or six more columns simultaneously!
+As our commands become more and more complex, you'll find that using the console can get pretty cramped.
+And if you make a mistake in entering your code, you'll get an error and have to start all over again.
+Plus, when we start a new session of R Studio, the console is cleared. 
+How can we save the commands we typed into R? We do so using an **R Script**. 
+
+An R Script is a file type which R recognizes as storing R commands and is saved as a .R file. 
+R Scripts are useful as we can edit our code before sending it to be run in the console. 
+
+We can start a new R Script by clicking on the top left symbol in R Studio and selecting "R Script".
+
+![](figures/lecture1_fig1.png)
+
+The untitled R Script will then appear in the top left hand box of R Studio.
+
+![](figures/lecture1_fig2.png)
+
+In the R Script, type the following:
+
+```{}
+2 * 3
+x <- 4
+sqrt(x)
+```
+
+
+Now our code is just sitting in the R Script. To run the code (that is, evalutate it in the console) we click the "Run" button in the top right of the script. This will run one line of code at a time - whichever line the cursor is on. Place your cursor on the first line and click "Run". Observe how `2 * 3` now appears in the console, as well as the output `6`.
+
+![](figures/lecture1_fig3.png)
+
+If we want to run multiple lines at once, we highlight them all and click "Run".
+
+![](figures/lecture1_fig4.png)
+
+Note in the above that we had to run `x <- 4` before `sqrt(x)`. We need to define our variables first and run this code in the console before performing calculations with those variables. The console can't "see" the script unless you run the code in the script. 
+
+One very nice thing about RStudio's script editor is that it will highlight syntax errors with a red squiggly line and a red cross in the sidebar.
+If you move your mouse over the line, a pop-up will appear that can help you diagnose the potential problem.
+
+Another advantage of R scripts is that you can add comments to your code, which are preceded by the pound sign / hash sign #. 
+Comments are useful because they allow you to explain what your code is doing.
+**Throughout the rest of this course, we will be working almost exclusively with R scripts rather than directly entering commands into the console.**
+
+
+## The tidyverse  
 For the rest of the course, we will be working within the [``tidyverse''](https://www.tidyverse.org/), which consists of several R packages for data manipulation, exploration, and visualization. 
 They are all based on a common design philosophy, mostly developed by Hadley Wickham (whose name you will encounter a lot as you gain more experience with R). 
-To access all of these packages, you first need to install them by running the following code in your R console:
+
+To access tidyverse, first we first need to install the tidyverse package:
 ```{r install-tidyverse, eval = FALSE}
 install.packages("tidyverse")
 ```
-The `install.packages()` function is one way of installing packages in R. You can also click on the Packages tab in your RStudio view and then click on Install to type in the package you want to install.
+The `install.packages()` function is one way of installing packages in R. You can also use Tools/Install Packages or click on the Packages tab in the bottom right pane of your RStudio view and then click on Install to type in the package you want to install.
 
 
 Now with the `tidyverse` suite of packages installed, we can load them with the following code:
@@ -51,7 +128,7 @@ When you do that, you'll see a lot of output to the console, most of which you c
 **Note you only need to install the package once. However, each time you open up a new R session and want to use the tidyverse, you will need to run line** `library(tidyverse)` **at the start.**
 ## Reading in tabular data
 
-Almost all of the data we will encounterin this course (and in the real world) will be tabular.
+Almost all of the data we will encounter in this course (and in the real world) will be tabular.
 Each row will represent a separate observation and each column will record a particular measurement.
 For instance, the table below lists different statistics for several basketball players from the 2015-16 NBA regular season.
 The statistics are:
@@ -84,7 +161,7 @@ tablecode(my.data, tabletype="zebra1")
 ```
 </center>
 
-Within the tidyverse, the standard way to store and manipulate tabular data like this is to use what is known as a tbl (pronounced ``tibble'').
+Within the tidyverse, the standard way to store and manipulate tabular data like this is to use what is known as a tbl (pronounced "tibble").
 At a high-level, a tbl is a two-dimensional array whose columns can be of different data types.
 That is, the first column might be characters (e.g. the names of athletes) and the second column can be numeric (e.g. the number of points scored).
 
@@ -189,54 +266,6 @@ It turns out that we can add *multiple* columns to a tbl at once by passing more
 ```{r mutate-fgp-2}
 mutate(nba_shooting_small, FGP = FGM/FGA, TPP = TPM/TPA, FTP = FTM/FTA)
 ```
-
-## A quick digression: R Scripts
-
-Up to this point, we have been working strictly within the R console, proceeding line-by-line.
-In the previous code block, we tried to add three columns to our tbl and the mutate call got a little bit over-whelming.
-Imagine trying to add five or six more columns simultaneously!
-As our commands become more and more complex, you'll find that using the console can get pretty cramped.
-And if you make a mistake in entering your code, you'll get an error and have to start all over again.
-Plus, when we start a new session of R Studio, the console is cleared. 
-How can we save the commands we typed into R? We do so using an **R Script**. 
-
-An R Script is a file type which R recognizes as storing R commands and is saved as a .R file. 
-R Scripts are useful as we can edit our code before sending it to be run in the console. 
-
-We can start a new R Script by clicking on the top left symbol in R Studio and selecting "R Script".
-
-![](figures/lecture1_fig1.png)
-
-The untitled R Script will then appear in the top left hand box of R Studio.
-
-![](figures/lecture1_fig2.png)
-
-In the R Script, type the following:
-
-```{}
-2 * 3
-x <- 4
-sqrt(x)
-```
-
-
-Now our code is just sitting in the R Script. To run the code (that is, evalutate it in the console) we click the "Run" button in the top right of the script. This will run one line of code at a time - whichever line the cursor is on. Place your cursor on the first line and click "Run". Observe how `2 * 3` now appears in the console, as well as the output `6`.
-
-![](figures/lecture1_fig3.png)
-
-If we want to run multiple lines at once, we highlight them all and click "Run".
-
-![](figures/lecture1_fig4.png)
-
-Note in the above that we had to run `x <- 4` before `sqrt(x)`. We need to define our variables first and run this code in the console before performing calculations with those variables. The console can't "see" the script unless you run the code in the script. 
-
-One very nice thing about RStudio's script editor is that it will highlight syntax errors with a red squiggly line and a red cross in the sidebar.
-If you move your mouse over the line, a pop-up will appear that can help you diagnose the potential problem.
-
-Another advantage of R scripts is that you can add comments to your code, which are preceded by the pound sign / hash sign #. 
-Comments are useful because they allow you to explain what your code is doing.
-**Throughout the rest of this course, we will be working almost exclusively with R scripts rather than directly entering commands into the console.**
-
 
 ## Back to the NBA data
 
