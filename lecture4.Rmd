@@ -36,22 +36,8 @@ batting_2014_2015 <-
   spread(yearID, BA)
 ```
 
-When we print out `batting_2014_2015` now, we notice that it is a grouped tbl.
-Before proceeding we will need to remove this grouping
-```{r ungroup, tidy=FALSE}
-batting_2014_2015 <- 
-  batting_2014_2015 %>%
-  ungroup()
-```
+When we print out `batting_2014_2015` now, we notice that it is easier to read.
 
-
-Notice that the column names of the tbl are now "2014" and "2015".
-We can rename these column names
-```{r rename, tidy=FALSE}
-batting_2014_2015 <- 
-  batting_2014_2015 %>%
-  rename(BA_2014 = `2014`, BA_2015 = `2015`)
-```
 
 ## Predicting Batting Averages
 
@@ -86,7 +72,7 @@ ggplot(batting_2014_2015) +
 It certainly looks like there is a relationship!
 So it's at least plausible that if we use the 2014 batting averages to make predictions for 2015, we can do better than relying on just the average of the 2015 averages.
 
-Looking carefully at the plot, we see that people with most players with below average batting averages in 2014 tended to also have below average batting averages in 2015.
+Looking carefully at the plot, we see that most players with below average batting averages in 2014 tended to also have below average batting averages in 2015.
 Similarly, most players with above average batting averages in 2014 tended to have above average batting averages in 2015. 
 
 One way to improve on the simple prediction above would be as follows:
@@ -94,7 +80,7 @@ One way to improve on the simple prediction above would be as follows:
 1. Divide the players into two groups, one for those with above average BA in 2014 and one for those with below average BA in 2014.
 2. Average the 2015 BA within each of these groups and use these averages as the prediction for each member of the group.
 
-In order to do this, we will need to augment our tbl `batting_2014_2015` with a column indicating to which group each player belongs.
+In order to do this, we will need to mutate our tbl `batting_2014_2015` with a column indicating to which group each player belongs.
 Then we can pass this column to `group_by()` and compute the average BA_2015 within each group.
 To create the column indicating group membership, we will use the powerful `cut()` function, which divides the range of a numerical vector into intervals and recodes the numerical values according to which interval they fall.
 
