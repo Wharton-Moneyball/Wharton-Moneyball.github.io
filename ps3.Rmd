@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE, comment = "", prompt = TRUE, collapse = TRUE,
 ## MLB Batting Statistics
 
 In this problem set, you will practice using the pipe `%>%` and grouped calculations with batting statistics taken from the Lahman dataset.
-We will compute the same statistics as we did in [Problem Set 3](ps3.html) and also standardize these statistics within year, year and league, and also historical era.
+We will compute the same statistics as we did in [Problem Set 2](ps2.html) and also standardize these statistics within year, year and league, and also historical era.
 
 To load the batting data into R, we can do the following
 ```{r}
@@ -44,7 +44,7 @@ When using `replace_na()` it is very important to remember to include the `list(
 
 2. Using the pipe `%>%`, `mutate()`, `filter()`, and `select()`, create a tbl `batting` by:
 
-- Adding columns (with `mutate()`) for plate appearances (PA), unintentional walks (uBB), singles (X1B), batting average (BA), on-base percentage (OBP), on-base plus slugging (OPS), and weighted On-Base Average (wOBA). Note that the formula for plate appearances is $\text{PA} = \text{AB} + \text{BB} + \text{HBP} + \text{SH} + \text{SF}.$ Formulae for the remaining statistics are given in [Problem Set 3](ps3.html).
+- Adding columns (with `mutate()`) for plate appearances (PA), unintentional walks (uBB), singles (X1B), batting average (BA), on-base percentage (OBP), on-base plus slugging (OPS), and weighted On-Base Average (wOBA). Note that the formula for plate appearances is $\text{PA} = \text{AB} + \text{BB} + \text{HBP} + \text{SH} + \text{SF}.$ Formulae for the remaining statistics are given in [Problem Set 2](ps2.html).
 - Pulling out only those rows of players with at least 502 plate appearances **and** who played in either the AL or NL with `filter()`
 - Select the following columns: playerID, yearID, lgID, teamID, PA, BA, OBP, OPS, wOBA. 
 
@@ -65,7 +65,7 @@ batting <-
   select(playerID, yearID, teamID, lgID, PA,BA, OBP, OPS, wOBA)
 ```
 
-3. Standardize each of BA, OBP, OPS, and wOBA using data from all of the years. Who were the best and worst batters according to these four metrics? Name the columns containing these new standardizedvalues `zBA_all`, `zOPB_all`, etc. *Remember, you must re-define the `standardize()` function we wrote in [Module 4](module4.html)*
+3. Standardize each of BA, OBP, OPS, and wOBA using data from all of the years. Who were the best and worst batters according to these four metrics? Name the columns containing these new standardized values `zBA_all`, `zOPB_all`, etc. *Remember, you must re-define the `standardize()` function we wrote in [Lecture 3](lecture3.html)*
 
 ```{r batting-standardize}
 standardize <- function(x){ (x - mean(x))/sd(x)}
@@ -131,7 +131,7 @@ batting <-
 ```
 
 
-Use `mutate()` and `case_when()` (just like we did in [Module 3](module3.html)) to add a column called Hist_era to `batting` that records the historical era.
+Use `mutate()` and `case_when()` (just like we did in [Lecture 2](lecture2.html)) to add a column called Hist_era to `batting` that records the historical era.
 
 7. Group `batting` by Hist_era and standardize BA, OBP, OPS, and wOBA within historical era. Who are the best and worst batters now? Name the columns containing these new stanardized values `zBA_hist`, `zOBP_hist`, etc.
 
@@ -148,7 +148,7 @@ Recall from [Problem Set 2](ps2.html), we plotted the relative payroll of MLB te
 In that problem set, we read in a file that had included the relative payroll for each team as a separate column.
 To get some additional practice with dplyr, we will read in a different dataset and re-compute these relative payrolls.
 
-1. Remember the function we wrote in [Module 4](module4.html) to standardize various statistics?
+1. Remember the function we wrote in [Lecture 3](lecture3.html) to standardize various statistics?
 It is reproduced below
 ```{r}
 standardize <- function(x){
@@ -188,7 +188,7 @@ ggplot(data = mlb_payrolls) +
 
 5. Using the `summarize()` function, compute the average team payroll and relative payroll for each year. Save these results in a new tbl called `payroll_avg`. 
 
-6. Make a scatterplot that shows how team payrolls have evolved over the year. Similar to what we did in [Module 4](module4.html), add a line to this scatterplot that shows the average team payroll. Do the same thing for relative payroll. What do you notice about the average team payroll and relative payroll? 
+6. Make a scatterplot that shows how team payrolls have evolved over the year. Similar to what we did in [Lecture 3](lecture3.html), add a line to this scatterplot that shows the average team payroll. Do the same thing for relative payroll. What do you notice about the average team payroll and relative payroll? 
 
 7. As you will see in coming lectures, correlation is a measure of the strength of the *linear* relationship between two variables. The closer to +1 or -1 the correlation between two variables is, the more predictable they are of each other. We can compute it using the `cor()` function. Using `summary()` and `cor()`, compute the correlation between relative payroll and winning percentage within each year. What do you notice about how the relationship between winning percentage and relative payroll changes year to year? 
 
