@@ -11,7 +11,7 @@ library(tidyverse)
 ## Introduction
 <!-- Original graphic is on pg 18 of Adi's Lecture 3 -->
 
-In Prof. Wyner's lectures, you saw a graph of Earned Run Average (ERA) against year. 
+In Prof. Wyner's lecture (Module 3), you saw a graph of Earned Run Average (ERA) against year. 
 Also shown was a line connecting the average ERA in each year.
 
 ![](figures/lecture3_era.png)
