@@ -11,7 +11,7 @@ library(tidyverse)
 ## Introduction
 <!-- Original graphic is on pg 18 of Adi's Lecture 3 -->
 
-In Prof. Wyner's lectures, you saw a graph of Earned Run Average (ERA) against year. 
+In Prof. Wyner's lecture (Module 3), you saw a graph of Earned Run Average (ERA) against year. 
 Also shown was a line connecting the average ERA in each year.
 
 ![](figures/lecture3_era.png)
@@ -258,7 +258,6 @@ We started this module with a figure similar to one from Professor Wyner's class
 When we run the following code, we get a plot that's very similar to the desired one but that is missing the red line showing the average ERA within each season. 
 ```{r, eval = FALSE, tidy = FALSE}
 ggplot(pitching) +
-  geom_point(aes(x = yearID, y = ERA)) +
   ylim(0, 10) + 
   geom_point(mapping = aes(x = yearID, y = ERA), size = 0.3)
 ```

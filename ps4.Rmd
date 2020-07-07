@@ -49,7 +49,7 @@ called_pitches <-
 g <- ggplot(data = called_pitches)
 ```
 
-4. To estimate the probability of a called strike given the pitch location, we will use a strategy similar to what we used to make heatmaps in [Module 2](module2.html). Essentially, we divide the plane into several small rectangular bins and compute the proportion of called strikes within each bin. To compute this, we use the `stat_summary_2d()` function, which takes three aesthetics:
+4. To estimate the probability of a called strike given the pitch location, we will use a strategy similar to what we used to make heatmaps in [Lecture 2](lecture2.html). Essentially, we divide the plane into several small rectangular bins and compute the proportion of called strikes within each bin. To compute this, we use the `stat_summary_2d()` function, which takes three aesthetics:
 * x: variable on the horizontal axis
 * y: variable on vertical axis
 * z: variable that is passed to the summary function.
