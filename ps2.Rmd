@@ -163,10 +163,11 @@ hitting_qualified <- mutate(hitting_qualified,
                             1.594 * X3B+ 2.065 * HR)/(AB + uBB + SF + HBP))
 ```
 
-7. For most of the statistics in the previous question, [Fangraphs](htpps://www.fangraphs.com) has defined rating scales (to see these ratings, click on the linked page for each statistic in Question 6 and scroll down to the "Context" section of the page). Use `mutate()` and `case_when()` to add the ratings for walk percentage (BBP), strike-out percentage (KP), on-base percentage (OBP), on-base plus slugging (OPS), and wOBA. Call the columns "BBP_rating", "KP_rating", "OBP_rating", "OPS_rating", and "wOBA_rating." 
+9. For most of the statistics in the previous question, [Fangraphs](htpps://www.fangraphs.com) has defined rating scales (to see these ratings, click on the linked page for each statistic in Question 6 and scroll down to the "Context" section of the page). Use `mutate()` and `case_when()` to add the ratings for walk percentage (BBP), strike-out percentage (KP), on-base percentage (OBP), on-base plus slugging (OPS), and wOBA. Call the columns "BBP_rating", "KP_rating", "OBP_rating", "OPS_rating", and "wOBA_rating." 
 
-8. Use `filter()` to subset the players who played between 2000 and 2015. Call the new tbl `tmp_batting`.
+10. Use `filter()` to subset the players who played between 2000 and 2015. Call the new tbl `tmp_batting`.
 
-9. Use `select()` to create a tibble called `batting_recent` containing all players who played between 2000 and 2015 with the following columns: playerID, yearID, teamID, lgID, and all of the statistics and rankings created in Problems 6 and 7. 
-10. Explore the distribution of some of the batting statistics introduced in problem 6 using the tbl `batting_recent` using histograms. Then explore the relationship between some of these statistics with scatterplots. 
+11. Use `select()` to create a tibble called `batting_recent` containing all players who played between 2000 and 2015 with the following columns: playerID, yearID, teamID, lgID, and all of the statistics and rankings created in Problems 8 and 9. 
+
+12. Explore the distribution of some of the batting statistics introduced in problem 6 using the tbl `batting_recent` using histograms. Then explore the relationship between some of these statistics with scatterplots. 
 
