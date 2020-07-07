@@ -167,7 +167,7 @@ hitting_qualified <- mutate(hitting_qualified,
 
 10. Use `filter()` to subset the players who played between 2000 and 2015. Call the new tbl `tmp_batting`.
 
-11. Use `select()` to create a tibble called `batting_recent` containing all players who played between 2000 and 2015 with the following columns: playerID, yearID, teamID, lgID, and all of the statistics and rankings created in Problems 8 and 9. 
+11. Use `select()` to create a tibble called `batting_recent` containing all players who played between 2000 and 2015 with the following columns: playerID, yearID, teamID, lgID, and all of the statistics and rankings created in Problems 8 and 9.  
 
 12. Explore the distribution of some of the batting statistics introduced in problem 6 using the tbl `batting_recent` using histograms. Then explore the relationship between some of these statistics with scatterplots. 
 
