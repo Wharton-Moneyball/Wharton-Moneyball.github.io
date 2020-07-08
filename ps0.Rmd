@@ -82,3 +82,12 @@ y + 5
 4. Round these values to 3 decimal points. 
 
 If you've finished these exercises and would like to keep playing with R, you can check out the [first day's R Lecture](lecture1.html).
+
+
+## Discussion Questions
+
+Prior to starting any type of statistical analysis, it is important for statisticians, analysts, etc., to learn how to propose research questions and develop unbiased strategies for answering them. Before getting into the real content of these lectures, we'd like you to think about the following questions:
+
+1. In the 2016-17 NBA regular season, Stephen Curry's field goal percentage was 46.8%. DeAndre Jordan's field goal percentage was 71.7%. One could argue, then, that Jordan is a much better shooter than Curry; after all, he makes a much higher percentage of shots. What is wrong with this argument (if anything)?
+
+2. The racehorse Secretariat won the Belmont Stakes by a total of 31 lengths. Ted Williams hit .406 in the 1941 baseball season. Which do you think was a more unusual outcome? How can we begin to compare the two events?
