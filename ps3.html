@@ -405,7 +405,7 @@ $(document).ready(function () {
       <a href="lecture8.html">Lecture 8</a>
     </li>
     <li>
-      <a href="nfl_lecture.html">nflscrapR lecture</a>
+      <a href="nflscrapR_lecture.html">nflscrapR lecture</a>
     </li>
   </ul>
 </li>
@@ -435,6 +435,12 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="ps5.html">Problem Set 5</a>
+    </li>
+    <li>
+      <a href="ps6.html">Problem Set 6</a>
+    </li>
+    <li>
+      <a href="psX.html">Problem Set X</a>
     </li>
   </ul>
 </li>
@@ -509,21 +515,8 @@ $(document).ready(function () {
 <p>In this problem set, you will practice using the pipe <code>%&gt;%</code> and grouped calculations with batting statistics taken from the Lahman dataset. We will compute the same statistics as we did in <a href="ps2.html">Problem Set 2</a> and also standardize these statistics within year, year and league, and also historical era.</p>
 <p>To load the batting data into R, we can do the following</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="op">--</span><span class="st"> </span>Attaching packages <span class="op">-----------------------------------------------------------------------------------------------</span><span class="st"> </span>tidyverse <span class="dv">1</span>.<span class="fl">3.0</span> <span class="op">--</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a>v ggplot2 <span class="dv">3</span>.<span class="fl">3.2</span>     v purrr   <span class="dv">0</span>.<span class="fl">3.4</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>v tibble  <span class="dv">3</span>.<span class="fl">0.1</span>     v dplyr   <span class="dv">1</span>.<span class="fl">0.0</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>v tidyr   <span class="dv">1</span>.<span class="fl">1.0</span>     v stringr <span class="dv">1</span>.<span class="fl">4.0</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>v readr   <span class="dv">1</span>.<span class="fl">3.1</span>     v forcats <span class="dv">0</span>.<span class="fl">5.0</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>Warning<span class="op">:</span><span class="st"> </span>package <span class="st">&#39;ggplot2&#39;</span> was built under R version <span class="dv">3</span>.<span class="fl">6.3</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>Warning<span class="op">:</span><span class="st"> </span>package <span class="st">&#39;tidyr&#39;</span> was built under R version <span class="dv">3</span>.<span class="fl">6.3</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a>Warning<span class="op">:</span><span class="st"> </span>package <span class="st">&#39;purrr&#39;</span> was built under R version <span class="dv">3</span>.<span class="fl">6.3</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>Warning<span class="op">:</span><span class="st"> </span>package <span class="st">&#39;dplyr&#39;</span> was built under R version <span class="dv">3</span>.<span class="fl">6.3</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a>Warning<span class="op">:</span><span class="st"> </span>package <span class="st">&#39;forcats&#39;</span> was built under R version <span class="dv">3</span>.<span class="fl">6.3</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="op">--</span><span class="st"> </span>Conflicts <span class="op">--------------------------------------------------------------------------------------------------</span><span class="st"> </span><span class="kw">tidyverse_conflicts</span>() <span class="op">--</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a>x dplyr<span class="op">::</span><span class="kw">filter</span>() masks stats<span class="op">::</span><span class="kw">filter</span>()</span>
-<span id="cb1-14"><a href="#cb1-14"></a>x dplyr<span class="op">::</span><span class="kw">lag</span>()    masks stats<span class="op">::</span><span class="kw">lag</span>()</span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(Lahman)</span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="op">&gt;</span><span class="st"> </span>batting &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(Batting)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(Lahman)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="op">&gt;</span><span class="st"> </span>batting &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(Batting)</span></code></pre></div>
 <p>Unfortunately, some statistics like hit-by-pitch (HBP) were not recorded in the earlier decades of baseball. In the tbl, these missing values are designated <code>NA</code>. To see some of these, we can run the following code:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="op">&gt;</span><span class="st"> </span>batting <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">select</span>(playerID, yearID, teamID, AB, BB, HBP, SH, SF, IBB, GIDP)</span>

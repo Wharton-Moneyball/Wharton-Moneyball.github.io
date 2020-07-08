@@ -405,7 +405,7 @@ $(document).ready(function () {
       <a href="lecture8.html">Lecture 8</a>
     </li>
     <li>
-      <a href="nfl_lecture.html">nflscrapR lecture</a>
+      <a href="nflscrapR_lecture.html">nflscrapR lecture</a>
     </li>
   </ul>
 </li>
@@ -435,6 +435,12 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="ps5.html">Problem Set 5</a>
+    </li>
+    <li>
+      <a href="ps6.html">Problem Set 6</a>
+    </li>
+    <li>
+      <a href="psX.html">Problem Set X</a>
     </li>
   </ul>
 </li>
@@ -515,16 +521,15 @@ $(document).ready(function () {
 <div id="piping" class="section level2">
 <h2>Piping</h2>
 <p>Data analysis can usually be described as set of functions or operations being applied to a dataset in sequence. In <a href="ps2.html">Problem Set 2</a>, <code>filter()</code> and <code>select()</code> were applied in sequence to the tbl <code>hitting_qualified</code>. Each of these functions takes a tbl as an input and returns a different tbl as an output. More complex data analysis tasks often require sequences of several operations on the dataset. Given what we have learned so far, it would appear that the analyst has two options: (1) save a temporary tbl after each function application and apply the next function to the temporary tbl or (2) “nest” all of the functions together. Below is an example of what these two strategies look like:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="co"># An Example: Applying func_1(), func_2(), and func_3() sequentially to a tibble</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="er">&gt;</span><span class="st"> </span><span class="co"># named dat.</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="er">&gt;</span><span class="st"> </span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="er">&gt;</span><span class="st"> </span><span class="co"># Strategy 1</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="er">&gt;</span><span class="st"> </span>dat_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">func_1</span>(dat)</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="op">&gt;</span><span class="st"> </span>dat_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">func_2</span>(dat_<span class="dv">1</span>)</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="op">&gt;</span><span class="st"> </span>dat_final &lt;-<span class="st"> </span><span class="kw">func_3</span>(dat_<span class="dv">2</span>)</span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="op">&gt;</span><span class="st"> </span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="er">&gt;</span><span class="st"> </span><span class="co"># Strategy 2</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="er">&gt;</span><span class="st"> </span>dat_final &lt;-<span class="st"> </span><span class="kw">func_3</span>(<span class="kw">func_2</span>(<span class="kw">func_1</span>(dat)))</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="co"># An Example: Applying func_1(), func_2(), and func_3() sequentially to a tibble named dat.</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="er">&gt;</span><span class="st"> </span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="er">&gt;</span><span class="st"> </span><span class="co"># Strategy 1</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="er">&gt;</span><span class="st"> </span>dat_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">func_1</span>(dat)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="op">&gt;</span><span class="st"> </span>dat_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">func_2</span>(dat_<span class="dv">1</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="op">&gt;</span><span class="st"> </span>dat_final &lt;-<span class="st"> </span><span class="kw">func_3</span>(dat_<span class="dv">2</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="op">&gt;</span><span class="st"> </span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="er">&gt;</span><span class="st"> </span><span class="co"># Strategy 2</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="er">&gt;</span><span class="st"> </span>dat_final &lt;-<span class="st"> </span><span class="kw">func_3</span>(<span class="kw">func_2</span>(<span class="kw">func_1</span>(dat)))</span></code></pre></div>
 <p>Both are hard to read and the first strategy is particularly prone to errors as you have introduce several temporary tibbles with the same name plus a numeric suffix – it’s very easy to make mistakes like <code>dat_2 &lt;- func_2(dat)</code> or <code>dat_final &lt;- func_2(dat_2)</code>, especially if you are copying-and-pasting lines and then changing suffixes. The second strategy is ugly because we’re generally not used to reading things from inside-out or right-to-left. It becomes especially problematic when each function has many additional arguments.</p>
 <p>Luckily there’s another option – the pipe operator <code>%&gt;%</code>. Here is what the same example looks like using the pipe:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="op">&gt;</span><span class="st"> </span>dat_final &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">func_1</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">func_2</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">func_3</span>()</span></code></pre></div>
