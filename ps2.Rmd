@@ -58,7 +58,7 @@ ggplot(data = relative_payroll) +
 
 ## MLB Batting Statistics
 
-In this problem set, we will gain more experience using the dplyr verbs we learned in [Module 3](module3.htlm) to analyze batting statistics of MLB players with at least 502.2 plate appearances.
+In this problem set, we will gain more experience using the dplyr verbs we learned in Lecture 2 to analyze batting statistics of MLB players with at least 502.2 plate appearances.
 All of the data is contained in the file "data/hitting_qualified.csv". 
 You should write save all of the code for this analyses in an R script called "ps2_mlb_batting.R".
 
@@ -130,7 +130,7 @@ hitting_qualified <- mutate(hitting_qualified, X1B = H - X2B - X3B - HR)
 hitting_qualified <- mutate(hitting_qualified, uBB = BB - IBB)
 ```
 
-8. Use `mutate()` to add columns for the following offensive statistics, whose formulae are given below. We have also included links to pages on [Fangraphs](htpps://www.fangraphs.com) that define and discuss each of these statistics.
+8. Use `mutate()` to add columns for the following offensive statistics, whose formulae are given below. We have also included links to pages on [Fangraphs](https://www.fangraphs.com) that define and discuss each of these statistics.
 
 * [Walk Percentage](https://www.fangraphs.com/library/offense/rate-stats/) (BBP):
 $$
@@ -163,7 +163,7 @@ hitting_qualified <- mutate(hitting_qualified,
                             1.594 * X3B+ 2.065 * HR)/(AB + uBB + SF + HBP))
 ```
 
-9. For most of the statistics in the previous question, [Fangraphs](htpps://www.fangraphs.com) has defined rating scales (to see these ratings, click on the linked page for each statistic in Question 6 and scroll down to the "Context" section of the page). Use `mutate()` and `case_when()` to add the ratings for walk percentage (BBP), strike-out percentage (KP), on-base percentage (OBP), on-base plus slugging (OPS), and wOBA. Call the columns "BBP_rating", "KP_rating", "OBP_rating", "OPS_rating", and "wOBA_rating." 
+9. For most of the statistics in the previous question, [Fangraphs](https://www.fangraphs.com) has defined rating scales (to see these ratings, click on the linked page for each statistic in Question 6 and scroll down to the "Context" section of the page). Use `mutate()` and `case_when()` to add the ratings for walk percentage (BBP), strike-out percentage (KP), on-base percentage (OBP), on-base plus slugging (OPS), and wOBA. Call the columns "BBP_rating", "KP_rating", "OBP_rating", "OPS_rating", and "wOBA_rating." 
 
 10. Use `filter()` to subset the players who played between 2000 and 2015. Call the new tbl `tmp_batting`.
 

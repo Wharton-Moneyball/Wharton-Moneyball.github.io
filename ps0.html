@@ -21,15 +21,16 @@
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -39,14 +40,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -55,9 +58,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -402,7 +405,7 @@ $(document).ready(function () {
       <a href="lecture8.html">Lecture 8</a>
     </li>
     <li>
-      <a href="nfl_lecture.html">nflscrapR lecture</a>
+      <a href="nflscrapR_lecture.html">nflscrapR lecture</a>
     </li>
   </ul>
 </li>
@@ -432,6 +435,12 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="ps5.html">Problem Set 5</a>
+    </li>
+    <li>
+      <a href="ps6.html">Problem Set 6</a>
+    </li>
+    <li>
+      <a href="psX.html">Problem Set X</a>
     </li>
   </ul>
 </li>
@@ -508,42 +517,40 @@ $(document).ready(function () {
 <p>The RStudio window is divided into three panes. For now, we will focus only on the big pane on the left, the <strong>Console</strong> pane. At the top of the <strong>Console</strong> pane, there is a bit of introductory text that shows the version of R that we are using and the license. Below that, you should see a <code>&gt;</code>, which is the <em>R prompt</em>. As we mentioned earlier, at its core, R uses a command-line interface which means that you interact with the software by typing commands and hitting <kbd>Enter</kbd> or <kbd>Return</kbd>.</p>
 <p>The simplest thing we can do is to use R as a calculator. For instance, we can type <code>2 + 3 * (6 - 4)^5</code> after the <code>&gt;</code> and then hit <kbd>Enter</kbd>. Below, is a code-chunk showing the output of typing <code>2 + 3 * (6 - 4)^5</code> after the <code>&gt;</code> and then hitting <kdb>Enter</kbd>. Throughout the course, you should try to replicate the code and output in these code chunks.</p>
 <p>We see that R returns the value of the expression <span class="math inline">\(2 + 3 \times (6 - 4)^5\)</span> immediately underneath and the answer is preceded by a [1]. For now, don’t worry about this ``[1]’’; we’ll return to it later.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">6</span> <span class="op">-</span><span class="st"> </span><span class="dv">4</span>)<span class="op">^</span><span class="dv">5</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">6</span> <span class="op">-</span><span class="st"> </span><span class="dv">4</span>)<span class="op">^</span><span class="dv">5</span></span></code></pre></div>
 <pre><code>## [1] 98</code></pre>
 <p>Like any scientific calculator, R comes with a number of built-in functions</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">sqrt</span>(<span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">sqrt</span>(<span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">log</span>(<span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">log</span>(<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## [1] 2.302585</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">cos</span>(pi)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">cos</span>(pi)</span></code></pre></div>
 <pre><code>## [1] -1</code></pre>
 </div>
 <div id="assignment" class="section level2">
 <h2>Assignment</h2>
 <p>When you enter expressions like those above, R evaluates them, prints them, and then immediately discards them. Oftentimes, however, you’ll want to store a value as a named variable and use it in subsequent calculations. For instance, let’s say that we want to store the value of <span class="math inline">\(2 + 3\times (6 - 4)^5\)</span> as <span class="math inline">\(x\)</span> and then compute the following: <span class="math inline">\(1/x, x + 1,\)</span> and <span class="math inline">\(\sqrt{x}.\)</span> To <em>assign</em> the value of the expression <code>2 + 3*(6 - 4)^5</code> to the variable <code>x</code> we use the <em>assignment operator</em> <code>&lt;-</code>. The assignment operator evaluates the expression immediately to the right of it and stores that value in an object whose name is whatever text came to the left of the operator.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">x &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>(<span class="dv">6-4</span>)<span class="op">^</span><span class="dv">5</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>x &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>(<span class="dv">6-4</span>)<span class="op">^</span><span class="dv">5</span></span></code></pre></div>
 <p>Now when we execute this expression, R does not auotmatically print anything like it did in an earlier example. However, if you look closely at the <strong>Environment</strong> pane (top right-hand side of the RStudio window), you’ll see that it now lists x and its value 98. <img src = "figures/RStudio_assignment_screenshot.png" width="1024" height="900"></p>
 <p>This pane will show every variable that we have defined. As we start creating more and more variables, this list will be really helpful to keep track of what we’ve defined. Now that we have created the variable x, we can use the symbol ``x’’ in more expressions. For example, we can compute <span class="math inline">\(1/x, x + 1,\)</span> and <span class="math inline">\(\sqrt{x}\)</span> as follows:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">x</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>x</span></code></pre></div>
 <pre><code>## [1] 98</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="dv">1</span><span class="op">/</span>x</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="dv">1</span><span class="op">/</span>x</span></code></pre></div>
 <pre><code>## [1] 0.01020408</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">x <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>x <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span></code></pre></div>
 <pre><code>## [1] 99</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">sqrt</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">sqrt</span>(x)</span></code></pre></div>
 <pre><code>## [1] 9.899495</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">round</span>(<span class="fl">3.14159</span>, <span class="dt">digits =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">round</span>(<span class="fl">3.14159</span>, <span class="dt">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 3.14</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">round</span>(<span class="fl">3.14159</span>, <span class="dt">digits =</span> <span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">round</span>(<span class="fl">3.14159</span>, <span class="dt">digits =</span> <span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## [1] 3.1416</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">round</span>(<span class="kw">sqrt</span>(x), <span class="dt">digits =</span> <span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">round</span>(<span class="kw">sqrt</span>(x), <span class="dt">digits =</span> <span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## [1] 9.8995</code></pre>
 <p>In the last three examples, we used the function <code>round()</code>, which takes 2 arguments (entered inside the parantheses). The first argument is the number that we want to round and the second argument (following the comma) is the number of digits to which we want to round the first argument. This is our first example of a multi-argument function and we’ll be seeing a lot more of them later on. In the last example above, we didn’t give <code>round</code> an explicit number to round. Instead, R first evaluated <code>sqrt(x)</code> and then rounded it. R follows the conventional order of operations, in that it evaluates the inner-most expression first and then works its way out.</p>
 <p>If we try to evaluate an expression using the name of a variable that we haven’t defined yet, R will throw an error. For instance, in the code below, if we try to add 5 to a previously undeclared variable, we get an error.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">y <span class="op">+</span><span class="st"> </span><span class="dv">5</span></a></code></pre></div>
-<pre><code>##  [1] 5.596900 5.059829 5.047764 5.060890 5.521040 5.078748 5.962378 5.286117 5.110335 5.000812 5.149910 5.008091 5.188819 5.717184 5.172531 5.455073 5.182802 5.217490 5.392570 5.286812 5.134524 5.155720
-## [23] 5.464999 5.846415 5.316295 5.385886 5.002641 5.687766 5.439158 5.825299 5.007712 5.220549 5.152612 5.000214 5.406799 5.269715 5.357011 5.232691 5.968848 5.377862 5.011378 5.085739 5.141640 5.059360
-## [45] 5.115913 5.000016 5.125450 5.000901 5.262290 5.281876</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>y <span class="op">+</span><span class="st"> </span><span class="dv">5</span></span></code></pre></div>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;y&#39; not found</code></pre>
 </div>
 <div id="exercises" class="section level2">
 <h2>Exercises</h2>
@@ -554,6 +561,14 @@ $(document).ready(function () {
 <li>Round these values to 3 decimal points.</li>
 </ol>
 <p>If you’ve finished these exercises and would like to keep playing with R, you can check out the <a href="lecture1.html">first day’s R Lecture</a>.</p>
+</div>
+<div id="discussion-questions" class="section level2">
+<h2>Discussion Questions</h2>
+<p>Prior to starting any type of statistical analysis, it is important for statisticians, analysts, etc., to learn how to propose research questions and develop unbiased strategies for answering them. Before getting into the real content of these lectures, we’d like you to think about the following questions:</p>
+<ol style="list-style-type: decimal">
+<li><p>In the 2016-17 NBA regular season, Stephen Curry’s field goal percentage was 46.8%. DeAndre Jordan’s field goal percentage was 71.7%. One could argue, then, that Jordan is a much better shooter than Curry; after all, he makes a much higher percentage of shots. What is wrong with this argument (if anything)?</p></li>
+<li><p>The racehorse Secretariat won the Belmont Stakes by a total of 31 lengths. Ted Williams hit .406 in the 1941 baseball season. Which do you think was a more unusual outcome? How can we begin to compare the two events?</p></li>
+</ol>
 </div>
 
 

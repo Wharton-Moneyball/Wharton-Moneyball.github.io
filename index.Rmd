@@ -20,7 +20,7 @@ This is in marked contrast to most other software that you're probably accustome
 To make our lifes a bit easier, we will use an integraded development environment (IDE) for R, known as RStudio.
 
 **So that we can start analyzing data right away, we'd like you to install R and RStudio before the first class**
-This can be done prior to arriving at the program or on the first night (Sunday July 5 for Academy, Sunday July 19 for Training Camp) with your project group and RTA. 
+This can be done prior to arriving at the program or on the first night (Sunday July 5 for Academy, Sunday July 19 for Training Camp) with your project group and assigned undergraduate TA. 
 Instructions for installing R and RStudio, as well as setting up your computer for the class are covered [here](lecture0.html) for Academy or [here](tc_lecture0.html) for Training Camp.
 **Note: tablets and chromebooks may not have sufficient computing power to run R and RStudio. We highly recommend using a laptop or desktop**
 
@@ -28,11 +28,9 @@ Instructions for installing R and RStudio, as well as setting up your computer f
 
 
 We know that you are very excited about the program and we're similarly excited to start working together.
-We've come up with [a really short assignment](ps0.html) for you to work on before you arrive.
-[Problem Set 0](ps0.html) contains instructions for downloading and installing R and RStudio, which you should do prior to arrival.
-It also contains a very brief introduction to the R programming language with some simple exercises, and several questions that will motivate the concepts you'll be exploring in Prof. Wyner's class. 
+We've come up with a really short assignment for you to work on before you arrive: [Problem Set 0](ps0.html) contains a brief introduction to the R programming language with some simple exercises, and several questions that will motivate the concepts you'll be exploring in Prof. Wyner's class. 
 Don't worry if you don't finish working your way through these exercises before you arrive.
-On the first morning  (Monday, July 6 for Academy or Monday, July 20 for Training Camp), you'll meet with your project team and RTA to discuss them. 
+On the first morning  (Monday, July 6 for Academy or Monday, July 20 for Training Camp), you'll meet with your project team and TAs to discuss them. 
 As we approach the start of camp, please check back for periodic updates to the site. 
 
 
@@ -53,6 +51,6 @@ Kat Wilson is a second year PhD student studying Quantitative Methods at Penn. A
 
 Ryan Gross is a second year PhD student in the Statistics Department at Wharton, interested in Bayesian statistics and sports analytics. Prior to UPenn, he graduated from Rutgers University Honors College with a double major in Math and Statistics and minor in Economics, where he also ran cross country and track. Growing up in New Jersey, Ryan is a diehard fan of the New York Jets, Knicks, and Yankees, along with Rutgers football and basketball. 
 
-Eric Eager
-
 Noah Beam is a second year Master's candidate of Behavioral and Decision Sciences. He is interested in the intersection of psychology and statistics, combining art and science to study consumer behavior, user experience, and human capital. Noah grew up in Texas and is an avid fan of the Texas Rangers, TCU Horned Frogs, and Nebraska Cornhuskers. He graduated from TCU in 2018 with majors in Mathematics, Psychology, and Economics.
+
+Eric Eager

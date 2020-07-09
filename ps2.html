@@ -405,7 +405,7 @@ $(document).ready(function () {
       <a href="lecture8.html">Lecture 8</a>
     </li>
     <li>
-      <a href="nfl_lecture.html">nflscrapR lecture</a>
+      <a href="nflscrapR_lecture.html">nflscrapR lecture</a>
     </li>
   </ul>
 </li>
@@ -435,6 +435,12 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="ps5.html">Problem Set 5</a>
+    </li>
+    <li>
+      <a href="ps6.html">Problem Set 6</a>
+    </li>
+    <li>
+      <a href="psX.html">Problem Set X</a>
     </li>
   </ul>
 </li>
@@ -538,7 +544,7 @@ $(document).ready(function () {
 </div>
 <div id="mlb-batting-statistics" class="section level2">
 <h2>MLB Batting Statistics</h2>
-<p>In this problem set, we will gain more experience using the dplyr verbs we learned in <a href="module3.htlm">Module 3</a> to analyze batting statistics of MLB players with at least 502.2 plate appearances. All of the data is contained in the file “data/hitting_qualified.csv”. You should write save all of the code for this analyses in an R script called “ps2_mlb_batting.R”.</p>
+<p>In this problem set, we will gain more experience using the dplyr verbs we learned in Lecture 2 to analyze batting statistics of MLB players with at least 502.2 plate appearances. All of the data is contained in the file “data/hitting_qualified.csv”. You should write save all of the code for this analyses in an R script called “ps2_mlb_batting.R”.</p>
 <ol style="list-style-type: decimal">
 <li>Load the data into a tibble called <code>hitting_qualified</code> using <code>read_csv()</code>.</li>
 </ol>
@@ -617,7 +623,7 @@ $(document).ready(function () {
 ##  8 hornujo01   1884   518    NA    NA    NA    NA    NA
 ##  9 jonesch01   1884   472    NA    10    NA    NA    NA
 ## 10 nelsoca01   1884   432    NA     9    NA    NA    NA
-## # … with 12,033 more rows</code></pre>
+## # ... with 12,033 more rows</code></pre>
 <p>You’ll notice that a lot of these columns contain <code>NA</code> values, which indicates that some of these values are missing. This make sense, since a lot of these statistics were not recorded in the early years of baseball. A popular convention for dealing with these missing statistics is to <strong>impute</strong> the missing values with 0. That is, for instance, every place we see an <code>NA</code> we need to replace it with a 0. We can do that with <code>mutate()</code> and <code>replace_na()</code> function as follows.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>hitting_qualified &lt;-<span class="st"> </span><span class="kw">replace_na</span>(hitting_qualified, </span>
 <span id="cb10-2"><a href="#cb10-2"></a>                                <span class="kw">list</span>(<span class="dt">IBB =</span> <span class="dv">0</span>, <span class="dt">HBP =</span> <span class="dv">0</span>, <span class="dt">SH =</span> <span class="dv">0</span>, <span class="dt">SF =</span> <span class="dv">0</span>, <span class="dt">GIDP =</span> <span class="dv">0</span>))</span></code></pre></div>
@@ -628,7 +634,7 @@ $(document).ready(function () {
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>hitting_qualified &lt;-<span class="st"> </span><span class="kw">mutate</span>(hitting_qualified, <span class="dt">X1B =</span> H <span class="op">-</span><span class="st"> </span>X2B <span class="op">-</span><span class="st"> </span>X3B <span class="op">-</span><span class="st"> </span>HR)</span></code></pre></div>
 <ol start="7" style="list-style-type: decimal">
 <li><p>The variable BB includes as a subset all intentional walks (IBB). Use <code>mutate()</code> to add a column to <code>hitting_qualified</code> that counts the number of <em>un-intentional walks</em> (uBB). Be sure to save the resulting tibble as <code>hitting_qualified</code>.</p></li>
-<li><p>Use <code>mutate()</code> to add columns for the following offensive statistics, whose formulae are given below. We have also included links to pages on <a href="htpps://www.fangraphs.com">Fangraphs</a> that define and discuss each of these statistics.</p></li>
+<li><p>Use <code>mutate()</code> to add columns for the following offensive statistics, whose formulae are given below. We have also included links to pages on <a href="https://www.fangraphs.com">Fangraphs</a> that define and discuss each of these statistics.</p></li>
 </ol>
 <ul>
 <li><p><a href="https://www.fangraphs.com/library/offense/rate-stats/">Walk Percentage</a> (BBP): <span class="math display">\[
@@ -653,7 +659,7 @@ $(document).ready(function () {
 <span id="cb12-7"><a href="#cb12-7"></a>                  <span class="dt">wOBA =</span> (<span class="fl">0.687</span> <span class="op">*</span><span class="st"> </span>uBB <span class="op">+</span><span class="st"> </span><span class="fl">0.718</span> <span class="op">*</span><span class="st"> </span>HBP <span class="op">+</span><span class="st"> </span><span class="fl">0.81</span> <span class="op">*</span><span class="st"> </span>X1B <span class="op">+</span><span class="st"> </span><span class="fl">1.256</span> <span class="op">*</span><span class="st"> </span>X2B <span class="op">+</span><span class="st"> </span></span>
 <span id="cb12-8"><a href="#cb12-8"></a><span class="st">                            </span><span class="fl">1.594</span> <span class="op">*</span><span class="st"> </span>X3B<span class="op">+</span><span class="st"> </span><span class="fl">2.065</span> <span class="op">*</span><span class="st"> </span>HR)<span class="op">/</span>(AB <span class="op">+</span><span class="st"> </span>uBB <span class="op">+</span><span class="st"> </span>SF <span class="op">+</span><span class="st"> </span>HBP))</span></code></pre></div>
 <ol start="9" style="list-style-type: decimal">
-<li><p>For most of the statistics in the previous question, <a href="htpps://www.fangraphs.com">Fangraphs</a> has defined rating scales (to see these ratings, click on the linked page for each statistic in Question 6 and scroll down to the “Context” section of the page). Use <code>mutate()</code> and <code>case_when()</code> to add the ratings for walk percentage (BBP), strike-out percentage (KP), on-base percentage (OBP), on-base plus slugging (OPS), and wOBA. Call the columns “BBP_rating”, “KP_rating”, “OBP_rating”, “OPS_rating”, and “wOBA_rating.”</p></li>
+<li><p>For most of the statistics in the previous question, <a href="https://www.fangraphs.com">Fangraphs</a> has defined rating scales (to see these ratings, click on the linked page for each statistic in Question 6 and scroll down to the “Context” section of the page). Use <code>mutate()</code> and <code>case_when()</code> to add the ratings for walk percentage (BBP), strike-out percentage (KP), on-base percentage (OBP), on-base plus slugging (OPS), and wOBA. Call the columns “BBP_rating”, “KP_rating”, “OBP_rating”, “OPS_rating”, and “wOBA_rating.”</p></li>
 <li><p>Use <code>filter()</code> to subset the players who played between 2000 and 2015. Call the new tbl <code>tmp_batting</code>.</p></li>
 <li><p>Use <code>select()</code> to create a tibble called <code>batting_recent</code> containing all players who played between 2000 and 2015 with the following columns: playerID, yearID, teamID, lgID, and all of the statistics and rankings created in Problems 8 and 9.</p></li>
 <li><p>Explore the distribution of some of the batting statistics introduced in problem 6 using the tbl <code>batting_recent</code> using histograms. Then explore the relationship between some of these statistics with scatterplots.</p></li>
