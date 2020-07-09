@@ -11,7 +11,8 @@ library(tidyverse)
 ## Review
 
 We understand that it's been quite a busy week and that we've thrown a ton of material your way.
-We'd like you to take some time today and this weekend to go through the notes of the first four lectures and first three problem sets carefully with your team and RTA.
+Today is the last new lecture and set of material for the week, 
+and tomorrow's R sessions will be used exclusively for review.
 
 
 ## Visualizing the Strike Zone
