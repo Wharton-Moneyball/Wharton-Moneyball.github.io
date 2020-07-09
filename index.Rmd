@@ -30,7 +30,7 @@ Instructions for installing R and RStudio, as well as setting up your computer f
 We know that you are very excited about the program and we're similarly excited to start working together.
 We've come up with a really short assignment for you to work on before you arrive: [Problem Set 0](ps0.html) contains a brief introduction to the R programming language with some simple exercises, and several questions that will motivate the concepts you'll be exploring in Prof. Wyner's class. 
 Don't worry if you don't finish working your way through these exercises before you arrive.
-On the first morning  (Monday, July 6 for Academy or Monday, July 20 for Training Camp), you'll meet with your project team and RTA to discuss them. 
+On the first morning  (Monday, July 6 for Academy or Monday, July 20 for Training Camp), you'll meet with your project team and TAs to discuss them. 
 As we approach the start of camp, please check back for periodic updates to the site. 
 
 
