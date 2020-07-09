@@ -8,13 +8,6 @@ knitr::opts_chunk$set(echo = TRUE, comment = "", prompt = TRUE, collapse = TRUE,
 library(tidyverse)
 ```
 
-## Review
-
-We understand that it's been quite a busy week and that we've thrown a ton of material your way.
-Today is the last new lecture and set of material for the week, 
-and tomorrow's R sessions will be used exclusively for review.
-
-
 ## Visualizing the Strike Zone
 In this part, we will continue to use heatmaps (introduced briefly in [Lecture 2](lecture2.html)) to explore the strike zone in baseball.
 We will focus on data collected by PITCHf/x.
