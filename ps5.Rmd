@@ -59,7 +59,9 @@ Use ggplot arguments to make the following changes to the graph to recreate Neil
 
 ## Make it Interactive
 
-A big goal of data visualization right now is to make charts interactive. Plotly in R is one way to begin to make your graphics interactive. Once you have your graph saved as a new object, install the plotly package and run the functin (ggplotly) on the graph in order to add interactive elements.
+You may have noticed a lot more interactive data visualization pieces on the internet over the last few years. The goal of these graphics is to allow the user to explore specific parts of the data and increase engagement. The [COVID-19 Dashboard](https://coronavirus.jhu.edu/map.html) put together by the Center for Systems Science and Engineering at Johns Hopkins University is a good example of this.
+
+Plotly in R is one way to begin to make your graphics interactive. Once you have your graph saved as a new object, install the plotly package and run the functin (ggplotly) on the graph in order to add interactive elements.
 
 ```{r second5, eval=FALSE, message=TRUE, warning=TRUE, include=FALSE}
 #install.packages(plotly)
@@ -97,4 +99,4 @@ ggplotly(n)
 
 Choose from the plots on Five Thirty Eight and recreate a graph using ggplot. Try to match the style and format of the graph, or use new tools like plotly to make the graph interactice.
 
-You can find data and code behind some of the articles [here](https://data.fivethirtyeight.com/). 
+You can find data and code behind some of the articles [here](https://data.fivethirtyeight.com/).
