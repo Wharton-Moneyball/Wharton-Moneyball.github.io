@@ -59,16 +59,9 @@ Use ggplot arguments to make the following changes to the graph to recreate Neil
 
 ## Make it Interactive
 
-You may have noticed a lot more interactive data visualization pieces on the internet over the last few years. The goal of these graphics is to allow the user to explore specific parts of the data and increase engagement. The [COVID-19 Dashboard](https://coronavirus.jhu.edu/map.html) put together by the Center for Systems Science and Engineering at Johns Hopkins University is a good example of this.
+You may have noticed a lot more interactive data visualization pieces on the internet over the last few years. The goal of these graphics is to allow the user to explore specific parts of the data and increase engagement. The [COVID-19 Dashboard](https://coronavirus.jhu.edu/map.html) put together by the Center for Systems Science and Engineering at Johns Hopkins University is a good example.
 
-Plotly in R is one way to begin to make your graphics interactive. Once you have your graph saved as a new object, install the plotly package and run the functin (ggplotly) on the graph in order to add interactive elements.
-
-```{r second5, eval=FALSE, message=TRUE, warning=TRUE, include=FALSE}
-#install.packages(plotly)
-library(plotly)
-ggplotly(name_of_completed_graph)
-
-```
+Plotly is one package that can be used in R to make interactive visualizations. Once you have your graph saved as a new object, install the plotly package and run the functin (ggplotly) on the graph in order to add interactive elements.
 
 ```{r third, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -90,7 +83,14 @@ n <- ggplot(data = data, aes(x = sec_duration, y = bpm, color = school)) +
   theme(plot.title = element_text(family = "Helvetica",
                                   face = "bold",
                                   size = (15))) 
-ggplotly(n)
+name_of_completed_graph <- n
+```
+
+```{r second5, echo=TRUE, message=TRUE, warning=TRUE}
+#install.packages(plotly)
+library(plotly)
+ggplotly(name_of_completed_graph)
+
 ```
 
 
