@@ -94,9 +94,42 @@ ggplotly(name_of_completed_graph)
 ```
 
 
-## Work with New Data
+## Work with new data to create a graph
 
 
-Choose from the plots on Five Thirty Eight and recreate a graph using ggplot. Try to match the style and format of the graph, or use new tools like plotly to make the graph interactice.
+Choose from the plots on Five Thirty Eight and recreate a graph using ggplot. Try to match the style and format of the graph, or use new tools like plotly to make the graph interactive. Perhaps you find a graph that you think would be better visualized in anothe way. See if you can use the data to think of a better approach.
 
 You can find data and code behind some of the articles [here](https://data.fivethirtyeight.com/).
+
+Alternatively, you can work with the graph I have recreated from this article on [Fatal Collisions](https://fivethirtyeight.com/features/which-state-has-the-worst-drivers/). See if you can turn this into a stacked bar chart and replicate the other graphs in the article. The GitHub with data can be found [here](https://github.com/fivethirtyeight/data/tree/master/bad-drivers).
+
+```{r second6, echo=TRUE, message=TRUE, warning=TRUE}
+
+#load data
+drivers<-'https://raw.githubusercontent.com/fivethirtyeight/data/master/bad-drivers/bad-drivers.csv'
+data<-read.csv(drivers)
+
+#rename columns
+names(data)[names(data) == 
+              "Number.of.drivers.involved.in.fatal.collisions.per.billion.miles"] <- "Total Collisions"
+names(data)[names(data) == 
+              "Percentage.Of.Drivers.Involved.In.Fatal.Collisions.Who.Were.Not.Distracted"] <- 'Non Distracted'
+
+#mutate data
+data <- data %>%
+  mutate("Non_Distracted_Per" = (`Non Distracted`/100) * `Total Collisions`) %>%
+  arrange((State))
+
+#plot data
+ggplot(data = data, aes(x = as.factor(State), y = Non_Distracted_Per)) +
+  geom_bar(stat = "identity", fill = "orange") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Drivers Involved in Fatal...",
+       caption = "As a share of the number of fatal 
+       collisions per billions of...") +
+  theme(axis.title.x = element_blank()) +
+  theme(axis.title.y = element_blank())
+
+```
+
