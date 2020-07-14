@@ -4,7 +4,10 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, comment = "", prompt = TRUE, collapse = TRUE, fig.align = "center")
+options(width = 100)
+library(tidyverse)
+library(modelr)
 ```
 
 In [Lecture 7](lecture7.html), we predicted field goal success using a similar strategy to the one we used in [Lecture 4](lecture4.html) to predict batting averages in 2015 using batting averages from 2014.
@@ -94,9 +97,9 @@ We see clearly, now, that our logistic regression model has the best out-of-samp
 This would indicate that "phat_dist_5" and "phat_dist_2", the models formed by binning distances into 5-yard and 2-yard increments and computing the overall success rate within each bin, over-fit the training data.
 
 
-## Regression with Multiple Predictors
+## Multiple Regression
 
-Up to this point, we have only talked about regression models with a single predictor.
+Up to this point, we have only talked about regression models with a single predictor (Exception: the end of [Problem Set 6](ps6.html) had an example of multiple regression).
 Though the logistic regression model we just built out-performs all of the ones we had built before, it is still pretty limited.
 After all, for any specific distance, this model estimates that every kicker has exactly the same chance of making a field goal.
 The code below fits a logistic regression model that accounts for both the kicker and the distance.
