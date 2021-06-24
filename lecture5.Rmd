@@ -454,7 +454,7 @@ logos directly. This can be done using the `ggimage` package that can be install
 as follows:
 
 ```{r install-ggimage, eval = FALSE}
-install.packages("ggimages")
+install.packages("ggimage")
 ```
 
 Next we access the images as a dataset, and join it together to the offense

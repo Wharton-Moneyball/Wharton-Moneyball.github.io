@@ -19,14 +19,39 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -122,39 +147,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 
 
@@ -164,10 +159,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -184,40 +175,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -245,7 +209,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -257,7 +221,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -268,10 +232,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -283,7 +260,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -364,13 +340,13 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-futbol-o"></span>
+    <span class="fas fa-futbol-o"></span>
      
     Lecture Notes
      
@@ -411,7 +387,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-dribbble"></span>
+    <span class="fas fa-dribbble"></span>
      
     Problem Sets
      
@@ -446,7 +422,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-bar-chart"></span>
+    <span class="fas fa-bar-chart"></span>
      
     Training Camp
      
@@ -493,11 +469,11 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -518,15 +494,16 @@ $(document).ready(function () {
 </ol>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="op">&gt;</span><span class="st"> </span>pitches &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/pitchfx_2015.csv&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a>Parsed with column specification<span class="op">:</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">cols</span>(</span>
-<span id="cb1-5"><a href="#cb1-5"></a>  <span class="dt">Description =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">X =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">Z =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb1-8"><a href="#cb1-8"></a>  <span class="dt">COUNT =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb1-9"><a href="#cb1-9"></a>  <span class="dt">P_HAND =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb1-10"><a href="#cb1-10"></a>  <span class="dt">B_HAND =</span> <span class="kw">col_character</span>()</span>
-<span id="cb1-11"><a href="#cb1-11"></a>)</span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="op">--</span><span class="st"> </span>Column specification <span class="op">----------------------------------------------------------------------------</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">cols</span>(</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">Description =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">X =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb1-8"><a href="#cb1-8"></a>  <span class="dt">Z =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb1-9"><a href="#cb1-9"></a>  <span class="dt">COUNT =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb1-10"><a href="#cb1-10"></a>  <span class="dt">P_HAND =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb1-11"><a href="#cb1-11"></a>  <span class="dt">B_HAND =</span> <span class="kw">col_character</span>()</span>
+<span id="cb1-12"><a href="#cb1-12"></a>)</span></code></pre></div>
 <p>The columns are: * <code>Description</code>: Records the outcome of the pitch (Called Strike, Swinging Strike, Foul, etc.) * <code>X</code> and <code>Z</code>: the horizontal and vertical coordinates of the pitch in inches. Note that the center of home plate corresponds to <code>X = 0</code>. Note that the <code>X</code> coordinate are recorded from the catcher’s perspective, with negative values on the left and positive values on the right. In this coordinate system, a right-handed batter will line up to the left (i.e. negative <code>X</code> values). * <code>COUNT</code>: The ball-strike count for each pitch * <code>P_HAND</code> and <code>B_HAND</code>: the handedness of the batter and pitcher.</p>
 <ol start="2" style="list-style-type: decimal">
 <li><p>To visualize the strike zone, we are going to want to filter out only the called strikes and balls. Moreover, it will be helpful to convert the Description to numeric values (1 for called strikes, 0 for balls). Use the pipe operator, <code>filter()</code>, <code>mutate()</code>, and <code>case_when()</code> to create a new tbl <code>called_pitches</code> containing only the called strike and balls and that includes a new column “Call” whose value is 0 for balls and 1 for called strike.</p></li>
@@ -569,45 +546,43 @@ $(document).ready(function () {
 <ol style="list-style-type: decimal">
 <li>Load the data into a tbl called <code>raw_boxscore</code>.</li>
 </ol>
-<pre><code>Parsed with column specification:
+<pre><code>
+-- Column specification ----------------------------------------------------------------------------
 cols(
   .default = col_double(),
   Player = col_character(),
   Pos = col_character(),
   Tm = col_character()
 )
-See spec(...) for full column specifications.</code></pre>
+i Use `spec()` for the full column specifications.</code></pre>
 <p>The column “Tm” lists the team on which each player played. We can look at the relative frequencies of the teams using the <code>table()</code> function. This function takes a vector and returns the frequencies of each unique value.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">table</span>(raw_boxscore[[<span class="st">&quot;Tm&quot;</span>]])</span>
 <span id="cb8-2"><a href="#cb8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3"></a> ATL  BOS  BRK  CHA  CHH  CHI  CHO  CLE  DAL  DEN  DET  GSW  HOU  IND  LAC  LAL </span>
-<span id="cb8-4"><a href="#cb8-4"></a> <span class="dv">347</span>  <span class="dv">350</span>   <span class="dv">72</span>  <span class="dv">183</span>  <span class="dv">101</span>  <span class="dv">335</span>   <span class="dv">34</span>  <span class="dv">359</span>  <span class="dv">356</span>  <span class="dv">354</span>  <span class="dv">321</span>  <span class="dv">355</span>  <span class="dv">359</span>  <span class="dv">319</span>  <span class="dv">347</span>  <span class="dv">319</span> </span>
-<span id="cb8-5"><a href="#cb8-5"></a> MEM  MIA  MIL  MIN  NJN  NOH  NOK  NOP  NYK  OKC  ORL  PHI  PHO  POR  SAC  SAS </span>
-<span id="cb8-6"><a href="#cb8-6"></a> <span class="dv">271</span>  <span class="dv">348</span>  <span class="dv">337</span>  <span class="dv">328</span>  <span class="dv">298</span>  <span class="dv">161</span>   <span class="dv">34</span>   <span class="dv">63</span>  <span class="dv">345</span>  <span class="dv">144</span>  <span class="dv">340</span>  <span class="dv">352</span>  <span class="dv">348</span>  <span class="dv">338</span>  <span class="dv">332</span>  <span class="dv">342</span> </span>
-<span id="cb8-7"><a href="#cb8-7"></a> SEA  TOR  TOT  UTA  VAN  WAS  WSB </span>
-<span id="cb8-8"><a href="#cb8-8"></a> <span class="dv">195</span>  <span class="dv">366</span> <span class="dv">1047</span>  <span class="dv">309</span>   <span class="dv">80</span>  <span class="dv">333</span>   <span class="dv">15</span> </span></code></pre></div>
+<span id="cb8-3"><a href="#cb8-3"></a> ATL  BOS  BRK  CHA  CHH  CHI  CHO  CLE  DAL  DEN  DET  GSW  HOU  IND  LAC  LAL  MEM  MIA  MIL  MIN </span>
+<span id="cb8-4"><a href="#cb8-4"></a> <span class="dv">347</span>  <span class="dv">350</span>   <span class="dv">72</span>  <span class="dv">183</span>  <span class="dv">101</span>  <span class="dv">335</span>   <span class="dv">34</span>  <span class="dv">359</span>  <span class="dv">356</span>  <span class="dv">354</span>  <span class="dv">321</span>  <span class="dv">355</span>  <span class="dv">359</span>  <span class="dv">319</span>  <span class="dv">347</span>  <span class="dv">319</span>  <span class="dv">271</span>  <span class="dv">348</span>  <span class="dv">337</span>  <span class="dv">328</span> </span>
+<span id="cb8-5"><a href="#cb8-5"></a> NJN  NOH  NOK  NOP  NYK  OKC  ORL  PHI  PHO  POR  SAC  SAS  SEA  TOR  TOT  UTA  VAN  WAS  WSB </span>
+<span id="cb8-6"><a href="#cb8-6"></a> <span class="dv">298</span>  <span class="dv">161</span>   <span class="dv">34</span>   <span class="dv">63</span>  <span class="dv">345</span>  <span class="dv">144</span>  <span class="dv">340</span>  <span class="dv">352</span>  <span class="dv">348</span>  <span class="dv">338</span>  <span class="dv">332</span>  <span class="dv">342</span>  <span class="dv">195</span>  <span class="dv">366</span> <span class="dv">1047</span>  <span class="dv">309</span>   <span class="dv">80</span>  <span class="dv">333</span>   <span class="dv">15</span> </span></code></pre></div>
 <p>Looking at the list of teams you may see a few that you don’t recognize. For instance, there are 15 players listed as playing on “WSB”. We can use <code>filter()</code> to take a closer look at these players</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">filter</span>(raw_boxscore, Tm <span class="op">==</span><span class="st"> &quot;WSB&quot;</span>)</span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="co"># A tibble: 15 x 22</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a>   Season Player Pos     Age Tm        G    GS    MP   FGM   FGA   TPM   TPA</span>
-<span id="cb9-4"><a href="#cb9-4"></a>    <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="st"> </span><span class="dv">1</span>   <span class="dv">1997</span> Ashra<span class="op">~</span><span class="st"> </span>PF       <span class="dv">25</span> WSB      <span class="dv">31</span>     <span class="dv">0</span>   <span class="dv">144</span>    <span class="dv">12</span>    <span class="dv">40</span>     <span class="dv">1</span>     <span class="dv">1</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a> <span class="dv">2</span>   <span class="dv">1997</span> Calbe<span class="op">~</span><span class="st"> </span>SG       <span class="dv">25</span> WSB      <span class="dv">79</span>    <span class="dv">79</span>  <span class="dv">2411</span>   <span class="dv">369</span>   <span class="dv">730</span>     <span class="dv">4</span>    <span class="dv">30</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a> <span class="dv">3</span>   <span class="dv">1997</span> Matt <span class="op">~</span><span class="st"> </span>C        <span class="dv">27</span> WSB       <span class="dv">5</span>     <span class="dv">0</span>     <span class="dv">7</span>     <span class="dv">1</span>     <span class="dv">3</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a> <span class="dv">4</span>   <span class="dv">1997</span> Harve<span class="op">~</span><span class="st"> </span>PF       <span class="dv">31</span> WSB      <span class="dv">78</span>    <span class="dv">25</span>  <span class="dv">1604</span>   <span class="dv">129</span>   <span class="dv">314</span>    <span class="dv">28</span>    <span class="dv">89</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a> <span class="dv">5</span>   <span class="dv">1997</span> Juwan<span class="op">~</span><span class="st"> </span>SF       <span class="dv">23</span> WSB      <span class="dv">82</span>    <span class="dv">82</span>  <span class="dv">3324</span>   <span class="dv">638</span>  <span class="dv">1313</span>     <span class="dv">0</span>     <span class="dv">2</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a> <span class="dv">6</span>   <span class="dv">1997</span> Jaren<span class="op">~</span><span class="st"> </span>SG       <span class="dv">29</span> WSB      <span class="dv">75</span>     <span class="dv">0</span>  <span class="dv">1133</span>   <span class="dv">134</span>   <span class="dv">329</span>    <span class="dv">53</span>   <span class="dv">158</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a> <span class="dv">7</span>   <span class="dv">1997</span> Tim L<span class="op">~</span><span class="st"> </span>SG       <span class="dv">30</span> WSB      <span class="dv">15</span>     <span class="dv">0</span>   <span class="dv">182</span>    <span class="dv">15</span>    <span class="dv">48</span>     <span class="dv">8</span>    <span class="dv">29</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a> <span class="dv">8</span>   <span class="dv">1997</span> Gheor<span class="op">~</span><span class="st"> </span>C        <span class="dv">25</span> WSB      <span class="dv">73</span>    <span class="dv">69</span>  <span class="dv">1849</span>   <span class="dv">327</span>   <span class="dv">541</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a> <span class="dv">9</span>   <span class="dv">1997</span> Tracy<span class="op">~</span><span class="st"> </span>SF       <span class="dv">25</span> WSB      <span class="dv">82</span>     <span class="dv">1</span>  <span class="dv">1814</span>   <span class="dv">288</span>   <span class="dv">678</span>   <span class="dv">106</span>   <span class="dv">300</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="dv">10</span>   <span class="dv">1997</span> Gaylo<span class="op">~</span><span class="st"> </span>SG       <span class="dv">27</span> WSB       <span class="dv">1</span>     <span class="dv">0</span>     <span class="dv">6</span>     <span class="dv">1</span>     <span class="dv">3</span>     <span class="dv">0</span>     <span class="dv">1</span></span>
-<span id="cb9-15"><a href="#cb9-15"></a><span class="dv">11</span>   <span class="dv">1997</span> Rod S<span class="op">~</span><span class="st"> </span>PG       <span class="dv">30</span> WSB      <span class="dv">82</span>    <span class="dv">81</span>  <span class="dv">2997</span>   <span class="dv">515</span>  <span class="dv">1105</span>    <span class="dv">13</span>    <span class="dv">77</span></span>
-<span id="cb9-16"><a href="#cb9-16"></a><span class="dv">12</span>   <span class="dv">1997</span> Ben W<span class="op">~</span><span class="st"> </span>PF       <span class="dv">22</span> WSB      <span class="dv">34</span>     <span class="dv">0</span>   <span class="dv">197</span>    <span class="dv">16</span>    <span class="dv">46</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb9-17"><a href="#cb9-17"></a><span class="dv">13</span>   <span class="dv">1997</span> Chris<span class="op">~</span><span class="st"> </span>PF       <span class="dv">23</span> WSB      <span class="dv">72</span>    <span class="dv">72</span>  <span class="dv">2806</span>   <span class="dv">604</span>  <span class="dv">1167</span>    <span class="dv">60</span>   <span class="dv">151</span></span>
-<span id="cb9-18"><a href="#cb9-18"></a><span class="dv">14</span>   <span class="dv">1997</span> Chris<span class="op">~</span><span class="st"> </span>PG       <span class="dv">25</span> WSB      <span class="dv">82</span>     <span class="dv">1</span>  <span class="dv">1117</span>   <span class="dv">139</span>   <span class="dv">330</span>    <span class="dv">58</span>   <span class="dv">163</span></span>
-<span id="cb9-19"><a href="#cb9-19"></a><span class="dv">15</span>   <span class="dv">1997</span> Loren<span class="op">~</span><span class="st"> </span>C        <span class="dv">27</span> WSB      <span class="dv">19</span>     <span class="dv">0</span>   <span class="dv">264</span>    <span class="dv">20</span>    <span class="dv">31</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb9-20"><a href="#cb9-20"></a><span class="co"># ... with 10 more variables: FTM &lt;dbl&gt;, FTA &lt;dbl&gt;, ORB &lt;dbl&gt;, DRB &lt;dbl&gt;,</span></span>
-<span id="cb9-21"><a href="#cb9-21"></a><span class="co">#   AST &lt;dbl&gt;, STL &lt;dbl&gt;, BLK &lt;dbl&gt;, TOV &lt;dbl&gt;, PF &lt;dbl&gt;, PTS &lt;dbl&gt;</span></span></code></pre></div>
+<span id="cb9-3"><a href="#cb9-3"></a>   Season Player Pos     Age Tm        G    GS    MP   FGM   FGA   TPM   TPA   FTM   FTA   ORB   DRB</span>
+<span id="cb9-4"><a href="#cb9-4"></a>    <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="st"> </span><span class="dv">1</span>   <span class="dv">1997</span> Ashra<span class="op">~</span><span class="st"> </span>PF       <span class="dv">25</span> WSB      <span class="dv">31</span>     <span class="dv">0</span>   <span class="dv">144</span>    <span class="dv">12</span>    <span class="dv">40</span>     <span class="dv">1</span>     <span class="dv">1</span>    <span class="dv">15</span>    <span class="dv">28</span>    <span class="dv">19</span>    <span class="dv">33</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a> <span class="dv">2</span>   <span class="dv">1997</span> Calbe<span class="op">~</span><span class="st"> </span>SG       <span class="dv">25</span> WSB      <span class="dv">79</span>    <span class="dv">79</span>  <span class="dv">2411</span>   <span class="dv">369</span>   <span class="dv">730</span>     <span class="dv">4</span>    <span class="dv">30</span>    <span class="dv">95</span>   <span class="dv">137</span>    <span class="dv">70</span>   <span class="dv">198</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a> <span class="dv">3</span>   <span class="dv">1997</span> Matt <span class="op">~</span><span class="st"> </span>C        <span class="dv">27</span> WSB       <span class="dv">5</span>     <span class="dv">0</span>     <span class="dv">7</span>     <span class="dv">1</span>     <span class="dv">3</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">1</span>     <span class="dv">4</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a> <span class="dv">4</span>   <span class="dv">1997</span> Harve<span class="op">~</span><span class="st"> </span>PF       <span class="dv">31</span> WSB      <span class="dv">78</span>    <span class="dv">25</span>  <span class="dv">1604</span>   <span class="dv">129</span>   <span class="dv">314</span>    <span class="dv">28</span>    <span class="dv">89</span>    <span class="dv">30</span>    <span class="dv">39</span>    <span class="dv">63</span>   <span class="dv">193</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a> <span class="dv">5</span>   <span class="dv">1997</span> Juwan<span class="op">~</span><span class="st"> </span>SF       <span class="dv">23</span> WSB      <span class="dv">82</span>    <span class="dv">82</span>  <span class="dv">3324</span>   <span class="dv">638</span>  <span class="dv">1313</span>     <span class="dv">0</span>     <span class="dv">2</span>   <span class="dv">294</span>   <span class="dv">389</span>   <span class="dv">202</span>   <span class="dv">450</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a> <span class="dv">6</span>   <span class="dv">1997</span> Jaren<span class="op">~</span><span class="st"> </span>SG       <span class="dv">29</span> WSB      <span class="dv">75</span>     <span class="dv">0</span>  <span class="dv">1133</span>   <span class="dv">134</span>   <span class="dv">329</span>    <span class="dv">53</span>   <span class="dv">158</span>    <span class="dv">53</span>    <span class="dv">69</span>    <span class="dv">31</span>   <span class="dv">101</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a> <span class="dv">7</span>   <span class="dv">1997</span> Tim L<span class="op">~</span><span class="st"> </span>SG       <span class="dv">30</span> WSB      <span class="dv">15</span>     <span class="dv">0</span>   <span class="dv">182</span>    <span class="dv">15</span>    <span class="dv">48</span>     <span class="dv">8</span>    <span class="dv">29</span>     <span class="dv">6</span>     <span class="dv">7</span>     <span class="dv">0</span>    <span class="dv">21</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a> <span class="dv">8</span>   <span class="dv">1997</span> Gheor<span class="op">~</span><span class="st"> </span>C        <span class="dv">25</span> WSB      <span class="dv">73</span>    <span class="dv">69</span>  <span class="dv">1849</span>   <span class="dv">327</span>   <span class="dv">541</span>     <span class="dv">0</span>     <span class="dv">0</span>   <span class="dv">123</span>   <span class="dv">199</span>   <span class="dv">141</span>   <span class="dv">340</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a> <span class="dv">9</span>   <span class="dv">1997</span> Tracy<span class="op">~</span><span class="st"> </span>SF       <span class="dv">25</span> WSB      <span class="dv">82</span>     <span class="dv">1</span>  <span class="dv">1814</span>   <span class="dv">288</span>   <span class="dv">678</span>   <span class="dv">106</span>   <span class="dv">300</span>   <span class="dv">135</span>   <span class="dv">161</span>    <span class="dv">84</span>   <span class="dv">169</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="dv">10</span>   <span class="dv">1997</span> Gaylo<span class="op">~</span><span class="st"> </span>SG       <span class="dv">27</span> WSB       <span class="dv">1</span>     <span class="dv">0</span>     <span class="dv">6</span>     <span class="dv">1</span>     <span class="dv">3</span>     <span class="dv">0</span>     <span class="dv">1</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">1</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="dv">11</span>   <span class="dv">1997</span> Rod S<span class="op">~</span><span class="st"> </span>PG       <span class="dv">30</span> WSB      <span class="dv">82</span>    <span class="dv">81</span>  <span class="dv">2997</span>   <span class="dv">515</span>  <span class="dv">1105</span>    <span class="dv">13</span>    <span class="dv">77</span>   <span class="dv">367</span>   <span class="dv">497</span>    <span class="dv">95</span>   <span class="dv">240</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="dv">12</span>   <span class="dv">1997</span> Ben W<span class="op">~</span><span class="st"> </span>PF       <span class="dv">22</span> WSB      <span class="dv">34</span>     <span class="dv">0</span>   <span class="dv">197</span>    <span class="dv">16</span>    <span class="dv">46</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">6</span>    <span class="dv">20</span>    <span class="dv">25</span>    <span class="dv">33</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="dv">13</span>   <span class="dv">1997</span> Chris<span class="op">~</span><span class="st"> </span>PF       <span class="dv">23</span> WSB      <span class="dv">72</span>    <span class="dv">72</span>  <span class="dv">2806</span>   <span class="dv">604</span>  <span class="dv">1167</span>    <span class="dv">60</span>   <span class="dv">151</span>   <span class="dv">177</span>   <span class="dv">313</span>   <span class="dv">238</span>   <span class="dv">505</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a><span class="dv">14</span>   <span class="dv">1997</span> Chris<span class="op">~</span><span class="st"> </span>PG       <span class="dv">25</span> WSB      <span class="dv">82</span>     <span class="dv">1</span>  <span class="dv">1117</span>   <span class="dv">139</span>   <span class="dv">330</span>    <span class="dv">58</span>   <span class="dv">163</span>    <span class="dv">94</span>   <span class="dv">113</span>    <span class="dv">13</span>    <span class="dv">91</span></span>
+<span id="cb9-19"><a href="#cb9-19"></a><span class="dv">15</span>   <span class="dv">1997</span> Loren<span class="op">~</span><span class="st"> </span>C        <span class="dv">27</span> WSB      <span class="dv">19</span>     <span class="dv">0</span>   <span class="dv">264</span>    <span class="dv">20</span>    <span class="dv">31</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">5</span>     <span class="dv">7</span>    <span class="dv">28</span>    <span class="dv">41</span></span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="co"># ... with 6 more variables: AST &lt;dbl&gt;, STL &lt;dbl&gt;, BLK &lt;dbl&gt;, TOV &lt;dbl&gt;, PF &lt;dbl&gt;, PTS &lt;dbl&gt;</span></span></code></pre></div>
 <p>These fifteen players during the 1996-97 season on the Washington Bullets, which was renamed the Washington Wizards at the end of that season. There are a few other examples: VAN refers to the Vancouver Grizzlies who moved to Memphis and CHH refers to the original Charlotte Hornets franchise, which ultimately relocated to New Orleans.</p>
 <p>One of the teams listed is “TOT”. This does not refer any specific team. Instead these rows record the <em>total</em> statistics recorded by a player if he played for multiple teams in a single season. For the purposes of understanding how team shooting statistics changed over time, we will not want to include these rows in our analysis.</p>
 <ol start="2" style="list-style-type: decimal">
@@ -620,7 +595,7 @@ See spec(...) for full column specifications.</code></pre>
 <li>Adds a column for team field goal percentage (FGP), three point percentage (TPP), and free throw percentages (FTP).</li>
 <li>Ungroup the resulting tbl</li>
 </ul>
-<pre><code>`summarise()` regrouping output by &#39;Season&#39; (override with `.groups` argument)</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;Season&#39;. You can override using the `.groups` argument.</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Use <code>filter()</code> to create a new tbl called <code>reduced_boxscore</code> that pulls out the rows of <code>team_boxscore</code> corresponding to the following teams: BOS, CLE, DAL, DET, GSW, LAL, MIA, and SAS. Then create a plot of these teams’ three point percentage in each season. Be sure to color the points according to the team. What patterns do you notice?</li>
 </ol>
@@ -639,7 +614,7 @@ See spec(...) for full column specifications.</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -657,7 +632,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

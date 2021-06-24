@@ -19,14 +19,39 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -122,39 +147,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 
 
@@ -164,10 +159,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -184,40 +175,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -245,7 +209,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -257,7 +221,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -268,10 +232,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -283,7 +260,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -364,13 +340,13 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-futbol-o"></span>
+    <span class="fas fa-futbol-o"></span>
      
     Lecture Notes
      
@@ -411,7 +387,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-dribbble"></span>
+    <span class="fas fa-dribbble"></span>
      
     Problem Sets
      
@@ -446,7 +422,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-bar-chart"></span>
+    <span class="fas fa-bar-chart"></span>
      
     Training Camp
      
@@ -493,11 +469,11 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -520,7 +496,7 @@ $(document).ready(function () {
 <p>Unfortunately, some statistics like hit-by-pitch (HBP) were not recorded in the earlier decades of baseball. In the tbl, these missing values are designated <code>NA</code>. To see some of these, we can run the following code:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="op">&gt;</span><span class="st"> </span>batting <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">select</span>(playerID, yearID, teamID, AB, BB, HBP, SH, SF, IBB, GIDP)</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># A tibble: 107,429 x 10</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># A tibble: 108,789 x 10</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a>   playerID  yearID teamID    AB    BB   HBP    SH    SF   IBB  GIDP</span>
 <span id="cb2-5"><a href="#cb2-5"></a>   <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st">      </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>fct<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span></span>
 <span id="cb2-6"><a href="#cb2-6"></a><span class="st"> </span><span class="dv">1</span> abercda01   <span class="dv">1871</span> TRO        <span class="dv">4</span>     <span class="dv">0</span>    <span class="ot">NA</span>    <span class="ot">NA</span>    <span class="ot">NA</span>    <span class="ot">NA</span>     <span class="dv">0</span></span>
@@ -533,13 +509,13 @@ $(document).ready(function () {
 <span id="cb2-13"><a href="#cb2-13"></a> <span class="dv">8</span> barnero01   <span class="dv">1871</span> BS1      <span class="dv">157</span>    <span class="dv">13</span>    <span class="ot">NA</span>    <span class="ot">NA</span>    <span class="ot">NA</span>    <span class="ot">NA</span>     <span class="dv">1</span></span>
 <span id="cb2-14"><a href="#cb2-14"></a> <span class="dv">9</span> barrebi01   <span class="dv">1871</span> FW1        <span class="dv">5</span>     <span class="dv">0</span>    <span class="ot">NA</span>    <span class="ot">NA</span>    <span class="ot">NA</span>    <span class="ot">NA</span>     <span class="dv">0</span></span>
 <span id="cb2-15"><a href="#cb2-15"></a><span class="dv">10</span> barrofr01   <span class="dv">1871</span> BS1       <span class="dv">86</span>     <span class="dv">0</span>    <span class="ot">NA</span>    <span class="ot">NA</span>    <span class="ot">NA</span>    <span class="ot">NA</span>     <span class="dv">0</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a><span class="co"># ... with 107,419 more rows</span></span></code></pre></div>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="co"># ... with 108,779 more rows</span></span></code></pre></div>
 <p>A common convention for dealing with the missing values when computing <span class="math inline">\(\text{PA}\)</span> is to replace the <code>NA</code> with a <code>0</code>. To do this, we can use the function <code>replace_na()</code> within a pipe as follows.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="op">&gt;</span><span class="st"> </span>batting &lt;-<span class="st"> </span></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="op">+</span><span class="st">   </span>batting <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">IBB =</span> <span class="dv">0</span>, <span class="dt">HBP =</span> <span class="dv">0</span>, <span class="dt">SH =</span> <span class="dv">0</span>, <span class="dt">SF =</span> <span class="dv">0</span>, <span class="dt">GIDP =</span> <span class="dv">0</span>))</span>
 <span id="cb3-4"><a href="#cb3-4"></a><span class="op">&gt;</span><span class="st"> </span>batting <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(playerID, yearID, teamID, AB, BB, HBP, SH, SF, IBB)</span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># A tibble: 107,429 x 9</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># A tibble: 108,789 x 9</span></span>
 <span id="cb3-6"><a href="#cb3-6"></a>   playerID  yearID teamID    AB    BB   HBP    SH    SF   IBB</span>
 <span id="cb3-7"><a href="#cb3-7"></a>   <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st">      </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>fct<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
 <span id="cb3-8"><a href="#cb3-8"></a><span class="st"> </span><span class="dv">1</span> abercda01   <span class="dv">1871</span> TRO        <span class="dv">4</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
@@ -552,7 +528,7 @@ $(document).ready(function () {
 <span id="cb3-15"><a href="#cb3-15"></a> <span class="dv">8</span> barnero01   <span class="dv">1871</span> BS1      <span class="dv">157</span>    <span class="dv">13</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
 <span id="cb3-16"><a href="#cb3-16"></a> <span class="dv">9</span> barrebi01   <span class="dv">1871</span> FW1        <span class="dv">5</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
 <span id="cb3-17"><a href="#cb3-17"></a><span class="dv">10</span> barrofr01   <span class="dv">1871</span> BS1       <span class="dv">86</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co"># ... with 107,419 more rows</span></span></code></pre></div>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="co"># ... with 108,779 more rows</span></span></code></pre></div>
 <p>The syntax for <code>replace_na()</code> is a bit involved but the basic idea is you have to specify the value you want to replace each <code>NA</code>. When using <code>replace_na()</code> it is very important to remember to include the <code>list(...)</code> bit.</p>
 <ol style="list-style-type: decimal">
 <li><p>Load the Lahman data and run the above code to create the tbl <code>Batting</code>, which has replaced all of the <code>NA</code>’ in the columns <code>IBB, HBP, SH, SF</code> and GIDP`.</p></li>
@@ -649,7 +625,8 @@ We will replicate his analysis in the following problems.
 <ol start="2" style="list-style-type: decimal">
 <li>Read in the <a href="data/mlb_payrolls.csv">MLB Payroll Data</a> and load it into a tibble called <code>mlb_payrolls</code>.</li>
 </ol>
-<pre><code>Parsed with column specification:
+<pre><code>
+-- Column specification ----------------------------------------------------------------------------
 cols(
   Team = col_character(),
   GM = col_character(),
@@ -659,13 +636,12 @@ cols(
 )</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li><p>Using the pipe <code>%&gt;%</code>, <code>group_by()</code>, and <code>mutate()</code>, add a column to <code>mlb_payrolls</code> that contains the relative payroll for each team.</p></li>
-<li><p>Make a scatterplot of winning percentage against relative payrolls. Comment on the relationship. Your scatterplot should be identical to one you made in <a href="ps2.html">Problem Set 2</a>. <img src="ps3_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p></li>
+<li><p>Make a scatterplot of winning percentage against relative payrolls. Comment on the relationship. Your scatterplot should be identical to one you made in <a href="ps2.html">Problem Set 2</a>. <img src="ps3_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p></li>
 <li><p>Using the <code>summarize()</code> function, compute the average team payroll and relative payroll for each year. Save these results in a new tbl called <code>payroll_avg</code>.</p></li>
 <li><p>Make a scatterplot that shows how team payrolls have evolved over the year. Similar to what we did in <a href="lecture3.html">Lecture 3</a>, add a line to this scatterplot that shows the average team payroll. Do the same thing for relative payroll. What do you notice about the average team payroll and relative payroll?</p></li>
 <li><p>As you will see in coming lectures, correlation is a measure of the strength of the <em>linear</em> relationship between two variables. The closer to +1 or -1 the correlation between two variables is, the more predictable they are of each other. We can compute it using the <code>cor()</code> function. Using <code>summary()</code> and <code>cor()</code>, compute the correlation between relative payroll and winning percentage within each year. What do you notice about how the relationship between winning percentage and relative payroll changes year to year?</p></li>
 </ol>
-<pre><code>`summarise()` ungrouping output (override with `.groups` argument)
-# A tibble: 18 x 2
+<pre><code># A tibble: 18 x 2
     Year   cor
    &lt;dbl&gt; &lt;dbl&gt;
  1  1998 0.764
@@ -711,7 +687,7 @@ cols(
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -729,7 +705,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

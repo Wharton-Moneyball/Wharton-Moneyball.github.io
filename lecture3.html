@@ -19,14 +19,39 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -122,39 +147,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 
 
@@ -164,10 +159,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -184,40 +175,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -245,7 +209,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -257,7 +221,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -268,10 +232,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -283,7 +260,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -364,13 +340,13 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-futbol-o"></span>
+    <span class="fas fa-futbol-o"></span>
      
     Lecture Notes
      
@@ -411,7 +387,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-dribbble"></span>
+    <span class="fas fa-dribbble"></span>
      
     Problem Sets
      
@@ -446,7 +422,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-bar-chart"></span>
+    <span class="fas fa-bar-chart"></span>
      
     Training Camp
      
@@ -493,11 +469,11 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -532,7 +508,10 @@ $(document).ready(function () {
 <span id="cb1-9"><a href="#cb1-9"></a><span class="er">&gt;</span><span class="st"> </span>dat_final &lt;-<span class="st"> </span><span class="kw">func_3</span>(<span class="kw">func_2</span>(<span class="kw">func_1</span>(dat)))</span></code></pre></div>
 <p>Both are hard to read and the first strategy is particularly prone to errors as you have introduce several temporary tibbles with the same name plus a numeric suffix – it’s very easy to make mistakes like <code>dat_2 &lt;- func_2(dat)</code> or <code>dat_final &lt;- func_2(dat_2)</code>, especially if you are copying-and-pasting lines and then changing suffixes. The second strategy is ugly because we’re generally not used to reading things from inside-out or right-to-left. It becomes especially problematic when each function has many additional arguments.</p>
 <p>Luckily there’s another option – the pipe operator <code>%&gt;%</code>. Here is what the same example looks like using the pipe:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="op">&gt;</span><span class="st"> </span>dat_final &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">func_1</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">func_2</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">func_3</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="op">&gt;</span><span class="st"> </span>dat_final &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="op">+</span><span class="st">     </span><span class="kw">func_1</span>() <span class="op">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="op">+</span><span class="st">     </span><span class="kw">func_2</span>() <span class="op">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="op">+</span><span class="st">     </span><span class="kw">func_3</span>()</span></code></pre></div>
 <p>Let’s break down what’s happening on the right-hand side of the assignment operator. First, R “pipes” the tbl <code>dat</code> into into the function function <code>func_1()</code>. Then it pipes the result of evaluating <code>func_1(dat)</code> into <code>func_2()</code> and so on and so forth. One way to understand the pipe operator is to think of your analysis as a “pipeline”. The sequence of analysis flow naturally top-to-bottom and puts the emphasis on the <em>actions</em> being carried out by the analyst (i.e. the functions) and the final output rather than a bunch of temporary tbl’s that may not be of much interest.</p>
 <p>There are several conventions for formating code when using the pipe. See <a href="http://style.tidyverse.org/pipes.html">here</a> and <a href="http://r4ds.had.co.nz/pipes.html">here</a> for much more information and for some advanced “special” pipes.</p>
 </div>
@@ -543,8 +522,7 @@ $(document).ready(function () {
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">install.packages</span>(<span class="st">&quot;Lahman&quot;</span>)</span></code></pre></div>
 <p>Once the package is installed, we can load it into R along with the tidyverse packages:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(tidyverse)</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(Lahman)</span>
-<span id="cb4-3"><a href="#cb4-3"></a>Warning<span class="op">:</span><span class="st"> </span>package <span class="st">&#39;Lahman&#39;</span> was built under R version <span class="dv">3</span>.<span class="fl">6.3</span></span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(Lahman)</span></code></pre></div>
 <p>We will focus on pitching statistics today. To load the pitching data into R from the Lahman package, we have to use the <code>data()</code> function. We also will need to <em>convert</em> the data into a tibble.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="op">&gt;</span><span class="st"> </span>Pitching &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(Pitching)</span></code></pre></div>
 <p>There are tons of rows and columns in the dataset. For this exercise, we will only want to focus on ERA and also focus only on those pitchers who have pitched at least 150 innings. Unfortuntaely, the Lahman pitching dataset does not contain the number of innings pitched (IP). Instead, it has a column called ``IPouts’’, which is the number of outs pitched and whose formula is <span class="math inline">\(\text{IPOuts} = 3 \times \text{IP}.\)</span></p>
@@ -623,7 +601,8 @@ $(document).ready(function () {
 <div id="grouped-calculations" class="section level2">
 <h2>Grouped Calculations</h2>
 <p>Before proceeding, let’s think for a minute about what the following code does:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="op">&gt;</span><span class="st"> </span>pitching <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(ERA), <span class="dt">sd =</span> <span class="kw">sd</span>(ERA))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="op">&gt;</span><span class="st"> </span>pitching <span class="op">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="op">+</span><span class="st">     </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(ERA), <span class="dt">sd =</span> <span class="kw">sd</span>(ERA))</span></code></pre></div>
 <p>Very often in a data analysis, instead of performing a calculation on the entire data set, you’ll want to first <em>split</em> the data into smaller subsets, <em>apply</em> the same calculation on every subset, and then <em>combine</em> the results from each subset. For example, in order to replicate the figure above from Prof. Wyner’s lecture, we need to split our pitching dataset based on the year, compute the average ERA within each year, and then combine these into a single tibble.</p>
 <p>One strength of dplyr is the ease with which you can follow this “split-apply-combine” paradigm using the function <code>group_by()</code>. We can use this in concert with the pipe as follows</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="op">&gt;</span><span class="st"> </span>pitching &lt;-<span class="st"> </span></span>
@@ -632,27 +611,25 @@ $(document).ready(function () {
 <p>When we print out <code>pitching</code> now, we notice an extra line that tells us the grouping variable. Now when we pass this tibble on to subsequent calculations, these calculations will be done on each group. Recall from earlier that the code <code>pitching %&gt;% summarize(mean = mean(ERA))</code> returned a single row containing the average of ERA over all players and year. If we now run the same code again, we actually get a tibble with one row per year that lists the mean and standard deviation of ERA <em>within each year</em>. We will save this tibble as <code>pitching_summary</code>:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="op">&gt;</span><span class="st"> </span>pitching_summary &lt;-<span class="st"> </span></span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="op">+</span><span class="st">   </span>pitching <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(ERA), <span class="dt">sd =</span> <span class="kw">sd</span>(ERA))</span>
-<span id="cb13-4"><a href="#cb13-4"></a><span class="st">`</span><span class="dt">summarise()</span><span class="st">`</span> ungrouping <span class="kw">output</span> (override with <span class="st">`</span><span class="dt">.groups</span><span class="st">`</span> argument)</span></code></pre></div>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(ERA), <span class="dt">sd =</span> <span class="kw">sd</span>(ERA))</span></code></pre></div>
 <p>In <a href="lecture2.html">Lecture 2</a>, we listed a few useful functions to be used within <code>summarize()</code>. One of them, <code>n()</code>, returns counts and is especially useful when used on a grouped tibble. We can, for instance, count the number of pitchers in our dataset within each year using <code>n()</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="op">&gt;</span><span class="st"> </span>pitching <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb14-2"><a href="#cb14-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></span>
 <span id="cb14-3"><a href="#cb14-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">arrange</span>(count)</span>
-<span id="cb14-4"><a href="#cb14-4"></a><span class="st">`</span><span class="dt">summarise()</span><span class="st">`</span> ungrouping <span class="kw">output</span> (override with <span class="st">`</span><span class="dt">.groups</span><span class="st">`</span> argument)</span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="co"># A tibble: 144 x 2</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a>   yearID count</span>
-<span id="cb14-7"><a href="#cb14-7"></a>    <span class="op">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span></span>
-<span id="cb14-8"><a href="#cb14-8"></a><span class="st"> </span><span class="dv">1</span>   <span class="dv">1877</span>     <span class="dv">7</span></span>
-<span id="cb14-9"><a href="#cb14-9"></a> <span class="dv">2</span>   <span class="dv">1878</span>     <span class="dv">7</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a> <span class="dv">3</span>   <span class="dv">1880</span>    <span class="dv">12</span></span>
-<span id="cb14-11"><a href="#cb14-11"></a> <span class="dv">4</span>   <span class="dv">1876</span>    <span class="dv">13</span></span>
-<span id="cb14-12"><a href="#cb14-12"></a> <span class="dv">5</span>   <span class="dv">1879</span>    <span class="dv">13</span></span>
-<span id="cb14-13"><a href="#cb14-13"></a> <span class="dv">6</span>   <span class="dv">1883</span>    <span class="dv">13</span></span>
-<span id="cb14-14"><a href="#cb14-14"></a> <span class="dv">7</span>   <span class="dv">1881</span>    <span class="dv">14</span></span>
-<span id="cb14-15"><a href="#cb14-15"></a> <span class="dv">8</span>   <span class="dv">1882</span>    <span class="dv">14</span></span>
-<span id="cb14-16"><a href="#cb14-16"></a> <span class="dv">9</span>   <span class="dv">1884</span>    <span class="dv">19</span></span>
-<span id="cb14-17"><a href="#cb14-17"></a><span class="dv">10</span>   <span class="dv">1885</span>    <span class="dv">19</span></span>
-<span id="cb14-18"><a href="#cb14-18"></a><span class="co"># ... with 134 more rows</span></span></code></pre></div>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co"># A tibble: 144 x 2</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>   yearID count</span>
+<span id="cb14-6"><a href="#cb14-6"></a>    <span class="op">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="st"> </span><span class="dv">1</span>   <span class="dv">1877</span>     <span class="dv">7</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a> <span class="dv">2</span>   <span class="dv">1878</span>     <span class="dv">7</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a> <span class="dv">3</span>   <span class="dv">1880</span>    <span class="dv">12</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a> <span class="dv">4</span>   <span class="dv">1876</span>    <span class="dv">13</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a> <span class="dv">5</span>   <span class="dv">1879</span>    <span class="dv">13</span></span>
+<span id="cb14-12"><a href="#cb14-12"></a> <span class="dv">6</span>   <span class="dv">1883</span>    <span class="dv">13</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a> <span class="dv">7</span>   <span class="dv">1881</span>    <span class="dv">14</span></span>
+<span id="cb14-14"><a href="#cb14-14"></a> <span class="dv">8</span>   <span class="dv">1882</span>    <span class="dv">14</span></span>
+<span id="cb14-15"><a href="#cb14-15"></a> <span class="dv">9</span>   <span class="dv">1884</span>    <span class="dv">19</span></span>
+<span id="cb14-16"><a href="#cb14-16"></a><span class="dv">10</span>   <span class="dv">1885</span>    <span class="dv">19</span></span>
+<span id="cb14-17"><a href="#cb14-17"></a><span class="co"># ... with 134 more rows</span></span></code></pre></div>
 <p><strong>Exercise</strong>: Describe, in words, what the following code does.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="op">&gt;</span><span class="st"> </span>pitching <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb15-2"><a href="#cb15-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></span>
@@ -685,11 +662,12 @@ $(document).ready(function () {
 <span id="cb17-2"><a href="#cb17-2"></a><span class="op">+</span><span class="st">   </span>pitching <span class="op">%&gt;%</span></span>
 <span id="cb17-3"><a href="#cb17-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">ungroup</span>()</span></code></pre></div>
 <p>To verify that we’ve indeed removed the grouping, let’s re-run the code from above to compute the mean and standard deviation of ERA.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="op">&gt;</span><span class="st"> </span>pitching <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(ERA), <span class="dt">sd =</span> <span class="kw">sd</span>(ERA))</span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="co"># A tibble: 1 x 2</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a>   mean    sd</span>
-<span id="cb18-4"><a href="#cb18-4"></a>  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
-<span id="cb18-5"><a href="#cb18-5"></a><span class="dv">1</span>  <span class="fl">3.61</span> <span class="fl">0.881</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="op">&gt;</span><span class="st"> </span>pitching <span class="op">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="op">+</span><span class="st">     </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(ERA), <span class="dt">sd =</span> <span class="kw">sd</span>(ERA))</span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="co"># A tibble: 1 x 2</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a>   mean    sd</span>
+<span id="cb18-5"><a href="#cb18-5"></a>  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="dv">1</span>  <span class="fl">3.61</span> <span class="fl">0.881</span></span></code></pre></div>
 <p>Up to this point, we have only grouped on a single variable. It is sometimes desirable to group on multiple variables at once. For instance, we may want to standardize ERA not only within each year but also within each leauge (AL and NL). That is, we may want to standardize each individual pitcher’s ERA using only the data from the other pitchers who pitched in the same league and in the same season. We also add a column called count_year_lg to record the number of pitchers included in each year-league combination.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="op">&gt;</span><span class="st"> </span>pitching &lt;-</span>
 <span id="cb19-2"><a href="#cb19-2"></a><span class="op">+</span><span class="st">   </span>pitching <span class="op">%&gt;%</span></span>
@@ -724,7 +702,7 @@ $(document).ready(function () {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -742,7 +720,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

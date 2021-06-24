@@ -19,14 +19,39 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -122,39 +147,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 
 
@@ -164,10 +159,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -184,40 +175,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -245,7 +209,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -257,7 +221,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -268,10 +232,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -283,7 +260,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -364,13 +340,13 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-futbol-o"></span>
+    <span class="fas fa-futbol-o"></span>
      
     Lecture Notes
      
@@ -411,7 +387,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-dribbble"></span>
+    <span class="fas fa-dribbble"></span>
      
     Problem Sets
      
@@ -446,7 +422,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-bar-chart"></span>
+    <span class="fas fa-bar-chart"></span>
      
     Training Camp
      
@@ -493,11 +469,11 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -552,7 +528,7 @@ $(document).ready(function () {
 <p>Now that we have ERA for all pitchers eligible for our analysis, we can plot the ERAs by year. Feel free to experiment with different ways of presenting this information via the different visualizations we covered in <a href="tc_lecture3.html">Lecture 3</a>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> pitching) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> yearID, <span class="dt">y =</span> ERA), <span class="dt">size =</span> <span class="fl">0.3</span>)</span></code></pre></div>
-<p><img src="tc_lecture4_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="tc_lecture4_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Looking at the plot, it appears that some of the pitchers from the first few decades of baseball had the lowest ERA. Using <code>arrange()</code>, we can see which pitcher had the best season according to ERA.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">arrange</span>(pitching, ERA)</span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="co"># A tibble: 9,528 x 6</span></span>
@@ -607,21 +583,20 @@ $(document).ready(function () {
 <p>We can now summarize each season using another <code>tidyverse</code> function called… <code>summarize()</code>! This convenient function will compute summary statistics that we specify with respect to the groups from <code>group_by()</code>. For instance, we can compute the average ERA in each year in the following way:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="op">&gt;</span><span class="st"> </span>pitching <span class="op">%&gt;%</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">ave_ERA =</span> <span class="kw">mean</span>(ERA))</span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="st">`</span><span class="dt">summarise()</span><span class="st">`</span> ungrouping <span class="kw">output</span> (override with <span class="st">`</span><span class="dt">.groups</span><span class="st">`</span> argument)</span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="co"># A tibble: 144 x 2</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a>   yearID ave_ERA</span>
-<span id="cb10-6"><a href="#cb10-6"></a>    <span class="op">&lt;</span>int<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="st"> </span><span class="dv">1</span>   <span class="dv">1876</span>    <span class="fl">2.42</span></span>
-<span id="cb10-8"><a href="#cb10-8"></a> <span class="dv">2</span>   <span class="dv">1877</span>    <span class="fl">2.78</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a> <span class="dv">3</span>   <span class="dv">1878</span>    <span class="fl">2.32</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a> <span class="dv">4</span>   <span class="dv">1879</span>    <span class="fl">2.57</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a> <span class="dv">5</span>   <span class="dv">1880</span>    <span class="fl">2.33</span></span>
-<span id="cb10-12"><a href="#cb10-12"></a> <span class="dv">6</span>   <span class="dv">1881</span>    <span class="fl">2.76</span></span>
-<span id="cb10-13"><a href="#cb10-13"></a> <span class="dv">7</span>   <span class="dv">1882</span>    <span class="fl">2.76</span></span>
-<span id="cb10-14"><a href="#cb10-14"></a> <span class="dv">8</span>   <span class="dv">1883</span>    <span class="fl">2.79</span></span>
-<span id="cb10-15"><a href="#cb10-15"></a> <span class="dv">9</span>   <span class="dv">1884</span>    <span class="fl">3.04</span></span>
-<span id="cb10-16"><a href="#cb10-16"></a><span class="dv">10</span>   <span class="dv">1885</span>    <span class="fl">2.87</span></span>
-<span id="cb10-17"><a href="#cb10-17"></a><span class="co"># ... with 134 more rows</span></span></code></pre></div>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co"># A tibble: 144 x 2</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>   yearID ave_ERA</span>
+<span id="cb10-5"><a href="#cb10-5"></a>    <span class="op">&lt;</span>int<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="st"> </span><span class="dv">1</span>   <span class="dv">1876</span>    <span class="fl">2.42</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a> <span class="dv">2</span>   <span class="dv">1877</span>    <span class="fl">2.78</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a> <span class="dv">3</span>   <span class="dv">1878</span>    <span class="fl">2.32</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a> <span class="dv">4</span>   <span class="dv">1879</span>    <span class="fl">2.57</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a> <span class="dv">5</span>   <span class="dv">1880</span>    <span class="fl">2.33</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a> <span class="dv">6</span>   <span class="dv">1881</span>    <span class="fl">2.76</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a> <span class="dv">7</span>   <span class="dv">1882</span>    <span class="fl">2.76</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a> <span class="dv">8</span>   <span class="dv">1883</span>    <span class="fl">2.79</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a> <span class="dv">9</span>   <span class="dv">1884</span>    <span class="fl">3.04</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="dv">10</span>   <span class="dv">1885</span>    <span class="fl">2.87</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="co"># ... with 134 more rows</span></span></code></pre></div>
 <p>The following functions are quite useful for summarizing several aspects of the distribution of the variables in our dataset:</p>
 <ul>
 <li>Center: <code>mean()</code>, <code>median()</code></li>
@@ -632,27 +607,25 @@ $(document).ready(function () {
 <p>We’ll now create a dataset, <code>pitching_summary</code>, that contains the mean and standard deviation of ERA <strong>within each year</strong>:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="op">&gt;</span><span class="st"> </span>pitching_summary &lt;-<span class="st"> </span>pitching <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb11-2"><a href="#cb11-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(ERA), </span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="op">+</span><span class="st">             </span><span class="dt">sd =</span> <span class="kw">sd</span>(ERA))</span>
-<span id="cb11-4"><a href="#cb11-4"></a><span class="st">`</span><span class="dt">summarise()</span><span class="st">`</span> ungrouping <span class="kw">output</span> (override with <span class="st">`</span><span class="dt">.groups</span><span class="st">`</span> argument)</span></code></pre></div>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="op">+</span><span class="st">             </span><span class="dt">sd =</span> <span class="kw">sd</span>(ERA))</span></code></pre></div>
 <p>One of the most commonly used functions, <code>n()</code>, returns counts and is especially useful when used on a grouped dataset We can, for instance, count the number of pitchers in our dataset within each year using <code>n()</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="op">&gt;</span><span class="st"> </span>pitching <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></span>
 <span id="cb12-3"><a href="#cb12-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">arrange</span>(count)</span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="st">`</span><span class="dt">summarise()</span><span class="st">`</span> ungrouping <span class="kw">output</span> (override with <span class="st">`</span><span class="dt">.groups</span><span class="st">`</span> argument)</span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="co"># A tibble: 144 x 2</span></span>
-<span id="cb12-6"><a href="#cb12-6"></a>   yearID count</span>
-<span id="cb12-7"><a href="#cb12-7"></a>    <span class="op">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span></span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="st"> </span><span class="dv">1</span>   <span class="dv">1877</span>     <span class="dv">7</span></span>
-<span id="cb12-9"><a href="#cb12-9"></a> <span class="dv">2</span>   <span class="dv">1878</span>     <span class="dv">7</span></span>
-<span id="cb12-10"><a href="#cb12-10"></a> <span class="dv">3</span>   <span class="dv">1880</span>    <span class="dv">12</span></span>
-<span id="cb12-11"><a href="#cb12-11"></a> <span class="dv">4</span>   <span class="dv">1876</span>    <span class="dv">13</span></span>
-<span id="cb12-12"><a href="#cb12-12"></a> <span class="dv">5</span>   <span class="dv">1879</span>    <span class="dv">13</span></span>
-<span id="cb12-13"><a href="#cb12-13"></a> <span class="dv">6</span>   <span class="dv">1883</span>    <span class="dv">13</span></span>
-<span id="cb12-14"><a href="#cb12-14"></a> <span class="dv">7</span>   <span class="dv">1881</span>    <span class="dv">14</span></span>
-<span id="cb12-15"><a href="#cb12-15"></a> <span class="dv">8</span>   <span class="dv">1882</span>    <span class="dv">14</span></span>
-<span id="cb12-16"><a href="#cb12-16"></a> <span class="dv">9</span>   <span class="dv">1884</span>    <span class="dv">19</span></span>
-<span id="cb12-17"><a href="#cb12-17"></a><span class="dv">10</span>   <span class="dv">1885</span>    <span class="dv">19</span></span>
-<span id="cb12-18"><a href="#cb12-18"></a><span class="co"># ... with 134 more rows</span></span></code></pre></div>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co"># A tibble: 144 x 2</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>   yearID count</span>
+<span id="cb12-6"><a href="#cb12-6"></a>    <span class="op">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="st"> </span><span class="dv">1</span>   <span class="dv">1877</span>     <span class="dv">7</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a> <span class="dv">2</span>   <span class="dv">1878</span>     <span class="dv">7</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a> <span class="dv">3</span>   <span class="dv">1880</span>    <span class="dv">12</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a> <span class="dv">4</span>   <span class="dv">1876</span>    <span class="dv">13</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a> <span class="dv">5</span>   <span class="dv">1879</span>    <span class="dv">13</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a> <span class="dv">6</span>   <span class="dv">1883</span>    <span class="dv">13</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a> <span class="dv">7</span>   <span class="dv">1881</span>    <span class="dv">14</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a> <span class="dv">8</span>   <span class="dv">1882</span>    <span class="dv">14</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a> <span class="dv">9</span>   <span class="dv">1884</span>    <span class="dv">19</span></span>
+<span id="cb12-16"><a href="#cb12-16"></a><span class="dv">10</span>   <span class="dv">1885</span>    <span class="dv">19</span></span>
+<span id="cb12-17"><a href="#cb12-17"></a><span class="co"># ... with 134 more rows</span></span></code></pre></div>
 <p>Or equivalently, we can use the <code>count</code> function:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="op">&gt;</span><span class="st"> </span>pitching <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">count</span>() <span class="op">%&gt;%</span></span>
@@ -745,7 +718,7 @@ $(document).ready(function () {
 <span id="cb21-3"><a href="#cb21-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb21-4"><a href="#cb21-4"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_line</span>(<span class="dt">data =</span> pitching_summary, </span>
 <span id="cb21-5"><a href="#cb21-5"></a><span class="op">+</span><span class="st">             </span><span class="kw">aes</span>(<span class="dt">x =</span> yearID, <span class="dt">y =</span> mean), <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
-<p><img src="tc_lecture4_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="tc_lecture4_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>You’ll notice that the last line of code is a bit different than anything we’ve seen before. In particular, we are specifying both the data and mapping within the same ggplot2 function. If all of the information we want to include in the plot is coming from the same data source, it’s enough to just specify the <code>data</code> argument in the first line, like we do with <code>ggplot(data = pitching)</code> and not in every subsequent call to functions like <code>geom_point</code> or <code>geom_line</code>. However, whenever we want to add layers to a plot using data from another source (in this case, using data from <code>pitching_summary</code> to plot the average ERAs), we need to tell R explicitly and specify the data argument in <code>geom_line</code>.</p>
 </div>
 
@@ -758,7 +731,7 @@ $(document).ready(function () {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -776,7 +749,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

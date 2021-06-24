@@ -19,14 +19,39 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -122,39 +147,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 
 
@@ -164,10 +159,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -184,40 +175,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -245,7 +209,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -257,7 +221,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -268,10 +232,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -283,7 +260,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -364,13 +340,13 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-futbol-o"></span>
+    <span class="fas fa-futbol-o"></span>
      
     Lecture Notes
      
@@ -411,7 +387,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-dribbble"></span>
+    <span class="fas fa-dribbble"></span>
      
     Problem Sets
      
@@ -446,7 +422,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-bar-chart"></span>
+    <span class="fas fa-bar-chart"></span>
      
     Training Camp
      
@@ -493,11 +469,11 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -522,17 +498,18 @@ l One strategy might be to see how well the models predict the data we used to f
 <p>The file “nfl_fg_train.csv” contains a large dataset about field goals attempted in the NFL between 2005 and 2015. First, we will train several models of field goal success with this data. Then, we will evaluate their predictive performance using the data contained in “nfl_fg_test.csv”.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="op">&gt;</span><span class="st"> </span>fg_train &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/nfl_fg_train.csv&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a>Parsed with column specification<span class="op">:</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">cols</span>(</span>
-<span id="cb1-5"><a href="#cb1-5"></a>  <span class="dt">Team =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">Year =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">GameMinute =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb1-8"><a href="#cb1-8"></a>  <span class="dt">Kicker =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb1-9"><a href="#cb1-9"></a>  <span class="dt">Distance =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb1-10"><a href="#cb1-10"></a>  <span class="dt">ScoreDiff =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb1-11"><a href="#cb1-11"></a>  <span class="dt">Grass =</span> <span class="kw">col_logical</span>(),</span>
-<span id="cb1-12"><a href="#cb1-12"></a>  <span class="dt">Success =</span> <span class="kw">col_double</span>()</span>
-<span id="cb1-13"><a href="#cb1-13"></a>)</span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="op">--</span><span class="st"> </span>Column specification <span class="op">----------------------------------------------------------------------------</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">cols</span>(</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">Team =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">Year =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb1-8"><a href="#cb1-8"></a>  <span class="dt">GameMinute =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb1-9"><a href="#cb1-9"></a>  <span class="dt">Kicker =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb1-10"><a href="#cb1-10"></a>  <span class="dt">Distance =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb1-11"><a href="#cb1-11"></a>  <span class="dt">ScoreDiff =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb1-12"><a href="#cb1-12"></a>  <span class="dt">Grass =</span> <span class="kw">col_logical</span>(),</span>
+<span id="cb1-13"><a href="#cb1-13"></a>  <span class="dt">Success =</span> <span class="kw">col_double</span>()</span>
+<span id="cb1-14"><a href="#cb1-14"></a>)</span></code></pre></div>
 <p>The simplest forecast for field goal success probability is the overall average success rate. This forecast does not differentiate between players or attempt to adjust for distance or other game contexts. To compute this forecast, we need to find the average of the data in the column “Success.” The code below adds a column to the tbl called “phat_all”</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="op">&gt;</span><span class="st"> </span>fg_train &lt;-<span class="st"> </span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="op">+</span><span class="st">   </span>fg_train <span class="op">%&gt;%</span></span>
@@ -601,37 +578,34 @@ BS = \frac{1}{n}\sum_{i = 1}^{n}{(y_{i} - \hat{p}_{i})^{2}}
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="op">&gt;</span><span class="st"> </span>phat_kicker &lt;-<span class="st"> </span></span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="op">+</span><span class="st">   </span>fg_train <span class="op">%&gt;%</span></span>
 <span id="cb9-3"><a href="#cb9-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(Kicker) <span class="op">%&gt;%</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">phat_kicker =</span> <span class="kw">mean</span>(Success))</span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="st">`</span><span class="dt">summarise()</span><span class="st">`</span> ungrouping <span class="kw">output</span> (override with <span class="st">`</span><span class="dt">.groups</span><span class="st">`</span> argument)</span></code></pre></div>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">phat_kicker =</span> <span class="kw">mean</span>(Success))</span></code></pre></div>
 <p>Create similar tibbles for phat_dist_10, phat_dist_5, and phat_dist_2.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="op">&gt;</span><span class="st"> </span>phat_dist_<span class="dv">10</span> &lt;-<span class="st"> </span></span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="op">+</span><span class="st">   </span>fg_train <span class="op">%&gt;%</span></span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(Dist_<span class="dv">10</span>) <span class="op">%&gt;%</span></span>
 <span id="cb10-4"><a href="#cb10-4"></a><span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">phat_dist_10 =</span> <span class="kw">mean</span>(Success))</span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="st">`</span><span class="dt">summarise()</span><span class="st">`</span> ungrouping <span class="kw">output</span> (override with <span class="st">`</span><span class="dt">.groups</span><span class="st">`</span> argument)</span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="op">&gt;</span><span class="st"> </span>phat_dist_<span class="dv">5</span> &lt;-<span class="st"> </span></span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="op">+</span><span class="st">   </span>fg_train <span class="op">%&gt;%</span></span>
-<span id="cb10-8"><a href="#cb10-8"></a><span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(Dist_<span class="dv">5</span>) <span class="op">%&gt;%</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a><span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">phat_dist_5 =</span> <span class="kw">mean</span>(Success))</span>
-<span id="cb10-10"><a href="#cb10-10"></a><span class="st">`</span><span class="dt">summarise()</span><span class="st">`</span> ungrouping <span class="kw">output</span> (override with <span class="st">`</span><span class="dt">.groups</span><span class="st">`</span> argument)</span>
-<span id="cb10-11"><a href="#cb10-11"></a><span class="op">&gt;</span><span class="st"> </span>phat_dist_<span class="dv">2</span> &lt;-<span class="st"> </span></span>
-<span id="cb10-12"><a href="#cb10-12"></a><span class="op">+</span><span class="st">   </span>fg_train <span class="op">%&gt;%</span></span>
-<span id="cb10-13"><a href="#cb10-13"></a><span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(Dist_<span class="dv">2</span>) <span class="op">%&gt;%</span></span>
-<span id="cb10-14"><a href="#cb10-14"></a><span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">phat_dist_2 =</span> <span class="kw">mean</span>(Success))</span>
-<span id="cb10-15"><a href="#cb10-15"></a><span class="st">`</span><span class="dt">summarise()</span><span class="st">`</span> ungrouping <span class="kw">output</span> (override with <span class="st">`</span><span class="dt">.groups</span><span class="st">`</span> argument)</span></code></pre></div>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="op">&gt;</span><span class="st"> </span>phat_dist_<span class="dv">5</span> &lt;-<span class="st"> </span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="op">+</span><span class="st">   </span>fg_train <span class="op">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(Dist_<span class="dv">5</span>) <span class="op">%&gt;%</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">phat_dist_5 =</span> <span class="kw">mean</span>(Success))</span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="op">&gt;</span><span class="st"> </span>phat_dist_<span class="dv">2</span> &lt;-<span class="st"> </span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="op">+</span><span class="st">   </span>fg_train <span class="op">%&gt;%</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(Dist_<span class="dv">2</span>) <span class="op">%&gt;%</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">phat_dist_2 =</span> <span class="kw">mean</span>(Success))</span></code></pre></div>
 <p>The file “nfl_fg_test.csv” contains additional data on more field goals kicked between 2005 and 2015. Since we have not used the data in this file to train our models, we can get a sense of the <em>out-of-sample</em> predictive performance of our models by looking at how well they predict these field goals. We first load the data into a tbl called <code>fg_test</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="op">&gt;</span><span class="st"> </span>fg_test &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/nfl_fg_test.csv&quot;</span>)</span>
-<span id="cb11-2"><a href="#cb11-2"></a>Parsed with column specification<span class="op">:</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="kw">cols</span>(</span>
-<span id="cb11-4"><a href="#cb11-4"></a>  <span class="dt">Team =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb11-5"><a href="#cb11-5"></a>  <span class="dt">Year =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb11-6"><a href="#cb11-6"></a>  <span class="dt">GameMinute =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb11-7"><a href="#cb11-7"></a>  <span class="dt">Kicker =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb11-8"><a href="#cb11-8"></a>  <span class="dt">Distance =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb11-9"><a href="#cb11-9"></a>  <span class="dt">ScoreDiff =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb11-10"><a href="#cb11-10"></a>  <span class="dt">Grass =</span> <span class="kw">col_logical</span>(),</span>
-<span id="cb11-11"><a href="#cb11-11"></a>  <span class="dt">Success =</span> <span class="kw">col_double</span>()</span>
-<span id="cb11-12"><a href="#cb11-12"></a>)</span></code></pre></div>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="op">--</span><span class="st"> </span>Column specification <span class="op">----------------------------------------------------------------------------</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="kw">cols</span>(</span>
+<span id="cb11-5"><a href="#cb11-5"></a>  <span class="dt">Team =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb11-6"><a href="#cb11-6"></a>  <span class="dt">Year =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb11-7"><a href="#cb11-7"></a>  <span class="dt">GameMinute =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb11-8"><a href="#cb11-8"></a>  <span class="dt">Kicker =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb11-9"><a href="#cb11-9"></a>  <span class="dt">Distance =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb11-10"><a href="#cb11-10"></a>  <span class="dt">ScoreDiff =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb11-11"><a href="#cb11-11"></a>  <span class="dt">Grass =</span> <span class="kw">col_logical</span>(),</span>
+<span id="cb11-12"><a href="#cb11-12"></a>  <span class="dt">Success =</span> <span class="kw">col_double</span>()</span>
+<span id="cb11-13"><a href="#cb11-13"></a>)</span></code></pre></div>
 <p>Using <code>mutate()</code> and <code>cut()</code>, add columns “Dist_10”, “Dist_5”, and “Dist_2” to <code>fg_test</code> that bin the data into 10-yard, 5-yard, and 2-yard increments.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="op">&gt;</span><span class="st"> </span>fg_test &lt;-</span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="op">+</span><span class="st">   </span>fg_test <span class="op">%&gt;%</span></span>
@@ -690,7 +664,7 @@ BS = \frac{1}{n}\sum_{i = 1}^{n}{(y_{i} - \hat{p}_{i})^{2}}
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -708,7 +682,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

@@ -19,14 +19,39 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -122,39 +147,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 
 
@@ -164,10 +159,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -184,40 +175,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -245,7 +209,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -257,7 +221,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -268,10 +232,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -283,7 +260,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -364,13 +340,13 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-futbol-o"></span>
+    <span class="fas fa-futbol-o"></span>
      
     Lecture Notes
      
@@ -411,7 +387,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-dribbble"></span>
+    <span class="fas fa-dribbble"></span>
      
     Problem Sets
      
@@ -446,7 +422,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-bar-chart"></span>
+    <span class="fas fa-bar-chart"></span>
      
     Training Camp
      
@@ -493,11 +469,11 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -565,7 +541,7 @@ $(document).ready(function () {
 <span id="cb5-2"><a href="#cb5-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">2014</span><span class="st">`</span>, <span class="dt">y =</span> <span class="st">`</span><span class="dt">2015</span><span class="st">`</span>), <span class="dt">col =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">shape =</span> <span class="dv">16</span>, <span class="dt">size =</span> <span class="fl">0.9</span>) <span class="op">+</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="fl">0.273</span>, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">lty =</span> <span class="dv">2</span>) <span class="op">+</span></span>
 <span id="cb5-4"><a href="#cb5-4"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="fl">0.272</span>, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="lecture4_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="lecture4_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>It certainly looks like there is a relationship! So it’s at least plausible that if we use the 2014 batting averages to make predictions for 2015, we can do better than relying on just the average of the 2015 averages.</p>
 <p>Looking carefully at the plot, we see that most players with below average batting averages in 2014 tended to also have below average batting averages in 2015. Similarly, most players with above average batting averages in 2014 tended to have above average batting averages in 2015.</p>
 <p>One way to improve on the simple prediction above would be as follows:</p>
@@ -588,12 +564,12 @@ $(document).ready(function () {
 <span id="cb7-2"><a href="#cb7-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">2014</span><span class="st">`</span>, <span class="dt">y =</span> <span class="st">`</span><span class="dt">2015</span><span class="st">`</span>), <span class="dt">col =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">shape =</span> <span class="dv">16</span>, <span class="dt">size =</span> <span class="fl">0.9</span>) <span class="op">+</span></span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">2014</span><span class="st">`</span>, <span class="dt">y =</span> yhat_<span class="dv">0</span>), <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">shape =</span> <span class="dv">3</span>, <span class="dt">size =</span> <span class="fl">0.75</span>) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb7-4"><a href="#cb7-4"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">2014</span><span class="st">`</span>, <span class="dt">y =</span> yhat_<span class="dv">1</span>), <span class="dt">col =</span> <span class="st">&#39;green&#39;</span>, <span class="dt">shape =</span> <span class="dv">15</span>, <span class="dt">size =</span> <span class="fl">0.75</span>)</span></code></pre></div>
-<p><img src="lecture4_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="lecture4_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Visually it appears that the green squares (corresponding to yhat_1) are a bit closer to the actual values than the red crosses (corresponding to yhat_0). This would suggest that dividing the players into the two bins according to their 2014 batting average and using the average BA_2015 value within each bin as our forecast was better than using the overall average BA_2015 value for all players.</p>
 <p>Of course, we can continue with this line of reasoning and divide the players into even more bins. When we do that, instead of hand-coding the vector of cut points, we can use the function <code>seq()</code> which generates a vector of equally spaced numbers. To demonstrate, suppose we wanted to divide the interval [0,1] into 10 equally sized intervals: (0,0.1], (0.1, 0.2], …, (0.9, 1]. To get the vector of cutpoints, we need to tell <code>seq()</code> either how many points we wanted or the spacing between the points:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">11</span>)</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)</span>
-<span id="cb8-3"><a href="#cb8-3"></a> [<span class="dv">1</span>] <span class="fl">0.0</span> <span class="fl">0.1</span> <span class="fl">0.2</span> <span class="fl">0.3</span> <span class="fl">0.4</span> <span class="fl">0.5</span> <span class="fl">0.6</span> <span class="fl">0.7</span> <span class="fl">0.8</span> <span class="fl">0.9</span> <span class="fl">1.0</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a> [<span class="dv">1</span>] <span class="fl">0.0</span> <span class="fl">0.1</span> <span class="fl">0.2</span> <span class="fl">0.3</span> <span class="fl">0.4</span> <span class="fl">0.5</span> <span class="fl">0.6</span> <span class="fl">0.7</span> <span class="fl">0.8</span> <span class="fl">0.9</span> <span class="fl">1.0</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)</span>
 <span id="cb8-4"><a href="#cb8-4"></a> [<span class="dv">1</span>] <span class="fl">0.0</span> <span class="fl">0.1</span> <span class="fl">0.2</span> <span class="fl">0.3</span> <span class="fl">0.4</span> <span class="fl">0.5</span> <span class="fl">0.6</span> <span class="fl">0.7</span> <span class="fl">0.8</span> <span class="fl">0.9</span> <span class="fl">1.0</span></span></code></pre></div>
 <p>So let’s say we wanted to divde the 2014 batting averages into intervals of length 0.05 and predict 2015 batting averages using the average BA_2015 values within the resulting bins. We could run</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="op">&gt;</span><span class="st"> </span>batting_<span class="dv">2014</span>_<span class="dv">2015</span> &lt;-<span class="st"> </span></span>
@@ -609,7 +585,7 @@ $(document).ready(function () {
 <span id="cb10-3"><a href="#cb10-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">2014</span><span class="st">`</span>, <span class="dt">y =</span> yhat_<span class="dv">0</span>), <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">shape =</span> <span class="dv">3</span>, <span class="dt">size =</span> <span class="fl">0.75</span>) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb10-4"><a href="#cb10-4"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">2014</span><span class="st">`</span>, <span class="dt">y =</span> yhat_<span class="dv">1</span>), <span class="dt">col =</span> <span class="st">&#39;green&#39;</span>, <span class="dt">shape =</span> <span class="dv">15</span>, <span class="dt">size =</span> <span class="fl">0.75</span>) <span class="op">+</span></span>
 <span id="cb10-5"><a href="#cb10-5"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">2014</span><span class="st">`</span>, <span class="dt">y =</span> yhat_<span class="dv">2</span>), <span class="dt">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="dt">shape =</span> <span class="dv">17</span>, <span class="dt">size =</span> <span class="fl">0.75</span>)</span></code></pre></div>
-<p><img src="lecture4_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="lecture4_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>It appears that we are able to perfectly predict the 2015 batting average of the player with the lowest batting average in 2014. Why do you think this was the case?</p>
 <p>Let’s add two more predictions in which we divide the 2014 batting averages into bins of length 0.005 and 0.001. The code below generates these predictions, saves them to columns called “yhat_3” and “yhat_4” in our tbl, and then adds the predictions to the plot in purple and orange.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="op">&gt;</span><span class="st"> </span>batting_<span class="dv">2014</span>_<span class="dv">2015</span> &lt;-<span class="st"> </span></span>
@@ -633,7 +609,7 @@ $(document).ready(function () {
 <span id="cb11-19"><a href="#cb11-19"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">2014</span><span class="st">`</span>, <span class="dt">y =</span> yhat_<span class="dv">2</span>), <span class="dt">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="dt">shape =</span> <span class="dv">17</span>, <span class="dt">size =</span> <span class="fl">0.75</span>) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb11-20"><a href="#cb11-20"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">2014</span><span class="st">`</span>, <span class="dt">y =</span> yhat_<span class="dv">3</span>), <span class="dt">col =</span> <span class="st">&#39;purple&#39;</span>, <span class="dt">shape =</span> <span class="dv">8</span>, <span class="dt">size =</span> <span class="fl">0.75</span>) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb11-21"><a href="#cb11-21"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">2014</span><span class="st">`</span>, <span class="dt">y =</span> yhat_<span class="dv">4</span>), <span class="dt">col =</span> <span class="st">&#39;orange&#39;</span>, <span class="dt">shape =</span> <span class="dv">10</span>, <span class="dt">size =</span> <span class="fl">0.75</span>)</span></code></pre></div>
-<p><img src="lecture4_files/figure-html/yhat-34-1.png" width="672" /></p>
+<p><img src="lecture4_files/figure-html/yhat-34-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="assessing-predictive-performance" class="section level2">
 <h2>Assessing Predictive Performance</h2>
@@ -661,7 +637,7 @@ $(document).ready(function () {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -679,7 +655,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

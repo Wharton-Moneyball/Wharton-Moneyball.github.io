@@ -19,14 +19,39 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -122,39 +147,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 
 
@@ -164,10 +159,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -184,40 +175,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -245,7 +209,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -257,7 +221,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -268,10 +232,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -283,7 +260,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -364,13 +340,13 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-futbol-o"></span>
+    <span class="fas fa-futbol-o"></span>
      
     Lecture Notes
      
@@ -411,7 +387,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-dribbble"></span>
+    <span class="fas fa-dribbble"></span>
      
     Problem Sets
      
@@ -446,7 +422,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-bar-chart"></span>
+    <span class="fas fa-bar-chart"></span>
      
     Training Camp
      
@@ -493,11 +469,11 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -516,41 +492,42 @@ $(document).ready(function () {
 <p>Let’s read in the data and take a look at the variables.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="op">&gt;</span><span class="st"> </span>data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;data/Ironman Data.csv&#39;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a>Parsed with column specification<span class="op">:</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">cols</span>(</span>
-<span id="cb1-5"><a href="#cb1-5"></a>  <span class="dt">.default =</span> <span class="kw">col_logical</span>(),</span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="st">`</span><span class="dt">Source Table</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_character</span>(),</span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">BIB =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb1-8"><a href="#cb1-8"></a>  <span class="dt">Name =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb1-9"><a href="#cb1-9"></a>  <span class="dt">Country =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb1-10"><a href="#cb1-10"></a>  <span class="dt">Gender =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb1-11"><a href="#cb1-11"></a>  <span class="dt">Division =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb1-12"><a href="#cb1-12"></a>  <span class="dt">Swim =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb1-13"><a href="#cb1-13"></a>  <span class="dt">Bike =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb1-14"><a href="#cb1-14"></a>  <span class="dt">Run =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb1-15"><a href="#cb1-15"></a>  <span class="dt">Overall =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb1-16"><a href="#cb1-16"></a>  <span class="st">`</span><span class="dt">Division Rank</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_double</span>(),</span>
-<span id="cb1-17"><a href="#cb1-17"></a>  <span class="st">`</span><span class="dt">Gender Rank</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_double</span>(),</span>
-<span id="cb1-18"><a href="#cb1-18"></a>  <span class="st">`</span><span class="dt">Overall Rank</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_double</span>(),</span>
-<span id="cb1-19"><a href="#cb1-19"></a>  <span class="st">`</span><span class="dt">Log Rank</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_double</span>(),</span>
-<span id="cb1-20"><a href="#cb1-20"></a>  <span class="st">`</span><span class="dt">Swim Total Split Time</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_time</span>(<span class="dt">format =</span> <span class="st">&quot;&quot;</span>),</span>
-<span id="cb1-21"><a href="#cb1-21"></a>  <span class="st">`</span><span class="dt">Swim Total Race Time</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_time</span>(<span class="dt">format =</span> <span class="st">&quot;&quot;</span>),</span>
-<span id="cb1-22"><a href="#cb1-22"></a>  <span class="st">`</span><span class="dt">Swim Total Pace</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_character</span>(),</span>
-<span id="cb1-23"><a href="#cb1-23"></a>  <span class="dt">T1 =</span> <span class="kw">col_time</span>(<span class="dt">format =</span> <span class="st">&quot;&quot;</span>),</span>
-<span id="cb1-24"><a href="#cb1-24"></a>  <span class="st">`</span><span class="dt">Bike 28.2 mi Distance</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_double</span>(),</span>
-<span id="cb1-25"><a href="#cb1-25"></a>  <span class="st">`</span><span class="dt">Bike 28.2 mi Split Time</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_time</span>(<span class="dt">format =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb1-26"><a href="#cb1-26"></a>  <span class="co"># ... with 76 more columns</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a>)</span>
-<span id="cb1-28"><a href="#cb1-28"></a>See <span class="kw">spec</span>(...) <span class="cf">for</span> full column specifications.</span>
-<span id="cb1-29"><a href="#cb1-29"></a>Warning<span class="op">:</span><span class="st"> </span><span class="dv">948010</span> parsing failures.</span>
-<span id="cb1-30"><a href="#cb1-30"></a> row           col expected actual                    file</span>
-<span id="cb1-31"><a href="#cb1-31"></a><span class="dv">2183</span> Division Rank a double    DNF <span class="st">&#39;data/Ironman Data.csv&#39;</span></span>
-<span id="cb1-32"><a href="#cb1-32"></a><span class="dv">2184</span> Division Rank a double    DNF <span class="st">&#39;data/Ironman Data.csv&#39;</span></span>
-<span id="cb1-33"><a href="#cb1-33"></a><span class="dv">2185</span> Division Rank a double    DNF <span class="st">&#39;data/Ironman Data.csv&#39;</span></span>
-<span id="cb1-34"><a href="#cb1-34"></a><span class="dv">2186</span> Division Rank a double    DNF <span class="st">&#39;data/Ironman Data.csv&#39;</span></span>
-<span id="cb1-35"><a href="#cb1-35"></a><span class="dv">2187</span> Division Rank a double    DNF <span class="st">&#39;data/Ironman Data.csv&#39;</span></span>
-<span id="cb1-36"><a href="#cb1-36"></a>.... ............. ........ ...... .......................</span>
-<span id="cb1-37"><a href="#cb1-37"></a>See <span class="kw">problems</span>(...) <span class="cf">for</span> more details.</span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="op">--</span><span class="st"> </span>Column specification <span class="op">----------------------------------------------------------------------------</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">cols</span>(</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">.default =</span> <span class="kw">col_logical</span>(),</span>
+<span id="cb1-7"><a href="#cb1-7"></a>  <span class="st">`</span><span class="dt">Source Table</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_character</span>(),</span>
+<span id="cb1-8"><a href="#cb1-8"></a>  <span class="dt">BIB =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb1-9"><a href="#cb1-9"></a>  <span class="dt">Name =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb1-10"><a href="#cb1-10"></a>  <span class="dt">Country =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb1-11"><a href="#cb1-11"></a>  <span class="dt">Gender =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb1-12"><a href="#cb1-12"></a>  <span class="dt">Division =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb1-13"><a href="#cb1-13"></a>  <span class="dt">Swim =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb1-14"><a href="#cb1-14"></a>  <span class="dt">Bike =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb1-15"><a href="#cb1-15"></a>  <span class="dt">Run =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb1-16"><a href="#cb1-16"></a>  <span class="dt">Overall =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb1-17"><a href="#cb1-17"></a>  <span class="st">`</span><span class="dt">Division Rank</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_double</span>(),</span>
+<span id="cb1-18"><a href="#cb1-18"></a>  <span class="st">`</span><span class="dt">Gender Rank</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_double</span>(),</span>
+<span id="cb1-19"><a href="#cb1-19"></a>  <span class="st">`</span><span class="dt">Overall Rank</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_double</span>(),</span>
+<span id="cb1-20"><a href="#cb1-20"></a>  <span class="st">`</span><span class="dt">Log Rank</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_double</span>(),</span>
+<span id="cb1-21"><a href="#cb1-21"></a>  <span class="st">`</span><span class="dt">Swim Total Split Time</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_time</span>(<span class="dt">format =</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb1-22"><a href="#cb1-22"></a>  <span class="st">`</span><span class="dt">Swim Total Race Time</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_time</span>(<span class="dt">format =</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb1-23"><a href="#cb1-23"></a>  <span class="st">`</span><span class="dt">Swim Total Pace</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_character</span>(),</span>
+<span id="cb1-24"><a href="#cb1-24"></a>  <span class="dt">T1 =</span> <span class="kw">col_time</span>(<span class="dt">format =</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb1-25"><a href="#cb1-25"></a>  <span class="st">`</span><span class="dt">Bike 28.2 mi Distance</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_double</span>(),</span>
+<span id="cb1-26"><a href="#cb1-26"></a>  <span class="st">`</span><span class="dt">Bike 28.2 mi Split Time</span><span class="st">`</span> =<span class="st"> </span><span class="kw">col_time</span>(<span class="dt">format =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb1-27"><a href="#cb1-27"></a>  <span class="co"># ... with 76 more columns</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a>)</span>
+<span id="cb1-29"><a href="#cb1-29"></a>i Use <span class="st">`</span><span class="dt">spec()</span><span class="st">`</span> <span class="cf">for</span> the full column specifications.</span>
+<span id="cb1-30"><a href="#cb1-30"></a>Warning<span class="op">:</span><span class="st"> </span><span class="dv">948010</span> parsing failures.</span>
+<span id="cb1-31"><a href="#cb1-31"></a> row           col expected actual                    file</span>
+<span id="cb1-32"><a href="#cb1-32"></a><span class="dv">2183</span> Division Rank a double    DNF <span class="st">&#39;data/Ironman Data.csv&#39;</span></span>
+<span id="cb1-33"><a href="#cb1-33"></a><span class="dv">2184</span> Division Rank a double    DNF <span class="st">&#39;data/Ironman Data.csv&#39;</span></span>
+<span id="cb1-34"><a href="#cb1-34"></a><span class="dv">2185</span> Division Rank a double    DNF <span class="st">&#39;data/Ironman Data.csv&#39;</span></span>
+<span id="cb1-35"><a href="#cb1-35"></a><span class="dv">2186</span> Division Rank a double    DNF <span class="st">&#39;data/Ironman Data.csv&#39;</span></span>
+<span id="cb1-36"><a href="#cb1-36"></a><span class="dv">2187</span> Division Rank a double    DNF <span class="st">&#39;data/Ironman Data.csv&#39;</span></span>
+<span id="cb1-37"><a href="#cb1-37"></a>.... ............. ........ ...... .......................</span>
+<span id="cb1-38"><a href="#cb1-38"></a>See <span class="kw">problems</span>(...) <span class="cf">for</span> more details.</span></code></pre></div>
 <p>This is a large data set with hundreds of variables. Digging deeper, we can see that many of the variables seem to be repeated and many have data only in certain rows. This is common in historical racing results, so it’s important to determine which variables are most important for our analysis. In our case, this analysis will be looking at the results from the 2017 Florida race, and we will focus on the swim, bike, run, and overall finishing times as well as demographics including country, gender, and division.</p>
 <p>Moreover, we note that the finishing times are actually character-types in the form of ‘minutes:seconds’. Keeping these variables in this form will pose problems as we are going to be performing operations that require numeric data. So, we need to convert these clock times into pure numbers. The best way to work with clock times within the tidyverse framework is to use the ‘lubridate’ package. Within this package, we can parse the times in the ‘minutes:seconds’ format using the <code>ms()</code> function, and then convert the result to a numeric using the <code>period_to_seconds()</code> function (the result will be a time in seconds, so we can get this back to minutes by dividing by 60).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(lubridate)</span>
@@ -579,16 +556,16 @@ $(document).ready(function () {
 <ol start="4" style="list-style-type: decimal">
 <li>To numerically evaluate these relationships, compute the correlation between each of the variables. Note that <code>cor()</code> is a Base R function and does not work with the other tidyverse functions, so we cannot pipe our data into it. Instead, we need to specifically point to each variable within the dataset, using the brackets notation we’ve seen a couple times before: <code>results_2017[['our_variable_here']]</code>.</li>
 </ol>
-<pre><code>[1] 0.6379414
-[1] 0.642096
-[1] 0.4433809</code></pre>
+<pre><code>[1] 0.638
+[1] 0.642
+[1] 0.443</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Now, let’s fit our linear model. Right now, we are doing simple linear regression, which involves one response variable and one predictor variable. So, let’s start by running a regression with Swim as our predictor and Bike as our response.</li>
 </ol>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="op">&gt;</span><span class="st"> </span>lm.swim_bike &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">data =</span> results_<span class="dv">2017</span>, <span class="dt">formula =</span> Bike <span class="op">~</span><span class="st"> </span>Swim)</span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="op">&gt;</span><span class="st"> </span>lm.swim_bike[[<span class="st">&#39;coefficients&#39;</span>]]</span>
 <span id="cb5-3"><a href="#cb5-3"></a>(Intercept)        Swim </span>
-<span id="cb5-4"><a href="#cb5-4"></a> <span class="fl">179.129651</span>    <span class="fl">2.395295</span> </span></code></pre></div>
+<span id="cb5-4"><a href="#cb5-4"></a>      <span class="fl">179.1</span>         <span class="fl">2.4</span> </span></code></pre></div>
 <ol start="6" style="list-style-type: decimal">
 <li>We also want to add the regression line to our plot. In <a href="lecture6.html">Lecture 6</a>, we saw that there are two ways of doing this. The first was to take the intercept and slope coefficients produced by our linear model and put them into <code>geom_abline()</code> while the second involved creating a <code>data_grid</code> over the predictor variable, adding the predictions to the grid, and then drawing a line through the predictions created on the grid using <code>geom_line</code>. As discussed in Lecture 6, the first approach only works for simple linear regression, while the second can be extended for all types of regression. For this reason, let’s practice using the second approach.</li>
 </ol>
@@ -615,7 +592,7 @@ $(document).ready(function () {
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="op">&gt;</span><span class="st"> </span>lm.run_bike &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">data =</span> results_<span class="dv">2017</span>, <span class="dt">formula =</span> Bike <span class="op">~</span><span class="st"> </span>Run)</span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="op">&gt;</span><span class="st"> </span>lm.run_bike[[<span class="st">&#39;coefficients&#39;</span>]]</span>
 <span id="cb7-3"><a href="#cb7-3"></a>(Intercept)         Run </span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="fl">205.7610166</span>   <span class="fl">0.5147168</span> </span>
+<span id="cb7-4"><a href="#cb7-4"></a>    <span class="fl">205.761</span>       <span class="fl">0.515</span> </span>
 <span id="cb7-5"><a href="#cb7-5"></a><span class="op">&gt;</span><span class="st"> </span>grid.run &lt;-<span class="st"> </span>results_<span class="dv">2017</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data_grid</span>(Run)</span>
 <span id="cb7-6"><a href="#cb7-6"></a><span class="op">&gt;</span><span class="st"> </span>grid.run &lt;-<span class="st"> </span>grid.run  <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">add_predictions</span>(<span class="dt">model =</span> lm.run_bike, <span class="dt">var=</span> <span class="st">&#39;pred.run_bike&#39;</span>)</span>
 <span id="cb7-7"><a href="#cb7-7"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">ggplot</span>(results_<span class="dv">2017</span>) <span class="op">+</span></span>
@@ -627,8 +604,8 @@ $(document).ready(function () {
 </ol>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="op">&gt;</span><span class="st"> </span>lm.run_bike2 &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">data =</span> results_<span class="dv">2017</span>, <span class="dt">formula =</span> Bike <span class="op">~</span><span class="st"> </span>Run <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(Run<span class="op">^</span><span class="dv">2</span>))</span>
 <span id="cb8-2"><a href="#cb8-2"></a><span class="op">&gt;</span><span class="st"> </span>lm.run_bike2[[<span class="st">&#39;coefficients&#39;</span>]]</span>
-<span id="cb8-3"><a href="#cb8-3"></a> (Intercept)          Run     <span class="kw">I</span>(Run<span class="op">^</span><span class="dv">2</span>) </span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="fl">26.222478107</span>  <span class="fl">1.649746436</span> <span class="fl">-0.001732342</span> </span></code></pre></div>
+<span id="cb8-3"><a href="#cb8-3"></a>(Intercept)         Run    <span class="kw">I</span>(Run<span class="op">^</span><span class="dv">2</span>) </span>
+<span id="cb8-4"><a href="#cb8-4"></a>   <span class="fl">26.22248</span>     <span class="fl">1.64975</span>    <span class="fl">-0.00173</span> </span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>To draw this regression line on our plot, we can take the grid of values used on our simple linear regression in step 1, and add another column with the predicted values from our new quadratic model. This new column contains the new y values of the regression line.</li>
 </ol>
@@ -659,7 +636,7 @@ $(document).ready(function () {
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="op">&gt;</span><span class="st"> </span>lm.run_bike_gender &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">data =</span> results_<span class="dv">2017</span>, <span class="dt">formula =</span> Bike <span class="op">~</span><span class="st"> </span>Run <span class="op">+</span><span class="st"> </span>Gender)</span>
 <span id="cb11-2"><a href="#cb11-2"></a><span class="op">&gt;</span><span class="st"> </span>lm.run_bike_gender[[<span class="st">&#39;coefficients&#39;</span>]]</span>
 <span id="cb11-3"><a href="#cb11-3"></a>(Intercept)         Run  GenderMale </span>
-<span id="cb11-4"><a href="#cb11-4"></a> <span class="fl">229.316963</span>    <span class="fl">0.502562</span>  <span class="fl">-26.143851</span> </span></code></pre></div>
+<span id="cb11-4"><a href="#cb11-4"></a>    <span class="fl">229.317</span>       <span class="fl">0.503</span>     <span class="fl">-26.144</span> </span></code></pre></div>
 <p>To interpret these results, we can say that for every increase in one minute of run times, bike times increase by about half a minute. Moreover, being a male is associated with bike time that is on average 26 minutes lower than the alternative (being a female).</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Now, let’s plot our regression. Note that there will be two separate regression lines: one for the association between running and biking for males, and one for the association between running and biking for females. Also note that since we now technically have two predictor variables to go on our x-axis, we need to create a new grid that spans the values of the Run variable as well as the Gender variable</li>
@@ -697,7 +674,7 @@ $(document).ready(function () {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -715,7 +692,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

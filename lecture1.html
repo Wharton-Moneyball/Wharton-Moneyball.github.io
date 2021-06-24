@@ -19,14 +19,39 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -122,39 +147,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 
 
@@ -164,10 +159,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -184,40 +175,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -245,7 +209,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -257,7 +221,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -268,10 +232,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -283,7 +260,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -364,13 +340,13 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-futbol-o"></span>
+    <span class="fas fa-futbol-o"></span>
      
     Lecture Notes
      
@@ -411,7 +387,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-dribbble"></span>
+    <span class="fas fa-dribbble"></span>
      
     Problem Sets
      
@@ -446,7 +422,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-bar-chart"></span>
+    <span class="fas fa-bar-chart"></span>
      
     Training Camp
      
@@ -493,11 +469,11 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -879,17 +855,18 @@ Marc Gasol
 <p>Last night, your RTA created a few folders in your working directory. One of them is called “data” and this folder will contain almost all of the data we will work with during this course. All of these datasets are stored on your computer in <a href="https://en.wikipedia.org/wiki/Comma-separated_values">comma-separated</a> files, which have extension ‘.csv’.</p>
 <p>Within the tidyverse, we can use the function <code>read_csv()</code> to read in a csv file that is stored on your computer and create a tibble containing all of the data. The dataset showed above is stored in a csv file named “nba_shooting_small.csv” in the “data” folder of our working directory. We will read it into R with the <code>read_csv()</code> function like so:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="op">&gt;</span><span class="st"> </span>nba_shooting_small &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;data/nba_shooting_small.csv&quot;</span>)</span>
-<span id="cb5-2"><a href="#cb5-2"></a>Parsed with column specification<span class="op">:</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="kw">cols</span>(</span>
-<span id="cb5-4"><a href="#cb5-4"></a>  <span class="dt">PLAYER =</span> <span class="kw">col_character</span>(),</span>
-<span id="cb5-5"><a href="#cb5-5"></a>  <span class="dt">SEASON =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb5-6"><a href="#cb5-6"></a>  <span class="dt">FGM =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb5-7"><a href="#cb5-7"></a>  <span class="dt">FGA =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb5-8"><a href="#cb5-8"></a>  <span class="dt">TPM =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb5-9"><a href="#cb5-9"></a>  <span class="dt">TPA =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb5-10"><a href="#cb5-10"></a>  <span class="dt">FTM =</span> <span class="kw">col_double</span>(),</span>
-<span id="cb5-11"><a href="#cb5-11"></a>  <span class="dt">FTA =</span> <span class="kw">col_double</span>()</span>
-<span id="cb5-12"><a href="#cb5-12"></a>)</span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="op">--</span><span class="st"> </span>Column specification <span class="op">----------------------------------------------------------------------------</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="kw">cols</span>(</span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="dt">PLAYER =</span> <span class="kw">col_character</span>(),</span>
+<span id="cb5-6"><a href="#cb5-6"></a>  <span class="dt">SEASON =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb5-7"><a href="#cb5-7"></a>  <span class="dt">FGM =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb5-8"><a href="#cb5-8"></a>  <span class="dt">FGA =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb5-9"><a href="#cb5-9"></a>  <span class="dt">TPM =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb5-10"><a href="#cb5-10"></a>  <span class="dt">TPA =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb5-11"><a href="#cb5-11"></a>  <span class="dt">FTM =</span> <span class="kw">col_double</span>(),</span>
+<span id="cb5-12"><a href="#cb5-12"></a>  <span class="dt">FTA =</span> <span class="kw">col_double</span>()</span>
+<span id="cb5-13"><a href="#cb5-13"></a>)</span></code></pre></div>
 <p>Before proceeding, let us parse the syntax <code>nba_shooting_small &lt;- read_csv(...)</code> The first thing to notice is that we’re using the assignment operator that we saw in <a href="ps0.html">Problem Set 0</a>. This tells R that we want it to evalaute whatever is on the right-hand side (in this case <code>read_csv(file = "data/nba_shooting_small.csv")</code>) and assign the resulting evaluation to a new object called <code>nba_shooting_small</code> (which R will create). We called the function <code>read_csv()</code> with one argument <code>file</code>. This argument is the <em>relative path</em> of the CSV file that we want to read into R. Basically, R starts in the working directory and first looks for a folder called “data.” If it finds such a folder, it looks inside it for a file called “nba_shooting_small.csv.” If it finds the file, it creates a tbl called <code>nba_shooting_small</code> that contains all of the data.</p>
 <p>When we type in the command and hit <kbd>Enter</kbd> or <kbd>Return</kbd>, we see some output printed to the console. This is <code>read_csv</code> telling us that it (a) found the file, (b) read it in successfully, and (c) identified the type of data stored in each column. We see, for instance, that the column named “PLAYER” contains <em>character strings</em>, and is parsed as <code>col_character()</code>. Similarly, the number of field goals made (“FGM”) is parsed as integer data.</p>
 <p>When we print out our tbl, R outputs many things: the dimension (in this case, <span class="math inline">\(10 \times 8\)</span>), the column names, the <em>type</em> of data included in each column, and then the actual data.</p>
@@ -967,20 +944,20 @@ Marc Gasol
 <span id="cb9-14"><a href="#cb9-14"></a><span class="dv">10</span> James Harden            <span class="dv">2016</span>   <span class="dv">710</span>  <span class="dv">1617</span>   <span class="dv">236</span>   <span class="dv">657</span>   <span class="dv">720</span>   <span class="dv">837</span></span></code></pre></div>
 <p>Now consider the two lines of code:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">arrange</span>(nba_shooting_small, PLAYER)</span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="op">&gt;</span><span class="st"> </span>nba_shooting_small</span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="co"># A tibble: 10 x 8</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a>   PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA</span>
-<span id="cb10-5"><a href="#cb10-5"></a>   <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st">                  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="st"> </span><span class="dv">1</span> Damian Lillard          <span class="dv">2016</span>   <span class="dv">618</span>  <span class="dv">1474</span>   <span class="dv">229</span>   <span class="dv">610</span>   <span class="dv">414</span>   <span class="dv">464</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a> <span class="dv">2</span> DeMarcus Cousins        <span class="dv">2016</span>   <span class="dv">601</span>  <span class="dv">1332</span>    <span class="dv">70</span>   <span class="dv">210</span>   <span class="dv">476</span>   <span class="dv">663</span></span>
-<span id="cb10-8"><a href="#cb10-8"></a> <span class="dv">3</span> Dirk Nowitzki           <span class="dv">2016</span>   <span class="dv">498</span>  <span class="dv">1112</span>   <span class="dv">126</span>   <span class="dv">342</span>   <span class="dv">250</span>   <span class="dv">280</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a> <span class="dv">4</span> Giannis Antetokounmpo   <span class="dv">2016</span>   <span class="dv">513</span>  <span class="dv">1013</span>    <span class="dv">28</span>   <span class="dv">110</span>   <span class="dv">296</span>   <span class="dv">409</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a> <span class="dv">5</span> James Harden            <span class="dv">2016</span>   <span class="dv">710</span>  <span class="dv">1617</span>   <span class="dv">236</span>   <span class="dv">657</span>   <span class="dv">720</span>   <span class="dv">837</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a> <span class="dv">6</span> Jimmy Butler            <span class="dv">2016</span>   <span class="dv">470</span>  <span class="dv">1034</span>    <span class="dv">64</span>   <span class="dv">206</span>   <span class="dv">395</span>   <span class="dv">475</span></span>
-<span id="cb10-12"><a href="#cb10-12"></a> <span class="dv">7</span> Kevin Durant            <span class="dv">2016</span>   <span class="dv">698</span>  <span class="dv">1381</span>   <span class="dv">186</span>   <span class="dv">480</span>   <span class="dv">447</span>   <span class="dv">498</span></span>
-<span id="cb10-13"><a href="#cb10-13"></a> <span class="dv">8</span> LeBron James            <span class="dv">2016</span>   <span class="dv">737</span>  <span class="dv">1416</span>    <span class="dv">87</span>   <span class="dv">282</span>   <span class="dv">359</span>   <span class="dv">491</span></span>
-<span id="cb10-14"><a href="#cb10-14"></a> <span class="dv">9</span> Marc Gasol              <span class="dv">2016</span>   <span class="dv">328</span>   <span class="dv">707</span>     <span class="dv">2</span>     <span class="dv">3</span>   <span class="dv">203</span>   <span class="dv">245</span></span>
-<span id="cb10-15"><a href="#cb10-15"></a><span class="dv">10</span> Stephen Curry           <span class="dv">2016</span>   <span class="dv">805</span>  <span class="dv">1597</span>   <span class="dv">402</span>   <span class="dv">887</span>   <span class="dv">363</span>   <span class="dv">400</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co"># A tibble: 10 x 8</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>   PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA</span>
+<span id="cb10-4"><a href="#cb10-4"></a>   <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st">                  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="st"> </span><span class="dv">1</span> Damian Lillard          <span class="dv">2016</span>   <span class="dv">618</span>  <span class="dv">1474</span>   <span class="dv">229</span>   <span class="dv">610</span>   <span class="dv">414</span>   <span class="dv">464</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a> <span class="dv">2</span> DeMarcus Cousins        <span class="dv">2016</span>   <span class="dv">601</span>  <span class="dv">1332</span>    <span class="dv">70</span>   <span class="dv">210</span>   <span class="dv">476</span>   <span class="dv">663</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a> <span class="dv">3</span> Dirk Nowitzki           <span class="dv">2016</span>   <span class="dv">498</span>  <span class="dv">1112</span>   <span class="dv">126</span>   <span class="dv">342</span>   <span class="dv">250</span>   <span class="dv">280</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a> <span class="dv">4</span> Giannis Antetokounmpo   <span class="dv">2016</span>   <span class="dv">513</span>  <span class="dv">1013</span>    <span class="dv">28</span>   <span class="dv">110</span>   <span class="dv">296</span>   <span class="dv">409</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a> <span class="dv">5</span> James Harden            <span class="dv">2016</span>   <span class="dv">710</span>  <span class="dv">1617</span>   <span class="dv">236</span>   <span class="dv">657</span>   <span class="dv">720</span>   <span class="dv">837</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a> <span class="dv">6</span> Jimmy Butler            <span class="dv">2016</span>   <span class="dv">470</span>  <span class="dv">1034</span>    <span class="dv">64</span>   <span class="dv">206</span>   <span class="dv">395</span>   <span class="dv">475</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a> <span class="dv">7</span> Kevin Durant            <span class="dv">2016</span>   <span class="dv">698</span>  <span class="dv">1381</span>   <span class="dv">186</span>   <span class="dv">480</span>   <span class="dv">447</span>   <span class="dv">498</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a> <span class="dv">8</span> LeBron James            <span class="dv">2016</span>   <span class="dv">737</span>  <span class="dv">1416</span>    <span class="dv">87</span>   <span class="dv">282</span>   <span class="dv">359</span>   <span class="dv">491</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a> <span class="dv">9</span> Marc Gasol              <span class="dv">2016</span>   <span class="dv">328</span>   <span class="dv">707</span>     <span class="dv">2</span>     <span class="dv">3</span>   <span class="dv">203</span>   <span class="dv">245</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="dv">10</span> Stephen Curry           <span class="dv">2016</span>   <span class="dv">805</span>  <span class="dv">1597</span>   <span class="dv">402</span>   <span class="dv">887</span>   <span class="dv">363</span>   <span class="dv">400</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="op">&gt;</span><span class="st"> </span>nba_shooting_small</span>
 <span id="cb10-16"><a href="#cb10-16"></a><span class="co"># A tibble: 10 x 8</span></span>
 <span id="cb10-17"><a href="#cb10-17"></a>   PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA</span>
 <span id="cb10-18"><a href="#cb10-18"></a>   <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st">                  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
@@ -1061,7 +1038,7 @@ Marc Gasol
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -1079,7 +1056,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

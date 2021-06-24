@@ -17,3 +17,6 @@ Lahman
 ggimage
 modelr
 ggbeeswarm
+plotly
+lubridate
+ggpubr
