@@ -334,7 +334,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">WMA20</a>
+      <a class="navbar-brand" href="index.html">WMA21</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -712,7 +712,7 @@ $(document).ready(function () {
 <span id="cb29-13"><a href="#cb29-13"></a><span class="op">+</span><span class="st">   </span><span class="co"># This time multiply by -1, since negative values are better for defense:</span></span>
 <span id="cb29-14"><a href="#cb29-14"></a><span class="op">+</span><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">def_epa_per_game =</span> <span class="dv">-1</span> <span class="op">*</span><span class="st"> </span>def_total_epa <span class="op">/</span><span class="st"> </span>n_games)</span></code></pre></div>
 <p>Now rather than displaying just points or team abbreviations, we can take advantage of files provided to use by <a href="https://statsbylopez.netlify.com/">Michael Lopez, the Director of Data and Analytics for the NFL</a>, and plot the team logos directly. This can be done using the <code>ggimage</code> package that can be installed as follows:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">install.packages</span>(<span class="st">&quot;ggimages&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">install.packages</span>(<span class="st">&quot;ggimage&quot;</span>)</span></code></pre></div>
 <p>Next we access the images as a dataset, and join it together to the offense and defense summaries before creating our chart:</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(ggimage)</span>
 <span id="cb31-2"><a href="#cb31-2"></a><span class="op">&gt;</span><span class="st"> </span>nfl_logos_df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/statsbylopez/BlogPosts/master/nfl_teamlogos.csv&quot;</span>)</span>
