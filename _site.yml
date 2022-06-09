@@ -1,7 +1,7 @@
-name: "Wharton Moneyball Academy 2020"
+name: "Wharton Moneyball Academy 2022"
 output_dir: "."
 navbar:
-  title: "WMA21"
+  title: "WMb22"
   left:
     - text:
       icon: fa-home

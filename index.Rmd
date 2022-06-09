@@ -1,10 +1,10 @@
 ---
-title: "Wharton Moneyball Academy 2021"
+title: "Wharton Moneyball Academy 2022"
 ---
 
 ## Overview
 
-Welcome to the webpage for the 2021 Wharton Moneyball Academy / Training Camp course on data analysis in R.
+Welcome to the webpage for the 2022 Wharton Moneyball Academy / Training Camp course on data analysis in R.
 In this course, you will learn the tools necessary to apply the concepts you learn in Prof. Wyner's class while analyzing real sports datasets using the R programming language.
 Please bookmark this site and check back regularly before the program starts for updates.
 Below, you will find important information about setting up your system and installing the necessary software, as well as a brief schedule for the course.
@@ -35,7 +35,7 @@ As we approach the start of camp, please check back for periodic updates to the 
 
 ## Daily Schedule
 
-Afternoon's are devoted to the programming component of the camp. Each day, the instructors will be spend the first hour or so of each class introducing new R functionality and programming concepts.
+Afternoons are devoted to the programming component of the camp. Each day, the instructors will be spend the first hour or so of each class introducing new R functionality and programming concepts.
 The notes for each lecture will be available on this website (see under the Lecture Notes tab in the menu at the top).
 These notes will contain worked out code examples and explanations.
 After the first hour of lecturing, you will have a chance to work on problem sets with your project team and UTA that will review and reinforce the material presented in that day's lecture.
