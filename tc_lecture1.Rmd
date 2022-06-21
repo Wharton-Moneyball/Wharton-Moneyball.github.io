@@ -22,7 +22,10 @@ Once we open RStudio, before we do anything, we need to tell R to change the wor
 We can do this in several ways.
 <!-- show the different ways to do this -->
 
-** Important: for this week, everytime you open up RStudio, the first thing you should do is set your working directory to the Moneyball folder.**
+1. In the top toolbar, Session/Set Working Directory/Choose Working Directory allows us to select and set our working directory from our files.  
+2. The code `setwd("~/Desktop/Moneyball")` sets our working directory to the Moneyball folder, and can be edited for any file location.
+
+**Important: for this week, everytime you open up RStudio, the first thing you should do is set your working directory to the Moneyball folder.**
 
 ## The tidyverse
 
