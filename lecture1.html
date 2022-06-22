@@ -338,7 +338,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">WMA21</a>
+      <a class="navbar-brand" href="index.html">WMb22</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -528,8 +528,8 @@ arithmetic such as <code>2*3</code> and <code>mean(3:9)</code> are
 included as initial functionality in base R. We can also assign values
 to vectors and plot graphs.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">18</span>,<span class="dv">20</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(x,y)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">14</span>, <span class="dv">15</span>, <span class="dv">18</span>, <span class="dv">20</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(x, y)</span></code></pre></div>
 <p><img src="lecture1_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" />
 In the above code, we assigned the numbers 1-8 to x and assigned the
 numbers 5, 7, …, 18, 20 to y. Then we plotted the graph with x and y, as
@@ -982,7 +982,7 @@ working directory. We will read it into R with the
 <code>read_csv()</code> function like so:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> nba_shooting_small <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;data/nba_shooting_small.csv&quot;</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Rows<span class="sc">:</span> <span class="dv">10</span> Columns<span class="sc">:</span> <span class="dv">8</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>── Column specification ──────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>Delimiter<span class="sc">:</span> <span class="st">&quot;,&quot;</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">chr</span> (<span class="dv">1</span>)<span class="sc">:</span> PLAYER</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dbl</span> (<span class="dv">7</span>)<span class="sc">:</span> SEASON, FGM, FGA, TPM, TPA, FTM, FTA</span>

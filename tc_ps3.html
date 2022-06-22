@@ -13,7 +13,8 @@
 
 <title>Problem Set 3</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -30,7 +31,6 @@
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -42,6 +42,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 
@@ -71,6 +72,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -226,24 +230,24 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">WMA21</a>
+      <a class="navbar-brand" href="index.html">WMb22</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-futbol-o"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-futbol-o"></span>
      
     Lecture Notes
      
@@ -283,8 +287,8 @@ $(document).ready(function () {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-dribbble"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-dribbble"></span>
      
     Problem Sets
      
@@ -318,8 +322,8 @@ $(document).ready(function () {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-bar-chart"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-bar-chart"></span>
      
     Training Camp
      
@@ -369,7 +373,7 @@ $(document).ready(function () {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -385,13 +389,21 @@ $(document).ready(function () {
 
 <div id="review-lecture-3-notes" class="section level2">
 <h2>Review Lecture 3 Notes</h2>
-<p>Please spend a few minutes reading through the notes from <a href="tc_lecture3.html">Lecture 3</a>. Like before, you should go through each code block with someone in your group and see if you can both explain to each other what all of the code does.</p>
+<p>Please spend a few minutes reading through the notes from <a
+href="tc_lecture3.html">Lecture 3</a>. Like before, you should go
+through each code block with someone in your group and see if you can
+both explain to each other what all of the code does.</p>
 </div>
 <div id="nba-three-point-efficiency" class="section level2">
 <h2>NBA Three-Point Efficiency</h2>
-<p>In <a href="tc_lecture3.html">Lecture 3</a> we saw that three-point shot rates have been increasing over time by creating visualizations of the distributions for each season.</p>
-<p>Now, create the same visuals but use TPP as the continous variable of interest. As players are attempting more three-pointers than ever before, are they also making them more?</p>
-<p>Discuss with other students in your group the meaning of these plots.</p>
+<p>In <a href="tc_lecture3.html">Lecture 3</a> we saw that three-point
+shot rates have been increasing over time by creating visualizations of
+the distributions for each season.</p>
+<p>Now, create the same visuals but use TPP as the continous variable of
+interest. As players are attempting more three-pointers than ever
+before, are they also making them more?</p>
+<p>Discuss with other students in your group the meaning of these
+plots.</p>
 </div>
 
 

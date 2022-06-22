@@ -13,7 +13,8 @@
 
 <title>Lecture 0: Installation and Setting up Workspace</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -30,7 +31,6 @@
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -42,6 +42,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 
@@ -71,6 +72,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -226,24 +230,24 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">WMA21</a>
+      <a class="navbar-brand" href="index.html">WMb22</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-futbol-o"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-futbol-o"></span>
      
     Lecture Notes
      
@@ -283,8 +287,8 @@ $(document).ready(function () {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-dribbble"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-dribbble"></span>
      
     Problem Sets
      
@@ -318,8 +322,8 @@ $(document).ready(function () {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-bar-chart"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-bar-chart"></span>
      
     Training Camp
      
@@ -369,7 +373,7 @@ $(document).ready(function () {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -378,50 +382,98 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Lecture 0: Installation and Setting up Workspace</h1>
+<h1 class="title toc-ignore">Lecture 0: Installation and Setting up
+Workspace</h1>
 
 </div>
 
 
 <div id="installing-r-and-r-studio-on-computer" class="section level2">
 <h2>Installing R and R Studio on computer:</h2>
-<p>So that we can jump right into working with data on the first day, we’d like for you to install R and RStudio onto your computer prior to the start of camp.</p>
+<p>So that we can jump right into working with data on the first day,
+we’d like for you to install R and RStudio onto your computer prior to
+the start of camp.</p>
 <div id="for-windows-users" class="section level4">
 <h4>For Windows Users:</h4>
 <p><strong>To Install R:</strong></p>
-<p>Open an internet browser and go to www.r-project.org. Click the “download R” link in the middle of the page under “Getting Started.” Select a CRAN location (a mirror site) and click the corresponding link. Click on the “Download R for Windows” link at the top of the page. Click on the “install R for the first time” link at the top of the page. Click “Download R for Windows” and save the executable file somewhere on your computer. Run the .exe file and follow the installation instructions. Now that R is installed, you need to download and install RStudio.</p>
+<p>Open an internet browser and go to www.r-project.org. Click the
+“download R” link in the middle of the page under “Getting Started.”
+Select a CRAN location (a mirror site) and click the corresponding link.
+Click on the “Download R for Windows” link at the top of the page. Click
+on the “install R for the first time” link at the top of the page. Click
+“Download R for Windows” and save the executable file somewhere on your
+computer. Run the .exe file and follow the installation instructions.
+Now that R is installed, you need to download and install RStudio.</p>
 <p><strong>To Install RStudio:</strong></p>
-<p>Go to www.rstudio.com and click on the “Download RStudio” button. Click on “Download RStudio Desktop.” Click on the version recommended for your system, or the latest Windows version, and save the executable file. Run the .exe file and follow the installation instructions.</p>
+<p>Go to www.rstudio.com and click on the “Download RStudio” button.
+Click on “Download RStudio Desktop.” Click on the version recommended
+for your system, or the latest Windows version, and save the executable
+file. Run the .exe file and follow the installation instructions.</p>
 </div>
 <div id="for-mac-users" class="section level4">
 <h4>For Mac Users:</h4>
 <p><strong>To Install R:</strong></p>
-<p>Open an internet browser and go to www.r-project.org. Click the “download R” link in the middle of the page under “Getting Started.” Select a CRAN location (a mirror site) and click the corresponding link. Click on the “Download R for (Mac) OS X” link at the top of the page. Click on the file containing the latest version of R under “Files.” Save the .pkg file, double-click it to open, and follow the installation instructions. Now that R is installed, you need to download and install RStudio.</p>
+<p>Open an internet browser and go to www.r-project.org. Click the
+“download R” link in the middle of the page under “Getting Started.”
+Select a CRAN location (a mirror site) and click the corresponding link.
+Click on the “Download R for (Mac) OS X” link at the top of the page.
+Click on the file containing the latest version of R under “Files.” Save
+the .pkg file, double-click it to open, and follow the installation
+instructions. Now that R is installed, you need to download and install
+RStudio.</p>
 <p><strong>To Install RStudio:</strong></p>
-<p>Go to www.rstudio.com and click on the “Download RStudio” button. Click on “Download RStudio Desktop.” Click on the version recommended for your system, or the latest Mac version, save the .dmg file on your computer, double-click it to open, and then drag and drop it to your applications folder.</p>
+<p>Go to www.rstudio.com and click on the “Download RStudio” button.
+Click on “Download RStudio Desktop.” Click on the version recommended
+for your system, or the latest Mac version, save the .dmg file on your
+computer, double-click it to open, and then drag and drop it to your
+applications folder.</p>
 </div>
 </div>
 <div id="installing-tidyverse" class="section level2">
 <h2>Installing tidyverse:</h2>
-<p>Open RStudio, read the basic instructions about using R and RStudio here: <a href="https://wharton-moneyball.github.io/ps0.html" class="uri">https://wharton-moneyball.github.io/ps0.html</a>. Then in the console, proceed to enter the following command: install.packages(“tidyverse”)</p>
-<p>If an error appears - then proceed to set-up an RStudio Cloud account: <a href="https://rstudio.cloud/" class="uri">https://rstudio.cloud/</a> Click on the ‘Get Started’ button. You will be asked to create an account, which is free, provided you have an email to use.</p>
-<p>Once you make an account, click on the ‘New Project’ button. In there rename the project to be “Moneyball” at the top. And your use of R is ready to go within the browser!</p>
+<p>Open RStudio, read the basic instructions about using R and RStudio
+here: <a href="https://wharton-moneyball.github.io/ps0.html"
+class="uri">https://wharton-moneyball.github.io/ps0.html</a>. Then in
+the console, proceed to enter the following command:
+install.packages(“tidyverse”)</p>
+<p>If an error appears - then proceed to set-up an RStudio Cloud
+account: <a href="https://rstudio.cloud/"
+class="uri">https://rstudio.cloud/</a> Click on the ‘Get Started’
+button. You will be asked to create an account, which is free, provided
+you have an email to use.</p>
+<p>Once you make an account, click on the ‘New Project’ button. In there
+rename the project to be “Moneyball” at the top. And your use of R is
+ready to go within the browser!</p>
 </div>
-<div id="creating-the-moneyball-and-data-directory" class="section level2">
+<div id="creating-the-moneyball-and-data-directory"
+class="section level2">
 <h2>Creating the Moneyball and data directory</h2>
-<p>Once you have RStudio set-up (whether on the cloud or on their computer), create a folder named ‘Moneyball’. Then inside that folder, create a new folder named ‘data’. You can do this directly in RStudio with the ‘New Folder’ button in the bottom right pane.</p>
+<p>Once you have RStudio set-up (whether on the cloud or on their
+computer), create a folder named ‘Moneyball’. Then inside that folder,
+create a new folder named ‘data’. You can do this directly in RStudio
+with the ‘New Folder’ button in the bottom right pane.</p>
 </div>
-<div id="downloading-data-and-saving-into-moneyballdata-folder" class="section level2">
+<div id="downloading-data-and-saving-into-moneyballdata-folder"
+class="section level2">
 <h2>Downloading data and saving into Moneyball/data folder</h2>
-<p>After you get the folders ready, go to the following page: <a href="https://github.com/Wharton-Moneyball/Wharton-Moneyball.github.io/tree/master/data" class="uri">https://github.com/Wharton-Moneyball/Wharton-Moneyball.github.io/tree/master/data</a></p>
+<p>After you get the folders ready, go to the following page: <a
+href="https://github.com/Wharton-Moneyball/Wharton-Moneyball.github.io/tree/master/data"
+class="uri">https://github.com/Wharton-Moneyball/Wharton-Moneyball.github.io/tree/master/data</a></p>
 <p>And from here, download the following files:</p>
 <ul>
 <li>nba_shooting_small.csv</li>
 <li>nba_shooting.csv</li>
 <li>mlb_relative_payrolls.csv</li>
 </ul>
-<p>To download each of these files, clink on their links in the page. Then click on the ‘Raw’ button. Once from there, right-click and ‘Save As’. You should proceed to save the dataset in the Moneyball/data folder you created.</p>
-<p>If you are using RStudio Cloud, download the files by using the same ‘Save As’ instructions above. Then inside your RStudio Cloud project, move to their ‘Moneyball/data’ folder by clicking on the folder names. Then once inside the data folder click on the ‘Upload’ button to upload each respective dataset to the data folder.</p>
+<p>To download each of these files, clink on their links in the page.
+Then click on the ‘Raw’ button. Once from there, right-click and ‘Save
+As’. You should proceed to save the dataset in the Moneyball/data folder
+you created.</p>
+<p>If you are using RStudio Cloud, download the files by using the same
+‘Save As’ instructions above. Then inside your RStudio Cloud project,
+move to their ‘Moneyball/data’ folder by clicking on the folder names.
+Then once inside the data folder click on the ‘Upload’ button to upload
+each respective dataset to the data folder.</p>
 </div>
 
 

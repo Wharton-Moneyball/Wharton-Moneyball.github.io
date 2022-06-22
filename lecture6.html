@@ -13,7 +13,8 @@
 
 <title>Lecture 6: Linear Regression</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -30,7 +31,6 @@
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -44,6 +44,7 @@
     </style>
 
 
+
 <style type="text/css">
   code {
     white-space: pre;
@@ -53,19 +54,19 @@
   }
 </style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -85,7 +86,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -174,6 +175,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -329,24 +333,24 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">WMA21</a>
+      <a class="navbar-brand" href="index.html">WMb22</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-futbol-o"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-futbol-o"></span>
      
     Lecture Notes
      
@@ -386,8 +390,8 @@ $(document).ready(function () {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-dribbble"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-dribbble"></span>
      
     Problem Sets
      
@@ -421,8 +425,8 @@ $(document).ready(function () {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-bar-chart"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-bar-chart"></span>
      
     Training Camp
      
@@ -472,7 +476,7 @@ $(document).ready(function () {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -486,153 +490,258 @@ $(document).ready(function () {
 </div>
 
 
-<p>In <a href="lecture4.html">Lecture 4</a>, we looked at predicting an MLB player’s 2015 batting average using their 2014 batting average. We did so by binning the data and looking at the average within each bin. What if we wanted to make the bins infinitesimally small? This brings us to the ideas of <em>correlation</em> and the <em>regression method</em>.</p>
-<p>We again read in the data and plot the 2014 batting averages against the 2015 batting averages:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="op">&gt;</span><span class="st"> </span>batting_<span class="dv">2014</span>_<span class="dv">2015</span> &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/batting_2014_2015.csv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="op">&gt;</span><span class="st"> </span>g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> batting_<span class="dv">2014</span>_<span class="dv">2015</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="op">&gt;</span><span class="st"> </span>g &lt;-<span class="st"> </span>g <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> BA_<span class="dv">2014</span>, <span class="dt">y =</span> BA_<span class="dv">2015</span>))</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="op">&gt;</span><span class="st"> </span>g &lt;-<span class="st"> </span>g <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;2014 Batting Average&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;2015 Batting Average&quot;</span>)</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="op">&gt;</span><span class="st"> </span>g</span></code></pre></div>
-<p><img src="lecture6_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>In <a href="lecture4.html">Lecture 4</a>, we looked at predicting an
+MLB player’s 2015 batting average using their 2014 batting average. We
+did so by binning the data and looking at the average within each bin.
+What if we wanted to make the bins infinitesimally small? This brings us
+to the ideas of <em>correlation</em> and the <em>regression
+method</em>.</p>
+<p>We again read in the data and plot the 2014 batting averages against
+the 2015 batting averages:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting_2014_2015 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/batting_2014_2015.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> batting_2014_2015)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> BA_2014, <span class="at">y =</span> BA_2015))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;2014 Batting Average&quot;</span>, <span class="at">y =</span> <span class="st">&quot;2015 Batting Average&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g</span></code></pre></div>
+<p><img src="lecture6_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <div id="correlation" class="section level3">
 <h3>Correlation</h3>
-<p>We can see a positive trend between the 2014 and 2015 batting averages. How can we quantify the relationship between the 2014 and 2015 data?</p>
-<p>The <strong>correlation coefficient</strong>, <em>r</em>, is one way to summarize the dependence between two seasons with one number. <em>r</em> is a standardized measure of the <em>linear</em> dependence between two variables (usually called <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>) and can take values between -1 and +1.</p>
-<p>If <span class="math inline">\(r = 1\)</span>, then the points all lie on a line with positive slope. If <span class="math inline">\(r = -1\)</span>, the points all lie on a line with negative slope.</p>
-<p>Loosely speaking, we can think of correlation as a measure of how well a line fits our data. <a href="http://guessthecorrelation.com/">Let’s get some practice!</a></p>
-<p>We can calculate the correlation between two variables in <code>R</code> using the function <code>cor()</code>. The correlation between the 2014 and 2015 batting averages is:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">cor</span>(batting_<span class="dv">2014</span>_<span class="dv">2015</span>[[<span class="st">&quot;BA_2014&quot;</span>]], batting_<span class="dv">2014</span>_<span class="dv">2015</span>[[<span class="st">&quot;BA_2015&quot;</span>]])</span>
-<span id="cb3-2"><a href="#cb3-2"></a>[<span class="dv">1</span>] <span class="fl">0.493</span></span></code></pre></div>
-<p>We have a moderate amount of correlation between 2014 and 2015 batting averages, but there is still a lot of noise.</p>
-<p>It is important to remember that correlation is only a measure of <em>linear</em> dependence between two variables. The below example shows data where <span class="math inline">\(y = x^2\)</span> exactly.</p>
-<p><img src="lecture6_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Even though <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are dependent, <span class="math inline">\(r = -0.1\)</span>, indicating a weak linear dependence. If we were to draw a line to fit this data, it would be quite flat!</p>
-<p><img src="lecture6_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Now let’s go back to the 2014 and 2015 batting data. To visualize our correlation, we draw the <em>line of best fit</em> through our data. In this example, the line of best fit has <span class="math inline">\(y\)</span>-intercept = 0.141 and slope = 0.485 (we’ll talk about how we find this values later).</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="op">&gt;</span><span class="st"> </span>g &lt;-<span class="st"> </span>g <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="fl">0.141</span>, <span class="dt">slope =</span> <span class="fl">0.485</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="op">&gt;</span><span class="st"> </span>g &lt;-<span class="st"> </span>g <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;y = 0.141 + 0.485x&quot;</span>)</span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="op">&gt;</span><span class="st"> </span>g</span></code></pre></div>
-<p><img src="lecture6_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p><strong>Question:</strong> Which feature of the best fit line, <span class="math inline">\(a\)</span> or <span class="math inline">\(b\)</span>, quantifies the linear dependence between 2014 and 2015 FG%?</p>
-<p>How does correlation relate to our line of best fit? This brings us to the <em>regression method</em>.</p>
+<p>We can see a positive trend between the 2014 and 2015 batting
+averages. How can we quantify the relationship between the 2014 and 2015
+data?</p>
+<p>The <strong>correlation coefficient</strong>, <em>r</em>, is one way
+to summarize the dependence between two seasons with one number.
+<em>r</em> is a standardized measure of the <em>linear</em> dependence
+between two variables (usually called <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>) and can take values between -1 and
++1.</p>
+<p>If <span class="math inline">\(r = 1\)</span>, then the points all
+lie on a line with positive slope. If <span class="math inline">\(r =
+-1\)</span>, the points all lie on a line with negative slope.</p>
+<p>Loosely speaking, we can think of correlation as a measure of how
+well a line fits our data. <a
+href="http://guessthecorrelation.com/">Let’s get some practice!</a></p>
+<p>We can calculate the correlation between two variables in
+<code>R</code> using the function <code>cor()</code>. The correlation
+between the 2014 and 2015 batting averages is:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cor</span>(batting_2014_2015[[<span class="st">&quot;BA_2014&quot;</span>]], batting_2014_2015[[<span class="st">&quot;BA_2015&quot;</span>]])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.493</span></span></code></pre></div>
+<p>We have a moderate amount of correlation between 2014 and 2015
+batting averages, but there is still a lot of noise.</p>
+<p>It is important to remember that correlation is only a measure of
+<em>linear</em> dependence between two variables. The below example
+shows data where <span class="math inline">\(y = x^2\)</span>
+exactly.</p>
+<p><img src="lecture6_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Even though <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> are dependent, <span
+class="math inline">\(r = -0.1\)</span>, indicating a weak linear
+dependence. If we were to draw a line to fit this data, it would be
+quite flat!</p>
+<p><img src="lecture6_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Now let’s go back to the 2014 and 2015 batting data. To visualize our
+correlation, we draw the <em>line of best fit</em> through our data. In
+this example, the line of best fit has <span
+class="math inline">\(y\)</span>-intercept = 0.141 and slope = 0.485
+(we’ll talk about how we find this values later).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">0.141</span>, <span class="at">slope =</span> <span class="fl">0.485</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;y = 0.141 + 0.485x&quot;</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g</span></code></pre></div>
+<p><img src="lecture6_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><strong>Question:</strong> Which feature of the best fit line, <span
+class="math inline">\(a\)</span> or <span
+class="math inline">\(b\)</span>, quantifies the linear dependence
+between 2014 and 2015 FG%?</p>
+<p>How does correlation relate to our line of best fit? This brings us
+to the <em>regression method</em>.</p>
 </div>
 <div id="the-regression-method" class="section level3">
 <h3>The Regression Method</h3>
-<p>If we standardize both datasets, <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, the correlation is the <em>slope</em> of the line of best fit:</p>
-<p><span class="math display">\[\frac{y - \bar{y}}{sd(y)} = r \times \frac{x - \bar{x}}{sd(x)}\]</span></p>
-<p>We can unpack this equation to get the formula for our unstandardized line of best fit:</p>
-<p><span class="math display">\[y = a + bx\]</span> where <span class="math inline">\(a = \bar{y} - b\bar{x}\)</span> and <span class="math inline">\(b = r \times sd(y)/sd(x)\)</span>.</p>
-<p>Now that we have our regression line, we can predict a future <span class="math inline">\(y\)</span> value given we know <span class="math inline">\(x\)</span>. For example, if we know that a player’s 2014 batting average was 0.31, we predict that their 2015 batting average will be: <span class="math display">\[\widehat{y} = 0.141 + 0.485 \times 0.31 = 0.291.\]</span> Note that we use <span class="math inline">\(\widehat{y}\)</span> for a predicted value of <span class="math inline">\(y\)</span>; we can think of this as <span class="math inline">\(\widehat{y} = E[Y|x]\)</span>.</p>
-<p><img src="lecture6_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p><strong>Question:</strong> What is the interpretation of the slope coefficient, <span class="math inline">\(b\)</span>?</p>
+<p>If we standardize both datasets, <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>, the correlation is the <em>slope</em>
+of the line of best fit:</p>
+<p><span class="math display">\[\frac{y - \bar{y}}{sd(y)} = r \times
+\frac{x - \bar{x}}{sd(x)}\]</span></p>
+<p>We can unpack this equation to get the formula for our unstandardized
+line of best fit:</p>
+<p><span class="math display">\[y = a + bx\]</span> where <span
+class="math inline">\(a = \bar{y} - b\bar{x}\)</span> and <span
+class="math inline">\(b = r \times sd(y)/sd(x)\)</span>.</p>
+<p>Now that we have our regression line, we can predict a future <span
+class="math inline">\(y\)</span> value given we know <span
+class="math inline">\(x\)</span>. For example, if we know that a
+player’s 2014 batting average was 0.31, we predict that their 2015
+batting average will be: <span class="math display">\[\widehat{y} =
+0.141 + 0.485 \times 0.31 = 0.291.\]</span> Note that we use <span
+class="math inline">\(\widehat{y}\)</span> for a predicted value of
+<span class="math inline">\(y\)</span>; we can think of this as <span
+class="math inline">\(\widehat{y} = E[Y|x]\)</span>.</p>
+<p><img src="lecture6_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><strong>Question:</strong> What is the interpretation of the slope
+coefficient, <span class="math inline">\(b\)</span>?</p>
 </div>
 <div id="fitting-linear-models" class="section level3">
 <h3>Fitting linear models</h3>
-<p>To find the regression coefficients, <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, we use the function <code>lm()</code>. The usage of <code>lm()</code> is as follows:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="op">&gt;</span><span class="st"> </span>fit &lt;-<span class="st"> </span><span class="kw">lm</span>(BA_<span class="dv">2015</span> <span class="op">~</span><span class="st"> </span>BA_<span class="dv">2014</span>, <span class="dt">data =</span> batting_<span class="dv">2014</span>_<span class="dv">2015</span>)</span></code></pre></div>
-<p>The first argument in the <code>lm()</code> call is called a <code>formula</code>. This takes input <code>y ~ x</code>, where <code>y</code> is our response and <code>x</code> is our predictor or covariate. In the <code>lm()</code> call above, the column <code>BA_2015</code> is our response and <code>BA_2014</code> is our predictor.</p>
-<p>The second argument in <code>lm()</code> is where we specifiy our data: <code>batting_2014_2015</code>. <code>R</code> then looks for the columns <code>BA_2014</code> and <code>BA_2015</code> in the given dataset to calculate the regression coefficients.</p>
-<p>Our new object, <code>fit</code>, contains a lot of information about our regression line. At the moment, we just want the coefficients. We can access the coefficients as follows:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="op">&gt;</span><span class="st"> </span>fit[[<span class="st">&quot;coefficients&quot;</span>]]</span>
-<span id="cb6-2"><a href="#cb6-2"></a>(Intercept)     BA_<span class="dv">2014</span> </span>
-<span id="cb6-3"><a href="#cb6-3"></a>      <span class="fl">0.141</span>       <span class="fl">0.485</span> </span></code></pre></div>
+<p>To find the regression coefficients, <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span>, we use the function <code>lm()</code>.
+The usage of <code>lm()</code> is as follows:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(BA_2015 <span class="sc">~</span> BA_2014, <span class="at">data =</span> batting_2014_2015)</span></code></pre></div>
+<p>The first argument in the <code>lm()</code> call is called a
+<code>formula</code>. This takes input <code>y ~ x</code>, where
+<code>y</code> is our response and <code>x</code> is our predictor or
+covariate. In the <code>lm()</code> call above, the column
+<code>BA_2015</code> is our response and <code>BA_2014</code> is our
+predictor.</p>
+<p>The second argument in <code>lm()</code> is where we specifiy our
+data: <code>batting_2014_2015</code>. <code>R</code> then looks for the
+columns <code>BA_2014</code> and <code>BA_2015</code> in the given
+dataset to calculate the regression coefficients.</p>
+<p>Our new object, <code>fit</code>, contains a lot of information about
+our regression line. At the moment, we just want the coefficients. We
+can access the coefficients as follows:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fit[[<span class="st">&quot;coefficients&quot;</span>]]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>(Intercept)     BA_2014 </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.141</span>       <span class="fl">0.485</span> </span></code></pre></div>
 </div>
 <div id="the-modelr-package" class="section level3">
 <h3>The <code>modelr</code> package</h3>
-<p><code>modelr</code> is another package that is part of the <code>tidyverse</code>. It has a number of useful functions for linear regression models.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(modelr)</span></code></pre></div>
-<p>We can use the function <code>rsquare</code> to get the square of the correlation, <span class="math inline">\(r^2\)</span>. The quantity <span class="math inline">\(r^2\)</span> is the <em>proportion of variance</em> explained by the linear model. The first argument of the <code>rsquare</code> function is the output <code>fit</code> from our linear model function <code>lm</code>. The second argument is our original dataset, <code>batting_2014_2015</code>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">rsquare</span>(fit, batting_<span class="dv">2014</span>_<span class="dv">2015</span>)</span>
-<span id="cb8-2"><a href="#cb8-2"></a>[<span class="dv">1</span>] <span class="fl">0.243</span></span></code></pre></div>
+<p><code>modelr</code> is another package that is part of the
+<code>tidyverse</code>. It has a number of useful functions for linear
+regression models.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(modelr)</span></code></pre></div>
+<p>We can use the function <code>rsquare</code> to get the square of the
+correlation, <span class="math inline">\(r^2\)</span>. The quantity
+<span class="math inline">\(r^2\)</span> is the <em>proportion of
+variance</em> explained by the linear model. The first argument of the
+<code>rsquare</code> function is the output <code>fit</code> from our
+linear model function <code>lm</code>. The second argument is our
+original dataset, <code>batting_2014_2015</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">rsquare</span>(fit, batting_2014_2015)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.243</span></span></code></pre></div>
 <div id="adding-predictions-and-residuals" class="section level4">
 <h4>Adding Predictions and Residuals</h4>
-<p>We can also use <code>modelr</code> to add predictions and residuals to our original dataset:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="op">&gt;</span><span class="st"> </span>batting_<span class="dv">2014</span>_<span class="dv">2015</span> &lt;-<span class="st"> </span>batting_<span class="dv">2014</span>_<span class="dv">2015</span> <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">add_predictions</span>(<span class="dt">model =</span> fit, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>, <span class="dt">var =</span> <span class="st">&quot;pred&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">add_residuals</span>(<span class="dt">model =</span> fit, <span class="dt">var =</span> <span class="st">&quot;resid&quot;</span>)</span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="op">&gt;</span><span class="st"> </span>batting_<span class="dv">2014</span>_<span class="dv">2015</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co"># A tibble: 70 x 5</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a>   playerID  BA_<span class="dv">2014</span> BA_<span class="dv">2015</span>  pred    resid</span>
-<span id="cb9-7"><a href="#cb9-7"></a>   <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st">       </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="st"> </span><span class="dv">1</span> abreujo02   <span class="fl">0.317</span>   <span class="fl">0.290</span> <span class="fl">0.295</span> <span class="fl">-0.00417</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a> <span class="dv">2</span> altuvjo01   <span class="fl">0.341</span>   <span class="fl">0.313</span> <span class="fl">0.306</span>  <span class="fl">0.00711</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a> <span class="dv">3</span> andruel01   <span class="fl">0.263</span>   <span class="fl">0.258</span> <span class="fl">0.269</span> <span class="fl">-0.0103</span> </span>
-<span id="cb9-11"><a href="#cb9-11"></a> <span class="dv">4</span> aybarer01   <span class="fl">0.278</span>   <span class="fl">0.270</span> <span class="fl">0.276</span> <span class="fl">-0.00638</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a> <span class="dv">5</span> bautijo02   <span class="fl">0.286</span>   <span class="fl">0.250</span> <span class="fl">0.280</span> <span class="fl">-0.0291</span> </span>
-<span id="cb9-13"><a href="#cb9-13"></a> <span class="dv">6</span> beltrad01   <span class="fl">0.324</span>   <span class="fl">0.287</span> <span class="fl">0.298</span> <span class="fl">-0.0108</span> </span>
-<span id="cb9-14"><a href="#cb9-14"></a> <span class="dv">7</span> blackch02   <span class="fl">0.288</span>   <span class="fl">0.287</span> <span class="fl">0.281</span>  <span class="fl">0.00577</span></span>
-<span id="cb9-15"><a href="#cb9-15"></a> <span class="dv">8</span> bogaexa01   <span class="fl">0.240</span>   <span class="fl">0.320</span> <span class="fl">0.257</span>  <span class="fl">0.0624</span> </span>
-<span id="cb9-16"><a href="#cb9-16"></a> <span class="dv">9</span> brantmi02   <span class="fl">0.327</span>   <span class="fl">0.310</span> <span class="fl">0.300</span>  <span class="fl">0.0102</span> </span>
-<span id="cb9-17"><a href="#cb9-17"></a><span class="dv">10</span> braunry02   <span class="fl">0.266</span>   <span class="fl">0.285</span> <span class="fl">0.270</span>  <span class="fl">0.0145</span> </span>
-<span id="cb9-18"><a href="#cb9-18"></a><span class="co"># ... with 60 more rows</span></span></code></pre></div>
-<p>In <code>add_predictions</code>, we have to specify three arguments: (i) the model, which is just the output of <code>lm()</code>, (ii) the type, which will always be “response” for this course, and (iii) the name of the column we want our predictions to be stored in. We similarly have to specify a <code>model</code> and <code>var</code> argument in <code>add_residual</code>.</p>
-<p>Using these new columns, we can create the original plot and add the residual lengths:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="op">&gt;</span><span class="st"> </span>g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(batting_<span class="dv">2014</span>_<span class="dv">2015</span>)</span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="op">&gt;</span><span class="st"> </span>g &lt;-<span class="st"> </span>g <span class="op">+</span><span class="st"> </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> BA_<span class="dv">2014</span>, <span class="dt">xend =</span> BA_<span class="dv">2014</span>, <span class="dt">y =</span> BA_<span class="dv">2015</span>, <span class="dt">yend =</span> pred), <span class="dt">color =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="op">&gt;</span><span class="st"> </span>g &lt;-<span class="st"> </span>g <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> BA_<span class="dv">2014</span>, <span class="dt">y =</span> BA_<span class="dv">2015</span>))</span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="op">&gt;</span><span class="st"> </span>g &lt;-<span class="st"> </span>g <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="fl">0.1409779</span>, <span class="dt">slope =</span> <span class="fl">0.4851417</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="op">&gt;</span><span class="st"> </span>g</span></code></pre></div>
-<p><img src="lecture6_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We can also use <code>modelr</code> to add predictions and residuals
+to our original dataset:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting_2014_2015 <span class="ot">&lt;-</span> batting_2014_2015 <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">add_predictions</span>(<span class="at">model =</span> fit, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">var =</span> <span class="st">&quot;pred&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">add_residuals</span>(<span class="at">model =</span> fit, <span class="at">var =</span> <span class="st">&quot;resid&quot;</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting_2014_2015</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 70 × 5</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>   playerID  BA_2014 BA_2015  pred    resid</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> abreujo02   <span class="fl">0.317</span>   <span class="fl">0.290</span> <span class="fl">0.295</span> <span class="sc">-</span><span class="fl">0.00417</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> altuvjo01   <span class="fl">0.341</span>   <span class="fl">0.313</span> <span class="fl">0.306</span>  <span class="fl">0.00711</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> andruel01   <span class="fl">0.263</span>   <span class="fl">0.258</span> <span class="fl">0.269</span> <span class="sc">-</span><span class="fl">0.0103</span> </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> aybarer01   <span class="fl">0.278</span>   <span class="fl">0.270</span> <span class="fl">0.276</span> <span class="sc">-</span><span class="fl">0.00638</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> bautijo02   <span class="fl">0.286</span>   <span class="fl">0.250</span> <span class="fl">0.280</span> <span class="sc">-</span><span class="fl">0.0291</span> </span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> beltrad01   <span class="fl">0.324</span>   <span class="fl">0.287</span> <span class="fl">0.298</span> <span class="sc">-</span><span class="fl">0.0108</span> </span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> blackch02   <span class="fl">0.288</span>   <span class="fl">0.287</span> <span class="fl">0.281</span>  <span class="fl">0.00577</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> bogaexa01   <span class="fl">0.240</span>   <span class="fl">0.320</span> <span class="fl">0.257</span>  <span class="fl">0.0624</span> </span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> brantmi02   <span class="fl">0.327</span>   <span class="fl">0.310</span> <span class="fl">0.300</span>  <span class="fl">0.0102</span> </span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> braunry02   <span class="fl">0.266</span>   <span class="fl">0.285</span> <span class="fl">0.270</span>  <span class="fl">0.0145</span> </span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 60 more rows</span></span></code></pre></div>
+<p>In <code>add_predictions</code>, we have to specify three arguments:
+(i) the model, which is just the output of <code>lm()</code>, (ii) the
+type, which will always be “response” for this course, and (iii) the
+name of the column we want our predictions to be stored in. We similarly
+have to specify a <code>model</code> and <code>var</code> argument in
+<code>add_residual</code>.</p>
+<p>Using these new columns, we can create the original plot and add the
+residual lengths:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(batting_2014_2015)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> BA_2014, <span class="at">xend =</span> BA_2014, <span class="at">y =</span> BA_2015, <span class="at">yend =</span> pred), <span class="at">color =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> BA_2014, <span class="at">y =</span> BA_2015))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">0.1409779</span>, <span class="at">slope =</span> <span class="fl">0.4851417</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g</span></code></pre></div>
+<p><img src="lecture6_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 </div>
 </div>
 <div id="predict" class="section level3">
 <h3>Predict</h3>
-<p>So far we have looked at the predicted values from our <em>training</em> data; that is, the data we used to fit our linear model. Suppose we have more players’ batting averages from 2014 but we do not have their batting averages from 2015. We can use our linear model to predict these players’ 2015 batting average using the function <code>predict</code>.</p>
-<p>In the below code, we enter the players’ 2014 batting averages as the tibble <code>new_data</code>. We then use the function <code>predict</code>. The first argument of <code>predict</code> is the fitted model, <code>fit</code>. The second argument is <code>new_data</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="op">&gt;</span><span class="st"> </span>new_data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">BA_2014 =</span> <span class="kw">c</span>(<span class="fl">0.241</span>, <span class="fl">0.31</span>, <span class="fl">0.265</span>))</span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="op">&gt;</span><span class="st"> </span>new_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit, new_data)</span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="op">&gt;</span><span class="st"> </span>new_pred</span>
-<span id="cb11-4"><a href="#cb11-4"></a>    <span class="dv">1</span>     <span class="dv">2</span>     <span class="dv">3</span> </span>
-<span id="cb11-5"><a href="#cb11-5"></a><span class="fl">0.258</span> <span class="fl">0.291</span> <span class="fl">0.270</span> </span></code></pre></div>
-<p>We can also add these predictions to <code>new_data</code> using <code>add_predictions</code>:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="op">&gt;</span><span class="st"> </span>new_data &lt;-<span class="st"> </span>new_data <span class="op">%&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">add_predictions</span>(fit)</span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="op">&gt;</span><span class="st"> </span>new_data</span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="co"># A tibble: 3 x 2</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a>  BA_<span class="dv">2014</span>  pred</span>
-<span id="cb12-6"><a href="#cb12-6"></a>    <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="dv">1</span>   <span class="fl">0.241</span> <span class="fl">0.258</span></span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="dv">2</span>   <span class="fl">0.31</span>  <span class="fl">0.291</span></span>
-<span id="cb12-9"><a href="#cb12-9"></a><span class="dv">3</span>   <span class="fl">0.265</span> <span class="fl">0.270</span></span></code></pre></div>
+<p>So far we have looked at the predicted values from our
+<em>training</em> data; that is, the data we used to fit our linear
+model. Suppose we have more players’ batting averages from 2014 but we
+do not have their batting averages from 2015. We can use our linear
+model to predict these players’ 2015 batting average using the function
+<code>predict</code>.</p>
+<p>In the below code, we enter the players’ 2014 batting averages as the
+tibble <code>new_data</code>. We then use the function
+<code>predict</code>. The first argument of <code>predict</code> is the
+fitted model, <code>fit</code>. The second argument is
+<code>new_data</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> new_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">BA_2014 =</span> <span class="fu">c</span>(<span class="fl">0.241</span>, <span class="fl">0.31</span>, <span class="fl">0.265</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> new_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, new_data)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> new_pred</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>     <span class="dv">2</span>     <span class="dv">3</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fl">0.258</span> <span class="fl">0.291</span> <span class="fl">0.270</span> </span></code></pre></div>
+<p>We can also add these predictions to <code>new_data</code> using
+<code>add_predictions</code>:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> new_data <span class="ot">&lt;-</span> new_data <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">add_predictions</span>(fit)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> new_data</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 3 × 2</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  BA_2014  pred</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>   <span class="fl">0.241</span> <span class="fl">0.258</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>   <span class="fl">0.31</span>  <span class="fl">0.291</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>   <span class="fl">0.265</span> <span class="fl">0.270</span></span></code></pre></div>
 <p>We add these predictions to our plot:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="op">&gt;</span><span class="st"> </span>g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(batting_<span class="dv">2014</span>_<span class="dv">2015</span>)</span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="op">&gt;</span><span class="st"> </span>g &lt;-<span class="st"> </span>g <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> BA_<span class="dv">2014</span>, <span class="dt">y =</span> BA_<span class="dv">2015</span>))</span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="op">&gt;</span><span class="st"> </span>g &lt;-<span class="st"> </span>g <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="fl">0.1409779</span>, <span class="dt">slope =</span> <span class="fl">0.4851417</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb13-4"><a href="#cb13-4"></a><span class="op">&gt;</span><span class="st"> </span>g &lt;-<span class="st"> </span>g <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> new_data, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> BA_<span class="dv">2014</span>, <span class="dt">y =</span> pred), <span class="dt">color =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
-<span id="cb13-5"><a href="#cb13-5"></a><span class="op">&gt;</span><span class="st"> </span>g</span></code></pre></div>
-<p><img src="lecture6_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(batting_2014_2015)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> BA_2014, <span class="at">y =</span> BA_2015))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">0.1409779</span>, <span class="at">slope =</span> <span class="fl">0.4851417</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> new_data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> BA_2014, <span class="at">y =</span> pred), <span class="at">color =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> g</span></code></pre></div>
+<p><img src="lecture6_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 </div>
 <div id="more-visualization-with-data_grid" class="section level3">
 <h3>More visualization with <code>data_grid</code></h3>
-<p>In the above code, we drew our fitted line using our coefficients from <code>fit</code> and <code>geom_abline</code> to specifiy the slope and the intercept. An alternative way to plot our fitted line is to use the function <code>data_grid</code>. This function creates a grid of evenly spaced points over the range of our <code>x</code> data.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="op">&gt;</span><span class="st"> </span>grid &lt;-<span class="st"> </span>batting_<span class="dv">2014</span>_<span class="dv">2015</span> <span class="op">%&gt;%</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">data_grid</span>(BA_<span class="dv">2014</span>)</span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="op">&gt;</span><span class="st"> </span>grid</span>
-<span id="cb14-4"><a href="#cb14-4"></a><span class="co"># A tibble: 70 x 1</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a>   BA_<span class="dv">2014</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a>     <span class="op">&lt;</span>dbl<span class="op">&gt;</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a><span class="st"> </span><span class="dv">1</span>   <span class="fl">0.196</span></span>
-<span id="cb14-8"><a href="#cb14-8"></a> <span class="dv">2</span>   <span class="fl">0.217</span></span>
-<span id="cb14-9"><a href="#cb14-9"></a> <span class="dv">3</span>   <span class="fl">0.227</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a> <span class="dv">4</span>   <span class="fl">0.231</span></span>
-<span id="cb14-11"><a href="#cb14-11"></a> <span class="dv">5</span>   <span class="fl">0.232</span></span>
-<span id="cb14-12"><a href="#cb14-12"></a> <span class="dv">6</span>   <span class="fl">0.240</span></span>
-<span id="cb14-13"><a href="#cb14-13"></a> <span class="dv">7</span>   <span class="fl">0.24</span> </span>
-<span id="cb14-14"><a href="#cb14-14"></a> <span class="dv">8</span>   <span class="fl">0.242</span></span>
-<span id="cb14-15"><a href="#cb14-15"></a> <span class="dv">9</span>   <span class="fl">0.242</span></span>
-<span id="cb14-16"><a href="#cb14-16"></a><span class="dv">10</span>   <span class="fl">0.243</span></span>
-<span id="cb14-17"><a href="#cb14-17"></a><span class="co"># ... with 60 more rows</span></span></code></pre></div>
-<p>We can then add our predicted values at these grid points using <code>add_predictions</code> and our linear model, <code>fit</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="op">&gt;</span><span class="st"> </span>grid &lt;-<span class="st"> </span>grid <span class="op">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">add_predictions</span>(fit)</span></code></pre></div>
-<p>Using this <code>grid</code> dataset, we can add a <code>geom_line</code> over our scatter plot of 2014 vs 2015 batting averages. This just “connects the dots” between the points in <code>grid</code>.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> batting_<span class="dv">2014</span>_<span class="dv">2015</span>) <span class="op">+</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> BA_<span class="dv">2014</span>, <span class="dt">y =</span> BA_<span class="dv">2015</span>)) <span class="op">+</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">geom_line</span>(<span class="dt">data =</span> grid, <span class="kw">aes</span>(<span class="dt">x =</span> BA_<span class="dv">2014</span>, <span class="dt">y =</span> pred), <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="lecture6_files/figure-html/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>At this point you might ask: why should I use <code>data_grid</code> instead of just <code>geom_abline</code>? The real benefit of using <code>data_grid</code> is when you want to visualize a more complicated model for which there is no <code>geom</code>. For instance, if you have a probit or logistic model!</p>
-<p>For more details on modelling using the <code>tidyverse</code>, you can look at <a href="http://r4ds.had.co.nz/model-basics.html">Chapter 23</a> of the book <em>R for Data Science</em> by Hadley Wickham and Garrett Grolemund. It’s also a great reference in general!</p>
+<p>In the above code, we drew our fitted line using our coefficients
+from <code>fit</code> and <code>geom_abline</code> to specifiy the slope
+and the intercept. An alternative way to plot our fitted line is to use
+the function <code>data_grid</code>. This function creates a grid of
+evenly spaced points over the range of our <code>x</code> data.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> grid <span class="ot">&lt;-</span> batting_2014_2015 <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">data_grid</span>(BA_2014)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> grid</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 70 × 1</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>   BA_2014</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>     <span class="sc">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span>   <span class="fl">0.196</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span>   <span class="fl">0.217</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span>   <span class="fl">0.227</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span>   <span class="fl">0.231</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span>   <span class="fl">0.232</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span>   <span class="fl">0.240</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span>   <span class="fl">0.24</span> </span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span>   <span class="fl">0.242</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span>   <span class="fl">0.242</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span>   <span class="fl">0.243</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 60 more rows</span></span></code></pre></div>
+<p>We can then add our predicted values at these grid points using
+<code>add_predictions</code> and our linear model, <code>fit</code>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> grid <span class="ot">&lt;-</span> grid <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">add_predictions</span>(fit)</span></code></pre></div>
+<p>Using this <code>grid</code> dataset, we can add a
+<code>geom_line</code> over our scatter plot of 2014 vs 2015 batting
+averages. This just “connects the dots” between the points in
+<code>grid</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(<span class="at">data =</span> batting_2014_2015) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> BA_2014, <span class="at">y =</span> BA_2015)) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_line</span>(<span class="at">data =</span> grid, <span class="fu">aes</span>(<span class="at">x =</span> BA_2014, <span class="at">y =</span> pred), <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="lecture6_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>At this point you might ask: why should I use <code>data_grid</code>
+instead of just <code>geom_abline</code>? The real benefit of using
+<code>data_grid</code> is when you want to visualize a more complicated
+model for which there is no <code>geom</code>. For instance, if you have
+a probit or logistic model!</p>
+<p>For more details on modelling using the <code>tidyverse</code>, you
+can look at <a href="http://r4ds.had.co.nz/model-basics.html">Chapter
+23</a> of the book <em>R for Data Science</em> by Hadley Wickham and
+Garrett Grolemund. It’s also a great reference in general!</p>
 </div>
 
 
