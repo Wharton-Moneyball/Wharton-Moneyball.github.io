@@ -16,7 +16,7 @@
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -30,8 +30,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -44,18 +43,111 @@
   ul.task-list{list-style: none;}
     </style>
 
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
   }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  { color: #cccccc; background-color: #303030; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ffcfaf; } /* Alert */
+code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #dca3a3; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #f0dfaf; } /* ControlFlow */
+code span.ch { color: #dca3a3; } /* Char */
+code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code span.co { color: #7f9f7f; } /* Comment */
+code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code span.do { color: #7f9f7f; } /* Documentation */
+code span.dt { color: #dfdfbf; } /* DataType */
+code span.dv { color: #dcdccc; } /* DecVal */
+code span.er { color: #c3bf9f; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #c0bed1; } /* Float */
+code span.fu { color: #efef8f; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+code span.kw { color: #f0dfaf; } /* Keyword */
+code span.op { color: #f0efd0; } /* Operator */
+code span.ot { color: #efef8f; } /* Other */
+code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code span.sc { color: #dca3a3; } /* SpecialChar */
+code span.ss { color: #cc9393; } /* SpecialString */
+code span.st { color: #cc9393; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #cc9393; } /* VerbatimString */
+code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
 </script>
-
-
 
 
 
@@ -221,6 +313,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -265,9 +360,58 @@ $(document).ready(function () {
     <li>
       <a href="lecture0.html">Lecture 0</a>
     </li>
-    <li class="dropdown-header">Problem Set 0</li>
     <li>
-      <a href="tc_lecture0.html">Lecture 0</a>
+      <a href="lecture1.html">Lecture 1</a>
+    </li>
+    <li>
+      <a href="lecture2.html">Lecture 2</a>
+    </li>
+    <li>
+      <a href="lecture3.html">Lecture 3</a>
+    </li>
+    <li>
+      <a href="lecture4.html">Lecture 4</a>
+    </li>
+    <li>
+      <a href="lecture5.html">Lecture 5</a>
+    </li>
+    <li>
+      <a href="lecture6.html">Lecture 6</a>
+    </li>
+    <li>
+      <a href="lecture7.html">Lecture 7</a>
+    </li>
+    <li>
+      <a href="lecture8.html">Lecture 8</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="ps0.html">Problem Set 0</a>
+    </li>
+    <li>
+      <a href="ps1.html">Problem Set 1</a>
+    </li>
+    <li>
+      <a href="ps2.html">Problem Set 2</a>
+    </li>
+    <li>
+      <a href="ps3.html">Problem Set 3</a>
+    </li>
+    <li>
+      <a href="ps4.html">Problem Set 4</a>
+    </li>
+    <li>
+      <a href="ps5.html">Problem Set 5</a>
+    </li>
+    <li>
+      <a href="ps6.html">Problem Set 6</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="nflscrapR_lecture.html">nflscrapR lecture</a>
+    </li>
+    <li>
+      <a href="psX.html">Problem Set X</a>
     </li>
   </ul>
 </li>
@@ -287,19 +431,10 @@ $(document).ready(function () {
       <a href="tc_lecture1.html">Lecture 1</a>
     </li>
     <li>
-      <a href="tc_ps1.html">Problem Set 1</a>
-    </li>
-    <li>
       <a href="tc_lecture2.html">Lecture 2</a>
     </li>
     <li>
-      <a href="tc_ps2.html">Problem Set 2</a>
-    </li>
-    <li>
       <a href="tc_lecture3.html">Lecture 3</a>
-    </li>
-    <li>
-      <a href="tc_ps3.html">Problem Set 3</a>
     </li>
     <li>
       <a href="tc_lecture4.html">Lecture 4</a>
@@ -307,6 +442,17 @@ $(document).ready(function () {
     <li>
       <a href="tc_lecture5.html">Lecture 5</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="tc_ps1.html">Problem Set 1</a>
+    </li>
+    <li>
+      <a href="tc_ps2.html">Problem Set 2</a>
+    </li>
+    <li>
+      <a href="tc_ps3.html">Problem Set 3</a>
+    </li>
+    <li class="divider"></li>
     <li>
       <a href="more_resources.html">More resources</a>
     </li>
@@ -321,6 +467,14 @@ $(document).ready(function () {
 </div><!--/.navbar -->
 
 <div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -398,25 +552,25 @@ each row containing a single batter, with their id, name, and number of
 pitches seen in the regular season. Consider what you will need to group
 by to achieve this result.</p></li>
 </ol>
-<pre class="r"><code>library(tidyverse)
-library(reshape2)
-library(ggrepel)
-
-statcast_2019 &lt;- read_csv(&quot;data/statcast_2019.csv&quot;)
-
-chadwick_register &lt;- read_csv(&quot;data/chadwick_register.csv&quot;)
-
-# note the use of select within left_join(), 
-# keeping only the columns needed from chadwick_register
-fangraphs_2019 &lt;- read_csv(&quot;data/fangraphs_2019.csv&quot;) %&gt;%
-  left_join(select(chadwick_register, key_mlbam, key_fangraphs), 
-            by = c(&quot;playerid&quot; = &quot;key_fangraphs&quot;))
-
-names &lt;- statcast_2019 %&gt;%
-  filter(!is.na(attack_region), game_type == &quot;Regular Season&quot;) %&gt;%
-  group_by(batterid) %&gt;%
-  summarize(batter_name = last(batter_name), 
-            pitches = n())                   </code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>statcast_2019 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/statcast_2019.csv&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>chadwick_register <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/chadwick_register.csv&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># note the use of select within left_join(), </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># keeping only the columns needed from chadwick_register</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>fangraphs_2019 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/fangraphs_2019.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">select</span>(chadwick_register, key_mlbam, key_fangraphs), </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;playerid&quot;</span> <span class="ot">=</span> <span class="st">&quot;key_fangraphs&quot;</span>))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> statcast_2019 <span class="sc">%&gt;%</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(attack_region), game_type <span class="sc">==</span> <span class="st">&quot;Regular Season&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(batterid) <span class="sc">%&gt;%</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">batter_name =</span> <span class="fu">last</span>(batter_name), </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">pitches =</span> <span class="fu">n</span>())                   </span></code></pre></div>
 </div>
 <div id="swing-take-batter-summary" class="section level2">
 <h2>Swing Take Batter Summary</h2>
@@ -496,34 +650,34 @@ pitches in the 2019 regular season. <em>Hint: look at
 created <code>fangraphs_2019</code>. Use select within the join command
 to keep only only the merge id column and wOBA.</em></p></li>
 </ol>
-<pre class="r"><code>swtk19_summary &lt;- statcast_2019 %&gt;%
-  filter(!is.na(attack_region), game_type == &quot;Regular Season&quot;) %&gt;%
-  mutate(is_sw = ifelse(
-    pitch_description %in% c(&quot;bunt_foul_tip&quot;, &quot;foul&quot;, &quot;foul_bunt&quot;, &quot;foul_tip&quot;,
-                             &quot;hit_into_play&quot;, &quot;hit_into_play_no_out&quot;, 
-                             &quot;hit_into_play_score&quot;, &quot;missed_bunt&quot;, 
-                             &quot;swinging_strike&quot;, &quot;swinging_strike_blocked&quot;),
-    1, 0)) %&gt;%
-  group_by(batterid, attack_region, is_sw) %&gt;%
-  summarize(n = n(),
-            rv = round(sum(cnrv_288), 2)) %&gt;%
-  ungroup() %&gt;%
-  unite(&quot;region&quot;, attack_region:is_sw, remove = TRUE) %&gt;%
-  melt(id.vars = c(&quot;batterid&quot;, &quot;region&quot;)) %&gt;%
-  unite(&quot;variable&quot;, region:variable, remove = TRUE) %&gt;%
-  dcast(batterid ~ variable) %&gt;%
-  replace(is.na(.), 0) %&gt;%
-  left_join(names, by = &quot;batterid&quot;) %&gt;%
-  mutate(Swing_Runs = round(Heart_1_rv + Shadow_1_rv + Chase_1_rv + Waste_1_rv, 2),
-         Take_Runs = round(Heart_0_rv + Shadow_0_rv + Chase_0_rv + Waste_0_rv, 2),
-         Total_Runs = Swing_Runs + Take_Runs,
-         TR_p100p = round(Total_Runs * 100 / pitches, 2)) %&gt;%
-  select(batterid, batter_name, pitches, TR_p100p, Total_Runs, Swing_Runs, 
-         Take_Runs, everything()) %&gt;%
-  top_n(270, pitches) %&gt;%
-  arrange(desc(TR_p100p)) %&gt;%
-  left_join(select(fangraphs_2019, key_mlbam, wOBA), 
-            by = c(&quot;batterid&quot; = &quot;key_mlbam&quot;))</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>swtk19_summary <span class="ot">&lt;-</span> statcast_2019 <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(attack_region), game_type <span class="sc">==</span> <span class="st">&quot;Regular Season&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">is_sw =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    pitch_description <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;bunt_foul_tip&quot;</span>, <span class="st">&quot;foul&quot;</span>, <span class="st">&quot;foul_bunt&quot;</span>, <span class="st">&quot;foul_tip&quot;</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;hit_into_play&quot;</span>, <span class="st">&quot;hit_into_play_no_out&quot;</span>, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;hit_into_play_score&quot;</span>, <span class="st">&quot;missed_bunt&quot;</span>, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;swinging_strike&quot;</span>, <span class="st">&quot;swinging_strike_blocked&quot;</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(batterid, attack_region, is_sw) <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">rv =</span> <span class="fu">round</span>(<span class="fu">sum</span>(cnrv_288), <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">&quot;region&quot;</span>, attack_region<span class="sc">:</span>is_sw, <span class="at">remove =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">melt</span>(<span class="at">id.vars =</span> <span class="fu">c</span>(<span class="st">&quot;batterid&quot;</span>, <span class="st">&quot;region&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">&quot;variable&quot;</span>, region<span class="sc">:</span>variable, <span class="at">remove =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dcast</span>(batterid <span class="sc">~</span> variable) <span class="sc">%&gt;%</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace</span>(<span class="fu">is.na</span>(.), <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(names, <span class="at">by =</span> <span class="st">&quot;batterid&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Swing_Runs =</span> <span class="fu">round</span>(Heart_1_rv <span class="sc">+</span> Shadow_1_rv <span class="sc">+</span> Chase_1_rv <span class="sc">+</span> Waste_1_rv, <span class="dv">2</span>),</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">Take_Runs =</span> <span class="fu">round</span>(Heart_0_rv <span class="sc">+</span> Shadow_0_rv <span class="sc">+</span> Chase_0_rv <span class="sc">+</span> Waste_0_rv, <span class="dv">2</span>),</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">Total_Runs =</span> Swing_Runs <span class="sc">+</span> Take_Runs,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">TR_p100p =</span> <span class="fu">round</span>(Total_Runs <span class="sc">*</span> <span class="dv">100</span> <span class="sc">/</span> pitches, <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(batterid, batter_name, pitches, TR_p100p, Total_Runs, Swing_Runs, </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>         Take_Runs, <span class="fu">everything</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">270</span>, pitches) <span class="sc">%&gt;%</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(TR_p100p)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">select</span>(fangraphs_2019, key_mlbam, wOBA), </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;batterid&quot;</span> <span class="ot">=</span> <span class="st">&quot;key_mlbam&quot;</span>))</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by &#39;batterid&#39;, &#39;attack_region&#39;. You can override using the
 ## `.groups` argument.</code></pre>
 </div>
@@ -549,30 +703,30 @@ making it easier to read.</em></p></li>
 <li><p>What predictions for the 2020 season would you make about these
 eight batters, and why?</p></li>
 </ol>
-<pre class="r"><code>fit &lt;- lm(wOBA ~ TR_p100p, data = swtk19_summary)
-
-swtk19_summary &lt;- swtk19_summary %&gt;%
-  mutate(pred_wOBA = predict(fit),
-         resid = pred_wOBA - wOBA)
-
-# residual plot
-# ggplot(swtk19_summary, aes(x = TR_p100p, y = resid)) +
-#   geom_point()
-
-ggplot(swtk19_summary, aes(x = TR_p100p, y = wOBA)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = &quot;lm&quot;, formula = y ~ x) +
-  geom_label_repel(data = top_n(swtk19_summary, 8, abs(resid)),
-             aes(label = batter_name), min.segment.length = 0, size = 2,
-             fontface = &quot;bold&quot;) +
-  theme_minimal() +
-  ggtitle(label = &quot;Comparing Run Value and wOBA of 2019 Batters&quot;,
-          subtitle = &quot;&gt;500 pitches seen&quot;) +
-  xlab(&quot;Context Neutral Run Value (per 100 pitches)&quot;) +
-  theme(plot.title = element_text(size = 16, face = &quot;bold&quot;, hjust = 0.5),
-        plot.subtitle = element_text(size = 12, hjust = 0.5),
-        axis.title.x = element_text(size = 12, face=&quot;bold&quot;),
-        axis.title.y = element_text(size = 12, face=&quot;bold&quot;))</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(wOBA <span class="sc">~</span> TR_p100p, <span class="at">data =</span> swtk19_summary)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>swtk19_summary <span class="ot">&lt;-</span> swtk19_summary <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred_wOBA =</span> <span class="fu">predict</span>(fit),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">resid =</span> pred_wOBA <span class="sc">-</span> wOBA)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># residual plot</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(swtk19_summary, aes(x = TR_p100p, y = resid)) +</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_point()</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(swtk19_summary, <span class="fu">aes</span>(<span class="at">x =</span> TR_p100p, <span class="at">y =</span> wOBA)) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> x) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> <span class="fu">top_n</span>(swtk19_summary, <span class="dv">8</span>, <span class="fu">abs</span>(resid)),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">label =</span> batter_name), <span class="at">min.segment.length =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">fontface =</span> <span class="st">&quot;bold&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="at">label =</span> <span class="st">&quot;Comparing Run Value and wOBA of 2019 Batters&quot;</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle =</span> <span class="st">&quot;&gt;500 pitches seen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Context Neutral Run Value (per 100 pitches)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face=</span><span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face=</span><span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
 <p><img src="psX_files/figure-html/interpreting%20run%20value-1.png" width="768" /></p>
 </div>
 <div id="run-value-generation" class="section level3">
@@ -583,23 +737,23 @@ takes. Add guide lines using <code>geom_abline()</code> to identify
 total run value benchmarks: 30, 40, and 50. Using a nested
 <code>filter()</code>, label players with &gt;30 total run value.</li>
 </ol>
-<pre class="r"><code>ggplot(swtk19_summary, aes(x = Swing_Runs, y = Take_Runs)) +
-  geom_point(alpha = 0.5) +
-  geom_abline(intercept = 50, slope = -1, linetype = &quot;dashed&quot;, color = &quot;blue&quot;) +
-  geom_abline(intercept = 40, slope = -1, linetype = &quot;dashed&quot;, color = &quot;blue&quot;) +
-  geom_abline(intercept = 30, slope = -1, linetype = &quot;dashed&quot;, color = &quot;blue&quot;) +
-  geom_text_repel(data = filter(swtk19_summary, Total_Runs &gt; 30),
-                   aes(label = batter_name), min.segment.length = 0,
-                   size = 2, fontface = &quot;bold&quot;) +
-  theme_minimal() +
-  ggtitle(label = &quot;Where do 2019 Batters Their Generate Run Value From?&quot;,
-          subtitle = &quot;&gt;500 pitches seen&quot;) +
-  xlab(&quot;Swing Runs&quot;) +
-  ylab(&quot;Take Runs&quot;) +
-  theme(plot.title = element_text(size = 16, face = &quot;bold&quot;, hjust = 0.5),
-        plot.subtitle = element_text(size = 12, hjust = 0.5),
-        axis.title.x = element_text(size = 12, face=&quot;bold&quot;),
-        axis.title.y = element_text(size = 12, face=&quot;bold&quot;))</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(swtk19_summary, <span class="fu">aes</span>(<span class="at">x =</span> Swing_Runs, <span class="at">y =</span> Take_Runs)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">50</span>, <span class="at">slope =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">40</span>, <span class="at">slope =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">30</span>, <span class="at">slope =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="at">data =</span> <span class="fu">filter</span>(swtk19_summary, Total_Runs <span class="sc">&gt;</span> <span class="dv">30</span>),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">label =</span> batter_name), <span class="at">min.segment.length =</span> <span class="dv">0</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">size =</span> <span class="dv">2</span>, <span class="at">fontface =</span> <span class="st">&quot;bold&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="at">label =</span> <span class="st">&quot;Where do 2019 Batters Their Generate Run Value From?&quot;</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle =</span> <span class="st">&quot;&gt;500 pitches seen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Swing Runs&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Take Runs&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face=</span><span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face=</span><span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
 <p><img src="psX_files/figure-html/run%20value%20generation-1.png" width="768" /></p>
 </div>
 </div>
@@ -637,6 +791,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

@@ -16,7 +16,7 @@
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -30,8 +30,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -44,18 +43,111 @@
   ul.task-list{list-style: none;}
     </style>
 
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
   }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  { color: #cccccc; background-color: #303030; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ffcfaf; } /* Alert */
+code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #dca3a3; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #f0dfaf; } /* ControlFlow */
+code span.ch { color: #dca3a3; } /* Char */
+code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code span.co { color: #7f9f7f; } /* Comment */
+code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code span.do { color: #7f9f7f; } /* Documentation */
+code span.dt { color: #dfdfbf; } /* DataType */
+code span.dv { color: #dcdccc; } /* DecVal */
+code span.er { color: #c3bf9f; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #c0bed1; } /* Float */
+code span.fu { color: #efef8f; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+code span.kw { color: #f0dfaf; } /* Keyword */
+code span.op { color: #f0efd0; } /* Operator */
+code span.ot { color: #efef8f; } /* Other */
+code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code span.sc { color: #dca3a3; } /* SpecialChar */
+code span.ss { color: #cc9393; } /* SpecialString */
+code span.st { color: #cc9393; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #cc9393; } /* VerbatimString */
+code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
 </script>
-
-
 
 
 
@@ -221,6 +313,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -265,9 +360,58 @@ $(document).ready(function () {
     <li>
       <a href="lecture0.html">Lecture 0</a>
     </li>
-    <li class="dropdown-header">Problem Set 0</li>
     <li>
-      <a href="tc_lecture0.html">Lecture 0</a>
+      <a href="lecture1.html">Lecture 1</a>
+    </li>
+    <li>
+      <a href="lecture2.html">Lecture 2</a>
+    </li>
+    <li>
+      <a href="lecture3.html">Lecture 3</a>
+    </li>
+    <li>
+      <a href="lecture4.html">Lecture 4</a>
+    </li>
+    <li>
+      <a href="lecture5.html">Lecture 5</a>
+    </li>
+    <li>
+      <a href="lecture6.html">Lecture 6</a>
+    </li>
+    <li>
+      <a href="lecture7.html">Lecture 7</a>
+    </li>
+    <li>
+      <a href="lecture8.html">Lecture 8</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="ps0.html">Problem Set 0</a>
+    </li>
+    <li>
+      <a href="ps1.html">Problem Set 1</a>
+    </li>
+    <li>
+      <a href="ps2.html">Problem Set 2</a>
+    </li>
+    <li>
+      <a href="ps3.html">Problem Set 3</a>
+    </li>
+    <li>
+      <a href="ps4.html">Problem Set 4</a>
+    </li>
+    <li>
+      <a href="ps5.html">Problem Set 5</a>
+    </li>
+    <li>
+      <a href="ps6.html">Problem Set 6</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="nflscrapR_lecture.html">nflscrapR lecture</a>
+    </li>
+    <li>
+      <a href="psX.html">Problem Set X</a>
     </li>
   </ul>
 </li>
@@ -287,19 +431,10 @@ $(document).ready(function () {
       <a href="tc_lecture1.html">Lecture 1</a>
     </li>
     <li>
-      <a href="tc_ps1.html">Problem Set 1</a>
-    </li>
-    <li>
       <a href="tc_lecture2.html">Lecture 2</a>
     </li>
     <li>
-      <a href="tc_ps2.html">Problem Set 2</a>
-    </li>
-    <li>
       <a href="tc_lecture3.html">Lecture 3</a>
-    </li>
-    <li>
-      <a href="tc_ps3.html">Problem Set 3</a>
     </li>
     <li>
       <a href="tc_lecture4.html">Lecture 4</a>
@@ -307,6 +442,17 @@ $(document).ready(function () {
     <li>
       <a href="tc_lecture5.html">Lecture 5</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="tc_ps1.html">Problem Set 1</a>
+    </li>
+    <li>
+      <a href="tc_ps2.html">Problem Set 2</a>
+    </li>
+    <li>
+      <a href="tc_ps3.html">Problem Set 3</a>
+    </li>
+    <li class="divider"></li>
     <li>
       <a href="more_resources.html">More resources</a>
     </li>
@@ -321,6 +467,14 @@ $(document).ready(function () {
 </div><!--/.navbar -->
 
 <div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -340,24 +494,24 @@ dataset we created in the challenge question at the end of <a
 href="ps3.html">Problem Set 3</a>. Each line of this tbl is a
 “player-season”. Printing out the tbl, we see that there is a separate
 row for each “player-season”.</p>
-<pre class="r"><code>&gt; library(tidyverse)
-&gt; load(&quot;data/batting_2014_2015.RData&quot;)
-&gt; batting_2014_2015
-# A tibble: 140 × 3
-# Groups:   yearID [2]
-   playerID  yearID    BA
-   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt;
- 1 abreujo02   2014 0.317
- 2 abreujo02   2015 0.290
- 3 altuvjo01   2014 0.341
- 4 altuvjo01   2015 0.313
- 5 andruel01   2014 0.263
- 6 andruel01   2015 0.258
- 7 aybarer01   2014 0.278
- 8 aybarer01   2015 0.270
- 9 bautijo02   2014 0.286
-10 bautijo02   2015 0.250
-# … with 130 more rows</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">load</span>(<span class="st">&quot;data/batting_2014_2015.RData&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting_2014_2015</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 140 × 3</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Groups:   yearID [2]</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>   playerID  yearID    BA</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> abreujo02   <span class="dv">2014</span> <span class="fl">0.317</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> abreujo02   <span class="dv">2015</span> <span class="fl">0.290</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> altuvjo01   <span class="dv">2014</span> <span class="fl">0.341</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> altuvjo01   <span class="dv">2015</span> <span class="fl">0.313</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> andruel01   <span class="dv">2014</span> <span class="fl">0.263</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> andruel01   <span class="dv">2015</span> <span class="fl">0.258</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> aybarer01   <span class="dv">2014</span> <span class="fl">0.278</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> aybarer01   <span class="dv">2015</span> <span class="fl">0.270</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> bautijo02   <span class="dv">2014</span> <span class="fl">0.286</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> bautijo02   <span class="dv">2015</span> <span class="fl">0.250</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 130 more rows</span></span></code></pre></div>
 <p>In order to study the relationship between a player’s 2014 batting
 average and his 2015 batting average, it will be more convenient to
 store the data as below.</p>
@@ -378,9 +532,9 @@ store the data as below.</p>
 <p>In this format, we have a row for each player and two columns for his
 batting averages, one for 2014 and one for 2015. In order to convert our
 tbl into this format, we use <em>spreading</em>.</p>
-<pre class="r"><code>&gt; batting_2014_2015 &lt;-
-+   batting_2014_2015 %&gt;%
-+   spread(yearID, BA)</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting_2014_2015 <span class="ot">&lt;-</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   batting_2014_2015 <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">spread</span>(yearID, BA)</span></code></pre></div>
 <p>When we print out <code>batting_2014_2015</code> now, we notice that
 it is easier to read.</p>
 </div>
@@ -401,9 +555,9 @@ tbl. We will add columns to our tbl containing these predictions. To get
 things started, let’s add a column containing the overall mean of the
 2015 batting averages. It turns out that this mean is 0.273, whereas the
 mean 2014 batting average is 0.272.</p>
-<pre class="r"><code>&gt; batting_2014_2015 &lt;-
-+   batting_2014_2015 %&gt;% 
-+   mutate(yhat_0 = mean(`2015`))</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting_2014_2015 <span class="ot">&lt;-</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   batting_2014_2015 <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">yhat_0 =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">2015</span><span class="st">`</span>))</span></code></pre></div>
 <p>If the 2014 batting average had no predictive power at all, then this
 overall mean will be the best prediction model possible, given what data
 we have. Plotting the 2015 batting averages against the 2014 batting
@@ -411,10 +565,10 @@ averages allows us to assess visually whether there is any relationship
 between the two variables. We have added dashed red horizontal and
 vertical lines at the overall means of the 2014 and 2015 data,
 respectively.</p>
-<pre class="r"><code>&gt; ggplot(batting_2014_2015) +
-+   geom_point(aes(x = `2014`, y = `2015`), col = &#39;black&#39;, shape = 16, size = 0.9) +
-+   geom_hline(yintercept = 0.273, col = &#39;red&#39;, lty = 2) +
-+   geom_vline(xintercept = 0.272, col = &#39;red&#39;, lty = 2)</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(batting_2014_2015) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">2015</span><span class="st">`</span>), <span class="at">col =</span> <span class="st">&#39;black&#39;</span>, <span class="at">shape =</span> <span class="dv">16</span>, <span class="at">size =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.273</span>, <span class="at">col =</span> <span class="st">&#39;red&#39;</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.272</span>, <span class="at">col =</span> <span class="st">&#39;red&#39;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="lecture4_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>It certainly looks like there is a relationship! So it’s at least
 plausible that if we use the 2014 batting averages to make predictions
@@ -444,13 +598,13 @@ according to which interval they fall.</p>
 <p>The following code chunk does precisely that with two more steps:
 once we have made our predictions, we ungroup the tbl and we can drop
 the column indicating the interval in which our observation falls.</p>
-<pre class="r"><code>&gt; batting_2014_2015 &lt;- 
-+   batting_2014_2015 %&gt;%
-+   mutate(bins = cut(`2014`, breaks = c(0.15, 0.272, 0.40))) %&gt;%
-+   group_by(bins) %&gt;%
-+   mutate(yhat_1 = mean(`2015`)) %&gt;%
-+   ungroup() %&gt;%
-+   select(-bins)</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting_2014_2015 <span class="ot">&lt;-</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   batting_2014_2015 <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">bins =</span> <span class="fu">cut</span>(<span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.272</span>, <span class="fl">0.40</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(bins) <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">yhat_1 =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">2015</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">select</span>(<span class="sc">-</span>bins)</span></code></pre></div>
 <p>When we run this code and print out our tbl, we see that there is a
 new column called “yhat_1” that contains our new predictions. Before
 proceeding, we should talk a bit about the syntax use in
@@ -465,10 +619,10 @@ second elements, 0.272, is the overall mean of the BA_2014 values. The
 last element, 0.40 is much greater than the largest BA_2014 value.</p>
 <p>Now that we have two different ways of predicting 2015 batting
 averages, let us see how they compare, visually.</p>
-<pre class="r"><code>&gt; ggplot(batting_2014_2015) +
-+   geom_point(aes(x = `2014`, y = `2015`), col = &#39;black&#39;, shape = 16, size = 0.9) +
-+   geom_point(aes(x = `2014`, y = yhat_0), col = &#39;red&#39;, shape = 3, size = 0.75) + 
-+   geom_point(aes(x = `2014`, y = yhat_1), col = &#39;green&#39;, shape = 15, size = 0.75)</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(batting_2014_2015) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">2015</span><span class="st">`</span>), <span class="at">col =</span> <span class="st">&#39;black&#39;</span>, <span class="at">shape =</span> <span class="dv">16</span>, <span class="at">size =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_0), <span class="at">col =</span> <span class="st">&#39;red&#39;</span>, <span class="at">shape =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_1), <span class="at">col =</span> <span class="st">&#39;green&#39;</span>, <span class="at">shape =</span> <span class="dv">15</span>, <span class="at">size =</span> <span class="fl">0.75</span>)</span></code></pre></div>
 <p><img src="lecture4_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>Visually it appears that the green squares (corresponding to yhat_1)
 are a bit closer to the actual values than the red crosses
@@ -484,27 +638,27 @@ wanted to divide the interval [0,1] into 10 equally sized intervals:
 (0,0.1], (0.1, 0.2], …, (0.9, 1]. To get the vector of cutpoints, we
 need to tell <code>seq()</code> either how many points we wanted or the
 spacing between the points:</p>
-<pre class="r"><code>&gt; seq(from = 0, to = 1, length = 11)
- [1] 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
-&gt; seq(from = 0, to = 1, by = 0.1)
- [1] 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">length =</span> <span class="dv">11</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="fl">0.0</span> <span class="fl">0.1</span> <span class="fl">0.2</span> <span class="fl">0.3</span> <span class="fl">0.4</span> <span class="fl">0.5</span> <span class="fl">0.6</span> <span class="fl">0.7</span> <span class="fl">0.8</span> <span class="fl">0.9</span> <span class="fl">1.0</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="fl">0.0</span> <span class="fl">0.1</span> <span class="fl">0.2</span> <span class="fl">0.3</span> <span class="fl">0.4</span> <span class="fl">0.5</span> <span class="fl">0.6</span> <span class="fl">0.7</span> <span class="fl">0.8</span> <span class="fl">0.9</span> <span class="fl">1.0</span></span></code></pre></div>
 <p>So let’s say we wanted to divde the 2014 batting averages into
 intervals of length 0.05 and predict 2015 batting averages using the
 average BA_2015 values within the resulting bins. We could run</p>
-<pre class="r"><code>&gt; batting_2014_2015 &lt;- 
-+   batting_2014_2015 %&gt;%
-+   mutate(bins = cut(`2014`, breaks = seq(from = 0.15, to = 0.4, by = 0.05))) %&gt;%
-+   group_by(bins) %&gt;%
-+   mutate(yhat_2 = mean(`2015`)) %&gt;%
-+   ungroup() %&gt;%
-+   select(-bins)</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting_2014_2015 <span class="ot">&lt;-</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   batting_2014_2015 <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">bins =</span> <span class="fu">cut</span>(<span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="fl">0.15</span>, <span class="at">to =</span> <span class="fl">0.4</span>, <span class="at">by =</span> <span class="fl">0.05</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(bins) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">yhat_2 =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">2015</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">select</span>(<span class="sc">-</span>bins)</span></code></pre></div>
 <p>We can also visualize our new predictions, this time with blue
 triangles</p>
-<pre class="r"><code>&gt; ggplot(batting_2014_2015) +
-+   geom_point(aes(x = `2014`, y = `2015`), shape = 16, size = 0.9) + 
-+   geom_point(aes(x = `2014`, y = yhat_0), col = &#39;red&#39;, shape = 3, size = 0.75) + 
-+   geom_point(aes(x = `2014`, y = yhat_1), col = &#39;green&#39;, shape = 15, size = 0.75) +
-+   geom_point(aes(x = `2014`, y = yhat_2), col = &#39;blue&#39;, shape = 17, size = 0.75)</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(batting_2014_2015) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">2015</span><span class="st">`</span>), <span class="at">shape =</span> <span class="dv">16</span>, <span class="at">size =</span> <span class="fl">0.9</span>) <span class="sc">+</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_0), <span class="at">col =</span> <span class="st">&#39;red&#39;</span>, <span class="at">shape =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_1), <span class="at">col =</span> <span class="st">&#39;green&#39;</span>, <span class="at">shape =</span> <span class="dv">15</span>, <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_2), <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="fl">0.75</span>)</span></code></pre></div>
 <p><img src="lecture4_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>It appears that we are able to perfectly predict the 2015 batting
 average of the player with the lowest batting average in 2014. Why do
@@ -514,27 +668,27 @@ averages into bins of length 0.005 and 0.001. The code below generates
 these predictions, saves them to columns called “yhat_3” and “yhat_4” in
 our tbl, and then adds the predictions to the plot in purple and
 orange.</p>
-<pre class="r"><code>&gt; batting_2014_2015 &lt;- 
-+   batting_2014_2015 %&gt;%
-+   mutate(bins = cut(`2014`, breaks = seq(from = 0.15, to = 0.4, by = 0.005))) %&gt;%
-+   group_by(bins) %&gt;%
-+   mutate(yhat_3 = mean(`2015`)) %&gt;%
-+   ungroup() %&gt;%
-+   select(-bins)
-&gt; batting_2014_2015 &lt;- 
-+   batting_2014_2015 %&gt;%
-+   mutate(bins = cut(`2014`, breaks = seq(from = 0.15, to = 0.4, by = 0.001))) %&gt;%
-+   group_by(bins) %&gt;%
-+   mutate(yhat_4 = mean(`2015`)) %&gt;%
-+   ungroup() %&gt;%
-+   select(-bins)
-&gt; ggplot(batting_2014_2015) +
-+   geom_point(aes(x = `2014`, y = `2015`), shape = 16, size = 0.9) + 
-+   geom_point(aes(x = `2014`, y = yhat_0), col = &#39;red&#39;, shape = 3, size = 0.75) + 
-+   geom_point(aes(x = `2014`, y = yhat_1), col = &#39;green&#39;, shape = 15, size = 0.75) +
-+   geom_point(aes(x = `2014`, y = yhat_2), col = &#39;blue&#39;, shape = 17, size = 0.75) + 
-+   geom_point(aes(x = `2014`, y = yhat_3), col = &#39;purple&#39;, shape = 8, size = 0.75) + 
-+   geom_point(aes(x = `2014`, y = yhat_4), col = &#39;orange&#39;, shape = 10, size = 0.75)</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting_2014_2015 <span class="ot">&lt;-</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   batting_2014_2015 <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">bins =</span> <span class="fu">cut</span>(<span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="fl">0.15</span>, <span class="at">to =</span> <span class="fl">0.4</span>, <span class="at">by =</span> <span class="fl">0.005</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(bins) <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">yhat_3 =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">2015</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">select</span>(<span class="sc">-</span>bins)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting_2014_2015 <span class="ot">&lt;-</span> </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   batting_2014_2015 <span class="sc">%&gt;%</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">bins =</span> <span class="fu">cut</span>(<span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="fl">0.15</span>, <span class="at">to =</span> <span class="fl">0.4</span>, <span class="at">by =</span> <span class="fl">0.001</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(bins) <span class="sc">%&gt;%</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">yhat_4 =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">2015</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">select</span>(<span class="sc">-</span>bins)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(batting_2014_2015) <span class="sc">+</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">2015</span><span class="st">`</span>), <span class="at">shape =</span> <span class="dv">16</span>, <span class="at">size =</span> <span class="fl">0.9</span>) <span class="sc">+</span> </span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_0), <span class="at">col =</span> <span class="st">&#39;red&#39;</span>, <span class="at">shape =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span> </span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_1), <span class="at">col =</span> <span class="st">&#39;green&#39;</span>, <span class="at">shape =</span> <span class="dv">15</span>, <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_2), <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span> </span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_3), <span class="at">col =</span> <span class="st">&#39;purple&#39;</span>, <span class="at">shape =</span> <span class="dv">8</span>, <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span> </span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_4), <span class="at">col =</span> <span class="st">&#39;orange&#39;</span>, <span class="at">shape =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="fl">0.75</span>)</span></code></pre></div>
 <p><img src="lecture4_files/figure-html/yhat-34-1.png" width="672" /></p>
 </div>
 <div id="assessing-predictive-performance" class="section level2">
@@ -547,16 +701,16 @@ quantitatively, we often rely on the root mean square error or RMSE.
 This is the square root of the mean square error (MSE), which is
 computed by averaging the squared difference between the actual values
 and the predicted values.</p>
-<pre class="r"><code>&gt; summarize(batting_2014_2015, 
-+           rmse_0 = sqrt(mean((`2015` - yhat_0)^2)),
-+           rmse_1 = sqrt(mean((`2015` - yhat_1)^2)),
-+           rmse_2 = sqrt(mean((`2015` - yhat_2)^2)),
-+           rmse_3 = sqrt(mean((`2015` - yhat_3)^2)),
-+           rmse_4 = sqrt(mean((`2015` - yhat_4)^2)))
-# A tibble: 1 × 5
-  rmse_0 rmse_1 rmse_2 rmse_3 rmse_4
-   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-1 0.0257 0.0244 0.0226 0.0185 0.0113</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">summarize</span>(batting_2014_2015, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>           <span class="at">rmse_0 =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((<span class="st">`</span><span class="at">2015</span><span class="st">`</span> <span class="sc">-</span> yhat_0)<span class="sc">^</span><span class="dv">2</span>)),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>           <span class="at">rmse_1 =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((<span class="st">`</span><span class="at">2015</span><span class="st">`</span> <span class="sc">-</span> yhat_1)<span class="sc">^</span><span class="dv">2</span>)),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>           <span class="at">rmse_2 =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((<span class="st">`</span><span class="at">2015</span><span class="st">`</span> <span class="sc">-</span> yhat_2)<span class="sc">^</span><span class="dv">2</span>)),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>           <span class="at">rmse_3 =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((<span class="st">`</span><span class="at">2015</span><span class="st">`</span> <span class="sc">-</span> yhat_3)<span class="sc">^</span><span class="dv">2</span>)),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>           <span class="at">rmse_4 =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((<span class="st">`</span><span class="at">2015</span><span class="st">`</span> <span class="sc">-</span> yhat_4)<span class="sc">^</span><span class="dv">2</span>)))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1 × 5</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  rmse_0 rmse_1 rmse_2 rmse_3 rmse_4</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="fl">0.0257</span> <span class="fl">0.0244</span> <span class="fl">0.0226</span> <span class="fl">0.0185</span> <span class="fl">0.0113</span></span></code></pre></div>
 <p>The RMSEs confirm what we could see visually: the purple predictions
 fit the data much better than the blue, green, and red predictions.
 Moreover we see that the predictions formed by binning into smaller
@@ -604,6 +758,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

@@ -16,7 +16,7 @@
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -30,8 +30,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -44,18 +43,111 @@
   ul.task-list{list-style: none;}
     </style>
 
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
   }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  { color: #cccccc; background-color: #303030; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ffcfaf; } /* Alert */
+code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #dca3a3; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #f0dfaf; } /* ControlFlow */
+code span.ch { color: #dca3a3; } /* Char */
+code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code span.co { color: #7f9f7f; } /* Comment */
+code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code span.do { color: #7f9f7f; } /* Documentation */
+code span.dt { color: #dfdfbf; } /* DataType */
+code span.dv { color: #dcdccc; } /* DecVal */
+code span.er { color: #c3bf9f; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #c0bed1; } /* Float */
+code span.fu { color: #efef8f; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+code span.kw { color: #f0dfaf; } /* Keyword */
+code span.op { color: #f0efd0; } /* Operator */
+code span.ot { color: #efef8f; } /* Other */
+code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code span.sc { color: #dca3a3; } /* SpecialChar */
+code span.ss { color: #cc9393; } /* SpecialString */
+code span.st { color: #cc9393; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #cc9393; } /* VerbatimString */
+code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
 </script>
-
-
 
 
 
@@ -221,6 +313,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -265,9 +360,58 @@ $(document).ready(function () {
     <li>
       <a href="lecture0.html">Lecture 0</a>
     </li>
-    <li class="dropdown-header">Problem Set 0</li>
     <li>
-      <a href="tc_lecture0.html">Lecture 0</a>
+      <a href="lecture1.html">Lecture 1</a>
+    </li>
+    <li>
+      <a href="lecture2.html">Lecture 2</a>
+    </li>
+    <li>
+      <a href="lecture3.html">Lecture 3</a>
+    </li>
+    <li>
+      <a href="lecture4.html">Lecture 4</a>
+    </li>
+    <li>
+      <a href="lecture5.html">Lecture 5</a>
+    </li>
+    <li>
+      <a href="lecture6.html">Lecture 6</a>
+    </li>
+    <li>
+      <a href="lecture7.html">Lecture 7</a>
+    </li>
+    <li>
+      <a href="lecture8.html">Lecture 8</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="ps0.html">Problem Set 0</a>
+    </li>
+    <li>
+      <a href="ps1.html">Problem Set 1</a>
+    </li>
+    <li>
+      <a href="ps2.html">Problem Set 2</a>
+    </li>
+    <li>
+      <a href="ps3.html">Problem Set 3</a>
+    </li>
+    <li>
+      <a href="ps4.html">Problem Set 4</a>
+    </li>
+    <li>
+      <a href="ps5.html">Problem Set 5</a>
+    </li>
+    <li>
+      <a href="ps6.html">Problem Set 6</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="nflscrapR_lecture.html">nflscrapR lecture</a>
+    </li>
+    <li>
+      <a href="psX.html">Problem Set X</a>
     </li>
   </ul>
 </li>
@@ -287,19 +431,10 @@ $(document).ready(function () {
       <a href="tc_lecture1.html">Lecture 1</a>
     </li>
     <li>
-      <a href="tc_ps1.html">Problem Set 1</a>
-    </li>
-    <li>
       <a href="tc_lecture2.html">Lecture 2</a>
     </li>
     <li>
-      <a href="tc_ps2.html">Problem Set 2</a>
-    </li>
-    <li>
       <a href="tc_lecture3.html">Lecture 3</a>
-    </li>
-    <li>
-      <a href="tc_ps3.html">Problem Set 3</a>
     </li>
     <li>
       <a href="tc_lecture4.html">Lecture 4</a>
@@ -307,6 +442,17 @@ $(document).ready(function () {
     <li>
       <a href="tc_lecture5.html">Lecture 5</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="tc_ps1.html">Problem Set 1</a>
+    </li>
+    <li>
+      <a href="tc_ps2.html">Problem Set 2</a>
+    </li>
+    <li>
+      <a href="tc_ps3.html">Problem Set 3</a>
+    </li>
+    <li class="divider"></li>
     <li>
       <a href="more_resources.html">More resources</a>
     </li>
@@ -322,6 +468,14 @@ $(document).ready(function () {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Lecture 2: Visualization and More Data
@@ -336,25 +490,25 @@ tbl containg several shooting statistics for NBA players between the
 1996-97 season and the 2015-16 season. Your script should look something
 like what is the code block below. For reasons that will become clear
 shortly, we are going to call our tbl <code>raw_shooting</code>.</p>
-<pre class="r"><code>&gt; library(tidyverse)
-&gt; raw_shooting &lt;- read_csv(file = &quot;data/nba_shooting.csv&quot;)
-Rows: 7447 Columns: 8
-── Column specification ────────────────────────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr (1): PLAYER
-dbl (7): SEASON, FGM, FGA, TPM, TPA, FTM, FTA
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-&gt; raw_shooting &lt;-
-+   mutate(raw_shooting,
-+          FGP = FGM/FGA,
-+          TPP = TPM/TPA,
-+          FTP = FTM/FTA,
-+          eFGP = (FGM + 0.5 * TPM)/(FGA),
-+          PTS = FTM + 2 * FGM + TPM,
-+          TSP = PTS/(2 * (FGA + 0.44 * FTA)))
-&gt; nba_shooting &lt;- arrange(raw_shooting, desc(TSP))</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> raw_shooting <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;data/nba_shooting.csv&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Rows<span class="sc">:</span> <span class="dv">7447</span> Columns<span class="sc">:</span> <span class="dv">8</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>── Column specification ────────────────────────────────────────────────────────────────────────────</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Delimiter<span class="sc">:</span> <span class="st">&quot;,&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">chr</span> (<span class="dv">1</span>)<span class="sc">:</span> PLAYER</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dbl</span> (<span class="dv">7</span>)<span class="sc">:</span> SEASON, FGM, FGA, TPM, TPA, FTM, FTA</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ℹ Use <span class="st">`</span><span class="at">spec()</span><span class="st">`</span> to retrieve the full column specification <span class="cf">for</span> this data.</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ℹ Specify the column types or set <span class="st">`</span><span class="at">show_col_types = FALSE</span><span class="st">`</span> to quiet this message.</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> raw_shooting <span class="ot">&lt;-</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(raw_shooting,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">FGP =</span> FGM<span class="sc">/</span>FGA,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">TPP =</span> TPM<span class="sc">/</span>TPA,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">FTP =</span> FTM<span class="sc">/</span>FTA,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">eFGP =</span> (FGM <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> TPM)<span class="sc">/</span>(FGA),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">PTS =</span> FTM <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> FGM <span class="sc">+</span> TPM,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">TSP =</span> PTS<span class="sc">/</span>(<span class="dv">2</span> <span class="sc">*</span> (FGA <span class="sc">+</span> <span class="fl">0.44</span> <span class="sc">*</span> FTA)))</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> nba_shooting <span class="ot">&lt;-</span> <span class="fu">arrange</span>(raw_shooting, <span class="fu">desc</span>(TSP))</span></code></pre></div>
 <p>We will use visualization to answer some questions about the data.
 Specifically, we will study the distribution of the individual columns
 as well as try to understand the relationship between pairs of
@@ -370,8 +524,8 @@ more advanced functionality of ggplot2 in</p>
 <h3>Histograms</h3>
 <p>As you saw in Prof. Wyner’s lectures, histograms are a powerful way
 to describe a single dataset.</p>
-<pre class="r"><code>&gt; ggplot(data = raw_shooting) + 
-+   geom_histogram(mapping = aes(x = FGP), bins = 5)</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_histogram</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGP), <span class="at">bins =</span> <span class="dv">5</span>)</span></code></pre></div>
 <p><img src="lecture2_files/figure-html/fgp-histogram-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The first bit of the code above,
 <code>ggplot(data = nba_shooting)</code> tells R to create a coordinate
@@ -395,12 +549,12 @@ of our data. For instance, we can use 50 bins:
 <p>Instead of specifying the number of bins, which can sometimes be
 difficult, we could instead specify the width of the bins. For instance,
 we could split our data into bins of width 0.05 as follows:</p>
-<pre class="r"><code>&gt; ggplot(data = raw_shooting) + geom_histogram(mapping = aes(x = FGP), binwidth = 0.05)</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGP), <span class="at">binwidth =</span> <span class="fl">0.05</span>)</span></code></pre></div>
 <p><img src="lecture2_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>It is often preferable to use a density histogram instead of a
 frequency histogram. This is because the areas of the density histogram
 boxes always sums to 1 no matter how much data you have.</p>
-<pre class="r"><code>&gt; ggplot(data = raw_shooting) + geom_histogram(mapping = aes(x = FGP, y = ..density..), bins = 50)</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGP, <span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">50</span>)</span></code></pre></div>
 <p><img src="lecture2_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" />
 Visually, the histograms look identical but now the vertical (y) axis
 has a different scale.</p>
@@ -416,7 +570,7 @@ free throw percentage (FTP) is related to his field goal percentage
 <p>To make a scatterplot in R, we can run the following code. Notice
 that it is very similar to the code used to make histograms, but with a
 few important differences</p>
-<pre class="r"><code>&gt; ggplot(data = raw_shooting) + geom_point(mapping = aes(x = FGP, y = FTP))</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGP, <span class="at">y =</span> FTP))</span></code></pre></div>
 <p><img src="lecture2_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Just like the code used to produce the histograms above, we began by
 calling <code>ggplot(data = nba_shooting)</code>. Now, however, instead
@@ -441,7 +595,7 @@ ones?</p>
 <p>One way to address this is to use <em>alpha-blending</em> to change
 the transparency of each point. When there are many points plotted in
 the same region, that region will appear darker.</p>
-<pre class="r"><code>&gt; ggplot(data = raw_shooting) + geom_point(mapping = aes(x = FGP, y = FTP), alpha = 0.1)</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGP, <span class="at">y =</span> FTP), <span class="at">alpha =</span> <span class="fl">0.1</span>)</span></code></pre></div>
 <p><img src="lecture2_files/figure-html/scatterplot-alpha-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now we can start to distinguish the number of players represented by
 each point. The fact that the point at (0.00, 0.50) is much darker than
@@ -458,21 +612,21 @@ conceptually make the bins any shape you want, there are two popular
 conventions: rectangular binning and hexagonal binning. For the purposes
 of this course, we will focus on rectangular binning, using the
 <code>geom_bin2d()</code> function.</p>
-<pre class="r"><code>&gt; ggplot(data = raw_shooting) + geom_bin2d(aes(x = FGP, y = FTP))</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span> <span class="fu">geom_bin2d</span>(<span class="fu">aes</span>(<span class="at">x =</span> FGP, <span class="at">y =</span> FTP))</span></code></pre></div>
 <p><img src="lecture2_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We can increase the number of bins to get a much more high-resolution
 view of our data.</p>
-<pre class="r"><code>&gt; ggplot(data = raw_shooting) + geom_bin2d(mapping = aes(x = FGP, y = FTP), bins = 100)</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span> <span class="fu">geom_bin2d</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGP, <span class="at">y =</span> FTP), <span class="at">bins =</span> <span class="dv">100</span>)</span></code></pre></div>
 <p><img src="lecture2_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now we are starting to get some sense that there are some outliers in
 our data. We can confirm this visually in another way</p>
-<pre class="r"><code>&gt; ggplot(data = raw_shooting) + geom_point(mapping = aes(x = FGA, y = FGP), alpha = 0.1)</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGA, <span class="at">y =</span> FGP), <span class="at">alpha =</span> <span class="fl">0.1</span>)</span></code></pre></div>
 <p><img src="lecture2_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Sometimes, we don’t want to look at the entire range of the data and
 only want to plot a smaller window. We can do this by changing the x and
 y limits of the plotting region</p>
-<pre class="r"><code>&gt; ggplot(data = raw_shooting) + geom_point(aes(x = FGA, y = FGP)) + xlim(0, 200)
-Warning: Removed 5346 rows containing missing values (geom_point).</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> FGA, <span class="at">y =</span> FGP)) <span class="sc">+</span> <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">200</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Warning<span class="sc">:</span> Removed <span class="dv">5346</span> rows containing missing <span class="fu">values</span> (geom_point).</span></code></pre></div>
 <p><img src="lecture2_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="filtering" class="section level2">
@@ -501,59 +655,59 @@ than or equal to”</li>
 “OR” and “NOT” The code below filter out all of the players with at
 least 100 field goals in a single season</li>
 </ul>
-<pre class="r"><code>&gt; filter(raw_shooting, FGA &gt; 100)
-# A tibble: 6,295 × 14
-   PLAYER            SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
-   &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 Stephen Curry       2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
- 2 James Harden        2016   710  1617   236   657   720   837 0.439 0.359 0.860 0.512  2376 0.598
- 3 Kevin Durant        2016   698  1381   186   480   447   498 0.505 0.388 0.898 0.573  2029 0.634
- 4 DeMarcus Cousins    2016   601  1332    70   210   476   663 0.451 0.333 0.718 0.477  1748 0.538
- 5 LeBron James        2016   737  1416    87   282   359   491 0.520 0.309 0.731 0.551  1920 0.588
- 6 Damian Lillard      2016   618  1474   229   610   414   464 0.419 0.375 0.892 0.497  1879 0.560
- 7 Anthony Davis       2016   560  1137    35   108   326   430 0.493 0.324 0.758 0.508  1481 0.558
- 8 Russell Westbrook   2016   656  1444   101   341   465   573 0.454 0.296 0.812 0.489  1878 0.554
- 9 DeMar DeRozan       2016   614  1377    47   139   555   653 0.446 0.338 0.850 0.463  1830 0.550
-10 Paul George         2016   605  1448   210   565   454   528 0.418 0.372 0.860 0.490  1874 0.558
-# … with 6,285 more rows</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">filter</span>(raw_shooting, FGA <span class="sc">&gt;</span> <span class="dv">100</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 6,295 × 14</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>   PLAYER            SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>              <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> Stephen Curry       <span class="dv">2016</span>   <span class="dv">805</span>  <span class="dv">1597</span>   <span class="dv">402</span>   <span class="dv">887</span>   <span class="dv">363</span>   <span class="dv">400</span> <span class="fl">0.504</span> <span class="fl">0.453</span> <span class="fl">0.908</span> <span class="fl">0.630</span>  <span class="dv">2375</span> <span class="fl">0.670</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> James Harden        <span class="dv">2016</span>   <span class="dv">710</span>  <span class="dv">1617</span>   <span class="dv">236</span>   <span class="dv">657</span>   <span class="dv">720</span>   <span class="dv">837</span> <span class="fl">0.439</span> <span class="fl">0.359</span> <span class="fl">0.860</span> <span class="fl">0.512</span>  <span class="dv">2376</span> <span class="fl">0.598</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> Kevin Durant        <span class="dv">2016</span>   <span class="dv">698</span>  <span class="dv">1381</span>   <span class="dv">186</span>   <span class="dv">480</span>   <span class="dv">447</span>   <span class="dv">498</span> <span class="fl">0.505</span> <span class="fl">0.388</span> <span class="fl">0.898</span> <span class="fl">0.573</span>  <span class="dv">2029</span> <span class="fl">0.634</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> DeMarcus Cousins    <span class="dv">2016</span>   <span class="dv">601</span>  <span class="dv">1332</span>    <span class="dv">70</span>   <span class="dv">210</span>   <span class="dv">476</span>   <span class="dv">663</span> <span class="fl">0.451</span> <span class="fl">0.333</span> <span class="fl">0.718</span> <span class="fl">0.477</span>  <span class="dv">1748</span> <span class="fl">0.538</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> LeBron James        <span class="dv">2016</span>   <span class="dv">737</span>  <span class="dv">1416</span>    <span class="dv">87</span>   <span class="dv">282</span>   <span class="dv">359</span>   <span class="dv">491</span> <span class="fl">0.520</span> <span class="fl">0.309</span> <span class="fl">0.731</span> <span class="fl">0.551</span>  <span class="dv">1920</span> <span class="fl">0.588</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> Damian Lillard      <span class="dv">2016</span>   <span class="dv">618</span>  <span class="dv">1474</span>   <span class="dv">229</span>   <span class="dv">610</span>   <span class="dv">414</span>   <span class="dv">464</span> <span class="fl">0.419</span> <span class="fl">0.375</span> <span class="fl">0.892</span> <span class="fl">0.497</span>  <span class="dv">1879</span> <span class="fl">0.560</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> Anthony Davis       <span class="dv">2016</span>   <span class="dv">560</span>  <span class="dv">1137</span>    <span class="dv">35</span>   <span class="dv">108</span>   <span class="dv">326</span>   <span class="dv">430</span> <span class="fl">0.493</span> <span class="fl">0.324</span> <span class="fl">0.758</span> <span class="fl">0.508</span>  <span class="dv">1481</span> <span class="fl">0.558</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> Russell Westbrook   <span class="dv">2016</span>   <span class="dv">656</span>  <span class="dv">1444</span>   <span class="dv">101</span>   <span class="dv">341</span>   <span class="dv">465</span>   <span class="dv">573</span> <span class="fl">0.454</span> <span class="fl">0.296</span> <span class="fl">0.812</span> <span class="fl">0.489</span>  <span class="dv">1878</span> <span class="fl">0.554</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> DeMar DeRozan       <span class="dv">2016</span>   <span class="dv">614</span>  <span class="dv">1377</span>    <span class="dv">47</span>   <span class="dv">139</span>   <span class="dv">555</span>   <span class="dv">653</span> <span class="fl">0.446</span> <span class="fl">0.338</span> <span class="fl">0.850</span> <span class="fl">0.463</span>  <span class="dv">1830</span> <span class="fl">0.550</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> Paul George         <span class="dv">2016</span>   <span class="dv">605</span>  <span class="dv">1448</span>   <span class="dv">210</span>   <span class="dv">565</span>   <span class="dv">454</span>   <span class="dv">528</span> <span class="fl">0.418</span> <span class="fl">0.372</span> <span class="fl">0.860</span> <span class="fl">0.490</span>  <span class="dv">1874</span> <span class="fl">0.558</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 6,285 more rows</span></span></code></pre></div>
 <p>When we run this code, you’ll notice that R prints out a tbl with
 6,295 rows.</p>
 <p>We can also filter on more complicated conditions constructed using
 the AND, OR, and NOT operators: <code>&amp;</code>, <code>|</code>, and
 <code>!</code>. For instance, to filter observations with at least 100
 field goal attempts OR 50 three point attempts, we would do</p>
-<pre class="r"><code>&gt; filter(raw_shooting, FGA &gt;= 100 | TPA &gt;= 50)
-# A tibble: 6,328 × 14
-   PLAYER            SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
-   &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 Stephen Curry       2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
- 2 James Harden        2016   710  1617   236   657   720   837 0.439 0.359 0.860 0.512  2376 0.598
- 3 Kevin Durant        2016   698  1381   186   480   447   498 0.505 0.388 0.898 0.573  2029 0.634
- 4 DeMarcus Cousins    2016   601  1332    70   210   476   663 0.451 0.333 0.718 0.477  1748 0.538
- 5 LeBron James        2016   737  1416    87   282   359   491 0.520 0.309 0.731 0.551  1920 0.588
- 6 Damian Lillard      2016   618  1474   229   610   414   464 0.419 0.375 0.892 0.497  1879 0.560
- 7 Anthony Davis       2016   560  1137    35   108   326   430 0.493 0.324 0.758 0.508  1481 0.558
- 8 Russell Westbrook   2016   656  1444   101   341   465   573 0.454 0.296 0.812 0.489  1878 0.554
- 9 DeMar DeRozan       2016   614  1377    47   139   555   653 0.446 0.338 0.850 0.463  1830 0.550
-10 Paul George         2016   605  1448   210   565   454   528 0.418 0.372 0.860 0.490  1874 0.558
-# … with 6,318 more rows</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">filter</span>(raw_shooting, FGA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">|</span> TPA <span class="sc">&gt;=</span> <span class="dv">50</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 6,328 × 14</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>   PLAYER            SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>              <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> Stephen Curry       <span class="dv">2016</span>   <span class="dv">805</span>  <span class="dv">1597</span>   <span class="dv">402</span>   <span class="dv">887</span>   <span class="dv">363</span>   <span class="dv">400</span> <span class="fl">0.504</span> <span class="fl">0.453</span> <span class="fl">0.908</span> <span class="fl">0.630</span>  <span class="dv">2375</span> <span class="fl">0.670</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> James Harden        <span class="dv">2016</span>   <span class="dv">710</span>  <span class="dv">1617</span>   <span class="dv">236</span>   <span class="dv">657</span>   <span class="dv">720</span>   <span class="dv">837</span> <span class="fl">0.439</span> <span class="fl">0.359</span> <span class="fl">0.860</span> <span class="fl">0.512</span>  <span class="dv">2376</span> <span class="fl">0.598</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> Kevin Durant        <span class="dv">2016</span>   <span class="dv">698</span>  <span class="dv">1381</span>   <span class="dv">186</span>   <span class="dv">480</span>   <span class="dv">447</span>   <span class="dv">498</span> <span class="fl">0.505</span> <span class="fl">0.388</span> <span class="fl">0.898</span> <span class="fl">0.573</span>  <span class="dv">2029</span> <span class="fl">0.634</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> DeMarcus Cousins    <span class="dv">2016</span>   <span class="dv">601</span>  <span class="dv">1332</span>    <span class="dv">70</span>   <span class="dv">210</span>   <span class="dv">476</span>   <span class="dv">663</span> <span class="fl">0.451</span> <span class="fl">0.333</span> <span class="fl">0.718</span> <span class="fl">0.477</span>  <span class="dv">1748</span> <span class="fl">0.538</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> LeBron James        <span class="dv">2016</span>   <span class="dv">737</span>  <span class="dv">1416</span>    <span class="dv">87</span>   <span class="dv">282</span>   <span class="dv">359</span>   <span class="dv">491</span> <span class="fl">0.520</span> <span class="fl">0.309</span> <span class="fl">0.731</span> <span class="fl">0.551</span>  <span class="dv">1920</span> <span class="fl">0.588</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> Damian Lillard      <span class="dv">2016</span>   <span class="dv">618</span>  <span class="dv">1474</span>   <span class="dv">229</span>   <span class="dv">610</span>   <span class="dv">414</span>   <span class="dv">464</span> <span class="fl">0.419</span> <span class="fl">0.375</span> <span class="fl">0.892</span> <span class="fl">0.497</span>  <span class="dv">1879</span> <span class="fl">0.560</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> Anthony Davis       <span class="dv">2016</span>   <span class="dv">560</span>  <span class="dv">1137</span>    <span class="dv">35</span>   <span class="dv">108</span>   <span class="dv">326</span>   <span class="dv">430</span> <span class="fl">0.493</span> <span class="fl">0.324</span> <span class="fl">0.758</span> <span class="fl">0.508</span>  <span class="dv">1481</span> <span class="fl">0.558</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> Russell Westbrook   <span class="dv">2016</span>   <span class="dv">656</span>  <span class="dv">1444</span>   <span class="dv">101</span>   <span class="dv">341</span>   <span class="dv">465</span>   <span class="dv">573</span> <span class="fl">0.454</span> <span class="fl">0.296</span> <span class="fl">0.812</span> <span class="fl">0.489</span>  <span class="dv">1878</span> <span class="fl">0.554</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> DeMar DeRozan       <span class="dv">2016</span>   <span class="dv">614</span>  <span class="dv">1377</span>    <span class="dv">47</span>   <span class="dv">139</span>   <span class="dv">555</span>   <span class="dv">653</span> <span class="fl">0.446</span> <span class="fl">0.338</span> <span class="fl">0.850</span> <span class="fl">0.463</span>  <span class="dv">1830</span> <span class="fl">0.550</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> Paul George         <span class="dv">2016</span>   <span class="dv">605</span>  <span class="dv">1448</span>   <span class="dv">210</span>   <span class="dv">565</span>   <span class="dv">454</span>   <span class="dv">528</span> <span class="fl">0.418</span> <span class="fl">0.372</span> <span class="fl">0.860</span> <span class="fl">0.490</span>  <span class="dv">1874</span> <span class="fl">0.558</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 6,318 more rows</span></span></code></pre></div>
 <p>We may combine these constraints by enclosing them in
 parantheses.</p>
-<pre class="r"><code>&gt; filter(raw_shooting, (FGA &gt;= 100 &amp; TPA &gt;= 50) | (FGP &gt;= 0.45 &amp; FGP &lt;= 0.5))
-# A tibble: 4,837 × 14
-   PLAYER            SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
-   &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 Stephen Curry       2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
- 2 James Harden        2016   710  1617   236   657   720   837 0.439 0.359 0.860 0.512  2376 0.598
- 3 Kevin Durant        2016   698  1381   186   480   447   498 0.505 0.388 0.898 0.573  2029 0.634
- 4 DeMarcus Cousins    2016   601  1332    70   210   476   663 0.451 0.333 0.718 0.477  1748 0.538
- 5 LeBron James        2016   737  1416    87   282   359   491 0.520 0.309 0.731 0.551  1920 0.588
- 6 Damian Lillard      2016   618  1474   229   610   414   464 0.419 0.375 0.892 0.497  1879 0.560
- 7 Anthony Davis       2016   560  1137    35   108   326   430 0.493 0.324 0.758 0.508  1481 0.558
- 8 Russell Westbrook   2016   656  1444   101   341   465   573 0.454 0.296 0.812 0.489  1878 0.554
- 9 DeMar DeRozan       2016   614  1377    47   139   555   653 0.446 0.338 0.850 0.463  1830 0.550
-10 Paul George         2016   605  1448   210   565   454   528 0.418 0.372 0.860 0.490  1874 0.558
-# … with 4,827 more rows</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">filter</span>(raw_shooting, (FGA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">&amp;</span> TPA <span class="sc">&gt;=</span> <span class="dv">50</span>) <span class="sc">|</span> (FGP <span class="sc">&gt;=</span> <span class="fl">0.45</span> <span class="sc">&amp;</span> FGP <span class="sc">&lt;=</span> <span class="fl">0.5</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 4,837 × 14</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>   PLAYER            SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>              <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> Stephen Curry       <span class="dv">2016</span>   <span class="dv">805</span>  <span class="dv">1597</span>   <span class="dv">402</span>   <span class="dv">887</span>   <span class="dv">363</span>   <span class="dv">400</span> <span class="fl">0.504</span> <span class="fl">0.453</span> <span class="fl">0.908</span> <span class="fl">0.630</span>  <span class="dv">2375</span> <span class="fl">0.670</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> James Harden        <span class="dv">2016</span>   <span class="dv">710</span>  <span class="dv">1617</span>   <span class="dv">236</span>   <span class="dv">657</span>   <span class="dv">720</span>   <span class="dv">837</span> <span class="fl">0.439</span> <span class="fl">0.359</span> <span class="fl">0.860</span> <span class="fl">0.512</span>  <span class="dv">2376</span> <span class="fl">0.598</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> Kevin Durant        <span class="dv">2016</span>   <span class="dv">698</span>  <span class="dv">1381</span>   <span class="dv">186</span>   <span class="dv">480</span>   <span class="dv">447</span>   <span class="dv">498</span> <span class="fl">0.505</span> <span class="fl">0.388</span> <span class="fl">0.898</span> <span class="fl">0.573</span>  <span class="dv">2029</span> <span class="fl">0.634</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> DeMarcus Cousins    <span class="dv">2016</span>   <span class="dv">601</span>  <span class="dv">1332</span>    <span class="dv">70</span>   <span class="dv">210</span>   <span class="dv">476</span>   <span class="dv">663</span> <span class="fl">0.451</span> <span class="fl">0.333</span> <span class="fl">0.718</span> <span class="fl">0.477</span>  <span class="dv">1748</span> <span class="fl">0.538</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> LeBron James        <span class="dv">2016</span>   <span class="dv">737</span>  <span class="dv">1416</span>    <span class="dv">87</span>   <span class="dv">282</span>   <span class="dv">359</span>   <span class="dv">491</span> <span class="fl">0.520</span> <span class="fl">0.309</span> <span class="fl">0.731</span> <span class="fl">0.551</span>  <span class="dv">1920</span> <span class="fl">0.588</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> Damian Lillard      <span class="dv">2016</span>   <span class="dv">618</span>  <span class="dv">1474</span>   <span class="dv">229</span>   <span class="dv">610</span>   <span class="dv">414</span>   <span class="dv">464</span> <span class="fl">0.419</span> <span class="fl">0.375</span> <span class="fl">0.892</span> <span class="fl">0.497</span>  <span class="dv">1879</span> <span class="fl">0.560</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> Anthony Davis       <span class="dv">2016</span>   <span class="dv">560</span>  <span class="dv">1137</span>    <span class="dv">35</span>   <span class="dv">108</span>   <span class="dv">326</span>   <span class="dv">430</span> <span class="fl">0.493</span> <span class="fl">0.324</span> <span class="fl">0.758</span> <span class="fl">0.508</span>  <span class="dv">1481</span> <span class="fl">0.558</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> Russell Westbrook   <span class="dv">2016</span>   <span class="dv">656</span>  <span class="dv">1444</span>   <span class="dv">101</span>   <span class="dv">341</span>   <span class="dv">465</span>   <span class="dv">573</span> <span class="fl">0.454</span> <span class="fl">0.296</span> <span class="fl">0.812</span> <span class="fl">0.489</span>  <span class="dv">1878</span> <span class="fl">0.554</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> DeMar DeRozan       <span class="dv">2016</span>   <span class="dv">614</span>  <span class="dv">1377</span>    <span class="dv">47</span>   <span class="dv">139</span>   <span class="dv">555</span>   <span class="dv">653</span> <span class="fl">0.446</span> <span class="fl">0.338</span> <span class="fl">0.850</span> <span class="fl">0.463</span>  <span class="dv">1830</span> <span class="fl">0.550</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> Paul George         <span class="dv">2016</span>   <span class="dv">605</span>  <span class="dv">1448</span>   <span class="dv">210</span>   <span class="dv">565</span>   <span class="dv">454</span>   <span class="dv">528</span> <span class="fl">0.418</span> <span class="fl">0.372</span> <span class="fl">0.860</span> <span class="fl">0.490</span>  <span class="dv">1874</span> <span class="fl">0.558</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 4,827 more rows</span></span></code></pre></div>
 <p>What if we wanted to pull out the observations corresponding to the
 2015-16 and 2014-15 season. We could do something like
 <code>filter(raw_shooting, (SEASON == 2016) | (SEASON == 2015))</code>,
@@ -561,58 +715,58 @@ which would be perfectly fine. However, what if we wanted data from
 1998-99, 2011-12, and 2015-16? Typing a lot of expressions like
 <code>SEASON == ...</code> would be rather tedious. The
 <code>%in%</code> operator lets us avoid this tedium:</p>
-<pre class="r"><code>&gt; filter(raw_shooting, SEASON %in% c(1999, 2012, 2016))
-# A tibble: 1,150 × 14
-   PLAYER            SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
-   &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 Stephen Curry       2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
- 2 James Harden        2016   710  1617   236   657   720   837 0.439 0.359 0.860 0.512  2376 0.598
- 3 Kevin Durant        2016   698  1381   186   480   447   498 0.505 0.388 0.898 0.573  2029 0.634
- 4 DeMarcus Cousins    2016   601  1332    70   210   476   663 0.451 0.333 0.718 0.477  1748 0.538
- 5 LeBron James        2016   737  1416    87   282   359   491 0.520 0.309 0.731 0.551  1920 0.588
- 6 Damian Lillard      2016   618  1474   229   610   414   464 0.419 0.375 0.892 0.497  1879 0.560
- 7 Anthony Davis       2016   560  1137    35   108   326   430 0.493 0.324 0.758 0.508  1481 0.558
- 8 Russell Westbrook   2016   656  1444   101   341   465   573 0.454 0.296 0.812 0.489  1878 0.554
- 9 DeMar DeRozan       2016   614  1377    47   139   555   653 0.446 0.338 0.850 0.463  1830 0.550
-10 Paul George         2016   605  1448   210   565   454   528 0.418 0.372 0.860 0.490  1874 0.558
-# … with 1,140 more rows</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">filter</span>(raw_shooting, SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>, <span class="dv">2016</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1,150 × 14</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>   PLAYER            SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>              <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> Stephen Curry       <span class="dv">2016</span>   <span class="dv">805</span>  <span class="dv">1597</span>   <span class="dv">402</span>   <span class="dv">887</span>   <span class="dv">363</span>   <span class="dv">400</span> <span class="fl">0.504</span> <span class="fl">0.453</span> <span class="fl">0.908</span> <span class="fl">0.630</span>  <span class="dv">2375</span> <span class="fl">0.670</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> James Harden        <span class="dv">2016</span>   <span class="dv">710</span>  <span class="dv">1617</span>   <span class="dv">236</span>   <span class="dv">657</span>   <span class="dv">720</span>   <span class="dv">837</span> <span class="fl">0.439</span> <span class="fl">0.359</span> <span class="fl">0.860</span> <span class="fl">0.512</span>  <span class="dv">2376</span> <span class="fl">0.598</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> Kevin Durant        <span class="dv">2016</span>   <span class="dv">698</span>  <span class="dv">1381</span>   <span class="dv">186</span>   <span class="dv">480</span>   <span class="dv">447</span>   <span class="dv">498</span> <span class="fl">0.505</span> <span class="fl">0.388</span> <span class="fl">0.898</span> <span class="fl">0.573</span>  <span class="dv">2029</span> <span class="fl">0.634</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> DeMarcus Cousins    <span class="dv">2016</span>   <span class="dv">601</span>  <span class="dv">1332</span>    <span class="dv">70</span>   <span class="dv">210</span>   <span class="dv">476</span>   <span class="dv">663</span> <span class="fl">0.451</span> <span class="fl">0.333</span> <span class="fl">0.718</span> <span class="fl">0.477</span>  <span class="dv">1748</span> <span class="fl">0.538</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> LeBron James        <span class="dv">2016</span>   <span class="dv">737</span>  <span class="dv">1416</span>    <span class="dv">87</span>   <span class="dv">282</span>   <span class="dv">359</span>   <span class="dv">491</span> <span class="fl">0.520</span> <span class="fl">0.309</span> <span class="fl">0.731</span> <span class="fl">0.551</span>  <span class="dv">1920</span> <span class="fl">0.588</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> Damian Lillard      <span class="dv">2016</span>   <span class="dv">618</span>  <span class="dv">1474</span>   <span class="dv">229</span>   <span class="dv">610</span>   <span class="dv">414</span>   <span class="dv">464</span> <span class="fl">0.419</span> <span class="fl">0.375</span> <span class="fl">0.892</span> <span class="fl">0.497</span>  <span class="dv">1879</span> <span class="fl">0.560</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> Anthony Davis       <span class="dv">2016</span>   <span class="dv">560</span>  <span class="dv">1137</span>    <span class="dv">35</span>   <span class="dv">108</span>   <span class="dv">326</span>   <span class="dv">430</span> <span class="fl">0.493</span> <span class="fl">0.324</span> <span class="fl">0.758</span> <span class="fl">0.508</span>  <span class="dv">1481</span> <span class="fl">0.558</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> Russell Westbrook   <span class="dv">2016</span>   <span class="dv">656</span>  <span class="dv">1444</span>   <span class="dv">101</span>   <span class="dv">341</span>   <span class="dv">465</span>   <span class="dv">573</span> <span class="fl">0.454</span> <span class="fl">0.296</span> <span class="fl">0.812</span> <span class="fl">0.489</span>  <span class="dv">1878</span> <span class="fl">0.554</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> DeMar DeRozan       <span class="dv">2016</span>   <span class="dv">614</span>  <span class="dv">1377</span>    <span class="dv">47</span>   <span class="dv">139</span>   <span class="dv">555</span>   <span class="dv">653</span> <span class="fl">0.446</span> <span class="fl">0.338</span> <span class="fl">0.850</span> <span class="fl">0.463</span>  <span class="dv">1830</span> <span class="fl">0.550</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> Paul George         <span class="dv">2016</span>   <span class="dv">605</span>  <span class="dv">1448</span>   <span class="dv">210</span>   <span class="dv">565</span>   <span class="dv">454</span>   <span class="dv">528</span> <span class="fl">0.418</span> <span class="fl">0.372</span> <span class="fl">0.860</span> <span class="fl">0.490</span>  <span class="dv">1874</span> <span class="fl">0.558</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 1,140 more rows</span></span></code></pre></div>
 <p>We could also filter out data from the two lockout-shortened seasons,
 1998-99 and 2011-12 using a combination of the NOT <code>!</code>
 operator and <code>%in%</code>.</p>
-<pre class="r"><code>&gt; filter(raw_shooting, !SEASON %in% c(1999, 2012))
-# A tibble: 6,721 × 14
-   PLAYER            SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
-   &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 Stephen Curry       2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
- 2 James Harden        2016   710  1617   236   657   720   837 0.439 0.359 0.860 0.512  2376 0.598
- 3 Kevin Durant        2016   698  1381   186   480   447   498 0.505 0.388 0.898 0.573  2029 0.634
- 4 DeMarcus Cousins    2016   601  1332    70   210   476   663 0.451 0.333 0.718 0.477  1748 0.538
- 5 LeBron James        2016   737  1416    87   282   359   491 0.520 0.309 0.731 0.551  1920 0.588
- 6 Damian Lillard      2016   618  1474   229   610   414   464 0.419 0.375 0.892 0.497  1879 0.560
- 7 Anthony Davis       2016   560  1137    35   108   326   430 0.493 0.324 0.758 0.508  1481 0.558
- 8 Russell Westbrook   2016   656  1444   101   341   465   573 0.454 0.296 0.812 0.489  1878 0.554
- 9 DeMar DeRozan       2016   614  1377    47   139   555   653 0.446 0.338 0.850 0.463  1830 0.550
-10 Paul George         2016   605  1448   210   565   454   528 0.418 0.372 0.860 0.490  1874 0.558
-# … with 6,711 more rows</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">filter</span>(raw_shooting, <span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 6,721 × 14</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>   PLAYER            SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>              <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> Stephen Curry       <span class="dv">2016</span>   <span class="dv">805</span>  <span class="dv">1597</span>   <span class="dv">402</span>   <span class="dv">887</span>   <span class="dv">363</span>   <span class="dv">400</span> <span class="fl">0.504</span> <span class="fl">0.453</span> <span class="fl">0.908</span> <span class="fl">0.630</span>  <span class="dv">2375</span> <span class="fl">0.670</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> James Harden        <span class="dv">2016</span>   <span class="dv">710</span>  <span class="dv">1617</span>   <span class="dv">236</span>   <span class="dv">657</span>   <span class="dv">720</span>   <span class="dv">837</span> <span class="fl">0.439</span> <span class="fl">0.359</span> <span class="fl">0.860</span> <span class="fl">0.512</span>  <span class="dv">2376</span> <span class="fl">0.598</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> Kevin Durant        <span class="dv">2016</span>   <span class="dv">698</span>  <span class="dv">1381</span>   <span class="dv">186</span>   <span class="dv">480</span>   <span class="dv">447</span>   <span class="dv">498</span> <span class="fl">0.505</span> <span class="fl">0.388</span> <span class="fl">0.898</span> <span class="fl">0.573</span>  <span class="dv">2029</span> <span class="fl">0.634</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> DeMarcus Cousins    <span class="dv">2016</span>   <span class="dv">601</span>  <span class="dv">1332</span>    <span class="dv">70</span>   <span class="dv">210</span>   <span class="dv">476</span>   <span class="dv">663</span> <span class="fl">0.451</span> <span class="fl">0.333</span> <span class="fl">0.718</span> <span class="fl">0.477</span>  <span class="dv">1748</span> <span class="fl">0.538</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> LeBron James        <span class="dv">2016</span>   <span class="dv">737</span>  <span class="dv">1416</span>    <span class="dv">87</span>   <span class="dv">282</span>   <span class="dv">359</span>   <span class="dv">491</span> <span class="fl">0.520</span> <span class="fl">0.309</span> <span class="fl">0.731</span> <span class="fl">0.551</span>  <span class="dv">1920</span> <span class="fl">0.588</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> Damian Lillard      <span class="dv">2016</span>   <span class="dv">618</span>  <span class="dv">1474</span>   <span class="dv">229</span>   <span class="dv">610</span>   <span class="dv">414</span>   <span class="dv">464</span> <span class="fl">0.419</span> <span class="fl">0.375</span> <span class="fl">0.892</span> <span class="fl">0.497</span>  <span class="dv">1879</span> <span class="fl">0.560</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> Anthony Davis       <span class="dv">2016</span>   <span class="dv">560</span>  <span class="dv">1137</span>    <span class="dv">35</span>   <span class="dv">108</span>   <span class="dv">326</span>   <span class="dv">430</span> <span class="fl">0.493</span> <span class="fl">0.324</span> <span class="fl">0.758</span> <span class="fl">0.508</span>  <span class="dv">1481</span> <span class="fl">0.558</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> Russell Westbrook   <span class="dv">2016</span>   <span class="dv">656</span>  <span class="dv">1444</span>   <span class="dv">101</span>   <span class="dv">341</span>   <span class="dv">465</span>   <span class="dv">573</span> <span class="fl">0.454</span> <span class="fl">0.296</span> <span class="fl">0.812</span> <span class="fl">0.489</span>  <span class="dv">1878</span> <span class="fl">0.554</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> DeMar DeRozan       <span class="dv">2016</span>   <span class="dv">614</span>  <span class="dv">1377</span>    <span class="dv">47</span>   <span class="dv">139</span>   <span class="dv">555</span>   <span class="dv">653</span> <span class="fl">0.446</span> <span class="fl">0.338</span> <span class="fl">0.850</span> <span class="fl">0.463</span>  <span class="dv">1830</span> <span class="fl">0.550</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> Paul George         <span class="dv">2016</span>   <span class="dv">605</span>  <span class="dv">1448</span>   <span class="dv">210</span>   <span class="dv">565</span>   <span class="dv">454</span>   <span class="dv">528</span> <span class="fl">0.418</span> <span class="fl">0.372</span> <span class="fl">0.860</span> <span class="fl">0.490</span>  <span class="dv">1874</span> <span class="fl">0.558</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 6,711 more rows</span></span></code></pre></div>
 <p>For the remainder of this module, we will focus on the players who
 attempted at least 100 field goals, 100 free throws, 50 three pointers
 in the non-lockout seasons.</p>
-<pre class="r"><code>&gt; nba_shooting &lt;- filter(raw_shooting, (FGA &gt;= 100 &amp; FTA &gt;= 100 &amp; TPA &gt;= 50 &amp; !SEASON %in% c(1999, 2012)))
-&gt; nba_shooting
-# A tibble: 2,254 × 14
-   PLAYER            SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
-   &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 Stephen Curry       2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
- 2 James Harden        2016   710  1617   236   657   720   837 0.439 0.359 0.860 0.512  2376 0.598
- 3 Kevin Durant        2016   698  1381   186   480   447   498 0.505 0.388 0.898 0.573  2029 0.634
- 4 DeMarcus Cousins    2016   601  1332    70   210   476   663 0.451 0.333 0.718 0.477  1748 0.538
- 5 LeBron James        2016   737  1416    87   282   359   491 0.520 0.309 0.731 0.551  1920 0.588
- 6 Damian Lillard      2016   618  1474   229   610   414   464 0.419 0.375 0.892 0.497  1879 0.560
- 7 Anthony Davis       2016   560  1137    35   108   326   430 0.493 0.324 0.758 0.508  1481 0.558
- 8 Russell Westbrook   2016   656  1444   101   341   465   573 0.454 0.296 0.812 0.489  1878 0.554
- 9 DeMar DeRozan       2016   614  1377    47   139   555   653 0.446 0.338 0.850 0.463  1830 0.550
-10 Paul George         2016   605  1448   210   565   454   528 0.418 0.372 0.860 0.490  1874 0.558
-# … with 2,244 more rows</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> nba_shooting <span class="ot">&lt;-</span> <span class="fu">filter</span>(raw_shooting, (FGA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">&amp;</span> FTA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">&amp;</span> TPA <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> <span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>)))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> nba_shooting</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 2,254 × 14</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>   PLAYER            SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>              <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> Stephen Curry       <span class="dv">2016</span>   <span class="dv">805</span>  <span class="dv">1597</span>   <span class="dv">402</span>   <span class="dv">887</span>   <span class="dv">363</span>   <span class="dv">400</span> <span class="fl">0.504</span> <span class="fl">0.453</span> <span class="fl">0.908</span> <span class="fl">0.630</span>  <span class="dv">2375</span> <span class="fl">0.670</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> James Harden        <span class="dv">2016</span>   <span class="dv">710</span>  <span class="dv">1617</span>   <span class="dv">236</span>   <span class="dv">657</span>   <span class="dv">720</span>   <span class="dv">837</span> <span class="fl">0.439</span> <span class="fl">0.359</span> <span class="fl">0.860</span> <span class="fl">0.512</span>  <span class="dv">2376</span> <span class="fl">0.598</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> Kevin Durant        <span class="dv">2016</span>   <span class="dv">698</span>  <span class="dv">1381</span>   <span class="dv">186</span>   <span class="dv">480</span>   <span class="dv">447</span>   <span class="dv">498</span> <span class="fl">0.505</span> <span class="fl">0.388</span> <span class="fl">0.898</span> <span class="fl">0.573</span>  <span class="dv">2029</span> <span class="fl">0.634</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> DeMarcus Cousins    <span class="dv">2016</span>   <span class="dv">601</span>  <span class="dv">1332</span>    <span class="dv">70</span>   <span class="dv">210</span>   <span class="dv">476</span>   <span class="dv">663</span> <span class="fl">0.451</span> <span class="fl">0.333</span> <span class="fl">0.718</span> <span class="fl">0.477</span>  <span class="dv">1748</span> <span class="fl">0.538</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> LeBron James        <span class="dv">2016</span>   <span class="dv">737</span>  <span class="dv">1416</span>    <span class="dv">87</span>   <span class="dv">282</span>   <span class="dv">359</span>   <span class="dv">491</span> <span class="fl">0.520</span> <span class="fl">0.309</span> <span class="fl">0.731</span> <span class="fl">0.551</span>  <span class="dv">1920</span> <span class="fl">0.588</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> Damian Lillard      <span class="dv">2016</span>   <span class="dv">618</span>  <span class="dv">1474</span>   <span class="dv">229</span>   <span class="dv">610</span>   <span class="dv">414</span>   <span class="dv">464</span> <span class="fl">0.419</span> <span class="fl">0.375</span> <span class="fl">0.892</span> <span class="fl">0.497</span>  <span class="dv">1879</span> <span class="fl">0.560</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> Anthony Davis       <span class="dv">2016</span>   <span class="dv">560</span>  <span class="dv">1137</span>    <span class="dv">35</span>   <span class="dv">108</span>   <span class="dv">326</span>   <span class="dv">430</span> <span class="fl">0.493</span> <span class="fl">0.324</span> <span class="fl">0.758</span> <span class="fl">0.508</span>  <span class="dv">1481</span> <span class="fl">0.558</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> Russell Westbrook   <span class="dv">2016</span>   <span class="dv">656</span>  <span class="dv">1444</span>   <span class="dv">101</span>   <span class="dv">341</span>   <span class="dv">465</span>   <span class="dv">573</span> <span class="fl">0.454</span> <span class="fl">0.296</span> <span class="fl">0.812</span> <span class="fl">0.489</span>  <span class="dv">1878</span> <span class="fl">0.554</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> DeMar DeRozan       <span class="dv">2016</span>   <span class="dv">614</span>  <span class="dv">1377</span>    <span class="dv">47</span>   <span class="dv">139</span>   <span class="dv">555</span>   <span class="dv">653</span> <span class="fl">0.446</span> <span class="fl">0.338</span> <span class="fl">0.850</span> <span class="fl">0.463</span>  <span class="dv">1830</span> <span class="fl">0.550</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> Paul George         <span class="dv">2016</span>   <span class="dv">605</span>  <span class="dv">1448</span>   <span class="dv">210</span>   <span class="dv">565</span>   <span class="dv">454</span>   <span class="dv">528</span> <span class="fl">0.418</span> <span class="fl">0.372</span> <span class="fl">0.860</span> <span class="fl">0.490</span>  <span class="dv">1874</span> <span class="fl">0.558</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 2,244 more rows</span></span></code></pre></div>
 </div>
 <div id="creating-categorical-variables" class="section level2">
 <h2>Creating Categorical Variables</h2>
@@ -631,13 +785,13 @@ three-point shooting prowess as follows:</p>
 <p>In order to add a column to <code>nba_shooting</code> that includes
 these classifications, we can use the <code>case_when()</code>
 function</p>
-<pre class="r"><code>&gt; nba_shooting &lt;- mutate(nba_shooting,
-+                        Classification = case_when(
-+                          TPP &lt; 0.2 ~  &quot;Hopeless&quot;,
-+                          0.2 &lt;= TPP &amp; TPP &lt; 0.3 ~ &quot;Below Average&quot;,
-+                          0.3 &lt;= TPP &amp; TPP &lt; 0.35 ~  &quot;Average&quot;,
-+                          0.35 &lt;= TPP &amp; TPP &lt; 0.4 ~ &quot;Above Average&quot;,
-+                          0.4 &lt;= TPP ~ &quot;Elite&quot;))</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> nba_shooting <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nba_shooting,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                        <span class="at">Classification =</span> <span class="fu">case_when</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                          TPP <span class="sc">&lt;</span> <span class="fl">0.2</span> <span class="sc">~</span>  <span class="st">&quot;Hopeless&quot;</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                          <span class="fl">0.2</span> <span class="sc">&lt;=</span> TPP <span class="sc">&amp;</span> TPP <span class="sc">&lt;</span> <span class="fl">0.3</span> <span class="sc">~</span> <span class="st">&quot;Below Average&quot;</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                          <span class="fl">0.3</span> <span class="sc">&lt;=</span> TPP <span class="sc">&amp;</span> TPP <span class="sc">&lt;</span> <span class="fl">0.35</span> <span class="sc">~</span>  <span class="st">&quot;Average&quot;</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                          <span class="fl">0.35</span> <span class="sc">&lt;=</span> TPP <span class="sc">&amp;</span> TPP <span class="sc">&lt;</span> <span class="fl">0.4</span> <span class="sc">~</span> <span class="st">&quot;Above Average&quot;</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                          <span class="fl">0.4</span> <span class="sc">&lt;=</span> TPP <span class="sc">~</span> <span class="st">&quot;Elite&quot;</span>))</span></code></pre></div>
 <p>Let’s take a minute to unpack the code above. Within
 <code>mutate()</code>, we have started like we always did, with the name
 of the new variable on the left hand side of an equal sign. Then we
@@ -654,17 +808,17 @@ logical expression and on the right we have written the value of
 the 2015-16 season? To answer this, we can use <code>filter()</code> to
 create a new tbl containing the data only for this season. Then we can
 use the dplyr verb <code>summarize()</code> as follows:</p>
-<pre class="r"><code>&gt; nba_shooting_2016 &lt;- filter(nba_shooting, SEASON == 2016)
-&gt; summarize(nba_shooting_2016, FGP = mean(FGP))
-# A tibble: 1 × 1
-    FGP
-  &lt;dbl&gt;
-1 0.438
-&gt; summarize(nba_shooting_2016, FGP = mean(FGP), TPP = mean(TPP), FTP = mean(FTP))
-# A tibble: 1 × 3
-    FGP   TPP   FTP
-  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 0.438 0.346 0.790</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> nba_shooting_2016 <span class="ot">&lt;-</span> <span class="fu">filter</span>(nba_shooting, SEASON <span class="sc">==</span> <span class="dv">2016</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">summarize</span>(nba_shooting_2016, <span class="at">FGP =</span> <span class="fu">mean</span>(FGP))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1 × 1</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    FGP</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="fl">0.438</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">summarize</span>(nba_shooting_2016, <span class="at">FGP =</span> <span class="fu">mean</span>(FGP), <span class="at">TPP =</span> <span class="fu">mean</span>(TPP), <span class="at">FTP =</span> <span class="fu">mean</span>(FTP))</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1 × 3</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    FGP   TPP   FTP</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="fl">0.438</span> <span class="fl">0.346</span> <span class="fl">0.790</span></span></code></pre></div>
 <p>In the first line, we compute the average field goal percentage and
 in the second example, we compute the average field goal, three point,
 and free throw percentages. Of course, we are not limited to computing
@@ -686,21 +840,21 @@ columns than you need. We can use <code>select()</code> to pull out the
 columns we want to use in our subsequent analyses. For instance, we may
 want to only focus on the columns SEASON, FGP, TPP, FTP, eFGP, PTS, and
 TSP and ignore the rest of the columns.</p>
-<pre class="r"><code>&gt; select(nba_shooting, PLAYER, SEASON, FGP, TPP, FTP, eFGP, PTS, TSP)
-# A tibble: 2,254 × 8
-   PLAYER            SEASON   FGP   TPP   FTP  eFGP   PTS   TSP
-   &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 Stephen Curry       2016 0.504 0.453 0.908 0.630  2375 0.670
- 2 James Harden        2016 0.439 0.359 0.860 0.512  2376 0.598
- 3 Kevin Durant        2016 0.505 0.388 0.898 0.573  2029 0.634
- 4 DeMarcus Cousins    2016 0.451 0.333 0.718 0.477  1748 0.538
- 5 LeBron James        2016 0.520 0.309 0.731 0.551  1920 0.588
- 6 Damian Lillard      2016 0.419 0.375 0.892 0.497  1879 0.560
- 7 Anthony Davis       2016 0.493 0.324 0.758 0.508  1481 0.558
- 8 Russell Westbrook   2016 0.454 0.296 0.812 0.489  1878 0.554
- 9 DeMar DeRozan       2016 0.446 0.338 0.850 0.463  1830 0.550
-10 Paul George         2016 0.418 0.372 0.860 0.490  1874 0.558
-# … with 2,244 more rows</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">select</span>(nba_shooting, PLAYER, SEASON, FGP, TPP, FTP, eFGP, PTS, TSP)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 2,254 × 8</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>   PLAYER            SEASON   FGP   TPP   FTP  eFGP   PTS   TSP</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>              <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> Stephen Curry       <span class="dv">2016</span> <span class="fl">0.504</span> <span class="fl">0.453</span> <span class="fl">0.908</span> <span class="fl">0.630</span>  <span class="dv">2375</span> <span class="fl">0.670</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> James Harden        <span class="dv">2016</span> <span class="fl">0.439</span> <span class="fl">0.359</span> <span class="fl">0.860</span> <span class="fl">0.512</span>  <span class="dv">2376</span> <span class="fl">0.598</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> Kevin Durant        <span class="dv">2016</span> <span class="fl">0.505</span> <span class="fl">0.388</span> <span class="fl">0.898</span> <span class="fl">0.573</span>  <span class="dv">2029</span> <span class="fl">0.634</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> DeMarcus Cousins    <span class="dv">2016</span> <span class="fl">0.451</span> <span class="fl">0.333</span> <span class="fl">0.718</span> <span class="fl">0.477</span>  <span class="dv">1748</span> <span class="fl">0.538</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> LeBron James        <span class="dv">2016</span> <span class="fl">0.520</span> <span class="fl">0.309</span> <span class="fl">0.731</span> <span class="fl">0.551</span>  <span class="dv">1920</span> <span class="fl">0.588</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> Damian Lillard      <span class="dv">2016</span> <span class="fl">0.419</span> <span class="fl">0.375</span> <span class="fl">0.892</span> <span class="fl">0.497</span>  <span class="dv">1879</span> <span class="fl">0.560</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> Anthony Davis       <span class="dv">2016</span> <span class="fl">0.493</span> <span class="fl">0.324</span> <span class="fl">0.758</span> <span class="fl">0.508</span>  <span class="dv">1481</span> <span class="fl">0.558</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> Russell Westbrook   <span class="dv">2016</span> <span class="fl">0.454</span> <span class="fl">0.296</span> <span class="fl">0.812</span> <span class="fl">0.489</span>  <span class="dv">1878</span> <span class="fl">0.554</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> DeMar DeRozan       <span class="dv">2016</span> <span class="fl">0.446</span> <span class="fl">0.338</span> <span class="fl">0.850</span> <span class="fl">0.463</span>  <span class="dv">1830</span> <span class="fl">0.550</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> Paul George         <span class="dv">2016</span> <span class="fl">0.418</span> <span class="fl">0.372</span> <span class="fl">0.860</span> <span class="fl">0.490</span>  <span class="dv">1874</span> <span class="fl">0.558</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 2,244 more rows</span></span></code></pre></div>
 </div>
 </div>
 <div id="saving-our-work" class="section level2">
@@ -712,10 +866,10 @@ when data analyses become more complicated, it is helpful to save these
 objects. R has its own special file format for efficiently saving data
 on your computer.</p>
 <p>We will use the <code>save()</code> command.</p>
-<pre class="r"><code>&gt; save(nba_shooting, file = &quot;data/nba_shooting.RData&quot;)</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">save</span>(nba_shooting, <span class="at">file =</span> <span class="st">&quot;data/nba_shooting.RData&quot;</span>)</span></code></pre></div>
 <p>When we want to <em>load</em> the data back into R, we can use the
 <code>load()</code> function</p>
-<pre class="r"><code>&gt; load(&quot;data/nba_shooting.RData&quot;)</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">load</span>(<span class="st">&quot;data/nba_shooting.RData&quot;</span>)</span></code></pre></div>
 </div>
 <div id="thinking-ahead-for-tomorrow" class="section level2">
 <h2>Thinking Ahead for Tomorrow</h2>
@@ -773,6 +927,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
