@@ -338,7 +338,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">WMb22</a>
+      <a class="navbar-brand" href="index.html">WMb'22</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -350,9 +350,9 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-futbol-o"></span>
+    <span class="fa fa-institution"></span>
      
-    Lecture Notes
+    Academy
      
     <span class="caret"></span>
   </a>
@@ -361,22 +361,43 @@ $(document).ready(function () {
       <a href="lecture0.html">Lecture 0</a>
     </li>
     <li>
+      <a href="ps0.html">Problem Set 0</a>
+    </li>
+    <li>
       <a href="lecture1.html">Lecture 1</a>
+    </li>
+    <li>
+      <a href="ps1.html">Problem Set 1</a>
     </li>
     <li>
       <a href="lecture2.html">Lecture 2</a>
     </li>
     <li>
+      <a href="ps2.html">Problem Set 2</a>
+    </li>
+    <li>
       <a href="lecture3.html">Lecture 3</a>
+    </li>
+    <li>
+      <a href="ps3.html">Problem Set 3</a>
     </li>
     <li>
       <a href="lecture4.html">Lecture 4</a>
     </li>
     <li>
+      <a href="ps4.html">Problem Set 4</a>
+    </li>
+    <li>
       <a href="lecture5.html">Lecture 5</a>
     </li>
     <li>
+      <a href="ps5.html">Problem Set 5</a>
+    </li>
+    <li>
       <a href="lecture6.html">Lecture 6</a>
+    </li>
+    <li>
+      <a href="ps6.html">Problem Set 6</a>
     </li>
     <li>
       <a href="lecture7.html">Lecture 7</a>
@@ -387,38 +408,6 @@ $(document).ready(function () {
     <li>
       <a href="nflscrapR_lecture.html">nflscrapR lecture</a>
     </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-dribbble"></span>
-     
-    Problem Sets
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="ps0.html">Problem Set 0</a>
-    </li>
-    <li>
-      <a href="ps1.html">Problem Set 1</a>
-    </li>
-    <li>
-      <a href="ps2.html">Problem Set 2</a>
-    </li>
-    <li>
-      <a href="ps3.html">Problem Set 3</a>
-    </li>
-    <li>
-      <a href="ps4.html">Problem Set 4</a>
-    </li>
-    <li>
-      <a href="ps5.html">Problem Set 5</a>
-    </li>
-    <li>
-      <a href="ps6.html">Problem Set 6</a>
-    </li>
     <li>
       <a href="psX.html">Problem Set X</a>
     </li>
@@ -426,7 +415,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-bar-chart"></span>
+    <span class="fa fa-dribbble"></span>
      
     Training Camp
      
@@ -581,9 +570,9 @@ each variable within the dataset, using the brackets notation we’ve seen
 a couple times before:
 <code>results_2017[['our_variable_here']]</code>.</li>
 </ol>
-<pre><code>[1] 0.638
-[1] 0.642
-[1] 0.443</code></pre>
+<pre><code>[1] 0.6379414
+[1] 0.642096
+[1] 0.4433809</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Now, let’s fit our linear model. Right now, we are doing simple
 linear regression, which involves one response variable and one
@@ -593,7 +582,7 @@ our predictor and Bike as our response.</li>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lm.swim_bike <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> results_2017, <span class="at">formula =</span> Bike <span class="sc">~</span> Swim)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lm.swim_bike[[<span class="st">&#39;coefficients&#39;</span>]]</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>(Intercept)        Swim </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      <span class="fl">179.1</span>         <span class="fl">2.4</span> </span></code></pre></div>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a> <span class="fl">179.129651</span>    <span class="fl">2.395295</span> </span></code></pre></div>
 <ol start="6" style="list-style-type: decimal">
 <li>We also want to add the regression line to our plot. In <a
 href="lecture6.html">Lecture 6</a>, we saw that there are two ways of
@@ -655,7 +644,7 @@ points, which is our regression line.</li>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lm.run_bike <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> results_2017, <span class="at">formula =</span> Bike <span class="sc">~</span> Run)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lm.run_bike[[<span class="st">&#39;coefficients&#39;</span>]]</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>(Intercept)         Run </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">205.761</span>       <span class="fl">0.515</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fl">205.7610166</span>   <span class="fl">0.5147168</span> </span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> grid.run <span class="ot">&lt;-</span> results_2017 <span class="sc">%&gt;%</span> <span class="fu">data_grid</span>(Run)</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> grid.run <span class="ot">&lt;-</span> grid.run  <span class="sc">%&gt;%</span>  <span class="fu">add_predictions</span>(<span class="at">model =</span> lm.run_bike, <span class="at">var=</span> <span class="st">&#39;pred.run_bike&#39;</span>)</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">ggplot</span>(results_2017) <span class="sc">+</span></span>
@@ -669,8 +658,8 @@ additional predictor variable (which, in this case, is Run).</li>
 </ol>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lm.run_bike2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> results_2017, <span class="at">formula =</span> Bike <span class="sc">~</span> Run <span class="sc">+</span> <span class="fu">I</span>(Run<span class="sc">^</span><span class="dv">2</span>))</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lm.run_bike2[[<span class="st">&#39;coefficients&#39;</span>]]</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>(Intercept)         Run    <span class="fu">I</span>(Run<span class="sc">^</span><span class="dv">2</span>) </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>   <span class="fl">26.22248</span>     <span class="fl">1.64975</span>    <span class="sc">-</span><span class="fl">0.00173</span> </span></code></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a> (Intercept)          Run     <span class="fu">I</span>(Run<span class="sc">^</span><span class="dv">2</span>) </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fl">26.222478107</span>  <span class="fl">1.649746436</span> <span class="sc">-</span><span class="fl">0.001732342</span> </span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>To draw this regression line on our plot, we can take the grid of
 values used on our simple linear regression in step 1, and add another
@@ -711,7 +700,7 @@ let’s add the gender effect in.</li>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lm.run_bike_gender <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> results_2017, <span class="at">formula =</span> Bike <span class="sc">~</span> Run <span class="sc">+</span> Gender)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lm.run_bike_gender[[<span class="st">&#39;coefficients&#39;</span>]]</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>(Intercept)         Run  GenderMale </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">229.317</span>       <span class="fl">0.503</span>     <span class="sc">-</span><span class="fl">26.144</span> </span></code></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a> <span class="fl">229.316963</span>    <span class="fl">0.502562</span>  <span class="sc">-</span><span class="fl">26.143851</span> </span></code></pre></div>
 <p>To interpret these results, we can say that for every increase in one
 minute of run times, bike times increase by about half a minute.
 Moreover, being a male is associated with bike time that is on average
