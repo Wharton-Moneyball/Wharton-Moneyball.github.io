@@ -16,7 +16,7 @@
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -30,7 +30,8 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -43,6 +44,16 @@
   ul.task-list{list-style: none;}
     </style>
 
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
 
 
 
@@ -210,9 +221,6 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -257,56 +265,9 @@ $(document).ready(function () {
     <li>
       <a href="lecture0.html">Lecture 0</a>
     </li>
+    <li class="dropdown-header">Problem Set 0</li>
     <li>
-      <a href="ps0.html">Problem Set 0</a>
-    </li>
-    <li>
-      <a href="lecture1.html">Lecture 1</a>
-    </li>
-    <li>
-      <a href="ps1.html">Problem Set 1</a>
-    </li>
-    <li>
-      <a href="lecture2.html">Lecture 2</a>
-    </li>
-    <li>
-      <a href="ps2.html">Problem Set 2</a>
-    </li>
-    <li>
-      <a href="lecture3.html">Lecture 3</a>
-    </li>
-    <li>
-      <a href="ps3.html">Problem Set 3</a>
-    </li>
-    <li>
-      <a href="lecture4.html">Lecture 4</a>
-    </li>
-    <li>
-      <a href="ps4.html">Problem Set 4</a>
-    </li>
-    <li>
-      <a href="lecture5.html">Lecture 5</a>
-    </li>
-    <li>
-      <a href="ps5.html">Problem Set 5</a>
-    </li>
-    <li>
-      <a href="lecture6.html">Lecture 6</a>
-    </li>
-    <li>
-      <a href="ps6.html">Problem Set 6</a>
-    </li>
-    <li>
-      <a href="lecture7.html">Lecture 7</a>
-    </li>
-    <li>
-      <a href="lecture8.html">Lecture 8</a>
-    </li>
-    <li>
-      <a href="nflscrapR_lecture.html">nflscrapR lecture</a>
-    </li>
-    <li>
-      <a href="psX.html">Problem Set X</a>
+      <a href="tc_lecture0.html">Lecture 0</a>
     </li>
   </ul>
 </li>
@@ -360,14 +321,6 @@ $(document).ready(function () {
 </div><!--/.navbar -->
 
 <div id="header">
-
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
 
@@ -491,11 +444,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("show" === "show");
-});
-</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
