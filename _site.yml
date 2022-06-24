@@ -11,9 +11,9 @@ navbar:
       icon: fa-sign-in
       menu:
         - text: "Lecture 0"
-          href: all_lecture0.html    
+          href: lecture0.html    
         - text: "Problem Set 0"
-          href: all_ps0.html  
+          href: ps0.html  
     - text: "Academy"
       icon: fa-institution
       menu:
