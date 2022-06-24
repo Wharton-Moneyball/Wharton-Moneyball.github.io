@@ -1,17 +1,13 @@
 ---
 title: "Problem Set X"
-output: html_document
+output: 
+  html_document:
+    code_folding: hide
 ---
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
-options(scipen = 0, digits = 3) 
-
-if(!require('pacman')) {
-  install.packages('pacman')
-}
-pacman::p_load(tidyverse, reshape2, ggrepel)
 ```
 
 
@@ -19,7 +15,7 @@ pacman::p_load(tidyverse, reshape2, ggrepel)
 
 ## Outline {-}
 
-Problem Set X is an additional, challenge problem set, designed to accompany the material covered in Wharton Moneyball 2020. Topics covered include advanced dplyr, merging datasets, simple regression, and ggplot2 graphing. You are **strongly** encouraged to attempt the problems for a significant amount of time before looking at the answers for help. A large portion of becoming an effective R-user is learning how to use Google and StackOverflow to help you solve problems you've never encountered before. You will be provided some direction and hints in the problem descriptions. So, your first step is to click "Hide All Code" in the upper right hand corner. When looking through the solutions, if you don't understand a function, I encourage you to utilize the ?function command in the Console (e.g. ?group_by). This will pull up the corresponding R Documentation in the bottom right of your RStudio window, under the "Help" section.
+Problem Set X is an additional, challenge problem set, designed to accompany the material covered in Moneyball Academy. Topics covered include advanced dplyr, merging datasets, simple regression, and ggplot2 graphing. You are strongly encouraged to attempt the problems for a significant amount of time before looking at the answers for help. A large portion of becoming an effective R-user is learning how to use Google and StackOverflow to help you solve problems you've never encountered before. You will be provided some direction and hints in the problem descriptions. So, the code is by default "hidden"; to check the solutions, click "Show All Code" in the upper right-hand corner of the page. When looking through the solutions, if you don't understand a function, I encourage you to utilize the `?function` command in the Console (e.g. `?group_by`). This will pull up the corresponding R Documentation in the bottom right of your RStudio window, under the "Help" section.
 
 
 Suggested background reading:
@@ -101,7 +97,7 @@ names <- statcast_2019 %>%
 
 16. Add wOBA values for each batter. *Hint: join the previously created `fangraphs_2019`. Use select within the join command to keep only only the merge id column and wOBA.*
 
-```{r swing take batter summary}
+```{r swing take batter summary, collapse = TRUE}
 swtk19_summary <- statcast_2019 %>%
   filter(!is.na(attack_region), game_type == "Regular Season") %>%
   mutate(is_sw = ifelse(

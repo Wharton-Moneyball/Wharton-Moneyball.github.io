@@ -409,7 +409,7 @@ $(document).ready(function () {
     </li>
     <li class="divider"></li>
     <li>
-      <a href="nflscrapR_lecture.html">nflscrapR lecture</a>
+      <a href="nflscrapR_lecture.html">nflscrapR Lecture</a>
     </li>
     <li>
       <a href="psX.html">Problem Set X</a>
@@ -445,6 +445,9 @@ $(document).ready(function () {
     </li>
     <li class="divider"></li>
     <li>
+      <a href="tc_ps0.html">Problem Set 0</a>
+    </li>
+    <li>
       <a href="tc_ps1.html">Problem Set 1</a>
     </li>
     <li>
@@ -455,7 +458,7 @@ $(document).ready(function () {
     </li>
     <li class="divider"></li>
     <li>
-      <a href="more_resources.html">More resources</a>
+      <a href="other_data_sources.html">Other Data Sources</a>
     </li>
   </ul>
 </li>
@@ -492,51 +495,51 @@ taken from the Lahman dataset. We will compute the same statistics as we
 did in <a href="ps2.html">Problem Set 2</a> and also standardize these
 statistics within year, year and league, and also historical era.</p>
 <p>To load the batting data into R, we can do the following</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(Lahman)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(Batting)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>batting <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(Batting)</span></code></pre></div>
 <p>Unfortunately, some statistics like hit-by-pitch (HBP) were not
 recorded in the earlier decades of baseball. In the tbl, these missing
 values are designated <code>NA</code>. To see some of these, we can run
 the following code:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting <span class="sc">%&gt;%</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">select</span>(playerID, yearID, teamID, AB, BB, HBP, SH, SF, IBB, GIDP)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 110,495 × 10</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   playerID  yearID teamID    AB    BB   HBP    SH    SF   IBB  GIDP</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>fct<span class="sc">&gt;</span>  <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> abercda01   <span class="dv">1871</span> TRO        <span class="dv">4</span>     <span class="dv">0</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>     <span class="dv">0</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> addybo01    <span class="dv">1871</span> RC1      <span class="dv">118</span>     <span class="dv">4</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>     <span class="dv">0</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> allisar01   <span class="dv">1871</span> CL1      <span class="dv">137</span>     <span class="dv">2</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>     <span class="dv">1</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> allisdo01   <span class="dv">1871</span> WS3      <span class="dv">133</span>     <span class="dv">0</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>     <span class="dv">0</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> ansonca01   <span class="dv">1871</span> RC1      <span class="dv">120</span>     <span class="dv">2</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>     <span class="dv">0</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> armstbo01   <span class="dv">1871</span> FW1       <span class="dv">49</span>     <span class="dv">0</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>     <span class="dv">0</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> barkeal01   <span class="dv">1871</span> RC1        <span class="dv">4</span>     <span class="dv">1</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>     <span class="dv">0</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> barnero01   <span class="dv">1871</span> BS1      <span class="dv">157</span>    <span class="dv">13</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>     <span class="dv">1</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> barrebi01   <span class="dv">1871</span> FW1        <span class="dv">5</span>     <span class="dv">0</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>     <span class="dv">0</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> barrofr01   <span class="dv">1871</span> BS1       <span class="dv">86</span>     <span class="dv">0</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>     <span class="dv">0</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 110,485 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>batting <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, teamID, AB, BB, HBP, SH, SF, IBB, GIDP)</span></code></pre></div>
+<pre><code>## # A tibble: 110,495 × 10
+##    playerID  yearID teamID    AB    BB   HBP    SH    SF   IBB  GIDP
+##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1 abercda01   1871 TRO        4     0    NA    NA    NA    NA     0
+##  2 addybo01    1871 RC1      118     4    NA    NA    NA    NA     0
+##  3 allisar01   1871 CL1      137     2    NA    NA    NA    NA     1
+##  4 allisdo01   1871 WS3      133     0    NA    NA    NA    NA     0
+##  5 ansonca01   1871 RC1      120     2    NA    NA    NA    NA     0
+##  6 armstbo01   1871 FW1       49     0    NA    NA    NA    NA     0
+##  7 barkeal01   1871 RC1        4     1    NA    NA    NA    NA     0
+##  8 barnero01   1871 BS1      157    13    NA    NA    NA    NA     1
+##  9 barrebi01   1871 FW1        5     0    NA    NA    NA    NA     0
+## 10 barrofr01   1871 BS1       86     0    NA    NA    NA    NA     0
+## # … with 110,485 more rows</code></pre>
 <p>A common convention for dealing with the missing values when
 computing <span class="math inline">\(\text{PA}\)</span> is to replace
 the <code>NA</code> with a <code>0</code>. To do this, we can use the
 function <code>replace_na()</code> within a pipe as follows.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting <span class="ot">&lt;-</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   batting <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">IBB =</span> <span class="dv">0</span>, <span class="at">HBP =</span> <span class="dv">0</span>, <span class="at">SH =</span> <span class="dv">0</span>, <span class="at">SF =</span> <span class="dv">0</span>, <span class="at">GIDP =</span> <span class="dv">0</span>))</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting <span class="sc">%&gt;%</span> <span class="fu">select</span>(playerID, yearID, teamID, AB, BB, HBP, SH, SF, IBB)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 110,495 × 9</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>   playerID  yearID teamID    AB    BB   HBP    SH    SF   IBB</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>fct<span class="sc">&gt;</span>  <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> abercda01   <span class="dv">1871</span> TRO        <span class="dv">4</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> addybo01    <span class="dv">1871</span> RC1      <span class="dv">118</span>     <span class="dv">4</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> allisar01   <span class="dv">1871</span> CL1      <span class="dv">137</span>     <span class="dv">2</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> allisdo01   <span class="dv">1871</span> WS3      <span class="dv">133</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> ansonca01   <span class="dv">1871</span> RC1      <span class="dv">120</span>     <span class="dv">2</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> armstbo01   <span class="dv">1871</span> FW1       <span class="dv">49</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> barkeal01   <span class="dv">1871</span> RC1        <span class="dv">4</span>     <span class="dv">1</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> barnero01   <span class="dv">1871</span> BS1      <span class="dv">157</span>    <span class="dv">13</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> barrebi01   <span class="dv">1871</span> FW1        <span class="dv">5</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> barrofr01   <span class="dv">1871</span> BS1       <span class="dv">86</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 110,485 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>batting <span class="ot">&lt;-</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  batting <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">IBB =</span> <span class="dv">0</span>, <span class="at">HBP =</span> <span class="dv">0</span>, <span class="at">SH =</span> <span class="dv">0</span>, <span class="at">SF =</span> <span class="dv">0</span>, <span class="at">GIDP =</span> <span class="dv">0</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>batting <span class="sc">%&gt;%</span> <span class="fu">select</span>(playerID, yearID, teamID, AB, BB, HBP, SH, SF, IBB)</span></code></pre></div>
+<pre><code>## # A tibble: 110,495 × 9
+##    playerID  yearID teamID    AB    BB   HBP    SH    SF   IBB
+##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1 abercda01   1871 TRO        4     0     0     0     0     0
+##  2 addybo01    1871 RC1      118     4     0     0     0     0
+##  3 allisar01   1871 CL1      137     2     0     0     0     0
+##  4 allisdo01   1871 WS3      133     0     0     0     0     0
+##  5 ansonca01   1871 RC1      120     2     0     0     0     0
+##  6 armstbo01   1871 FW1       49     0     0     0     0     0
+##  7 barkeal01   1871 RC1        4     1     0     0     0     0
+##  8 barnero01   1871 BS1      157    13     0     0     0     0
+##  9 barrebi01   1871 FW1        5     0     0     0     0     0
+## 10 barrofr01   1871 BS1       86     0     0     0     0     0
+## # … with 110,485 more rows</code></pre>
 <p>The syntax for <code>replace_na()</code> is a bit involved but the
 basic idea is you have to specify the value you want to replace each
 <code>NA</code>. When using <code>replace_na()</code> it is very
@@ -571,13 +574,13 @@ metrics? Name the columns containing these new standardized values
 re-define the <code>standardize()</code> function we wrote in <a
 href="lecture3.html">Lecture 3</a></em></li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> standardize <span class="ot">&lt;-</span> <span class="cf">function</span>(x){ (x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">/</span><span class="fu">sd</span>(x)}</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting <span class="ot">&lt;-</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   batting <span class="sc">%&gt;%</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">zBA_all =</span> <span class="fu">standardize</span>(BA),</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">zOBP_all =</span> <span class="fu">standardize</span>(OBP),</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">zOPS_all =</span> <span class="fu">standardize</span>(OPS),</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">zwOBA_all =</span> <span class="fu">standardize</span>(wOBA))</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>standardize <span class="ot">&lt;-</span> <span class="cf">function</span>(x){ (x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">/</span><span class="fu">sd</span>(x)}</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>batting <span class="ot">&lt;-</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  batting <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">zBA_all =</span> <span class="fu">standardize</span>(BA),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">zOBP_all =</span> <span class="fu">standardize</span>(OBP),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">zOPS_all =</span> <span class="fu">standardize</span>(OPS),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">zwOBA_all =</span> <span class="fu">standardize</span>(wOBA))</span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
 <li>Group <code>batting</code> by year and compute the standardized BA,
 OBP, OPS, and wOBA within each year. Now who are the best and worst
@@ -585,13 +588,13 @@ batters according to the four measures? Name the columns containing
 these new standardized values <code>zBA_year</code>,
 <code>zOBP_year</code>, etc.</li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting <span class="ot">&lt;-</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   batting <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(yearID) <span class="sc">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">zBA_year =</span> <span class="fu">standardize</span>(BA),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">zOBP_year =</span> <span class="fu">standardize</span>(OBP),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">zOPS_year =</span> <span class="fu">standardize</span>(OPS),</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">zwOBA_year =</span> <span class="fu">standardize</span>(wOBA))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>batting <span class="ot">&lt;-</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  batting <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">zBA_year =</span> <span class="fu">standardize</span>(BA),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">zOBP_year =</span> <span class="fu">standardize</span>(OBP),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">zOPS_year =</span> <span class="fu">standardize</span>(OPS),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">zwOBA_year =</span> <span class="fu">standardize</span>(wOBA))</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>Remove the grouping by year and instead group by year and league.
 Once again, standardize OBP, OPS, and wOBA within each league-year
@@ -599,14 +602,14 @@ combination. Are the best and worst batters still the same? Name the
 columns containing these new standardized valuse
 <code>zBA_year_lg</code>, <code>zOBP_year_lg</code>, etc.</li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting <span class="ot">&lt;-</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   batting <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(yearID) <span class="sc">%&gt;%</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">zBA_year_lg =</span> <span class="fu">standardize</span>(BA),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">zOBP_year_lg =</span> <span class="fu">standardize</span>(OBP),</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">zOPS_year_lg =</span> <span class="fu">standardize</span>(OPS),</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">zwOBA_year_lg =</span> <span class="fu">standardize</span>(wOBA))</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>batting <span class="ot">&lt;-</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  batting <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID) <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">zBA_year_lg =</span> <span class="fu">standardize</span>(BA),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">zOBP_year_lg =</span> <span class="fu">standardize</span>(OBP),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">zOPS_year_lg =</span> <span class="fu">standardize</span>(OPS),</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">zwOBA_year_lg =</span> <span class="fu">standardize</span>(wOBA))</span></code></pre></div>
 <ol start="6" style="list-style-type: decimal">
 <li>Remove the grouping you created in Problem 4. Bill James <a
 href="https://www.billjamesonline.com/dividing_baseball_history_into_eras/">divided
@@ -620,21 +623,21 @@ baseball history into several eras</a> as follows:</li>
 <li>Artifical Turf Era: 1969 – 1992</li>
 <li>Camden Yards Era: 1993 – present</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting <span class="ot">&lt;-</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   batting <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">HIST_ERA =</span> <span class="fu">case_when</span>(</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     <span class="dv">1871</span> <span class="sc">&lt;=</span> yearID <span class="sc">&amp;</span> yearID <span class="sc">&lt;=</span> <span class="dv">1892</span> <span class="sc">~</span> <span class="st">&quot;Pioneer&quot;</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     <span class="dv">1893</span> <span class="sc">&lt;=</span> yearID <span class="sc">&amp;</span> yearID <span class="sc">&lt;=</span> <span class="dv">1919</span> <span class="sc">~</span> <span class="st">&quot;Spitball&quot;</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     <span class="dv">1920</span> <span class="sc">&lt;=</span> yearID <span class="sc">&amp;</span> yearID <span class="sc">&lt;=</span> <span class="dv">1946</span> <span class="sc">~</span> <span class="st">&quot;Landis&quot;</span>,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     <span class="dv">1947</span> <span class="sc">&lt;=</span> yearID <span class="sc">&amp;</span> yearID <span class="sc">&lt;=</span> <span class="dv">1968</span> <span class="sc">~</span> <span class="st">&quot;Baby Boomer&quot;</span>,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     <span class="dv">1969</span> <span class="sc">&lt;=</span> yearID <span class="sc">&amp;</span> yearID <span class="sc">&lt;=</span> <span class="dv">1992</span> <span class="sc">~</span> <span class="st">&quot;Artifical Turf&quot;</span>,</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     <span class="dv">1993</span> <span class="sc">&lt;=</span> yearID <span class="sc">~</span> <span class="st">&quot;Camden Yards&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(HIST_ERA) <span class="sc">%&gt;%</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">zBA_hist =</span> <span class="fu">standardize</span>(BA),</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">zOBP_hist =</span> <span class="fu">standardize</span>(OBP),</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">zOPS_hist =</span> <span class="fu">standardize</span>(OPS),</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">zwOBA_hist =</span> <span class="fu">standardize</span>(wOBA))</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>batting <span class="ot">&lt;-</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  batting <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">HIST_ERA =</span> <span class="fu">case_when</span>(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1871</span> <span class="sc">&lt;=</span> yearID <span class="sc">&amp;</span> yearID <span class="sc">&lt;=</span> <span class="dv">1892</span> <span class="sc">~</span> <span class="st">&quot;Pioneer&quot;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1893</span> <span class="sc">&lt;=</span> yearID <span class="sc">&amp;</span> yearID <span class="sc">&lt;=</span> <span class="dv">1919</span> <span class="sc">~</span> <span class="st">&quot;Spitball&quot;</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1920</span> <span class="sc">&lt;=</span> yearID <span class="sc">&amp;</span> yearID <span class="sc">&lt;=</span> <span class="dv">1946</span> <span class="sc">~</span> <span class="st">&quot;Landis&quot;</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1947</span> <span class="sc">&lt;=</span> yearID <span class="sc">&amp;</span> yearID <span class="sc">&lt;=</span> <span class="dv">1968</span> <span class="sc">~</span> <span class="st">&quot;Baby Boomer&quot;</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1969</span> <span class="sc">&lt;=</span> yearID <span class="sc">&amp;</span> yearID <span class="sc">&lt;=</span> <span class="dv">1992</span> <span class="sc">~</span> <span class="st">&quot;Artifical Turf&quot;</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1993</span> <span class="sc">&lt;=</span> yearID <span class="sc">~</span> <span class="st">&quot;Camden Yards&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(HIST_ERA) <span class="sc">%&gt;%</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">zBA_hist =</span> <span class="fu">standardize</span>(BA),</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">zOBP_hist =</span> <span class="fu">standardize</span>(OBP),</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">zOPS_hist =</span> <span class="fu">standardize</span>(OPS),</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">zwOBA_hist =</span> <span class="fu">standardize</span>(wOBA))</span></code></pre></div>
 <p>Use <code>mutate()</code> and <code>case_when()</code> (just like we
 did in <a href="lecture2.html">Lecture 2</a>) to add a column called
 Hist_era to <code>batting</code> that records the historical era.</p>
@@ -662,31 +665,31 @@ payrolls.</p>
 <li>Remember the function we wrote in <a href="lecture3.html">Lecture
 3</a> to standardize various statistics? It is reproduced below</li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> standardize <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   sigma <span class="ot">&lt;-</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">return</span>( (x <span class="sc">-</span> mu)<span class="sc">/</span>sigma)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> }</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>standardize <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>( (x <span class="sc">-</span> mu)<span class="sc">/</span>sigma)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>We need to write another function in order to compute “relative
 payroll”. This function will take in a vector <code>x</code>, compute
 its median, and then divides every element of <code>x</code> by the
 median.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> relative <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   med <span class="ot">&lt;-</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">return</span>( x<span class="sc">/</span>med )  </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> }</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>relative <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  med <span class="ot">&lt;-</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>( x<span class="sc">/</span>med )  </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Read in the <a href="data/mlb_payrolls.csv">MLB Payroll Data</a> and
 load it into a tibble called <code>mlb_payrolls</code>.</li>
 </ol>
-<pre><code>Rows: 540 Columns: 5
-── Column specification ────────────────────────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr (2): Team, GM
-dbl (3): Team_Payroll, Winning_Percentage, Year
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre><code>## Rows: 540 Columns: 5
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (2): Team, GM
+## dbl (3): Team_Payroll, Winning_Percentage, Year
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li><p>Using the pipe <code>%&gt;%</code>, <code>group_by()</code>, and
 <code>mutate()</code>, add a column to <code>mlb_payrolls</code> that
@@ -713,39 +716,39 @@ winning percentage within each year. What do you notice about how the
 relationship between winning percentage and relative payroll changes
 year to year?</p></li>
 </ol>
-<pre><code># A tibble: 18 × 2
-    Year   cor
-   &lt;dbl&gt; &lt;dbl&gt;
- 1  1998 0.764
- 2  1999 0.699
- 3  2000 0.327
- 4  2001 0.338
- 5  2002 0.443
- 6  2003 0.415
- 7  2004 0.515
- 8  2005 0.497
- 9  2006 0.538
-10  2007 0.495
-11  2008 0.322
-12  2009 0.504
-13  2010 0.347
-14  2011 0.408
-15  2012 0.195
-16  2013 0.330
-17  2014 0.297
-18  2015 0.281</code></pre>
+<pre><code>## # A tibble: 18 × 2
+##     Year   cor
+##    &lt;dbl&gt; &lt;dbl&gt;
+##  1  1998 0.764
+##  2  1999 0.699
+##  3  2000 0.327
+##  4  2001 0.338
+##  5  2002 0.443
+##  6  2003 0.415
+##  7  2004 0.515
+##  8  2005 0.497
+##  9  2006 0.538
+## 10  2007 0.495
+## 11  2008 0.322
+## 12  2009 0.504
+## 13  2010 0.347
+## 14  2011 0.408
+## 15  2012 0.195
+## 16  2013 0.330
+## 17  2014 0.297
+## 18  2015 0.281</code></pre>
 </div>
 <div id="a-challenge-question" class="section level2">
 <h2>A Challenge Question</h2>
 <p>Without running the code, work with your teammates to see if you can
 figure out what the code below is doing.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> batting_2014_2015 <span class="ot">&lt;-</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   batting <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">filter</span>(yearID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2014</span>, <span class="dv">2015</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(playerID) <span class="sc">%&gt;%</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">select</span>(playerID, yearID, BA) <span class="sc">%&gt;%</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">arrange</span>(playerID)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>batting_2014_2015 <span class="ot">&lt;-</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  batting <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2014</span>, <span class="dv">2015</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(playerID) <span class="sc">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, BA) <span class="sc">%&gt;%</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(playerID)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Run the code above and save the tbl
 <code>batting_2014_2015.RData</code> to the file

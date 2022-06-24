@@ -409,7 +409,7 @@ $(document).ready(function () {
     </li>
     <li class="divider"></li>
     <li>
-      <a href="nflscrapR_lecture.html">nflscrapR lecture</a>
+      <a href="nflscrapR_lecture.html">nflscrapR Lecture</a>
     </li>
     <li>
       <a href="psX.html">Problem Set X</a>
@@ -455,7 +455,7 @@ $(document).ready(function () {
     </li>
     <li class="divider"></li>
     <li>
-      <a href="more_resources.html">More resources</a>
+      <a href="other_data_sources.html">Other Data Sources</a>
     </li>
   </ul>
 </li>
@@ -488,8 +488,8 @@ $(document).ready(function () {
 <div id="basic-usage" class="section level2">
 <h2>Basic Usage</h2>
 <p>When you open RStudio for the first time, it should open up a new
-window that looks something like this:
-<img src = "figures/RStudio_screenshot.png" width="1024" height="900"></p>
+window that looks something like this: <img
+src="figures/ps0_fig1.png" /></p>
 <p>The RStudio window is divided into three panes. For now, we will
 focus only on the big pane on the left, the <strong>Console</strong>
 pane. At the top of the <strong>Console</strong> pane, there is a bit of
@@ -517,7 +517,7 @@ functions</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">10</span>)</span></code></pre></div>
-<pre><code>## [1] 2.3</code></pre>
+<pre><code>## [1] 2.302585</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cos</span>(pi)</span></code></pre></div>
 <pre><code>## [1] -1</code></pre>
 </div>
@@ -540,8 +540,8 @@ name is whatever text came to the left of the operator.</p>
 <p>Now when we execute this expression, R does not auotmatically print
 anything like it did in an earlier example. However, if you look closely
 at the <strong>Environment</strong> pane (top right-hand side of the
-RStudio window), you’ll see that it now lists x and its value 98.
-<img src = "figures/RStudio_assignment_screenshot.png" width="1024" height="900"></p>
+RStudio window), you’ll see that it now lists x and its value 98. <img
+src="figures/ps0_fig2.png" /></p>
 <p>This pane will show every variable that we have defined. As we start
 creating more and more variables, this list will be really helpful to
 keep track of what we’ve defined. Now that we have created the variable
@@ -551,17 +551,17 @@ class="math inline">\(\sqrt{x}\)</span> as follows:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>## [1] 98</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>x</span></code></pre></div>
-<pre><code>## [1] 0.0102</code></pre>
+<pre><code>## [1] 0.01020408</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div>
 <pre><code>## [1] 99</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(x)</span></code></pre></div>
-<pre><code>## [1] 9.9</code></pre>
+<pre><code>## [1] 9.899495</code></pre>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">3.14159</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 3.14</code></pre>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">3.14159</span>, <span class="at">digits =</span> <span class="dv">4</span>)</span></code></pre></div>
-<pre><code>## [1] 3.14</code></pre>
+<pre><code>## [1] 3.1416</code></pre>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(x), <span class="at">digits =</span> <span class="dv">4</span>)</span></code></pre></div>
-<pre><code>## [1] 9.9</code></pre>
+<pre><code>## [1] 9.8995</code></pre>
 <p>In the last three examples, we used the function
 <code>round()</code>, which takes 2 arguments (entered inside the
 parantheses). The first argument is the number that we want to round and
@@ -578,9 +578,7 @@ we haven’t defined yet, R will throw an error. For instance, in the code
 below, if we try to add 5 to a previously undeclared variable, we get an
 error.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>y <span class="sc">+</span> <span class="dv">5</span></span></code></pre></div>
-<pre><code>##  [1] 5.60 5.06 5.05 5.06 5.52 5.08 5.96 5.29 5.11 5.00 5.15 5.01 5.19 5.72 5.17 5.46 5.18 5.22 5.39
-## [20] 5.29 5.13 5.16 5.46 5.85 5.32 5.39 5.00 5.69 5.44 5.83 5.01 5.22 5.15 5.00 5.41 5.27 5.36 5.23
-## [39] 5.97 5.38 5.01 5.09 5.14 5.06 5.12 5.00 5.13 5.00 5.26 5.28</code></pre>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;y&#39; not found</code></pre>
 </div>
 <div id="exercises" class="section level2">
 <h2>Exercises</h2>

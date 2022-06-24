@@ -3,7 +3,7 @@ title: "Problem Set 5"
 output: html_document
 ---
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, comment = "", prompt = TRUE, collapse = TRUE, fig.align = "center")
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
 ```
 
 ## Recreate a Graph
@@ -17,7 +17,6 @@ Let's try to recreate one of Neil's graphics from his article on the top fight s
 ```{r second, message=TRUE, warning=TRUE}
 file_from_git<-'https://raw.githubusercontent.com/fivethirtyeight/data/master/fight-songs/fight-songs.csv'
 data<-read.csv(file_from_git)
-
 ```
 
 

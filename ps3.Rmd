@@ -4,7 +4,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, comment = "", prompt = TRUE, collapse = TRUE, tidy=FALSE)
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
 ```
 
 ## MLB Batting Statistics
@@ -13,7 +13,7 @@ In this problem set, you will practice using the pipe `%>%` and grouped calculat
 We will compute the same statistics as we did in [Problem Set 2](ps2.html) and also standardize these statistics within year, year and league, and also historical era.
 
 To load the batting data into R, we can do the following
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
 library(Lahman)
 batting <- as_tibble(Batting)

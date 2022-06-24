@@ -4,14 +4,15 @@ output: html_document
 ---
 
 ```{r ps0-setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
 ```
 
 Please try to work through this first problem set 
 
 ## Basic Usage
+
 When you open RStudio for the first time, it should open up a new window that looks something like this:
-<img src = "figures/RStudio_screenshot.png" width="1024" height="900">
+![](figures/ps0_fig1.png)
 
 The RStudio window is divided into three panes. For now, we will focus only on the big pane on the left, the **Console** pane.
 At the top of the **Console** pane, there is a bit of introductory text that shows the version of R that we are using and the license. 
@@ -46,7 +47,7 @@ x <- 2 + 3*(6-4)^5
 ```
 Now when we execute this expression, R does not auotmatically print anything like it did in an earlier example.
 However, if you look closely at the **Environment** pane (top right-hand side of the RStudio window), you'll see that it now lists x and its value 98. 
-<img src = "figures/RStudio_assignment_screenshot.png" width="1024" height="900">
+![](figures/ps0_fig2.png)
 
 This pane will show every variable that we have defined. As we start creating more and more variables, this list will be really helpful to keep track of what we've defined. 
 Now that we have created the variable x, we can use the symbol ``x'' in more expressions.
