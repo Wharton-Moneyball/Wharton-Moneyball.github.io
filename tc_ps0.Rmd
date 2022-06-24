@@ -7,7 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
 ```
 
-Please try to work through this first problem set 
+Please try to work through this first problem set. You will have time on Day 1 to discuss any questions you have with the TAs.
 
 ## Basic Usage
 
