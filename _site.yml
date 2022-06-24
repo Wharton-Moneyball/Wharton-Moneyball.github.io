@@ -1,9 +1,10 @@
 name: "Wharton Moneyball 2022"
 output_dir: "."
 navbar:
-  title: "WMb'22"
+  title: "<img id=\"logo\" style=\"width: 200px;\" src=\"figures/WMA_logo.png\" />" 
+  #type: inverse
   left:
-    - text:
+    - text: "Home"
       icon: fa-home
       href: index.html
     - text: "Academy"

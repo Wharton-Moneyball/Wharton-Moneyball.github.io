@@ -338,7 +338,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">WMb'22</a>
+      <a class="navbar-brand" href="index.html"><img id="logo" style="width: 200px;" src="figures/WMA_logo.png" /></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -346,6 +346,7 @@ $(document).ready(function () {
   <a href="index.html">
     <span class="fa fa-home"></span>
      
+    Home
   </a>
 </li>
 <li class="dropdown">
@@ -516,26 +517,26 @@ goals attempted in the NFL between 2005 and 2015. First, we will train
 several models of field goal success with this data. Then, we will
 evaluate their predictive performance using the data contained in
 “nfl_fg_test.csv”.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_train <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/nfl_fg_train.csv&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Rows<span class="sc">:</span> <span class="dv">9505</span> Columns<span class="sc">:</span> <span class="dv">8</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>── Column specification ────────────────────────────────────────────────────────────────────────────</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Delimiter<span class="sc">:</span> <span class="st">&quot;,&quot;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">chr</span> (<span class="dv">2</span>)<span class="sc">:</span> Team, Kicker</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dbl</span> (<span class="dv">5</span>)<span class="sc">:</span> Year, GameMinute, Distance, ScoreDiff, Success</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lgl</span> (<span class="dv">1</span>)<span class="sc">:</span> Grass</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ℹ Use <span class="st">`</span><span class="at">spec()</span><span class="st">`</span> to retrieve the full column specification <span class="cf">for</span> this data.</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ℹ Specify the column types or set <span class="st">`</span><span class="at">show_col_types = FALSE</span><span class="st">`</span> to quiet this message.</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>fg_train <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/nfl_fg_train.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 9505 Columns: 8
+## ── Column specification ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (2): Team, Kicker
+## dbl (5): Year, GameMinute, Distance, ScoreDiff, Success
+## lgl (1): Grass
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p>The simplest forecast for field goal success probability is the
 overall average success rate. This forecast does not differentiate
 between players or attempt to adjust for distance or other game
 contexts. To compute this forecast, we need to find the average of the
 data in the column “Success.” The code below adds a column to the tbl
 called “phat_all”</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_train <span class="ot">&lt;-</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   fg_train <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">phat_all =</span> <span class="fu">mean</span>(Success))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fg_train <span class="ot">&lt;-</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  fg_train <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">phat_all =</span> <span class="fu">mean</span>(Success))</span></code></pre></div>
 <p>It turns out that kickers make just over 83% of their attempts.
 However, we know that there are some truly elite kickers (e.g. Justin
 Tucker) who make well over 83% of their attempts, and other kickers
@@ -548,11 +549,11 @@ the code below, we add a column to <code>fg_train</code> called
 conversion rate. Notice that because we adding a grouping to carry out
 this computation, we need to remove the grouping using
 <code>ungroup()</code> when we’re done.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_train <span class="ot">&lt;-</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   fg_train <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(Kicker) <span class="sc">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">phat_kicker =</span> <span class="fu">mean</span>(Success)) <span class="sc">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">ungroup</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fg_train <span class="ot">&lt;-</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  fg_train <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Kicker) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">phat_kicker =</span> <span class="fu">mean</span>(Success)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 <p>Intuitively, distance is one of the main factors of whether a kicker
 makes a field goal. We will use the <code>cut()</code> function to bin
 the data according to distance. Then, we will compute the conversion
@@ -564,12 +565,12 @@ longest was 76. We will begin by binning our data into 10 yard
 increments, 10 – 20, 20 – 30, …, 70 – 80. We then save the bin label in
 a column called “Dist_10” and the predictions in a column called
 “phat_dist_10”.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_train <span class="ot">&lt;-</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   fg_train <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">Dist_10 =</span> <span class="fu">cut</span>(Distance, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">10</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(Dist_10) <span class="sc">%&gt;%</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">phat_dist_10 =</span> <span class="fu">mean</span>(Success)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">ungroup</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fg_train <span class="ot">&lt;-</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  fg_train <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Dist_10 =</span> <span class="fu">cut</span>(Distance, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">10</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Dist_10) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">phat_dist_10 =</span> <span class="fu">mean</span>(Success)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 <p>We can now look at a scatter plot of distance and our forecasts
 “phat_dist_10”. Since there are many attempts from certain yardages,
 we’ll use alpha-blending (see <a href="lecture2.html">Lecture 2</a> for
@@ -579,35 +580,35 @@ values than lighter dots.</p>
 <p>It certainly looks like our predictions make some intuitive sense:
 the estimated probability of making a field goal decreases as the
 distance increases.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fg_train) <span class="sc">+</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Distance, <span class="at">y =</span> phat_dist_10), <span class="at">alpha =</span> <span class="fl">0.2</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_plot</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fg_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fg_train) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Distance, <span class="at">y =</span> phat_dist_10), <span class="at">alpha =</span> <span class="fl">0.2</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>fg_plot</span></code></pre></div>
 <p><img src="lecture7_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We also could have binned field goal Distance 5- or 2-yard
 increments, saving bin labels into columns called “Dist_5” or “Dist_2”.
 And similar to the 10-yard bins, we could add columns to
 <code>fg_train</code> that computes the overall conversion rate within
 each of these 5-yard or 2-yard bins.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_train <span class="ot">&lt;-</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   fg_train <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">Dist_5 =</span> <span class="fu">cut</span>(Distance, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">5</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(Dist_5) <span class="sc">%&gt;%</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">phat_dist_5 =</span> <span class="fu">mean</span>(Success)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">ungroup</span>()</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_train <span class="ot">&lt;-</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   fg_train <span class="sc">%&gt;%</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">Dist_2 =</span> <span class="fu">cut</span>(Distance, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(Dist_2) <span class="sc">%&gt;%</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">phat_dist_2 =</span> <span class="fu">mean</span>(Success)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">ungroup</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fg_train <span class="ot">&lt;-</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  fg_train <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Dist_5 =</span> <span class="fu">cut</span>(Distance, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">5</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Dist_5) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">phat_dist_5 =</span> <span class="fu">mean</span>(Success)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>fg_train <span class="ot">&lt;-</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  fg_train <span class="sc">%&gt;%</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Dist_2 =</span> <span class="fu">cut</span>(Distance, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Dist_2) <span class="sc">%&gt;%</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">phat_dist_2 =</span> <span class="fu">mean</span>(Success)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 <p>Now we plot our predictions based on three different binning
 methods.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_plot  <span class="ot">&lt;-</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">ggplot</span>(fg_train) <span class="sc">+</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Distance, <span class="at">y =</span> phat_dist_10), <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="st">&#39;black&#39;</span>) <span class="sc">+</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Distance, <span class="at">y =</span> phat_dist_5), <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>) <span class="sc">+</span> </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Distance, <span class="at">y =</span> phat_dist_2), <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="st">&#39;red&#39;</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_plot</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fg_plot  <span class="ot">&lt;-</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(fg_train) <span class="sc">+</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Distance, <span class="at">y =</span> phat_dist_10), <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="st">&#39;black&#39;</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Distance, <span class="at">y =</span> phat_dist_5), <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Distance, <span class="at">y =</span> phat_dist_2), <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="st">&#39;red&#39;</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>fg_plot</span></code></pre></div>
 <p><img src="lecture7_files/figure-html/phat-dist-plot2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now when we binned our data into 2-yard increments, we find that our
 forecasts are no longer monotonic decreasing. Probability of making a
@@ -637,16 +638,16 @@ the mean square error of our forecasts. Using code that is very nearly
 identical to that used to compute RSME in <a
 href="lecture4.html">Lecture 4</a>, we can compute the Brier score of
 each of our prediction models.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">summarise</span>(fg_train,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>           <span class="at">phat_all =</span> <span class="fu">mean</span>( (Success <span class="sc">-</span> phat_all)<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>           <span class="at">phat_kicker =</span> <span class="fu">mean</span>( (Success <span class="sc">-</span> phat_kicker)<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>           <span class="at">phat_dist_10 =</span> <span class="fu">mean</span>( (Success <span class="sc">-</span> phat_dist_10)<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>           <span class="at">phat_dist_5 =</span> <span class="fu">mean</span>( (Success <span class="sc">-</span> phat_dist_5)<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>           <span class="at">phat_dist_2 =</span> <span class="fu">mean</span>( (Success <span class="sc">-</span> phat_dist_2)<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1 × 5</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  phat_all phat_kicker phat_dist_10 phat_dist_5 phat_dist_2</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>     <span class="sc">&lt;</span>dbl<span class="sc">&gt;</span>       <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>        <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>       <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>       <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>    <span class="fl">0.140</span>       <span class="fl">0.138</span>        <span class="fl">0.125</span>       <span class="fl">0.123</span>       <span class="fl">0.123</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(fg_train,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">phat_all =</span> <span class="fu">mean</span>( (Success <span class="sc">-</span> phat_all)<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">phat_kicker =</span> <span class="fu">mean</span>( (Success <span class="sc">-</span> phat_kicker)<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">phat_dist_10 =</span> <span class="fu">mean</span>( (Success <span class="sc">-</span> phat_dist_10)<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">phat_dist_5 =</span> <span class="fu">mean</span>( (Success <span class="sc">-</span> phat_dist_5)<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">phat_dist_2 =</span> <span class="fu">mean</span>( (Success <span class="sc">-</span> phat_dist_2)<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 5
+##   phat_all phat_kicker phat_dist_10 phat_dist_5 phat_dist_2
+##      &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1    0.140       0.138        0.125       0.123       0.123</code></pre>
 <p>Which model has the lowest Brier score? Do you think this model
 over-fits the data?</p>
 <p>Before assessing how well our models predict <em>out-of-sample</em>,
@@ -656,57 +657,57 @@ need multiple rows recording the same prediction for each kicker.
 Instead, we can create a tbl called <code>phat_kicker</code> which has
 one row per kicker and two columns, one identifying kicker and one for
 the associated forecast:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> phat_kicker <span class="ot">&lt;-</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   fg_train <span class="sc">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(Kicker) <span class="sc">%&gt;%</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">summarize</span>(<span class="at">phat_kicker =</span> <span class="fu">mean</span>(Success))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>phat_kicker <span class="ot">&lt;-</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  fg_train <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Kicker) <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">phat_kicker =</span> <span class="fu">mean</span>(Success))</span></code></pre></div>
 <p>Create similar tibbles for phat_dist_10, phat_dist_5, and
 phat_dist_2.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> phat_dist_10 <span class="ot">&lt;-</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   fg_train <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(Dist_10) <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">summarize</span>(<span class="at">phat_dist_10 =</span> <span class="fu">mean</span>(Success))</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> phat_dist_5 <span class="ot">&lt;-</span> </span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   fg_train <span class="sc">%&gt;%</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(Dist_5) <span class="sc">%&gt;%</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">summarize</span>(<span class="at">phat_dist_5 =</span> <span class="fu">mean</span>(Success))</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> phat_dist_2 <span class="ot">&lt;-</span> </span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   fg_train <span class="sc">%&gt;%</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(Dist_2) <span class="sc">%&gt;%</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">summarize</span>(<span class="at">phat_dist_2 =</span> <span class="fu">mean</span>(Success))</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>phat_dist_10 <span class="ot">&lt;-</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  fg_train <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Dist_10) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">phat_dist_10 =</span> <span class="fu">mean</span>(Success))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>phat_dist_5 <span class="ot">&lt;-</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  fg_train <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Dist_5) <span class="sc">%&gt;%</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">phat_dist_5 =</span> <span class="fu">mean</span>(Success))</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>phat_dist_2 <span class="ot">&lt;-</span> </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  fg_train <span class="sc">%&gt;%</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Dist_2) <span class="sc">%&gt;%</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">phat_dist_2 =</span> <span class="fu">mean</span>(Success))</span></code></pre></div>
 <p>The file “nfl_fg_test.csv” contains additional data on more field
 goals kicked between 2005 and 2015. Since we have not used the data in
 this file to train our models, we can get a sense of the
 <em>out-of-sample</em> predictive performance of our models by looking
 at how well they predict these field goals. We first load the data into
 a tbl called <code>fg_test</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_test <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/nfl_fg_test.csv&quot;</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Rows<span class="sc">:</span> <span class="dv">1682</span> Columns<span class="sc">:</span> <span class="dv">8</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>── Column specification ────────────────────────────────────────────────────────────────────────────</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>Delimiter<span class="sc">:</span> <span class="st">&quot;,&quot;</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">chr</span> (<span class="dv">2</span>)<span class="sc">:</span> Team, Kicker</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dbl</span> (<span class="dv">5</span>)<span class="sc">:</span> Year, GameMinute, Distance, ScoreDiff, Success</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lgl</span> (<span class="dv">1</span>)<span class="sc">:</span> Grass</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>ℹ Use <span class="st">`</span><span class="at">spec()</span><span class="st">`</span> to retrieve the full column specification <span class="cf">for</span> this data.</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>ℹ Specify the column types or set <span class="st">`</span><span class="at">show_col_types = FALSE</span><span class="st">`</span> to quiet this message.</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fg_test <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/nfl_fg_test.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 1682 Columns: 8
+## ── Column specification ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (2): Team, Kicker
+## dbl (5): Year, GameMinute, Distance, ScoreDiff, Success
+## lgl (1): Grass
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p>Using <code>mutate()</code> and <code>cut()</code>, add columns
 “Dist_10”, “Dist_5”, and “Dist_2” to <code>fg_test</code> that bin the
 data into 10-yard, 5-yard, and 2-yard increments.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_test <span class="ot">&lt;-</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   fg_test <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">Dist_10 =</span> <span class="fu">cut</span>(Distance, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">10</span>)),</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">Dist_5 =</span> <span class="fu">cut</span>(Distance, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">5</span>)),</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>          <span class="at">Dist_2 =</span> <span class="fu">cut</span>(Distance, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fg_test <span class="ot">&lt;-</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  fg_test <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Dist_10 =</span> <span class="fu">cut</span>(Distance, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">10</span>)),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">Dist_5 =</span> <span class="fu">cut</span>(Distance, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">5</span>)),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">Dist_2 =</span> <span class="fu">cut</span>(Distance, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">2</span>)))</span></code></pre></div>
 <p>We are now ready to apply our <code>fg_train</code> model’s forecasts
 to <code>fg_test</code>. For instance, we can add the forecast from
 “phat_all”, which is just the overall conversion rate averaged over all
 kickers. Notice that instead of computing the mean of the column
 “Success” from <code>fg_test</code>, we are computing the mean from
 <code>fg_train</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_test <span class="ot">&lt;-</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   fg_test <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">phat_all =</span> <span class="fu">mean</span>(fg_train[[<span class="st">&quot;Success&quot;</span>]]))</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fg_test <span class="ot">&lt;-</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  fg_test <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">phat_all =</span> <span class="fu">mean</span>(fg_train[[<span class="st">&quot;Success&quot;</span>]]))</span></code></pre></div>
 <p>Joining is a powerful technique to combine data from two different
 tables based on a <em>key</em>. The key is what enables us to match rows
 between the tables. For instance, to add the forecasts from the tbl
@@ -719,26 +720,26 @@ forecast from <code>phat_kicker</code> to the row in
 <code>fg_test.</code> What we have just described is what is known as an
 “inner join”. In this situation, the key was the Kicker. The code to
 carry out these operations is given below.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_test <span class="ot">&lt;-</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   fg_test <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">inner_join</span>(phat_kicker, <span class="at">by =</span> <span class="st">&quot;Kicker&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fg_test <span class="ot">&lt;-</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  fg_test <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(phat_kicker, <span class="at">by =</span> <span class="st">&quot;Kicker&quot;</span>)</span></code></pre></div>
 <p>To verify that we have successfully performed this join, we can print
 out a few rows of <code>fg_test</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">select</span>(fg_test, Kicker, Success, phat_kicker)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1,682 × 3</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>   Kicker  Success phat_kicker</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>       <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> Akers         <span class="dv">1</span>       <span class="fl">0.788</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> Akers         <span class="dv">1</span>       <span class="fl">0.788</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> Bironas       <span class="dv">1</span>       <span class="fl">0.850</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> Bironas       <span class="dv">1</span>       <span class="fl">0.850</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> Bironas       <span class="dv">1</span>       <span class="fl">0.850</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> Brien         <span class="dv">0</span>       <span class="fl">0.333</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> Brown         <span class="dv">0</span>       <span class="fl">0.829</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> Brown         <span class="dv">1</span>       <span class="fl">0.829</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> Brown         <span class="dv">1</span>       <span class="fl">0.829</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> Brown         <span class="dv">1</span>       <span class="fl">0.829</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 1,672 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(fg_test, Kicker, Success, phat_kicker)</span></code></pre></div>
+<pre><code>## # A tibble: 1,682 × 3
+##    Kicker  Success phat_kicker
+##    &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Akers         1       0.788
+##  2 Akers         1       0.788
+##  3 Bironas       1       0.850
+##  4 Bironas       1       0.850
+##  5 Bironas       1       0.850
+##  6 Brien         0       0.333
+##  7 Brown         0       0.829
+##  8 Brown         1       0.829
+##  9 Brown         1       0.829
+## 10 Brown         1       0.829
+## # … with 1,672 more rows</code></pre>
 <p>Let’s unpack the inner join code line-by-line: in the first two
 lines, we are telling R that we want to over-write <code>fg_test</code>.
 Next, we pipe <code>fg_test</code> to the function
@@ -750,17 +751,17 @@ use is the kicker.</p>
 <p>Mimic the code above, we can add columns for <code>fg_test</code> for
 the remaining three predictive models: <code>phat_dist_10</code>,
 <code>phat_dist_5</code>, and <code>phat_dist_2</code>.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> fg_test <span class="ot">&lt;-</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   fg_test <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">inner_join</span>(phat_dist_10, <span class="at">by =</span> <span class="st">&quot;Dist_10&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">inner_join</span>(phat_dist_5, <span class="at">by =</span> <span class="st">&quot;Dist_5&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">inner_join</span>(phat_dist_2, <span class="at">by =</span> <span class="st">&quot;Dist_2&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fg_test <span class="ot">&lt;-</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  fg_test <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(phat_dist_10, <span class="at">by =</span> <span class="st">&quot;Dist_10&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(phat_dist_5, <span class="at">by =</span> <span class="st">&quot;Dist_5&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(phat_dist_2, <span class="at">by =</span> <span class="st">&quot;Dist_2&quot;</span>)</span></code></pre></div>
 <p>Now, we can compute the out-of-sample Brier scores for each of our
 models. Which has the best out-of-sample performance?</p>
-<pre><code># A tibble: 1 × 5
-  phat_all phat_kicker phat_dist_10 phat_dist_5 phat_dist_2
-     &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-1    0.134       0.133        0.120       0.118       0.118</code></pre>
+<pre><code>## # A tibble: 1 × 5
+##   phat_all phat_kicker phat_dist_10 phat_dist_5 phat_dist_2
+##      &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1    0.134       0.133        0.120       0.118       0.118</code></pre>
 </div>
 <div id="looking-ahead-to-tomorrow" class="section level2">
 <h2>Looking ahead to tomorrow</h2>
@@ -769,7 +770,7 @@ the “binning-and-averaging” approach we used above to its logical
 extreme (i.e. what would happen if we made our bins infinitesimally
 small). In order to do that, we will want to save our tbls
 <code>fg_train</code> and <code>fg_test</code>:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">save</span>(fg_train, fg_test, <span class="at">file =</span> <span class="st">&quot;data/nfl_fg.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(fg_train, fg_test, <span class="at">file =</span> <span class="st">&quot;data/nfl_fg.RData&quot;</span>)</span></code></pre></div>
 </div>
 
 

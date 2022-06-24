@@ -4,7 +4,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, comment = "", prompt = TRUE, collapse = TRUE, tidy=FALSE)
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
 ```
 
 In [Lecture 4](lecture4.html), we looked at predicting an MLB player's 2015 batting average using their 2014 batting average. We did so by binning the data and looking at the average within each bin. What if we wanted to make the bins infinitesimally small? This brings us to the ideas of *correlation* and the *regression method*.

@@ -3,6 +3,11 @@ title: "Lecture 4"
 output: html_document
 ---
 
+```{r lecture4-setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
+library(tidyverse)
+```
+
 ## Introduction
 <!-- Original graphic is on pg 18 of Adi's Lecture 3 -->
 

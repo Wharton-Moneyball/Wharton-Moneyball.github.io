@@ -338,7 +338,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">WMb'22</a>
+      <a class="navbar-brand" href="index.html"><img id="logo" style="width: 200px;" src="figures/WMA_logo.png" /></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -346,6 +346,7 @@ $(document).ready(function () {
   <a href="index.html">
     <span class="fa fa-home"></span>
      
+    Home
   </a>
 </li>
 <li class="dropdown">
@@ -557,7 +558,7 @@ of presenting this information via the different visualizations we
 covered in <a href="tc_lecture3.html">Lecture 3</a>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pitching) <span class="sc">+</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>)</span></code></pre></div>
-<p><img src="tc_lecture4_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="tc_lecture4_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Looking at the plot, it appears that some of the pitchers from the
 first few decades of baseball had the lowest ERA. Using
 <code>arrange()</code>, we can see which pitcher had the best season
@@ -825,7 +826,7 @@ above but with some additional calls to <code>geom_line</code>.</p>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> </span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> pitching_summary, </span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> mean), <span class="at">col =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
-<p><img src="tc_lecture4_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="tc_lecture4_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>You’ll notice that the last line of code is a bit different than
 anything we’ve seen before. In particular, we are specifying both the
 data and mapping within the same ggplot2 function. If all of the

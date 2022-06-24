@@ -1,5 +1,3 @@
-base
-pacman
 tidyverse
 ggplot2
 tibble
@@ -9,12 +7,5 @@ purrr
 dplyr
 stringr
 forcats
-reshape2
-ggrepel
-rmarkdown
-simpletable
 Lahman
-ggimage
 modelr
-ggbeeswarm
-ggridges

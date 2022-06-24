@@ -3,6 +3,11 @@ title: "Lecture 5"
 output: html_document
 ---
 
+```{r lecture5-setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
+library(tidyverse)
+```
+
 ## MLB Batting Statistics
 
 Let's first load the `Lahman` library used in [Lecture 4](tc_lecture4.html). In

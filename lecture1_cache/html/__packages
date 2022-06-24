@@ -1,5 +1,3 @@
-base
-pacman
 tidyverse
 ggplot2
 tibble
@@ -9,8 +7,15 @@ purrr
 dplyr
 stringr
 forcats
-reshape2
-ggrepel
-rmarkdown
 simpletable
 Lahman
+ggimage
+modelr
+ggbeeswarm
+plotly
+lubridate
+ggpubr
+pacman
+reshape2
+ggrepel
+ggridges

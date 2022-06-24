@@ -338,7 +338,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">WMb'22</a>
+      <a class="navbar-brand" href="index.html"><img id="logo" style="width: 200px;" src="figures/WMA_logo.png" /></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -346,6 +346,7 @@ $(document).ready(function () {
   <a href="index.html">
     <span class="fa fa-home"></span>
      
+    Home
   </a>
 </li>
 <li class="dropdown">
@@ -678,8 +679,8 @@ to keep only only the merge id column and wOBA.</em></p></li>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(TR_p100p)) <span class="sc">%&gt;%</span></span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">select</span>(fangraphs_2019, key_mlbam, wOBA), </span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;batterid&quot;</span> <span class="ot">=</span> <span class="st">&quot;key_mlbam&quot;</span>))</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;batterid&#39;, &#39;attack_region&#39;. You can override using the
-## `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;batterid&#39;, &#39;attack_region&#39;. You can
+## override using the `.groups` argument.</code></pre>
 </div>
 <div id="interpreting-run-value" class="section level2">
 <h2>Interpreting Run Value</h2>
@@ -727,7 +728,7 @@ eight batters, and why?</p></li>
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face=</span><span class="st">&quot;bold&quot;</span>),</span>
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face=</span><span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
-<p><img src="psX_files/figure-html/interpreting%20run%20value-1.png" width="768" /></p>
+<p><img src="psX_files/figure-html/interpreting%20run%20value-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="run-value-generation" class="section level3">
 <h3>Run Value Generation</h3>
@@ -754,7 +755,7 @@ total run value benchmarks: 30, 40, and 50. Using a nested
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face=</span><span class="st">&quot;bold&quot;</span>),</span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face=</span><span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
-<p><img src="psX_files/figure-html/run%20value%20generation-1.png" width="768" /></p>
+<p><img src="psX_files/figure-html/run%20value%20generation-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 

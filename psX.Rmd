@@ -5,7 +5,7 @@ output: html_document
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, results = "hold", fig.width=8, fig.height=4, cache=T)
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
 options(scipen = 0, digits = 3) 
 
 if(!require('pacman')) {
