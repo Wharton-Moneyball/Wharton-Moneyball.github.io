@@ -20,11 +20,11 @@ This is in marked contrast to most other software that you're probably accustome
 To make our lives a bit easier, we will use an integrated development environment (IDE) for R, known as RStudio.
 
 **So that we can start analyzing data right away, we'd like you to install R and RStudio before the first day**
-Instructions for installing R and RStudio, as well as setting up your computer for the class are covered in [Lecture 0](all_lecture0.html).
+Instructions for installing R and RStudio, as well as setting up your computer for the class are covered in [Lecture 0](lecture0.html).
 **Note: tablets and chromebooks may not have sufficient computing power to run R and RStudio. We highly recommend using a laptop or desktop**
 
 We know that you are very excited about the program and we're similarly excited to start working together.
-After completing Lecture 0, [Problem Set 0](all_ps0.html) contains a brief introduction to the R programming language with some simple exercises, and several questions that will motivate the concepts you'll be exploring in the morning lectures.
+After completing Lecture 0, [Problem Set 0](ps0.html) contains a brief introduction to the R programming language with some simple exercises, and several questions that will motivate the concepts you'll be exploring in the morning lectures.
 Don't worry if you don't finish working your way through these exercises before the first day.
 On the first morning, you'll meet with your project team and TAs to discuss them. 
 As we approach the start of camp, please check back for periodic updates to the site. 
