@@ -7,11 +7,16 @@ navbar:
     - text: "Home"
       icon: fa-home
       href: index.html
+    - text: "Get Started"
+      icon: fa-sign-in
+      menu:
+        - text: "Lecture 0"
+          href: all_lecture0.html    
+        - text: "Problem Set 0"
+          href: all_ps0.html  
     - text: "Academy"
       icon: fa-institution
       menu:
-        - text: "Lecture 0"
-          href: lecture0.html      
         - text: "Lecture 1"
           href: lecture1.html
         - text: "Lecture 2"
@@ -29,8 +34,6 @@ navbar:
         - text: "Lecture 8"
           href: lecture8.html
         - text: "---"
-        - text: "Problem Set 0"
-          href: ps0.html
         - text: "Problem Set 1"
           href: ps1.html
         - text: "Problem Set 2"
@@ -51,8 +54,6 @@ navbar:
     - text: "Training Camp"
       icon: fa-dribbble
       menu:
-        - text: "Lecture 0"
-          href: tc_lecture0.html
         - text: "Lecture 1"
           href: tc_lecture1.html
         - text: "Lecture 2"
@@ -64,8 +65,6 @@ navbar:
         - text: "Lecture 5"
           href: tc_lecture5.html
         - text: "---"
-        - text: "Problem Set 0"
-          href: tc_ps0.html
         - text: "Problem Set 1"
           href: tc_ps1.html
         - text: "Problem Set 2"
@@ -73,8 +72,8 @@ navbar:
         - text: "Problem Set 3"
           href: tc_ps3.html
         - text: "---"
-        - text: "Other Data Sources"
-          href: other_data_sources.html
+        - text: "Data Sources Lecture"
+          href: tc_lecture_data_sources.html
 output:
   html_document:
     theme: darkly

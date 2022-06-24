@@ -351,6 +351,23 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-sign-in"></span>
+     
+    Get Started
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="all_lecture0.html">Lecture 0</a>
+    </li>
+    <li>
+      <a href="all_ps0.html">Problem Set 0</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-institution"></span>
      
     Academy
@@ -358,9 +375,6 @@ $(document).ready(function () {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="lecture0.html">Lecture 0</a>
-    </li>
     <li>
       <a href="lecture1.html">Lecture 1</a>
     </li>
@@ -386,9 +400,6 @@ $(document).ready(function () {
       <a href="lecture8.html">Lecture 8</a>
     </li>
     <li class="divider"></li>
-    <li>
-      <a href="ps0.html">Problem Set 0</a>
-    </li>
     <li>
       <a href="ps1.html">Problem Set 1</a>
     </li>
@@ -426,9 +437,6 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="tc_lecture0.html">Lecture 0</a>
-    </li>
-    <li>
       <a href="tc_lecture1.html">Lecture 1</a>
     </li>
     <li>
@@ -445,9 +453,6 @@ $(document).ready(function () {
     </li>
     <li class="divider"></li>
     <li>
-      <a href="tc_ps0.html">Problem Set 0</a>
-    </li>
-    <li>
       <a href="tc_ps1.html">Problem Set 1</a>
     </li>
     <li>
@@ -458,7 +463,7 @@ $(document).ready(function () {
     </li>
     <li class="divider"></li>
     <li>
-      <a href="other_data_sources.html">Other Data Sources</a>
+      <a href="tc_lecture_data_sources.html">Data Sources Lecture</a>
     </li>
   </ul>
 </li>
@@ -513,7 +518,7 @@ href="https://github.com/skdeshpande91/wharton_moneyball/raw/master/website_file
 </ol>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>relative_payroll <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;data/mlb_relative_payrolls.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 540 Columns: 6
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (2): Team, GM
 ## dbl (4): Team_Payroll, Winning_Percentage, Year, Relative_Payroll
