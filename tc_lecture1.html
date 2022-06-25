@@ -11,7 +11,7 @@
 
 
 
-<title>Lecture 1: R Basics &amp; Into the Tidyverse</title>
+<title>Lecture 1: R Basics &amp; the Tidyverse</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -487,7 +487,7 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Lecture 1: R Basics &amp; Into the
+<h1 class="title toc-ignore">Lecture 1: R Basics &amp; the
 Tidyverse</h1>
 
 </div>
@@ -495,13 +495,13 @@ Tidyverse</h1>
 
 <div id="setting-our-working-directory" class="section level2">
 <h2>Setting our working directory</h2>
-<p>The <em>working directory</em> is a really powerful concept in
-<code>R</code> – it is where <code>R</code> saves any output files you
-create during an analysis and it is the place where <code>R</code> looks
-for any data you want to read in. When you <a
-href="installation.html">installed <code>R</code> &amp; RStudio</a>, we
-asked you to create a folder on your Desktop called Moneyball. This will
-be your working directory for the duration of the course.</p>
+<p>The <em>working directory</em> is a really powerful concept in R – it
+is where R saves any output files you create during an analysis and it
+is the place where R looks for any data you want to read in. When you
+installed R &amp; <code>RStudio</code> in <a
+href="lecture0.html">Lecture 0</a>, we asked you to create a folder on
+your Desktop called Moneyball. This will be your working directory for
+the duration of the course.</p>
 <p>Everytime you open RStudio, it automatically sets the working
 directory to some default folder on your computer. To see what that is,
 we’ll open RStudio and look at the console pane.
@@ -524,37 +524,36 @@ folder.</strong></p>
 </div>
 <div id="the-tidyverse" class="section level2">
 <h2>The tidyverse</h2>
-<p>So far we have seen only the most basic of <code>R</code>’s
-functionality. Arguable, one of the things that makes <code>R</code> so
-powerful is the ease with which users are able to define their own
-functions and release them to the public. As <a
-href="http://hadley.nz">Hadley Wickham</a> defines them,
-“[<code>R</code>] packages are fundamental units of reproducible code.
-They include reusable <code>R</code> functions, the documentation that
-describes how to use them, and sample data.” As of July 8, 2018, there
-are 12,725 packages available from the <a
-href="https://cran.r-project.org">Comprehensive <code>R</code> Archive
-Network (CRAN)</a>. The scope of these packages is vast: there are some
-designed for scraping data from the web, pre-processing data to get it
-into an analyzable format, performing standard and specialized
-statistical analyses, and to publish your results. People have also
-released packages tailored to very specific applications like analyzing
-baseball data. There are also some more whimsical packages, like one
-that allow you to display your favorite <a
-href="https://xkcd.com">XKCD</a> comic strip!</p>
+<p>So far we have seen only the most basic of R’s functionality.
+Arguably, one of the things that makes R so powerful is the ease with
+which users are able to define their own functions and release them to
+the public. As <a href="http://hadley.nz">Hadley Wickham</a> defines
+them, “[R] packages are fundamental units of reproducible code. They
+include reusable R functions, the documentation that describes how to
+use them, and sample data.” As of July 8, 2018, there are 12,725
+packages available from the <a
+href="https://cran.r-project.org">Comprehensive R Archive Network
+(CRAN)</a>. The scope of these packages is vast: there are some designed
+for scraping data from the web, pre-processing data to get it into an
+analyzable format, performing standard and specialized statistical
+analyses, and to publish your results. People have also released
+packages tailored to very specific applications like analyzing baseball
+data. There are also some more whimsical packages, like one that allow
+you to display your favorite <a href="https://xkcd.com">XKCD</a> comic
+strip!</p>
 <p>For the rest of the course, we will be working within the <a
 href="https://www.tidyverse.org/"><code>tidyverse</code></a>, which
-consists of several <code>R</code> packages for data manipulation,
-exploration, and visualization. They are all based on a common design
-philosophy, mostly developed by Hadley Wickham (whose name you will
-encounter a lot as you gain more experience with <code>R</code>). To
-access all of these packages, you first need to install them (if you
-have not already) with the following code:</p>
+consists of several R packages for data manipulation, exploration, and
+visualization. They are all based on a common design philosophy, mostly
+developed by Hadley Wickham (whose name you will encounter a lot as you
+gain more experience with R). To access all of these packages, you first
+need to install them (if you have not already) with the following
+code:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
 <p>The <code>install.packages()</code> function is one way of installing
-packages in <code>R</code>. You can also click on the Packages tab in
-your RStudio view and then click on Install to type in the package you
-want to install.</p>
+packages in R. You can also click on the Packages tab in your RStudio
+view and then click on Install to type in the package you want to
+install.</p>
 <p>Now with the <code>tidyverse</code> suite of packages installed, we
 can load them with the following code:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
@@ -877,18 +876,16 @@ two-dimensional array whose columns can be of different data types. That
 is, the first column might be characters (e.g. the names of athletes)
 and the second column can be numeric (e.g. the number of points
 scored).</p>
-<p>Your RTA should have created a few folders in your working directory
-(please inform us if you do not have these folders). One of them is
-called “data” and this folder will contain almost all of the data we
-will work with during this course. All of these datasets are stored on
-your computer in <a
+<p>Throughout the course, you will be downloading all datasets we will
+analyze to your “data” folder within your working directory (the
+“Moneyball” folder). All of these datasets are in the form of <a
 href="https://en.wikipedia.org/wiki/Comma-separated_values">comma-separated</a>
 files, which have extension ‘.csv’.</p>
 <p>Within the tidyverse, we can use the function <code>read_csv()</code>
 to read in a csv file that is stored on your computer and create a
 tibble containing all of the data. The dataset showed above is stored in
 a csv file named “nba_shooting_small.csv” in the “data” folder of our
-working directory. We will read it into <code>R</code> with the
+working directory. We will read it into R with the
 <code>read_csv()</code> function like so:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;data/nba_shooting_small.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 10 Columns: 8
@@ -902,19 +899,18 @@ working directory. We will read it into <code>R</code> with the
 <p>Before proceeding, let us parse the syntax
 <code>nba_shooting_small &lt;- read_csv(...)</code> The first thing to
 notice is that we’re using the assignment operator that we saw in <a
-href="ps0.html">Problem Set 0</a>. This tells <code>R</code> that we
-want it to evalaute whatever is on the right-hand side (in this case
+href="ps0.html">Problem Set 0</a>. This tells R that we want it to
+evalaute whatever is on the right-hand side (in this case
 <code>read_csv(file = "data/nba_shooting_small.csv")</code>) and assign
 the resulting evaluation to a new object called
-<code>nba_shooting_small</code> (which <code>R</code> will create). We
-called the function <code>read_csv()</code> with one argument
-<code>file</code>. This argument is the <em>relative path</em> of the
-CSV file that we want to read into <code>R</code>. Basically,
-<code>R</code> starts in the working directory and first looks for a
-folder called “data.” If it finds such a folder, it looks inside it for
-a file called “nba_shooting_small.csv.” If it finds the file, it creates
-a <code>tbl</code> called <code>nba_shooting_small</code> that contains
-all of the data.</p>
+<code>nba_shooting_small</code> (which R will create). We called the
+function <code>read_csv()</code> with one argument <code>file</code>.
+This argument is the <em>relative path</em> of the CSV file that we want
+to read into R. Basically, R starts in the working directory and first
+looks for a folder called “data.” If it finds such a folder, it looks
+inside it for a file called “nba_shooting_small.csv.” If it finds the
+file, it creates a <code>tbl</code> called
+<code>nba_shooting_small</code> that contains all of the data.</p>
 <p>When we type in the command and hit <kbd>Enter</kbd> or
 <kbd>Return</kbd>, we see some output printed to the console. This is
 <code>read_csv</code> telling us that it (a) found the file, (b) read it
@@ -923,10 +919,10 @@ column. We see, for instance, that the column named “PLAYER” contains
 <em>character strings</em>, and is parsed as
 <code>col_character()</code>. Similarly, the number of field goals made
 (“FGM”) is parsed as integer data.</p>
-<p>When we print out our tbl, <code>R</code> outputs many things: the
-dimension (in this case, <span class="math inline">\(10 \times
-7\)</span>), the column names, the <em>type</em> of data included in
-each column, and then the actual data.</p>
+<p>When we print out our tbl, R outputs many things: the dimension (in
+this case, <span class="math inline">\(10 \times 7\)</span>), the column
+names, the <em>type</em> of data included in each column, and then the
+actual data.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 8
 ##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA
@@ -1059,12 +1055,11 @@ attempts.</p>
 <p>In the first line, we’ve sorted the players in alphabet order of
 their first name. But when we print out our <code>tbl</code>,
 <code>nba_shooting_small</code>, we see that the players are no longer
-sorted. This is because <code>dplyr</code> (and most other
-<code>R</code>) functions <strong>never</strong> modify their input but
-work by creating a copy and modifying that copy. If we wanted to
-preserve the new ordering, we would have to <em>overwrite</em>
-<code>nba_shooting_small</code> using a combination of the assignment
-operator and <code>arrange()</code>.</p>
+sorted. This is because <code>dplyr</code> (and most other R) functions
+<strong>never</strong> modify their input but work by creating a copy
+and modifying that copy. If we wanted to preserve the new ordering, we
+would have to <em>overwrite</em> <code>nba_shooting_small</code> using a
+combination of the assignment operator and <code>arrange()</code>.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small <span class="ot">&lt;-</span> <span class="fu">arrange</span>(nba_shooting_small, PLAYER)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>nba_shooting_small</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 8
@@ -1105,16 +1100,15 @@ class="math inline">\(\text{FGP} =
 ##  9 Marc Gasol              2016   328   707     2     3   203   245 0.464
 ## 10 Stephen Curry           2016   805  1597   402   887   363   400 0.504</code></pre>
 <p>The syntax for <code>mutate()</code> looks kind of similar to
-<code>arrange()</code>: the first argument tells <code>R</code> what
-<code>tbl</code> we want to manipulate and the second argument tells
-<code>R</code> how to compute FGP. As expected, when we run this
-command, <code>R</code> returns a `<code>tbl</code> with a new column
-containing the field goal percentage for each of these 10 players. Just
-like with <code>arrange()</code>, if we call <code>mutate()</code> by
-itself, <code>R</code> will not add the new column to our existing data
-frame. In order to permanently add a column for field goal percentages
-to <code>nba_shooting_small</code>, we’re going to need to use the
-assignment operator.</p>
+<code>arrange()</code>: the first argument tells R what <code>tbl</code>
+we want to manipulate and the second argument tells R how to compute
+FGP. As expected, when we run this command, R returns a
+`<code>tbl</code> with a new column containing the field goal percentage
+for each of these 10 players. Just like with <code>arrange()</code>, if
+we call <code>mutate()</code> by itself, R will not add the new column
+to our existing data frame. In order to permanently add a column for
+field goal percentages to <code>nba_shooting_small</code>, we’re going
+to need to use the assignment operator.</p>
 <p>It turns out that we can add <em>multiple</em> columns to a
 <code>tbl</code> at once by passing more arguments to
 <code>mutate()</code>, one for each column we wish to define.</p>
@@ -1135,35 +1129,33 @@ assignment operator.</p>
 </div>
 </div>
 <div id="a-quick-digression-r-scripts" class="section level2">
-<h2>A quick digression: <code>R</code> Scripts</h2>
-<p>Up to this point, we have been working strictly within the
-<code>R</code> console, proceeding line-by-line. In the previous code
-block, we tried to add three columns to our <code>tbl</code> and the
-<code>mutate</code> call got a little bit over-whelming. Imagine trying
-to add five or six more columns simultaneously! As our commands become
-more and more complex, you’ll find that using the console can get pretty
-cramped. And if you make a mistake in entering your code, you’ll get an
-error and have to start all over again. Plus, when we start a new
-session of R Studio, the console is cleared. How can we save the
-commands we typed into <code>R</code>? We do so using an <strong>R
-Script</strong>.</p>
-<p>An <code>R</code> Script is a file type which <code>R</code>
-recognizes as storing <code>R</code> commands and is saved as a _.R_s
-file. <code>R</code> Scripts are useful as we can edit our code before
-sending it to be run in the console.</p>
-<p>We can start a new <code>R</code> Script by clicking on the top left
-symbol in RStudio and selecting “R Script”.</p>
+<h2>A quick digression: R Scripts</h2>
+<p>Up to this point, we have been working strictly within the R console,
+proceeding line-by-line. In the previous code block, we tried to add
+three columns to our <code>tbl</code> and the <code>mutate</code> call
+got a little bit over-whelming. Imagine trying to add five or six more
+columns simultaneously! As our commands become more and more complex,
+you’ll find that using the console can get pretty cramped. And if you
+make a mistake in entering your code, you’ll get an error and have to
+start all over again. Plus, when we start a new session of RStudio, the
+console is cleared. How can we save the commands we typed into R? We do
+so using an <strong>R Script</strong>.</p>
+<p>An R Script is a file type which R recognizes as storing R commands
+and is saved as a .R file. R Scripts are useful as we can edit our code
+before sending it to be run in the console.</p>
+<p>We can start a new R Script by clicking on the top left symbol in
+RStudio and selecting “R Script”.</p>
 <p><img src="figures/lecture1_fig1.png" /></p>
-<p>The untitled <code>R</code> Script will then appear in the top left
-hand box of RStudio.</p>
+<p>The untitled R Script will then appear in the top left hand box of
+RStudio.</p>
 <p><img src="figures/lecture1_fig2.png" /></p>
-<p>In the <code>R</code> Script, type the following:</p>
+<p>In the R Script, type the following:</p>
 <pre><code>2 * 3
 x &lt;- 4
 sqrt(x)</code></pre>
-<p>Now our code is just sitting in the <code>R</code> Script. To run the
-code (that is, evaluate it in the console) we click the “Run” button in
-the top right of the script. This will run one line of code at a time -
+<p>Now our code is just sitting in the R Script. To run the code (that
+is, evaluate it in the console) we click the “Run” button in the top
+right of the script. This will run one line of code at a time -
 whichever line the cursor is on. Place your cursor on the first line and
 click “Run”. Observe how <code>2 * 3</code> now appears in the console,
 as well as the output <code>6</code>.</p>
@@ -1180,19 +1172,19 @@ script.</p>
 highlight syntax errors with a red squiggly line and a red cross in the
 sidebar. If you move your mouse over the line, a pop-up will appear that
 can help you diagnose the potential problem.</p>
-<p>Another advantage of <code>R</code> scripts is that you can add
-comments to your code, which are preceded by the pound sign / hash sign
-<code>#</code>. Comments are useful because they allow you to explain
-what your code is doing. <strong>Throughout the rest of this course, we
-will be working almost exclusively with <code>R</code> scripts rather
-than directly entering commands into the console.</strong></p>
+<p>Another advantage of R scripts is that you can add comments to your
+code, which are preceded by the pound sign / hash sign <code>#</code>.
+Comments are useful because they allow you to explain what your code is
+doing. <strong>Throughout the rest of this course, we will be working
+almost exclusively with R scripts rather than directly entering commands
+into the console.</strong></p>
 </div>
 <div id="back-to-the-nba-data" class="section level2">
 <h2>Back to the NBA data</h2>
-<p>One huge advantage with working with <code>R</code> script is the
-ability to separate commands onto multiple lines. For instance, to add
-columns for FGP, FTP, and TPP to our tbl, we can write the following in
-our script window.</p>
+<p>One huge advantage with working with R script is the ability to
+separate commands onto multiple lines. For instance, to add columns for
+FGP, FTP, and TPP to our tbl, we can write the following in our script
+window.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small <span class="ot">&lt;-</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(nba_shooting_small,</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">FGP =</span> FGM <span class="sc">/</span> FGA,</span>
@@ -1215,8 +1207,8 @@ point attempts:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small <span class="sc">%&gt;%</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">three_point_fg_rate =</span> TPA <span class="sc">/</span> FGA) <span class="sc">%&gt;%</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(three_point_fg_rate))</span></code></pre></div>
-<p>Let’s break down what’s happening here. First, <code>R</code> “pipes”
-the <code>tbl</code> <code>nba_shooting_small</code> into into
+<p>Let’s break down what’s happening here. First, R “pipes” the
+<code>tbl</code> <code>nba_shooting_small</code> into into
 <code>mutate</code> to create a new variable
 <code>three_point_fg_rate</code>. Then it pipes the result of this
 <code>mutate</code> into <code>arrange</code> to sort the players based
@@ -1233,7 +1225,7 @@ remainder of the week, and you will see how convenient it is to use in
 the <a href="tc_lecture2.html">next lecture</a> when making
 visualizations. Next, proceed to practice the basics of reading and
 wrangling data in <a href="tc_ps1.html">Problem Set 1</a>.</p>
-<p><strong>NOTE</strong>: There are several conventions for formating
+<p><strong>NOTE</strong>: There are several conventions for formatting
 code when using the pipe. See <a
 href="http://style.tidyverse.org/pipes.html">here</a> and <a
 href="http://r4ds.had.co.nz/pipes.html">here</a> for much more

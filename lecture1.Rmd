@@ -1,5 +1,5 @@
 ---
-title: "Lecture 1: R Basics & the tidyverse"
+title: "Lecture 1: R Basics & the Tidyverse"
 output: html_document
 ---
   
@@ -11,7 +11,7 @@ library(tidyverse)
 ## Setting our working directory
 
 The *working directory* is a really powerful concept in R -- it is where R saves any output files you create during an analysis and it is the place where R looks for any data you want to read in.
-When you [installed R & RStudio](installation.html), we asked you to create a folder on your Desktop called Moneyball.
+When you installed R & RStudio in [Lecture 0](lecture0.html), we asked you to create a folder on your Desktop called Moneyball.
 This will be your working directory for the duration of the course. 
 
 Everytime you open RStudio, it automatically sets the working directory to some default folder on your computer.
@@ -43,7 +43,7 @@ We did all that with Base R. However, the functionality provided by a fresh inst
 ## Packages
 So far we have seen only the most basic of R's functionality. 
 Arguably, one of the things that makes R so powerful is the ease with which users are able to define their own functions and release them to the public.
-As [Hadley Wickhamn](http://hadley.nz) defines them, "[R] packages are fundamental units of reproducible code. They include reusable R functions, the documentation that describes how to use them, and sample data." 
+As [Hadley Wickham](http://hadley.nz) defines them, "[R] packages are fundamental units of reproducible code. They include reusable R functions, the documentation that describes how to use them, and sample data." 
 As of June 18, 2020, there are 15,805 packages available from the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org). 
 The scope of these packages is vast: there are some designed for scraping data from the web, pre-processing data to get it into an analyzable format, performing standard and specialized statistical analyses, and to publish your results.
 People have also released packages tailored to very specific applications like analyzing baseball data.
@@ -91,7 +91,7 @@ sqrt(x)
 ```
 
 
-Now our code is just sitting in the R Script. To run the code (that is, evalutate it in the console) we click the "Run" button in the top right of the script. This will run one line of code at a time - whichever line the cursor is on. Place your cursor on the first line and click "Run". Observe how `2 * 3` now appears in the console, as well as the output `6`.
+Now our code is just sitting in the R Script. To run the code (that is, evaluate it in the console) we click the "Run" button in the top right of the script. This will run one line of code at a time - whichever line the cursor is on. Place your cursor on the first line and click "Run". Observe how `2 * 3` now appears in the console, as well as the output `6`.
 
 ![](figures/lecture1_fig3.png)
 
@@ -106,7 +106,7 @@ If you move your mouse over the line, a pop-up will appear that can help you dia
 
 Another advantage of R scripts is that you can add comments to your code, which are preceded by the pound sign / hash sign #. 
 Comments are useful because they allow you to explain what your code is doing.
-**Throughout the rest of this course, we will be working almost exclusively with R scripts rather than directly entering commands into the console.**
+**Throughout the rest of this course, we will be working almost exclusively with R scripts rather than directly entering commands into the console. We**
 
 
 ## The tidyverse  
@@ -126,6 +126,7 @@ library(tidyverse)
 ```
 When you do that, you'll see a lot of output to the console, most of which you can safely ignore for now.
 **Note you only need to install the package once. However, each time you open up a new R session and want to use the tidyverse, you will need to run line** `library(tidyverse)` **at the start.**
+
 ## Reading in tabular data
 
 Almost all of the data we will encounter in this course (and in the real world) will be tabular.
@@ -165,9 +166,7 @@ Within the tidyverse, the standard way to store and manipulate tabular data like
 At a high-level, a tbl is a two-dimensional array whose columns can be of different data types.
 That is, the first column might be characters (e.g. the names of athletes) and the second column can be numeric (e.g. the number of points scored).
 
-Last night, your RTA created a few folders in your working directory.
-One of them is called "data" and this folder will contain almost all of the data we will work with during this course.
-All of these datasets are stored on your computer in [comma-separated](https://en.wikipedia.org/wiki/Comma-separated_values) files, which have extension '.csv'.
+Throughout the course, you will be downloading all datasets we will analyze to your "data" folder within your working directory (the "Moneyball" folder). All of these datasets are in the form of [comma-separated](https://en.wikipedia.org/wiki/Comma-separated_values) files, which have extension '.csv'.
 
 Within the tidyverse, we can use the function `read_csv()` to read in a csv file that is stored on your computer and create a tibble containing all of the data.
 The dataset showed above is stored in a csv file named "nba_shooting_small.csv" in the "data" folder of our working directory.
@@ -271,7 +270,7 @@ mutate(nba_shooting_small, FGP = FGM/FGA, TPP = TPM/TPA, FTP = FTM/FTA)
 
 One huge advantage with working with R script is the ability to separate commands onto multiple lines.
 For instance, to add columns for FGP, FTP, and TPP to our tbl, we can write the following in our script window.
-```{r multiline-syntax, include=FALSE}
+```{r multiline-syntax, include=TRUE}
 nba_shooting_small <-
   mutate(nba_shooting_small,
          FGP = FGM/FGA,
@@ -280,6 +279,6 @@ nba_shooting_small <-
 ```
 Notice how we have separated our command into multiple lines.
 This makes our script much easier to read.
-While it seems a bit cumbersome to write our code like this now, it will make our code much easier to read when we start to string multiple manipulations together using the pipe operator `%>%`, which we will meet in [Lecture 2](lecture2.html). 
+While it seems a bit cumbersome to write our code like this now, it will make our code much easier to read when we start to string multiple manipulations together using the pipe operator `%>%`, which we will meet in [Lecture 3](lecture3.html). 
 
 

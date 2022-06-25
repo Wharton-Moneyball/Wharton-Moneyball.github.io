@@ -11,7 +11,7 @@
 
 
 
-<title>Lecture 1: R Basics &amp; the tidyverse</title>
+<title>Lecture 1: R Basics &amp; the Tidyverse</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -488,7 +488,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Lecture 1: R Basics &amp; the
-tidyverse</h1>
+Tidyverse</h1>
 
 </div>
 
@@ -497,10 +497,10 @@ tidyverse</h1>
 <h2>Setting our working directory</h2>
 <p>The <em>working directory</em> is a really powerful concept in R – it
 is where R saves any output files you create during an analysis and it
-is the place where R looks for any data you want to read in. When you <a
-href="installation.html">installed R &amp; RStudio</a>, we asked you to
-create a folder on your Desktop called Moneyball. This will be your
-working directory for the duration of the course.</p>
+is the place where R looks for any data you want to read in. When you
+installed R &amp; RStudio in <a href="lecture0.html">Lecture 0</a>, we
+asked you to create a folder on your Desktop called Moneyball. This will
+be your working directory for the duration of the course.</p>
 <p>Everytime you open RStudio, it automatically sets the working
 directory to some default folder on your computer. To see what that is,
 we’ll open RStudio and look at the console pane
@@ -546,7 +546,7 @@ created by developers.</p>
 <p>So far we have seen only the most basic of R’s functionality.
 Arguably, one of the things that makes R so powerful is the ease with
 which users are able to define their own functions and release them to
-the public. As <a href="http://hadley.nz">Hadley Wickhamn</a> defines
+the public. As <a href="http://hadley.nz">Hadley Wickham</a> defines
 them, “[R] packages are fundamental units of reproducible code. They
 include reusable R functions, the documentation that describes how to
 use them, and sample data.” As of June 18, 2020, there are 15,805
@@ -610,7 +610,7 @@ Studio.</p>
 x &lt;- 4
 sqrt(x)</code></pre>
 <p>Now our code is just sitting in the R Script. To run the code (that
-is, evalutate it in the console) we click the “Run” button in the top
+is, evaluate it in the console) we click the “Run” button in the top
 right of the script. This will run one line of code at a time -
 whichever line the cursor is on. Place your cursor on the first line and
 click “Run”. Observe how <code>2 * 3</code> now appears in the console,
@@ -633,7 +633,7 @@ code, which are preceded by the pound sign / hash sign #. Comments are
 useful because they allow you to explain what your code is doing.
 <strong>Throughout the rest of this course, we will be working almost
 exclusively with R scripts rather than directly entering commands into
-the console.</strong></p>
+the console. We</strong></p>
 </div>
 <div id="the-tidyverse" class="section level2">
 <h2>The tidyverse</h2>
@@ -657,8 +657,10 @@ can load them with the following code:</p>
 which you can safely ignore for now. <strong>Note you only need to
 install the package once. However, each time you open up a new R session
 and want to use the tidyverse, you will need to run line</strong>
-<code>library(tidyverse)</code> <strong>at the start.</strong> ##
-Reading in tabular data</p>
+<code>library(tidyverse)</code> <strong>at the start.</strong></p>
+</div>
+<div id="reading-in-tabular-data" class="section level2">
+<h2>Reading in tabular data</h2>
 <p>Almost all of the data we will encounter in this course (and in the
 real world) will be tabular. Each row will represent a separate
 observation and each column will record a particular measurement. For
@@ -970,10 +972,9 @@ tabular data like this is to use what is known as a tbl (pronounced
 columns can be of different data types. That is, the first column might
 be characters (e.g. the names of athletes) and the second column can be
 numeric (e.g. the number of points scored).</p>
-<p>Last night, your RTA created a few folders in your working directory.
-One of them is called “data” and this folder will contain almost all of
-the data we will work with during this course. All of these datasets are
-stored on your computer in <a
+<p>Throughout the course, you will be downloading all datasets we will
+analyze to your “data” folder within your working directory (the
+“Moneyball” folder). All of these datasets are in the form of <a
 href="https://en.wikipedia.org/wiki/Comma-separated_values">comma-separated</a>
 files, which have extension ‘.csv’.</p>
 <p>Within the tidyverse, we can use the function <code>read_csv()</code>
@@ -1227,12 +1228,17 @@ column we wish to define.</p>
 separate commands onto multiple lines. For instance, to add columns for
 FGP, FTP, and TPP to our tbl, we can write the following in our script
 window.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small <span class="ot">&lt;-</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(nba_shooting_small,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">FGP =</span> FGM<span class="sc">/</span>FGA,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">TPP =</span> TPM<span class="sc">/</span>TPA,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">FTP =</span> FTM<span class="sc">/</span>FTA)</span></code></pre></div>
 <p>Notice how we have separated our command into multiple lines. This
 makes our script much easier to read. While it seems a bit cumbersome to
 write our code like this now, it will make our code much easier to read
 when we start to string multiple manipulations together using the pipe
 operator <code>%&gt;%</code>, which we will meet in <a
-href="lecture2.html">Lecture 2</a>.</p>
+href="lecture3.html">Lecture 3</a>.</p>
 </div>
 
 

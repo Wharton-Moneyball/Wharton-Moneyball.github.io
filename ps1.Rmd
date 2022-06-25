@@ -24,7 +24,7 @@ In the second part, you will begin working with a much larger dataset that we wi
 
 4. Following along with the notes in Lecture 1, in your newly created script, write code that (i) reads in the dataset "nba_shooting_small.csv" and (ii) adds columns for field goal percentage (FGP), three point percentage (TPP), and free throw percentage (FTP). **Do not run any part of your script.**
 
-5. Compare the script you have written with someone else in your group. See if your codes are similar. Then have your RTA or an instructor come and execute the script. If it runs without error and produces the correct output, you can proceed onto Part 2 of this problem set. Otherwise, you will need to go back and edit your script.
+5. Compare the script you have written with someone else in your group. See if your codes are similar. Then have your TA or an instructor come and execute the script. If it runs without error and produces the correct output, you can proceed onto Part 2 of this problem set. Otherwise, you will need to go back and edit your script.
 
 ## Part 2: Looking ahead to tomorrow
 
@@ -34,7 +34,7 @@ This data is stored in the "data/" folder of your working directory in the CSV f
 
 1. In the R console (**and not in an R script**) enter the command `rm(list = ls())`. This will clear your environment.
 
-2. Create a new R script and save it as "ps1_preview.R" in the "scripts/" folder within your working directory. Similarly to what you did in the previous part, write `library(tidyverse)` as the first line of the script.
+2. Create a new R script and save it as "ps2_preview.R" in the "scripts/" folder within your working directory. Similarly to what you did in the previous part, write `library(tidyverse)` as the first line of the script.
 
 3. Read in the dataset using `read_csv()`. Save it as a tbl called `nba_shooting.`
 
@@ -45,7 +45,7 @@ As a result, the league leader in FGP is usually a center whose shots mostly com
 [effective Field Goal Percentage](https://en.wikipedia.org/wiki/Effective_field_goal_percentage) is a statistic that adjusts FGP to account for the fact that a made 3-point shots is worth 50% more than a made 2-point shot. 
 The formula for eFGP is
 $$ \text{eFGP} = \frac{\text{FGM} + 0.5 \times \text{TPM}}{\text{FGA}}.$$
-Write another line of code to your script which will add a column for eFGP to your 
+Write another line of code to your script which will add a column for eFGP to the data. 
 
 6. Add a new column to the tbl that records the number of points scored
 $$
