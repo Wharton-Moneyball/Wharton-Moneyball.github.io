@@ -18,39 +18,39 @@ navbar:
       icon: fa-institution
       menu:
         - text: "Lecture 1"
-          href: acad_lecture1.html
+          href: lecture1.html
         - text: "Lecture 2"
-          href: acad_lecture2.html
+          href: lecture2.html
         - text: "Lecture 3"
-          href: acad_lecture3.html
+          href: lecture3.html
         - text: "Lecture 4"
-          href: acad_lecture4.html
+          href: lecture4.html
         - text: "Lecture 5"
-          href: acad_lecture5.html
+          href: lecture5.html
         - text: "Lecture 6"
-          href: acad_lecture6.html
+          href: lecture6.html
         - text: "Lecture 7"
-          href: acad_lecture7.html
+          href: lecture7.html
         - text: "Lecture 8"
-          href: acad_lecture8.html
+          href: lecture8.html
         - text: "---"
         - text: "Problem Set 1"
-          href: acad_ps1.html
+          href: ps1.html
         - text: "Problem Set 2"
-          href: acad_ps2.html
+          href: ps2.html
         - text: "Problem Set 3"
-          href: acad_ps3.html
+          href: ps3.html
         - text: "Problem Set 4"
-          href: acad_ps4.html
+          href: ps4.html
         - text: "Problem Set 5"
-          href: acad_ps5.html
+          href: ps5.html
         - text: "Problem Set 6"
-          href: acad_ps6.html
+          href: ps6.html
         - text: "---"
         - text: "nflscrapR Lecture"
-          href: acad_lecture_nflscrapR.html
+          href: lecture_nflscrapR.html
         - text: "Problem Set X"
-          href: acad_psX.html
+          href: psX.html
     - text: "Training Camp"
       icon: fa-dribbble
       menu:
