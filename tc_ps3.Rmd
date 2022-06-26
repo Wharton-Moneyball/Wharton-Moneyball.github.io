@@ -22,3 +22,8 @@ Now, create the same visuals but use TPP as the continous variable of interest. 
 are attempting more three-pointers than ever before, are they also making them more?
 
 Discuss with other students in your group the meaning of these plots.
+
+
+## Other Data Sources
+
+As you start to brainstorm ideas for your projects, consider some of the R packages that provide interesting datasets from various sports and additional functions for working with that data. For more information, see the [Data Sources Lecture](tc_lecture_data_sources.html).

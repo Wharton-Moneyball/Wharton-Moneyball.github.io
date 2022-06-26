@@ -279,6 +279,6 @@ nba_shooting_small <-
 ```
 Notice how we have separated our command into multiple lines.
 This makes our script much easier to read.
-While it seems a bit cumbersome to write our code like this now, it will make our code much easier to read when we start to string multiple manipulations together using the pipe operator `%>%`, which we will meet in [Lecture 3](lecture3.html). 
+While it seems a bit cumbersome to write our code like this now, it will make our code much easier to read when we start to string multiple manipulations together using the pipe operator `%>%`, which we will meet in Lecture 3. 
 
 
