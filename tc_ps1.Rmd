@@ -3,8 +3,8 @@ title: "Problem Set 1"
 output: html_document
 ---
 
-```{r ps1-setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE, fig.align = "center", include = FALSE) # set include = TRUE to see solutions in knitted RMarkdown
 library(tidyverse)
 ```
 
@@ -24,6 +24,11 @@ In the second part, you will begin working with a much larger dataset that we wi
 
 4. Following along with the notes in Lecture 1, in your newly created script, write code that (i) reads in the dataset "nba_shooting_small.csv" and (ii) adds columns for field goal percentage (FGP), three point percentage (TPP), and free throw percentage (FTP). **Do not run any part of your script.**
 
+```{r}
+nba_shooting_small <- read_csv('data/nba_shooting_small.csv')
+nba_shooting_small <- mutate(nba_shooting_small, FGP = FGM/FGA, TPP = TPM/TPA, FTP = FTM/FTA)
+```
+
 5. Compare the script you have written with someone else in your group. See if your codes are similar. Then have your TA or an instructor come and execute the script. If it runs without error and produces the correct output, you can proceed onto Part 2 of this problem set. Otherwise, you will need to go back and edit your script.
 
 ## Part 2: Looking ahead to tomorrow
@@ -38,7 +43,15 @@ This data is stored in the "data/" folder of your working directory in the CSV f
 
 3. Read in the dataset using `read_csv()`. Save it as a `tbl` called `nba_shooting.`
 
+```{r}
+nba_shooting <- read_csv('data/nba_shooting.csv')
+```
+
 4. Add columns to the tbl containing field goal percentage (FGP), three point percentage (TPP), and (FTP). You should write the code to do this in your R Script and then go ahead execute the code.
+
+```{r}
+nba_shooting <- mutate(nba_shooting, FGP = FGM/FGA, TPP = TPM/TPA, FTP = FTM/FTA)
+```
 
 5. One criticism of FGP is that it treats 2-point shots the same as 3-point shots.
 As a result, the league leader in FGP is usually a center whose shots mostly come from near the rim.
@@ -47,11 +60,19 @@ The formula for eFGP is
 $$ \text{eFGP} = \frac{\text{FGM} + 0.5 \times \text{TPM}}{\text{FGA}}.$$
 Write another line of code to your script which will add a column for eFGP to the data.
 
+```{r}
+nba_shooting <- mutate(nba_shooting, eFGP = (FGM+.5*TPM)/FGA)
+```
+
 6. Add a new column to the tbl that records the number of points scored
 $$
 \text{PTS} = \text{FTM} + 2 \times (\text{FGM} - \text{TPM}) + 3 \times \text{TPM}\\= \text{FTM} + 2 \times \text{FGM} + \text{TPM}
 $$
 Remember, FGM records the number of 2-point shots made as well as the number of 3-point shots made.
+
+```{r}
+nba_shooting <- mutate(nba_shooting, PTS = FTM + 2*FGM + 3*TPM)
+```
 
 7. Both field goal percentage and effective field goal percentage totally ignore free throws.
 One metric that accounts for all field goals, three pointers, and free throws is [true shooting percentage](https://en.wikipedia.org/wiki/True_shooting_percentage), whose formula is given by
@@ -60,7 +81,24 @@ $$
 $$
 Add another column to the `tbl` for TSP
 
+```{r}
+nba_shooting <- mutate(nba_shooting, TSP = PTS/(2*(FGA+.44*FTA)))
+```
+
 8. Arrange your tbl so that the players are sorted in increasing order of true shooting percentage. Which player has the best true shooting percentage?
+
+```{r}
+nba_shooting <- arrange(nba_shooting, desc(TSP))
+nba_shooting %>% head(1)
+```
 
 9. Repeat the above steps with and without using the pipe operator `%>%`, and try to become familiar with using it.
 
+```{r}
+nba_shooting_new <- read_csv('data/nba_shooting.csv') %>%
+  mutate(FGP = FGM/FGA, TPP = TPM/TPA, FTP = FTM/FTA,
+         eFGP = (FGM+.5*TPM)/FGA, 
+         PTS = FTM + 2*FGM + 3*TPM,
+         TSP = PTS/(2*(FGA+.44*FTA))) %>%
+  arrange(desc(TSP))
+```

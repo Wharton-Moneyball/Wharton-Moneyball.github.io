@@ -4,7 +4,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
+knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 ```
 
 In [Lecture 4](lecture4.html) and [Lecture 6](lecture6.html), we started building a model for predicting a baseball player's 2015 batting average using his 2014 batting average.

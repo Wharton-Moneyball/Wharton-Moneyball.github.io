@@ -45,109 +45,6 @@
 
 
 
-<style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
-</style>
-<style type="text/css" data-origin="pandoc">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  { color: #cccccc; background-color: #303030; }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ffcfaf; } /* Alert */
-code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
-code span.at { } /* Attribute */
-code span.bn { color: #dca3a3; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #f0dfaf; } /* ControlFlow */
-code span.ch { color: #dca3a3; } /* Char */
-code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
-code span.co { color: #7f9f7f; } /* Comment */
-code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
-code span.do { color: #7f9f7f; } /* Documentation */
-code span.dt { color: #dfdfbf; } /* DataType */
-code span.dv { color: #dcdccc; } /* DecVal */
-code span.er { color: #c3bf9f; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #c0bed1; } /* Float */
-code span.fu { color: #efef8f; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
-code span.kw { color: #f0dfaf; } /* Keyword */
-code span.op { color: #f0efd0; } /* Operator */
-code span.ot { color: #efef8f; } /* Other */
-code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
-code span.sc { color: #dca3a3; } /* SpecialChar */
-code span.ss { color: #cc9393; } /* SpecialString */
-code span.st { color: #cc9393; } /* String */
-code span.va { } /* Variable */
-code span.vs { color: #cc9393; } /* VerbatimString */
-code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
-
-.sourceCode .row {
-  width: 100%;
-}
-.sourceCode {
-  overflow-x: auto;
-}
-.code-folding-btn {
-  margin-right: -30px;
-}
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
-</script>
 
 
 
@@ -516,16 +413,12 @@ Baseball from 1871 to 2018 (most recent fully completed season). The
 data is available as an R package, which we will need to install and
 load. To install the package, we need to run the following in our
 console</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;Lahman&quot;</span>)</span></code></pre></div>
 <p>Once the package is installed, we can load it into R along with the
 <code>tidyverse</code> packages:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span></code></pre></div>
 <p>We will focus on pitching statistics today. To load the pitching data
 into R from the <code>Lahman</code> package, we have to use the
 <code>data()</code> function. We also will need to <em>convert</em> the
 data into a <code>tibble</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Pitching <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(Pitching)</span></code></pre></div>
 <p>There are tons of rows and columns in the dataset. For this exercise,
 we will only want to focus on ERA and also focus only on those pitchers
 who have pitched at least 150 innings. Unfortunately, the Lahman
@@ -538,25 +431,6 @@ tibble called <code>pitching</code> which contains all players who
 pitched at least 150 innings, played in either the AL or the NL and
 which contains only the columns corresponding the player, year, team,
 league, innings pitched, and ERA.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span> Pitching <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">IP =</span> IPouts <span class="sc">/</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(lgID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;AL&#39;</span>, <span class="st">&#39;NL&#39;</span>) <span class="sc">&amp;</span> IP <span class="sc">&gt;=</span> <span class="dv">150</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, teamID, lgID, IP, ERA)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>pitching</span></code></pre></div>
-<pre><code>## # A tibble: 9,577 × 6
-##    playerID  yearID teamID lgID     IP   ERA
-##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 bondto01    1876 HAR    NL     408   1.68
-##  2 bordejo01   1876 BSN    NL     218.  2.89
-##  3 bradlfo01   1876 BSN    NL     173.  2.49
-##  4 bradlge01   1876 SL3    NL     573   1.23
-##  5 cummica01   1876 HAR    NL     216   1.67
-##  6 deando01    1876 CN1    NL     263.  3.73
-##  7 devliji01   1876 LS1    NL     622   1.56
-##  8 fishech01   1876 CN1    NL     229.  3.02
-##  9 knighlo01   1876 PHN    NL     282   2.62
-## 10 mannija01   1876 BSN    NL     197.  2.14
-## # … with 9,567 more rows</code></pre>
 <p><strong>IMPORTANT</strong>: Before reading any further, make sure you
 and your team understand completely what is happening in the code
 above.</p>
@@ -564,28 +438,10 @@ above.</p>
 can plot the ERAs by year. Feel free to experiment with different ways
 of presenting this information via the different visualizations we
 covered in <a href="tc_lecture3.html">Lecture 3</a>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pitching) <span class="sc">+</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>)</span></code></pre></div>
-<p><img src="tc_lecture4_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Looking at the plot, it appears that some of the pitchers from the
 first few decades of baseball had the lowest ERA. Using
 <code>arrange()</code>, we can see which pitcher had the best season
 according to ERA.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(pitching, ERA)</span></code></pre></div>
-<pre><code>## # A tibble: 9,577 × 6
-##    playerID  yearID teamID lgID     IP   ERA
-##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 leonadu01   1914 BOS    AL     225.  0.96
-##  2 brownmo01   1906 CHN    NL     277.  1.04
-##  3 gibsobo01   1968 SLN    NL     305.  1.12
-##  4 mathech01   1909 NY1    NL     275.  1.14
-##  5 johnswa01   1913 WS1    AL     346   1.14
-##  6 pfiesja01   1907 CHN    NL     195   1.15
-##  7 jossad01    1908 CLE    AL     325   1.16
-##  8 lundgca01   1907 CHN    NL     207   1.17
-##  9 alexape01   1915 PHI    NL     376.  1.22
-## 10 bradlge01   1876 SL3    NL     573   1.23
-## # … with 9,567 more rows</code></pre>
 <p>It would appear that the best pitching season of all time was <a
 href="https://en.wikipedia.org/wiki/Dutch_Leonard_(left-handed_pitcher)">Dutch
 Leonard’s</a> 1914 season with the Red Sox. The next best was <a
@@ -596,34 +452,12 @@ Brown’s 1.04 ERA?</p>
 <code>mutate()</code> function. There is a minor complication: there is
 not a built-in function for standardizing a variable in R! Luckily for
 us, R allows us to define our own functions like so:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>standardize <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>((x <span class="sc">-</span> mu) <span class="sc">/</span> sigma)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>For now, don’t worry too much about the syntax or the
 <code>na.rm = TRUE</code> bits - that’s just telling R to remove any
 missing values when computing the average and standard deviation (easy
 way to deal with messy data). Armed with our <code>standardize()</code>
 function, we can add a column called <code>z_era_all</code> which
 transforms ERA to the standardized scale.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span> pitching <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">z_era_all =</span> <span class="fu">standardize</span>(ERA))</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(z_era_all)</span></code></pre></div>
-<pre><code>## # A tibble: 9,577 × 7
-##    playerID  yearID teamID lgID     IP   ERA z_era_all
-##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-##  1 leonadu01   1914 BOS    AL     225.  0.96     -3.01
-##  2 brownmo01   1906 CHN    NL     277.  1.04     -2.92
-##  3 gibsobo01   1968 SLN    NL     305.  1.12     -2.83
-##  4 mathech01   1909 NY1    NL     275.  1.14     -2.81
-##  5 johnswa01   1913 WS1    AL     346   1.14     -2.81
-##  6 pfiesja01   1907 CHN    NL     195   1.15     -2.79
-##  7 jossad01    1908 CLE    AL     325   1.16     -2.78
-##  8 lundgca01   1907 CHN    NL     207   1.17     -2.77
-##  9 alexape01   1915 PHI    NL     376.  1.22     -2.71
-## 10 bradlge01   1876 SL3    NL     573   1.23     -2.70
-## # … with 9,567 more rows</code></pre>
 <p>Now we see that Leonard’s 0.96 ERA was about 3 standard deviations
 below the overall mean of qualified pitchers, while Brown’s was about
 2.91 standard deviations below the mean! On the other hand, the
@@ -653,8 +487,6 @@ within each year, and then combine these into a single tibble.</p>
 “split-apply-combine” paradigm using the function
 <code>group_by()</code>. We can use this in concert with the pipe as
 follows</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span> pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID)</span></code></pre></div>
 <p>When we print out <code>pitching</code> now, we notice an extra line
 that tells us the grouping variable. Now when we pass this dataset on to
 subsequent calculations, these calculations will be done on each
@@ -664,22 +496,6 @@ function called… <code>summarize()</code>! This convenient function will
 compute summary statistics that we specify with respect to the groups
 from <code>group_by()</code>. For instance, we can compute the average
 ERA in each year in the following way:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">ave_ERA =</span> <span class="fu">mean</span>(ERA))</span></code></pre></div>
-<pre><code>## # A tibble: 145 × 2
-##    yearID ave_ERA
-##     &lt;int&gt;   &lt;dbl&gt;
-##  1   1876    2.42
-##  2   1877    2.78
-##  3   1878    2.32
-##  4   1879    2.57
-##  5   1880    2.33
-##  6   1881    2.76
-##  7   1882    2.76
-##  8   1883    2.79
-##  9   1884    3.04
-## 10   1885    2.87
-## # … with 135 more rows</code></pre>
 <p>The following functions are quite useful for summarizing several
 aspects of the distribution of the variables in our dataset:</p>
 <ul>
@@ -691,78 +507,18 @@ aspects of the distribution of the variables in our dataset:</p>
 <p>We’ll now create a dataset, <code>pitching_summary</code>, that
 contains the mean and standard deviation of ERA <strong>within each
 year</strong>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pitching_summary <span class="ot">&lt;-</span> pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
 <p>One of the most commonly used functions, <code>n()</code>, returns
 counts and is especially useful when used on a grouped dataset We can,
 for instance, count the number of pitchers in our dataset within each
 year using <code>n()</code>.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(count)</span></code></pre></div>
-<pre><code>## # A tibble: 145 × 2
-##    yearID count
-##     &lt;int&gt; &lt;int&gt;
-##  1   1877     7
-##  2   1878     7
-##  3   1880    12
-##  4   1876    13
-##  5   1879    13
-##  6   1883    13
-##  7   1881    14
-##  8   1882    14
-##  9   1884    19
-## 10   1885    19
-## # … with 135 more rows</code></pre>
 <p>Or equivalently, we can use the <code>count</code> function:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(n)</span></code></pre></div>
-<pre><code>## # A tibble: 145 × 2
-## # Groups:   yearID [145]
-##    yearID     n
-##     &lt;int&gt; &lt;int&gt;
-##  1   1877     7
-##  2   1878     7
-##  3   1880    12
-##  4   1876    13
-##  5   1879    13
-##  6   1883    13
-##  7   1881    14
-##  8   1882    14
-##  9   1884    19
-## 10   1885    19
-## # … with 135 more rows</code></pre>
 <p>What’s the difference between the two approaches above?</p>
 <p><strong>Exercise</strong>: Describe, in words, what the following
 code does.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(count <span class="sc">&gt;=</span> <span class="dv">90</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(count))</span></code></pre></div>
 <p>Once we add a grouping to our dataset, it also changes the way
 <code>mutate()</code> operates on it. We can now standardize each
 pitcher’s ERA within each year and store that result in a column called
 z_era_year</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span> pitching <span class="sc">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">z_era_year =</span> <span class="fu">standardize</span>(ERA))</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(z_era_year)</span></code></pre></div>
-<pre><code>## # A tibble: 9,577 × 8
-## # Groups:   yearID [145]
-##    playerID  yearID teamID lgID     IP   ERA z_era_all z_era_year
-##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
-##  1 leonadu01   1914 BOS    AL     225.  0.96     -3.01      -3.48
-##  2 martipe02   2000 BOS    AL     217   1.74     -2.12      -3.16
-##  3 maddugr01   1995 ATL    NL     210.  1.63     -2.25      -3.02
-##  4 luquedo01   1923 CIN    NL     322   1.93     -1.91      -2.88
-##  5 martipe02   1999 BOS    AL     213.  2.07     -1.75      -2.85
-##  6 brownke01   1996 FLO    NL     233   1.89     -1.95      -2.82
-##  7 eichhma01   1986 TOR    AL     157   1.72     -2.15      -2.81
-##  8 maddugr01   1994 ATL    NL     202   1.56     -2.33      -2.79
-##  9 piercbi02   1955 CHA    AL     206.  1.97     -1.86      -2.77
-## 10 hubbeca01   1933 NY1    NL     309.  1.66     -2.22      -2.77
-## # … with 9,567 more rows</code></pre>
 <div id="ungrouping-and-grouping-on-multiple-variables"
 class="section level3">
 <h3>Ungrouping and grouping on multiple variables</h3>
@@ -774,15 +530,8 @@ remove the grouping, we have to use the <code>ungroup()</code> function.
 Remember, as with the other <code>tidyverse</code> verbs we’ve learned,
 we need to store the result if we want the dataset to remain
 ungrouped!</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span> pitching <span class="sc">%&gt;%</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 <p>To verify that we’ve indeed removed the grouping, let’s re-run the
 code from above to compute the mean and standard deviation of ERA.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
-<pre><code>## # A tibble: 1 × 2
-##    mean    sd
-##   &lt;dbl&gt; &lt;dbl&gt;
-## 1  3.61 0.881</code></pre>
 <p>Up to this point, we have only grouped on a single variable. It is
 sometimes desirable to group on multiple variables at once. For
 instance, we may want to standardize ERA not only within each year but
@@ -791,30 +540,9 @@ each individual pitcher’s ERA using only the data from the other
 pitchers who pitched in the same league and in the same season. We also
 add a column called <code>count_year_lg</code> to record the number of
 pitchers included in each year-league combination.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span> pitching <span class="sc">%&gt;%</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID, lgID) <span class="sc">%&gt;%</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">z_era_year_lg =</span> <span class="fu">standardize</span>(ERA),</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">count =</span> <span class="fu">n</span>())</span></code></pre></div>
 <p>When we arrange by the ERA standardized within the year and league,
 we now see that Pedro Martinez’s 1999 and 2000 season with the Red Sox
 were even better than Dutch Leonard’s 1914 season!</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(z_era_year_lg)</span></code></pre></div>
-<pre><code>## # A tibble: 9,577 × 10
-## # Groups:   yearID, lgID [265]
-##    playerID  yearID teamID lgID     IP   ERA z_era_all z_era_year z_era_year_lg
-##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;         &lt;dbl&gt;
-##  1 martipe02   2000 BOS    AL     217   1.74     -2.12      -3.16         -3.55
-##  2 martipe02   1999 BOS    AL     213.  2.07     -1.75      -2.85         -3.15
-##  3 leonadu01   1914 BOS    AL     225.  0.96     -3.01      -3.48         -3.13
-##  4 eichhma01   1986 TOR    AL     157   1.72     -2.15      -2.81         -3.06
-##  5 youngcy01   1901 BOS    AL     371.  1.62     -2.26      -2.51         -2.81
-##  6 alexape01   1915 PHI    NL     376.  1.22     -2.71      -2.28         -2.78
-##  7 maddugr01   1995 ATL    NL     210.  1.63     -2.25      -3.02         -2.75
-##  8 gibsobo01   1968 SLN    NL     305.  1.12     -2.83      -2.73         -2.75
-##  9 grovele01   1931 PHA    AL     289.  2.06     -1.76      -2.39         -2.74
-## 10 guidrro01   1978 NYA    AL     274.  1.74     -2.12      -2.67         -2.73
-## # … with 9,567 more rows, and 1 more variable: count &lt;int&gt;</code></pre>
 <p>As a final note, when we group by multiple variables, the order in
 which we specify the variables in <code>group_by()</code> matters.</p>
 </div>
@@ -825,16 +553,8 @@ which we specify the variables in <code>group_by()</code> matters.</p>
 Wyner’s class that plotted ERAs over time. When we run the following
 code, we get a plot that’s very similar to the desired one but that is
 missing the red line showing the average ERA within each season.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pitching) <span class="sc">+</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>)</span></code></pre></div>
 <p>To <em>add</em> this to our plot, we need to simply re-run the code
 above but with some additional calls to <code>geom_line</code>.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pitching) <span class="sc">+</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> </span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> pitching_summary, </span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> mean), <span class="at">col =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
-<p><img src="tc_lecture4_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>You’ll notice that the last line of code is a bit different than
 anything we’ve seen before. In particular, we are specifying both the
 data and mapping within the same ggplot2 function. If all of the

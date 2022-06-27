@@ -90,13 +90,13 @@ batting <-
 ```
 
 
-5. Remove the grouping by year and instead group by year and league. Once again, standardize OBP, OPS, and wOBA within each league-year combination. Are the best and worst batters still the same? Name the columns containing these new standardized valuse `zBA_year_lg`, `zOBP_year_lg`, etc. 
+5. Remove the grouping by year and instead group by year and league. Once again, standardize OBP, OPS, and wOBA within each league-year combination. Are the best and worst batters still the same? Name the columns containing these new standardized values `zBA_year_lg`, `zOBP_year_lg`, etc. 
 
 ```{r year-lg}
 batting <- 
   batting %>%
   ungroup() %>% 
-  group_by(yearID) %>%
+  group_by(yearID, lgID) %>%
   mutate(zBA_year_lg = standardize(BA),
          zOBP_year_lg = standardize(OBP),
          zOPS_year_lg = standardize(OPS),
@@ -133,7 +133,7 @@ batting <-
 
 Use `mutate()` and `case_when()` (just like we did in [Lecture 2](lecture2.html)) to add a column called Hist_era to `batting` that records the historical era.
 
-7. Group `batting` by Hist_era and standardize BA, OBP, OPS, and wOBA within historical era. Who are the best and worst batters now? Name the columns containing these new stanardized values `zBA_hist`, `zOBP_hist`, etc.
+7. Group `batting` by Hist_era and standardize BA, OBP, OPS, and wOBA within historical era. Who are the best and worst batters now? Name the columns containing these new standardized values `zBA_hist`, `zOBP_hist`, etc.
 
 8. Remove the grouping you added in Problem 6.
 

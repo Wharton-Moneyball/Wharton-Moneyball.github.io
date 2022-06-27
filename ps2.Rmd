@@ -4,7 +4,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
+knitr::opts_chunk$set(cache = TRUE, fig.align = "center", include = FALSE) # set include = TRUE to see solutions in knitted RMarkdown
 library(tidyverse)
 ```
 
@@ -21,36 +21,46 @@ We will replicate his analysis in the following problems using the dataset "mlb_
 You should save all of the code for this analysis in an R script called "ps2_mlb_payroll.R".
 
 1. Read the data in from the file and save it as a tbl called "relative_payroll"
-```{r read-payrolls}
+```{r}
 relative_payroll <- read_csv(file = "data/mlb_relative_payrolls.csv")
 ```
 
 2. Make a histogram of team winning percentages. Play around with different binwidths. 
-```{r, eval = FALSE, echo = FALSE}
+```{r}
+ggplot(data = relative_payroll) +
+  geom_histogram(mapping = aes(x = Winning_Percentage, y = ..density..))
+
+ggplot(data = relative_payroll) +
+  geom_histogram(mapping = aes(x = Winning_Percentage, y = ..density..), binwidth = 0.05)
+
 ggplot(data = relative_payroll) +
   geom_histogram(mapping = aes(x = Winning_Percentage, y = ..density..), binwidth = 0.01)
 ```
 3. Make a histogram of the relative payrolls.
-```{r, eval = FALSE, echo = FALSE}
+```{r}
 ggplot(data = relative_payroll) +
-  geom_histogram(mapping = aes(x = Relative_Payroll, y = ..density..), binwidth = 0.1)
+  geom_histogram(mapping = aes(x = Relative_Payroll, y = ..density..))
 ```
+
 4. Make a scatterplot with relative payroll on the horizontal axis and winning percentage on the vertical axis. 
 
-```{r, eval = FALSE, echo = FALSE}
+```{r}
 ggplot(data = relative_payroll) +
   geom_point(mapping = aes(x = Relative_Payroll, y = Winning_Percentage))
 ```
 
 5. Without executing the code below, discuss with your group and see if you can figure out what it is doing.
-```{r, eval = FALSE}
+```{r, include = TRUE, eval = FALSE}
 ggplot(data = relative_payroll) + 
   geom_point(mapping = aes(x = Year, y = Team_Payroll))
 ```
 
 6. Execute the code above. What can you say about how team payrolls have evolved over time? Make a similar plot that visualizes how *relative payrolls* have evolved over time.
 
-```{r, eval = FALSE, echo = FALSE}
+```{r}
+ggplot(data = relative_payroll) + 
+  geom_point(mapping = aes(x = Year, y = Team_Payroll))
+
 ggplot(data = relative_payroll) + 
   geom_point(mapping = aes(x = Year, y = Relative_Payroll))
 ```
@@ -63,7 +73,7 @@ All of the data is contained in the file "data/hitting_qualified.csv".
 You should write save all of the code for this analyses in an R script called "ps2_mlb_batting.R".
 
 1. Load the data into a tibble called `hitting_qualified` using `read_csv()`.
-```{r hitting_qualified, echo=FALSE}
+```{r}
 hitting_qualified <- read_csv("data/hitting_qualified.csv")
 ```
 
@@ -94,12 +104,28 @@ The columns of this dataset include
 * `GIDP` Grounded into double plays
 
 2. Use `arrange()` to find out the first and last season for which we have data. *Hint: you may need to use `desc()` as well.*
+```{r}
+arrange(hitting_qualified, yearID)
+arrange(hitting_qualified, desc(yearID))
+```
+
 
 3. Use `summarize()` to find out the first and last season for which we have data. *Hint, you only need one line of code to do this*
+```{r}
+summarize(hitting_qualified, first_year= min(yearID), last_year= max(yearID))
+```
+
 
 4. When you print out `hitting_qualified` you'll notice that some columns were read in as characters and not integers or numerics. This can happen sometimes whenever the original csv file has missing values. In this case, the columns IBB, HBP, SH, SF, and GIDP were read in as characters. We want to *convert* these to integers. We can do this using `mutate()` and the function `as.integer()`.
 
-```{r as-integer}
+```{r, include = TRUE, eval = FALSE}
+hitting_qualified <- mutate(hitting_qualified,
+                            IBB = as.integer(IBB),
+                            HBP = as.integer(HBP),
+                            # finish on your own
+```
+
+```{r}
 hitting_qualified <- mutate(hitting_qualified,
                             IBB = as.integer(IBB),
                             HBP = as.integer(HBP),
@@ -109,24 +135,28 @@ hitting_qualified <- mutate(hitting_qualified,
 ```
 
 5. Let's take a look at some of the columns we just converted:
-```{r}
+```{r, include = TRUE}
 select(hitting_qualified, playerID, yearID, AB, IBB, HBP, SH, SF, GIDP)
 ```
 You'll notice that a lot of these columns contain `NA` values, which indicates that some of these values are missing. This make sense, since a lot of these statistics were not recorded in the early years of baseball. A popular convention for dealing with these missing statistics is to **impute** the missing values with 0. That is, for instance, every place we see an `NA` we need to replace it with a 0. We can do that with `mutate()` and `replace_na()` function as follows.
-```{r replace-na}
+```{r, include = TRUE}
 hitting_qualified <- replace_na(hitting_qualified, 
                                 list(IBB = 0, HBP = 0, SH = 0, SF = 0, GIDP = 0))
 ```
-We will discuss the syntax for `replace_na()` later in lecture.
+We will discuss the syntax for `replace_na()` later in lecture. Now, rerun the `select()` function from above to check that the NAs were replaced with zeros. 
+
+```{r}
+select(hitting_qualified, playerID, yearID, AB, IBB, HBP, SH, SF, GIDP)
+```
 
 6. Use `mutate()` to add a column for the number of singles, which can be computed as $\text{X1B} = \text{H} - \text{X2B} - \text{X3B} - \text{HR}$.
 
-```{r singles}
+```{r}
 hitting_qualified <- mutate(hitting_qualified, X1B = H - X2B - X3B - HR)
 ```
 
 7. The variable BB includes as a subset all intentional walks (IBB). Use `mutate()` to add a column to `hitting_qualified` that counts the number of *un-intentional walks* (uBB). Be sure to save the resulting tibble as `hitting_qualified`.
-```{r uBB, echo = FALSE}
+```{r}
 hitting_qualified <- mutate(hitting_qualified, uBB = BB - IBB)
 ```
 
@@ -152,7 +182,15 @@ $$\text{OPS} = \text{OBP} + \text{SLG}$$
 $$
 \text{wOBA} = \frac{0.687 \times \text{uBB} + 0.718 \times \text{HBP} + 0.881 \times \text{X1B} + 1.256 \times \text{X2B} + 1.594 \times \text{X3B} + 2.065 \times \text{HR}}{\text{AB} + \text{uBB} + \text{SF} + \text{HBP}}
 $$
-```{r batting-stats, tidy = FALSE}
+
+```{r, include=TRUE, eval=FALSE}
+hitting_qualified <- mutate(hitting_qualified,
+                  BBP = BB/PA,
+                  KP = SO/PA,
+                  # finish on your own
+```
+
+```{r}
 hitting_qualified <- mutate(hitting_qualified,
                   BBP = BB/PA,
                   KP = SO/PA,
@@ -165,9 +203,82 @@ hitting_qualified <- mutate(hitting_qualified,
 
 9. For most of the statistics in the previous question, [Fangraphs](https://www.fangraphs.com) has defined rating scales (to see these ratings, click on the linked page for each statistic in Question 6 and scroll down to the "Context" section of the page). Use `mutate()` and `case_when()` to add the ratings for walk percentage (BBP), strike-out percentage (KP), on-base percentage (OBP), on-base plus slugging (OPS), and wOBA. Call the columns "BBP_rating", "KP_rating", "OBP_rating", "OPS_rating", and "wOBA_rating." 
 
+```{r include=TRUE, eval=FALSE}
+hitting_qualified <- mutate(hitting_qualified, 
+                            BBP_rating = case_when(BBP >= .15 ~ "Excellent",
+                                                   BBP < .15 & BBP >= .125 ~ "Great",
+                                                   # finish on your own
+```
+
+```{r}
+hitting_qualified <- mutate(hitting_qualified, 
+                            BBP_rating = case_when(BBP >= .15 ~ "Excellent",
+                                                   BBP < .15 & BBP >= .125 ~ "Great",
+                                                   BBP < .125 & BBP >= .1 ~ "Above Average",
+                                                   BBP < .1 & BBP >= .08 ~ "Average",
+                                                   BBP < .08 & BBP >= .07 ~ "Below Average",
+                                                   BBP < .07 & BBP >= .055 ~ "Poor",
+                                                   BBP < .055 & BBP >= 0 ~ "Awful"),
+                            KP_rating = case_when(KP <= .1 ~ "Excellent",
+                                                  KP <= .125 & KP > .1 ~ "Great",
+                                                  KP <= .16 & KP > .125 ~ "Above Average",
+                                                  KP <= .2 & KP > .16 ~ "Average",
+                                                  KP <= .22 & KP > .2 ~ "Below Average",
+                                                  KP <= .25 & KP > .22 ~ "Poor",
+                                                  KP <= 1 & KP > .25 ~ "Awful"),
+                            OBP_rating = case_when(OBP >= .39 ~ "Excellent",
+                                                   OBP < .39 & OBP >= .37 ~ "Great",
+                                                   OBP < .37 & OBP >= .34 ~ "Above Average",
+                                                   OBP < .34 & OBP >= .32 ~ "Average",
+                                                   OBP < .32 & OBP >= .31 ~ "Below Average",
+                                                   OBP < .31 & OBP >= .3 ~ "Poor",
+                                                   OBP < .3 & OBP >= 0 ~ "Awful"),
+                            OPS_rating = case_when(OPS >= 1 ~ "Excellent",
+                                                   OPS < 1 & OPS >= .9 ~ "Great",
+                                                   OPS < .9 & OPS >= .8 ~ "Above Average",
+                                                   OPS < .8 & OPS >= .71 ~ "Average",
+                                                   OPS < .71 & OPS >= .67 ~ "Below Average",
+                                                   OPS < .67 & OPS >= .6 ~ "Poor",
+                                                   OPS < .6 & OPS >= 0 ~ "Awful"),
+                            wOBA_rating = case_when(wOBA >= .4 ~ "Excellent",
+                                                    wOBA < .4 & wOBA >= .37 ~ "Great",
+                                                    wOBA < .37 & wOBA >= .34 ~ "Above Average",
+                                                    wOBA < .34 & wOBA >= .32 ~ "Average",
+                                                    wOBA < .32 & wOBA >= .31 ~ "Below Average",
+                                                    wOBA < .31 & wOBA >= .3 ~ "Poor",
+                                                    wOBA < .3 & wOBA >= 0 ~ "Awful"))
+```
+
+
 10. Use `filter()` to subset the players who played between 2000 and 2015. Call the new tbl `tmp_batting`.
 
-11. Use `select()` to create a tibble called `batting_recent` containing all players who played between 2000 and 2015 with the following columns: playerID, yearID, teamID, lgID, and all of the statistics and rankings created in Problems 8 and 9.  
+```{r}
+tmp_batting <- filter(hitting_qualified, yearID %in% c(2000:2015))
+```
 
-12. Explore the distribution of some of the batting statistics introduced in problem 6 using the tbl `batting_recent` using histograms. Then explore the relationship between some of these statistics with scatterplots. 
+11. Use `select()` on `tmp_batting` to create a tibble called `batting_recent` containing all players who played between 2000 and 2015 with the following columns: playerID, yearID, teamID, lgID, and all of the statistics and rankings created in Problems 8 and 9.  
+
+```{r}
+batting_recent <- select(tmp_batting, playerID, yearID, teamID, lgID, BBP, BBP_rating, KP, KP_rating, OBP, OBP_rating, SLG, OPS, OPS_rating, wOBA, wOBA_rating)
+```
+
+
+12. Explore the distribution of some of the batting statistics introduced in problem 8 using the tbl `batting_recent` using histograms. Then explore the relationship between some of these statistics with scatterplots. 
+
+```{r}
+ggplot(batting_recent) +
+  geom_histogram(mapping = aes(x=BBP))
+
+ggplot(batting_recent) +
+  geom_histogram(mapping = aes(x=KP))
+
+ggplot(batting_recent) +
+  geom_histogram(mapping = aes(x=wOBA))
+
+ggplot(batting_recent) +
+  geom_point(mapping = aes(x=BBP, y=wOBA))
+
+ggplot(batting_recent) +
+  geom_point(mapping = aes(x=KP, y=wOBA))
+```
 

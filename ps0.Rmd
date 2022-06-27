@@ -3,8 +3,8 @@ title: "Problem Set 0"
 output: html_document
 ---
 
-```{r ps0-setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 ```
 
 Please try to work through this first problem set. You will have time on Day 1 to discuss any questions you have with the TAs.
@@ -31,7 +31,7 @@ For now, don't worry about this ``[1]''; we'll return to it later.
 ```
 
 Like any scientific calculator, R comes with a number of built-in functions
-```{r ps0-built-in-functions}
+```{r}
 sqrt(4)
 log(10)
 cos(pi)
@@ -42,7 +42,7 @@ cos(pi)
 When you enter expressions like those above, R evaluates them, prints them, and then immediately discards them. Oftentimes, however, you'll want to store a value as a named variable and use it in subsequent calculations. For instance, let's say that we want to store the value of $2 + 3\times (6 - 4)^5$ as $x$ and then compute the following: $1/x, x + 1,$ and $\sqrt{x}.$
 To *assign* the value of the expression `2 + 3*(6 - 4)^5` to the variable `x` we use the *assignment operator* `<-`. 
 The assignment operator evaluates the expression immediately to the right of it and stores that value in an object whose name is whatever text came to the left of the operator. 
-```{r ps0-assignment}
+```{r}
 x <- 2 + 3*(6-4)^5
 ```
 Now when we execute this expression, R does not auotmatically print anything like it did in an earlier example.
@@ -52,7 +52,7 @@ However, if you look closely at the **Environment** pane (top right-hand side of
 This pane will show every variable that we have defined. As we start creating more and more variables, this list will be really helpful to keep track of what we've defined. 
 Now that we have created the variable x, we can use the symbol ``x'' in more expressions.
 For example, we can compute $1/x, x + 1,$ and $\sqrt{x}$ as follows:
-```{r ps0-more-expressions}
+```{r}
 x
 1/x
 x + 1
@@ -70,7 +70,7 @@ R follows the conventional order of operations, in that it evaluates the inner-m
 
 If we try to evaluate an expression using the name of a variable that we haven't defined yet, R will throw an error.
 For instance, in the code below, if we try to add 5 to a previously undeclared variable, we get an error.
-```{r ps0-error, error=TRUE}
+```{r error=TRUE}
 y + 5
 ```
 

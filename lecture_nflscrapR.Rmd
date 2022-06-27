@@ -4,7 +4,7 @@ output: html_document
 ---
 
 ```{r nfl-setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
+knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 library(tidyverse)
 ```
 

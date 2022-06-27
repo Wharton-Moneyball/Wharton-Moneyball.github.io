@@ -4,7 +4,7 @@ output: html_document
 ---
 
 ```{r install-setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
+knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 ```
 
 
@@ -65,13 +65,13 @@ Then inside that folder, create a new folder named 'data', and a separate folder
 
 After you get the folders ready, go to the following page: https://github.com/Wharton-Moneyball/Wharton-Moneyball.github.io/tree/master/data
 
-And from here, download the following files: 
+From here, download the following CSV files: 
 
 + nba_shooting_small.csv
 + nba_shooting.csv
 + mlb_relative_payrolls.csv
 
-*To download each of these files, clink on their links in the page. Then click on the 'Raw' button. Once from there, right-click and 'Save As'. You should proceed to save the dataset in the Moneyball/data folder you created.*
+**To download a file, clink on its link on the page. Then click on the 'Raw' button. From there, right-click on some open space and 'Save As...' or 'Save Page As..' (depending on your browser). Name it exactly as it appears above (e.g. 'nba_shooting_small.csv'), including the '.csv' part at the end. This will save the dataset as a .CSV file. Choose the save location to be the Moneyball/data folder you created.**
 
 
 ## Getting Started With R
