@@ -3,7 +3,7 @@ title: "Lecture 3: Visualizations with categorical data and grouped operations"
 output: html_document
 ---
 
-```{r lecture3-setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 library(tidyverse)
 ```
@@ -11,7 +11,7 @@ library(tidyverse)
 We're going to pick up right where we left off in [Lecture 2](tc_lecture2.html) by
 loading the `nba_shooting` dataset we created using the `filter` and `mutate` functions.
 
-```{r load}
+```{r}
 load("data/clean_nba_shooting.RData")
 ```
 
@@ -19,7 +19,7 @@ We're interested in the rate and efficiency of three-point attempts over time. T
 let's make simple histograms for `three_point_fg_rate = TPA / FGA` and `TPP` following
 what we learned in [Lecture 2](tc_lecture2.html).
 
-```{r tp-rate-hist}
+```{r}
 nba_shooting %>%
   ggplot(aes(x = three_point_fg_rate)) +
   geom_histogram(binwidth = 0.05) +
@@ -29,7 +29,7 @@ nba_shooting %>%
        title = "Distribution of three-pointer shot rate")
 ```
 
-```{r tpp-hist}
+```{r}
 nba_shooting %>%
   ggplot(aes(x = TPP)) +
   geom_histogram(bins = 30) +
@@ -42,7 +42,7 @@ nba_shooting %>%
 Next let's make a scatterplot showing the relationship between the rate at which
 players attempt three point shots and the proportion at which they make them:
 
-```{r tp-scatter}
+```{r}
 nba_shooting %>%
   ggplot(aes(x = three_point_fg_rate, y = TPP)) +
   geom_point(alpha = 0.25) +
@@ -66,7 +66,7 @@ as the season/year could be considered like a continuous variable. For instance,
 we could create a scatterplot with the `SEASON` variable on the x-axis and each
 of the variables of interest on the y-axis, such as:
 
-```{r season-scatter-tp-rate}
+```{r}
 nba_shooting %>%
   ggplot(aes(x = SEASON, y = three_point_fg_rate)) +
   geom_point(alpha = 0.25) +
@@ -84,7 +84,7 @@ as a "factor". We won't cover the details, but "factors" are essentially categor
 variables with an order to them. By default, when we create `season_factor` using 
 the `as.factor()` function, the natural chronological order is used.
 
-```{r season-factor}
+```{r}
 nba_shooting <- nba_shooting %>%
   mutate(season_factor = as.factor(SEASON))
 ```
@@ -97,7 +97,7 @@ This can be done using `geom_bar`, and all we have to specify is the categorical
 variable to be displayed along the x-axis - `ggplot` will count the number of each
 player and display it for us just like `geom_histogram`.
 
-```{r season-bars}
+```{r}
 nba_shooting %>%
   ggplot(aes(x = season_factor)) +
   geom_bar() +
@@ -124,7 +124,7 @@ This can be done in several different ways.
 We can use *facets* to create histograms for each different season. Facets allow you to separate graphs by category. 
 We do not need to do anything different from our above code for creating histograms except we only need to add a *facet* layer to our graph. The first argument of `facet_wrap` is the column of our dataset that contains the category information. Note that we need a tilde (`~`) in front of `season_factor`. The second argument of `facet_wrap` specifies the number of rows for which to display the graphs.
 
-```{r facet-hist}
+```{r}
 nba_shooting %>%
   ggplot(aes(x = three_point_fg_rate)) +
   geom_histogram(binwidth = 0.05) +
@@ -146,7 +146,7 @@ important to remember the difference between `fill` and `color`. In this case, `
 actually changes the literal _fill_ of the bars while `color` changes the line. This
 differs from `geom_point` and is important to keep in mind when making plots.
 
-```{r hist-color-stacked}
+```{r}
 nba_shooting %>%
   ggplot(aes(x = three_point_fg_rate, fill = season_factor)) +
   geom_histogram(binwidth = 0.05) +
@@ -164,7 +164,7 @@ the default which is "stacked". When doing this we'll have several histograms
 overlaid on top of each other, so it's important to change the `alpha` to be
 a lower value.
 
-```{r hist-color-dodge}
+```{r}
 nba_shooting %>%
   ggplot(aes(x = three_point_fg_rate, fill = season_factor)) +
   geom_histogram(binwidth = 0.05, position = "identity",
@@ -188,7 +188,7 @@ variable is with boxplots. Side-by-side boxplots can be generated easily using
 `geom_boxplot`. Now we specify the categorical variable we want __mapped__ to the
 x-axis (`season_factor`) and then the variable we want mapped to the y-axis.
 
-```{r boxplot}
+```{r}
 nba_shooting %>%
   ggplot(aes(x = season_factor, y = three_point_fg_rate)) +
   geom_boxplot() +
@@ -211,7 +211,7 @@ A much more informative plot than only a boxplot, is a __violin plot__. Violin
 plots display the density curves giving us the general shape of a distribution. 
 And of course, there's a `geom` for that as well called... `geom_violin`!
 
-```{r violin}
+```{r}
 nba_shooting %>%
   ggplot(aes(x = season_factor, y = three_point_fg_rate)) +
   geom_violin() +
@@ -228,7 +228,7 @@ using `ggplot`, we can easily add the boxplot layer on top of the violin plots
 to get the best of both visualizations! We just specify a small `width` for our
 boxplots so that they don't take up too much space and fit inside the violin plots.
 
-```{r violin-box}
+```{r}
 nba_shooting %>%
   ggplot(aes(x = season_factor, y = three_point_fg_rate)) +
   geom_violin() + 
@@ -249,7 +249,7 @@ plots, we need to install an additional package: [`ggridges`](https://cran.r-pro
 With this package installed, we can now access it and use what appears to be a
 slightly different mapping then boxplots and violin plots:
 
-```{r ridges}
+```{r}
 # install.packages("ggridges")
 library(ggridges)
 nba_shooting %>%
@@ -274,7 +274,7 @@ Beeswarm plots display the distributions for each category by __plotting all
 of the individual data points__ with the placement resembling the histogram and 
 density curve shape.
 
-```{r beeswarm}
+```{r}
 # install.packages("ggbeeswarm")
 library(ggbeeswarm)
 nba_shooting %>%
@@ -293,7 +293,7 @@ For example, in order to calculate the **average** three-point shot rate **for e
 
 We can easily implement this "split-apply-combine" paradigm using the function `group_by()`.
 Let's now modify the `nba_shooting` data so that the years belonging to the same season are grouped together. 
-```{r init-year-group, tidy = FALSE}
+```{r}
 nba_shooting <- nba_shooting %>% 
   group_by(season_factor)
 ```
@@ -301,7 +301,7 @@ nba_shooting <- nba_shooting %>%
 When we print out `nba_shooting` now, we notice an extra line that tells us the grouping variable. Now when we pass this `tbl` on to subsequent calculations, these calculations will be done on each group.
 
 We can now summarize each season using another `tidyverse` function called... `summarize()`! This convenient function will compute summary statistics that we specify with respect to the groups from `group_by()`. For instance, we can compute the average three-point shot rate for each season in the following way:
-```{r season-ave}
+```{r}
 nba_shooting %>%
   summarize(ave_tp_shot_rate = mean(three_point_fg_rate))
 ```
@@ -316,7 +316,7 @@ The following functions are quite useful for summarizing several aspects of the 
 Now we'll make a dataset that provides us with both the mean and **standard deviation** 
 of three-point shot rate within each year, storing it as `nba_shooting_summary`:
 
-```{r shooting-summary}
+```{r}
 nba_shooting_summary <- nba_shooting %>%
   summarize(ave_tp_shot_rate = mean(three_point_fg_rate),
             sd_tp_shot_rate = sd(three_point_fg_rate))
@@ -331,7 +331,7 @@ rather than in the `ggplot` call like before for the settings that are unique to
 `geom_errorbar`. Both `geom_point` and and `geom_errorbar` will share the same `x`
 axis though so that will be assigned in the `ggplot` line:
 
-```{r three-point-errors}
+```{r}
 nba_shooting_summary %>%
   ggplot(aes(x = season_factor)) +
   geom_point(aes(y = ave_tp_shot_rate)) +
@@ -347,7 +347,7 @@ __add__ it to our previous code - such as the violin plots or beeswarm plots. Al
 we have to do is specify the dataset to use for each `geom` separately now, rather
 than piping the whole dataset into the operation:
 
-```{r violin-errorbars}
+```{r}
 # Start with blank canvas:
 ggplot() +
   # Now add the violin plot layer:
@@ -369,7 +369,7 @@ ggplot() +
        subtitle = "Red points indicate average for each year with +/- 1 standard deviation")
 ```
 
-```{r beeswarm-errorbars}
+```{r}
 # Start with blank canvas:
 ggplot() +
   # Now add the beeswarm plot layer:
@@ -397,7 +397,7 @@ You probably noticed that the first season in the dataset (labeled 1997 but corr
 
 We can now `ungroup` our dataset since we're done with this operation:
 
-```{r, tidy = FALSE}
+```{r}
 nba_shooting <- nba_shooting %>%
   ungroup()
 ```
@@ -405,7 +405,7 @@ nba_shooting <- nba_shooting %>%
 To end today's lecture, we could have used the following code instead as a shortcut
 for displaying the averages and standard deviation bars.
 
-```{r, tidy = FALSE}
+```{r}
 nba_shooting %>%
   ggplot(aes(x = season_factor, y = three_point_fg_rate)) +
   geom_violin() + 

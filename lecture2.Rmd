@@ -8,23 +8,25 @@ knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 library(tidyverse)
 ```
 
-We're going to pick up right where we left off yesterday in [Problem Set 1](ps1.html), where you wrote a script to create a tbl containg several shooting statistics for NBA players between the 1996-97 season and the 2015-16 season.
+We're going to pick up right where we left off yesterday in [Problem Set 1](ps1.html), where you wrote a script to create a tbl containing several shooting statistics for NBA players between the 1996-97 season and the 2015-16 season.
 Your script should look something like what is the code block below.
 For reasons that will become clear shortly, we are going to call our tbl `raw_shooting`. 
 ```{r}
 library(tidyverse)
+# Read in data
 raw_shooting <- read_csv(file = "data/nba_shooting.csv")
+# Create new columns
 raw_shooting <-
   mutate(raw_shooting,
-         FGP = FGM/FGA,
-         TPP = TPM/TPA,
-         FTP = FTM/FTA,
-         eFGP = (FGM + 0.5 * TPM)/(FGA),
+         FGP = FGM / FGA,
+         TPP = TPM / TPA,
+         FTP = FTM / FTA,
+         eFGP = (FGM + 0.5 * TPM) / (FGA),
          PTS = FTM + 2 * FGM + TPM,
          TSP = PTS/(2 * (FGA + 0.44 * FTA)))
-nba_shooting <- arrange(raw_shooting, desc(TSP))
+# Sort by the TSP in descending order
+raw_shooting <- arrange(raw_shooting, desc(TSP))
 ```
-
 
 
 We will use visualization to answer some questions about the data.
@@ -74,7 +76,7 @@ ggplot(data = raw_shooting) +
 ```
 Visually, the histograms look identical but now the vertical (y) axis has a different scale. 
 
-<!--**Exercise** Make histograms of FGA, FTA, TPA, FTP, and TPP. Comment on the differences-->
+**Now you should spend time making histograms of FTP and TPP, and other variables created in code above. Discuss the differences with others.**
 
 ### Visualizing bivariate data
 
@@ -151,7 +153,6 @@ For instance, there seem to be several players who have never made a field goal 
 After re-arranging our tbl according to the number of field goals made, it is clear that we have several players who have attempted fewer than 5 field goals in a single season.
 Before examining the relationship between a player's field goal percentage and free throw percentage, we'd like to remove all of the players who have not attempted many of each type of shot.
 
-
 The function `filter()` is used to pull out subsets of observations that satisfy some logical condition like "FGA > 100" or "FGA > 100 and FTA > 50".
 To make such comparisons in R, we have the following operators available at our disposal:
 
@@ -160,7 +161,8 @@ To make such comparisons in R, we have the following operators available at our 
 * `<` and `<=` for "less than" and "less than or equal to"
 * `>` and `>=` for "greater than" and "greater than or equal to"
 * `&`, `|`, `!` for "AND" and "OR" and "NOT"
-The code below filter out all of the players with at least 100 field goals in a single season
+
+The code below filters out all of the players with at least 100 field goals in a single season
 ```{r}
 filter(raw_shooting, FGA > 100)
 ```
@@ -172,12 +174,12 @@ For instance, to filter observations with at least 100 field goal attempts OR 50
 filter(raw_shooting, FGA >= 100 | TPA >= 50)
 ```
 
-We may combine these constraints by enclosing them in parantheses.
+We may combine these constraints by enclosing them in parentheses.
 ```{r}
 filter(raw_shooting, (FGA >= 100 & TPA >= 50) | (FGP >= 0.45 & FGP <= 0.5))
 ```
 
-What if we wanted to pull out the observations corresponding to the 2015-16 and 2014-15 season.
+What if we wanted to pull out the observations corresponding to the 2015-16 and 2014-15 season?
 We could do something like `filter(raw_shooting, (SEASON == 2016) | (SEASON == 2015))`, which would be perfectly fine.
 However, what if we wanted data from 1998-99, 2011-12, and 2015-16? 
 Typing a lot of expressions like `SEASON == ...` would be rather tedious.

@@ -496,8 +496,18 @@ Introduction</h1>
 <div id="tidy-data" class="section level2">
 <h2>Tidy Data</h2>
 <p>Before we jump into any analysis, we wanted to start by discussing
-the notion of “tidy data”.
-<!-- Paraphrase some of the stuff in Hadley's article perhaps? --></p>
+the notion of “tidy data” because not all datasets you find will be
+organized in a form that’s easy to analyze. Thus, you’ll often find
+yourself in a situation where you’ll need to manipulate the data into a
+better form. The enitre <code>tidyverse</code> ecosystem of packages and
+functions is based on analyzing datasets that are in a “tidy” format.
+This format, at its simplest, must adhere to the following three
+rules:</p>
+<ol style="list-style-type: decimal">
+<li>Each variable must have its own column.</li>
+<li>Each observation must have its own row.</li>
+<li>Each value must have its own cell.</li>
+</ol>
 <p>To make the above discussion much more concrete, let’s go back to the
 dataset we created in the challenge question at the end of <a
 href="ps3.html">Problem Set 3</a>. Each line of this tbl is a
@@ -521,9 +531,11 @@ row for each “player-season”.</p>
 ##  9 bautijo02   2014 0.286
 ## 10 bautijo02   2015 0.250
 ## # … with 130 more rows</code></pre>
-<p>In order to study the relationship between a player’s 2014 batting
-average and his 2015 batting average, it will be more convenient to
-store the data as below.</p>
+<p>Let’s say we want to study the relationship between a player’s 2014
+batting average and his 2015 batting average. In this case, each
+observation is a player, and that player has two associated variables;
+batting average in 2014, and batting average in 2015. Thus, it will be
+more convenient to store the data as below.</p>
 <pre><code>## # A tibble: 70 × 3
 ##    playerID  `2014` `2015`
 ##    &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
@@ -545,7 +557,11 @@ tbl into this format, we use <em>spreading</em>.</p>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  batting_2014_2015 <span class="sc">%&gt;%</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(yearID, BA)</span></code></pre></div>
 <p>When we print out <code>batting_2014_2015</code> now, we notice that
-it is easier to read.</p>
+it is easier to read in this proper “tidy” format. Moreover, many of the
+<code>tidyverse</code> functions that we’ve covered and will continue to
+learn are much simpler to implement when used on data of this form.
+We’ll continue to see examples of how to “tidy” up our data as we go
+through the lectures and problem sets.</p>
 </div>
 <div id="predicting-batting-averages" class="section level2">
 <h2>Predicting Batting Averages</h2>
@@ -578,7 +594,7 @@ respectively.</p>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">2015</span><span class="st">`</span>), <span class="at">col =</span> <span class="st">&#39;black&#39;</span>, <span class="at">shape =</span> <span class="dv">16</span>, <span class="at">size =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.273</span>, <span class="at">col =</span> <span class="st">&#39;red&#39;</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.272</span>, <span class="at">col =</span> <span class="st">&#39;red&#39;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="lecture4_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture4_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>It certainly looks like there is a relationship! So it’s at least
 plausible that if we use the 2014 batting averages to make predictions
 for 2015, we can do better than relying on just the average of the 2015
@@ -632,7 +648,7 @@ averages, let us see how they compare, visually.</p>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">2015</span><span class="st">`</span>), <span class="at">col =</span> <span class="st">&#39;black&#39;</span>, <span class="at">shape =</span> <span class="dv">16</span>, <span class="at">size =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_0), <span class="at">col =</span> <span class="st">&#39;red&#39;</span>, <span class="at">shape =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span> </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_1), <span class="at">col =</span> <span class="st">&#39;green&#39;</span>, <span class="at">shape =</span> <span class="dv">15</span>, <span class="at">size =</span> <span class="fl">0.75</span>)</span></code></pre></div>
-<p><img src="lecture4_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture4_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Visually it appears that the green squares (corresponding to yhat_1)
 are a bit closer to the actual values than the red crosses
 (corresponding to yhat_0). This would suggest that dividing the players
@@ -668,7 +684,7 @@ triangles</p>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_0), <span class="at">col =</span> <span class="st">&#39;red&#39;</span>, <span class="at">shape =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span> </span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_1), <span class="at">col =</span> <span class="st">&#39;green&#39;</span>, <span class="at">shape =</span> <span class="dv">15</span>, <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_2), <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="fl">0.75</span>)</span></code></pre></div>
-<p><img src="lecture4_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture4_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>It appears that we are able to perfectly predict the 2015 batting
 average of the player with the lowest batting average in 2014. Why do
 you think this was the case?</p>
@@ -698,7 +714,7 @@ orange.</p>
 <span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_2), <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span> </span>
 <span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_3), <span class="at">col =</span> <span class="st">&#39;purple&#39;</span>, <span class="at">shape =</span> <span class="dv">8</span>, <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span> </span>
 <span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">2014</span><span class="st">`</span>, <span class="at">y =</span> yhat_4), <span class="at">col =</span> <span class="st">&#39;orange&#39;</span>, <span class="at">shape =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="fl">0.75</span>)</span></code></pre></div>
-<p><img src="lecture4_files/figure-html/yhat-34-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture4_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="assessing-predictive-performance" class="section level2">
 <h2>Assessing Predictive Performance</h2>

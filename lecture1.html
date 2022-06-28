@@ -31,6 +31,8 @@
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -501,7 +503,7 @@ is the place where R looks for any data you want to read in. When you
 installed R &amp; RStudio in <a href="lecture0.html">Lecture 0</a>, we
 asked you to create a folder on your Desktop called Moneyball. This will
 be your working directory for the duration of the course.</p>
-<p>Everytime you open RStudio, it automatically sets the working
+<p>Every time you open RStudio, it automatically sets the working
 directory to some default folder on your computer. To see what that is,
 we’ll open RStudio and look at the console pane
 <!-- show console pane --> We can also check our working directory with
@@ -671,303 +673,298 @@ basketball players from the 2015-16 NBA regular season. The statistics
 are: * field goal makes (FGM) * field goal attempts (FGA) * three point
 makes (TPM) * three point attempts (TPA) * free throw makes (FTM) * free
 throw attempts (FTA)</p>
-<center>
-<style>
-table#zebra1 {font-family: 'Helvetica', 'Arial', sans-serif; font-size:16px; text-align:left; margin-bottom:25px; background-color: #FF9999;}
-table#zebra1 th {color: #444; font-size: 18px; font-weight: bold; padding: 10px 8px;}
-table#zebra1 td {color: #777;padding: 8px;}
-table#zebra1 tr:nth-child(even) { color: black; background-color: #eee;}
-table#zebra1 tr:nth-child(odd) {color: black; background-color: #fff;}
-              </style>
-<table id="zebra1" style="width:80%">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
 <tr>
-<th>
+<th style="text-align:left;">
 PLAYER
 </th>
-<th>
+<th style="text-align:left;">
 SEASON
 </th>
-<th>
+<th style="text-align:right;">
 FGM
 </th>
-<th>
+<th style="text-align:right;">
 FGA
 </th>
-<th>
+<th style="text-align:right;">
 TPM
 </th>
-<th>
+<th style="text-align:right;">
 TPA
 </th>
-<th>
+<th style="text-align:right;">
 FTM
 </th>
-<th>
+<th style="text-align:right;">
 FTA
 </th>
 </tr>
+</thead>
+<tbody>
 <tr>
-<td data-th="PLAYER">
+<td style="text-align:left;">
 Stephen Curry
 </td>
-<td data-th="SEASON">
+<td style="text-align:left;">
 2016
 </td>
-<td data-th="FGM">
+<td style="text-align:right;">
 805
 </td>
-<td data-th="FGA">
+<td style="text-align:right;">
 1597
 </td>
-<td data-th="TPM">
+<td style="text-align:right;">
 402
 </td>
-<td data-th="TPA">
+<td style="text-align:right;">
 887
 </td>
-<td data-th="FTM">
+<td style="text-align:right;">
 363
 </td>
-<td data-th="FTA">
+<td style="text-align:right;">
 400
 </td>
 </tr>
 <tr>
-<td data-th="PLAYER">
+<td style="text-align:left;">
 Damian Lillard
 </td>
-<td data-th="SEASON">
+<td style="text-align:left;">
 2016
 </td>
-<td data-th="FGM">
+<td style="text-align:right;">
 618
 </td>
-<td data-th="FGA">
+<td style="text-align:right;">
 1474
 </td>
-<td data-th="TPM">
+<td style="text-align:right;">
 229
 </td>
-<td data-th="TPA">
+<td style="text-align:right;">
 610
 </td>
-<td data-th="FTM">
+<td style="text-align:right;">
 414
 </td>
-<td data-th="FTA">
+<td style="text-align:right;">
 464
 </td>
 </tr>
 <tr>
-<td data-th="PLAYER">
+<td style="text-align:left;">
 Jimmy Butler
 </td>
-<td data-th="SEASON">
+<td style="text-align:left;">
 2016
 </td>
-<td data-th="FGM">
+<td style="text-align:right;">
 470
 </td>
-<td data-th="FGA">
+<td style="text-align:right;">
 1034
 </td>
-<td data-th="TPM">
+<td style="text-align:right;">
 64
 </td>
-<td data-th="TPA">
+<td style="text-align:right;">
 206
 </td>
-<td data-th="FTM">
+<td style="text-align:right;">
 395
 </td>
-<td data-th="FTA">
+<td style="text-align:right;">
 475
 </td>
 </tr>
 <tr>
-<td data-th="PLAYER">
+<td style="text-align:left;">
 James Harden
 </td>
-<td data-th="SEASON">
+<td style="text-align:left;">
 2016
 </td>
-<td data-th="FGM">
+<td style="text-align:right;">
 710
 </td>
-<td data-th="FGA">
+<td style="text-align:right;">
 1617
 </td>
-<td data-th="TPM">
+<td style="text-align:right;">
 236
 </td>
-<td data-th="TPA">
+<td style="text-align:right;">
 657
 </td>
-<td data-th="FTM">
+<td style="text-align:right;">
 720
 </td>
-<td data-th="FTA">
+<td style="text-align:right;">
 837
 </td>
 </tr>
 <tr>
-<td data-th="PLAYER">
+<td style="text-align:left;">
 Kevin Durant
 </td>
-<td data-th="SEASON">
+<td style="text-align:left;">
 2016
 </td>
-<td data-th="FGM">
+<td style="text-align:right;">
 698
 </td>
-<td data-th="FGA">
+<td style="text-align:right;">
 1381
 </td>
-<td data-th="TPM">
+<td style="text-align:right;">
 186
 </td>
-<td data-th="TPA">
+<td style="text-align:right;">
 480
 </td>
-<td data-th="FTM">
+<td style="text-align:right;">
 447
 </td>
-<td data-th="FTA">
+<td style="text-align:right;">
 498
 </td>
 </tr>
 <tr>
-<td data-th="PLAYER">
+<td style="text-align:left;">
 LeBron James
 </td>
-<td data-th="SEASON">
+<td style="text-align:left;">
 2016
 </td>
-<td data-th="FGM">
+<td style="text-align:right;">
 737
 </td>
-<td data-th="FGA">
+<td style="text-align:right;">
 1416
 </td>
-<td data-th="TPM">
+<td style="text-align:right;">
 87
 </td>
-<td data-th="TPA">
+<td style="text-align:right;">
 282
 </td>
-<td data-th="FTM">
+<td style="text-align:right;">
 359
 </td>
-<td data-th="FTA">
+<td style="text-align:right;">
 491
 </td>
 </tr>
 <tr>
-<td data-th="PLAYER">
+<td style="text-align:left;">
 Dirk Nowitzki
 </td>
-<td data-th="SEASON">
+<td style="text-align:left;">
 2016
 </td>
-<td data-th="FGM">
+<td style="text-align:right;">
 498
 </td>
-<td data-th="FGA">
+<td style="text-align:right;">
 1112
 </td>
-<td data-th="TPM">
+<td style="text-align:right;">
 126
 </td>
-<td data-th="TPA">
+<td style="text-align:right;">
 342
 </td>
-<td data-th="FTM">
+<td style="text-align:right;">
 250
 </td>
-<td data-th="FTA">
+<td style="text-align:right;">
 280
 </td>
 </tr>
 <tr>
-<td data-th="PLAYER">
+<td style="text-align:left;">
 Giannis Antetokounmpo
 </td>
-<td data-th="SEASON">
+<td style="text-align:left;">
 2016
 </td>
-<td data-th="FGM">
+<td style="text-align:right;">
 513
 </td>
-<td data-th="FGA">
+<td style="text-align:right;">
 1013
 </td>
-<td data-th="TPM">
+<td style="text-align:right;">
 28
 </td>
-<td data-th="TPA">
+<td style="text-align:right;">
 110
 </td>
-<td data-th="FTM">
+<td style="text-align:right;">
 296
 </td>
-<td data-th="FTA">
+<td style="text-align:right;">
 409
 </td>
 </tr>
 <tr>
-<td data-th="PLAYER">
+<td style="text-align:left;">
 DeMarcus Cousins
 </td>
-<td data-th="SEASON">
+<td style="text-align:left;">
 2016
 </td>
-<td data-th="FGM">
+<td style="text-align:right;">
 601
 </td>
-<td data-th="FGA">
+<td style="text-align:right;">
 1332
 </td>
-<td data-th="TPM">
+<td style="text-align:right;">
 70
 </td>
-<td data-th="TPA">
+<td style="text-align:right;">
 210
 </td>
-<td data-th="FTM">
+<td style="text-align:right;">
 476
 </td>
-<td data-th="FTA">
+<td style="text-align:right;">
 663
 </td>
 </tr>
 <tr>
-<td data-th="PLAYER">
+<td style="text-align:left;">
 Marc Gasol
 </td>
-<td data-th="SEASON">
+<td style="text-align:left;">
 2016
 </td>
-<td data-th="FGM">
+<td style="text-align:right;">
 328
 </td>
-<td data-th="FGA">
+<td style="text-align:right;">
 707
 </td>
-<td data-th="TPM">
+<td style="text-align:right;">
 2
 </td>
-<td data-th="TPA">
+<td style="text-align:right;">
 3
 </td>
-<td data-th="FTM">
+<td style="text-align:right;">
 203
 </td>
-<td data-th="FTA">
+<td style="text-align:right;">
 245
 </td>
 </tr>
+</tbody>
 </table>
-</center>
 <p>Within the tidyverse, the standard way to store and manipulate
 tabular data like this is to use what is known as a tbl (pronounced
 “tibble”). At a high-level, a tbl is a two-dimensional array whose

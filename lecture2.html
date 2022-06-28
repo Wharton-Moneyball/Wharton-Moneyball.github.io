@@ -495,12 +495,13 @@ Wrangling</h1>
 
 <p>We’re going to pick up right where we left off yesterday in <a
 href="ps1.html">Problem Set 1</a>, where you wrote a script to create a
-tbl containg several shooting statistics for NBA players between the
+tbl containing several shooting statistics for NBA players between the
 1996-97 season and the 2015-16 season. Your script should look something
 like what is the code block below. For reasons that will become clear
 shortly, we are going to call our tbl <code>raw_shooting</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;data/nba_shooting.csv&quot;</span>)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in data</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;data/nba_shooting.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 7447 Columns: 8
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -509,15 +510,17 @@ shortly, we are going to call our tbl <code>raw_shooting</code>.</p>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="ot">&lt;-</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(raw_shooting,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">FGP =</span> FGM<span class="sc">/</span>FGA,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">TPP =</span> TPM<span class="sc">/</span>TPA,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">FTP =</span> FTM<span class="sc">/</span>FTA,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">eFGP =</span> (FGM <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> TPM)<span class="sc">/</span>(FGA),</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">PTS =</span> FTM <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> FGM <span class="sc">+</span> TPM,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">TSP =</span> PTS<span class="sc">/</span>(<span class="dv">2</span> <span class="sc">*</span> (FGA <span class="sc">+</span> <span class="fl">0.44</span> <span class="sc">*</span> FTA)))</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>nba_shooting <span class="ot">&lt;-</span> <span class="fu">arrange</span>(raw_shooting, <span class="fu">desc</span>(TSP))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new columns</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="ot">&lt;-</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(raw_shooting,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">FGP =</span> FGM <span class="sc">/</span> FGA,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">TPP =</span> TPM <span class="sc">/</span> TPA,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">FTP =</span> FTM <span class="sc">/</span> FTA,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">eFGP =</span> (FGM <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> TPM) <span class="sc">/</span> (FGA),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">PTS =</span> FTM <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> FGM <span class="sc">+</span> TPM,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">TSP =</span> PTS<span class="sc">/</span>(<span class="dv">2</span> <span class="sc">*</span> (FGA <span class="sc">+</span> <span class="fl">0.44</span> <span class="sc">*</span> FTA)))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort by the TSP in descending order</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="ot">&lt;-</span> <span class="fu">arrange</span>(raw_shooting, <span class="fu">desc</span>(TSP))</span></code></pre></div>
 <p>We will use visualization to answer some questions about the data.
 Specifically, we will study the distribution of the individual columns
 as well as try to understand the relationship between pairs of
@@ -571,7 +574,9 @@ boxes always sums to 1 no matter how much data you have.</p>
 <p><img src="lecture2_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" />
 Visually, the histograms look identical but now the vertical (y) axis
 has a different scale.</p>
-<!--**Exercise** Make histograms of FGA, FTA, TPA, FTP, and TPP. Comment on the differences-->
+<p><strong>Now you should spend time making histograms of FTP and TPP,
+and other variables created in code above. Discuss the differences with
+others.</strong></p>
 </div>
 <div id="visualizing-bivariate-data" class="section level3">
 <h3>Visualizing bivariate data</h3>
@@ -672,9 +677,10 @@ than or equal to”</li>
 <li><code>&gt;</code> and <code>&gt;=</code> for “greater than” and
 “greater than or equal to”</li>
 <li><code>&amp;</code>, <code>|</code>, <code>!</code> for “AND” and
-“OR” and “NOT” The code below filter out all of the players with at
-least 100 field goals in a single season</li>
+“OR” and “NOT”</li>
 </ul>
+<p>The code below filters out all of the players with at least 100 field
+goals in a single season</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(raw_shooting, FGA <span class="sc">&gt;</span> <span class="dv">100</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 6,295 × 14
 ##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
@@ -712,7 +718,7 @@ field goal attempts OR 50 three point attempts, we would do</p>
 ## 10 Paul Geor…   2016   605  1448   210   565   454   528 0.418 0.372 0.860 0.490
 ## # … with 6,318 more rows, and 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
 <p>We may combine these constraints by enclosing them in
-parantheses.</p>
+parentheses.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(raw_shooting, (FGA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">&amp;</span> TPA <span class="sc">&gt;=</span> <span class="dv">50</span>) <span class="sc">|</span> (FGP <span class="sc">&gt;=</span> <span class="fl">0.45</span> <span class="sc">&amp;</span> FGP <span class="sc">&lt;=</span> <span class="fl">0.5</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 4,837 × 14
 ##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
@@ -729,7 +735,7 @@ parantheses.</p>
 ## 10 Paul Geor…   2016   605  1448   210   565   454   528 0.418 0.372 0.860 0.490
 ## # … with 4,827 more rows, and 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
 <p>What if we wanted to pull out the observations corresponding to the
-2015-16 and 2014-15 season. We could do something like
+2015-16 and 2014-15 season? We could do something like
 <code>filter(raw_shooting, (SEASON == 2016) | (SEASON == 2015))</code>,
 which would be perfectly fine. However, what if we wanted data from
 1998-99, 2011-12, and 2015-16? Typing a lot of expressions like

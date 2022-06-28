@@ -11,7 +11,7 @@ library(tidyverse)
 ## Introduction
 <!-- Original graphic is on pg 18 of Adi's Lecture 3 -->
 
-On day 3 of the morning lectures (Slide 7 of Lecture 6), you saw a graph of Earned Run Average (ERA) against year. 
+On day 3 of the morning lectures (Lecture 6), you saw a graph of Earned Run Average (ERA) against year. 
 Also shown was a line connecting the average ERA in each year.
 
 ![](figures/lecture3_era.png)

@@ -3,7 +3,6 @@ title: "Lecture 1: R Basics & the Tidyverse"
 output: html_document
 ---
   
-  
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 library(tidyverse)
@@ -14,7 +13,7 @@ The *working directory* is a really powerful concept in R -- it is where R saves
 When you installed R & RStudio in [Lecture 0](lecture0.html), we asked you to create a folder on your Desktop called Moneyball.
 This will be your working directory for the duration of the course. 
 
-Everytime you open RStudio, it automatically sets the working directory to some default folder on your computer.
+Every time you open RStudio, it automatically sets the working directory to some default folder on your computer.
 To see what that is, we'll open RStudio and look at the console pane
 <!-- show console pane -->
 We can also check our working directory with the code `getwd()`
@@ -114,14 +113,14 @@ For the rest of the course, we will be working within the [``tidyverse''](https:
 They are all based on a common design philosophy, mostly developed by Hadley Wickham (whose name you will encounter a lot as you gain more experience with R). 
 
 To access tidyverse, first we first need to install the tidyverse package:
-```{r install-tidyverse, eval = FALSE}
+```{r, eval = FALSE}
 install.packages("tidyverse")
 ```
 The `install.packages()` function is one way of installing packages in R. You can also use Tools/Install Packages or click on the Packages tab in the bottom right pane of your RStudio view and then click on Install to type in the package you want to install.
 
 
 Now with the `tidyverse` suite of packages installed, we can load them with the following code:
-```{r load-tidyverse, eval=FALSE}
+```{r, eval=FALSE}
 library(tidyverse)
 ```
 When you do that, you'll see a lot of output to the console, most of which you can safely ignore for now.
@@ -140,12 +139,7 @@ The statistics are:
 * free throw makes (FTM)
 * free throw attempts (FTA)
 
-<center>
-```{r echo=FALSE, results='asis'}
-#install.packages("remotes")
-#remotes::install_github("jalapic/simpletable")
-
-library(simpletable)
+```{r, echo=FALSE}
 my.data <- data.frame("PLAYER" = c("Stephen Curry", "John Wall", "Jimmy Butler", "James Harden", "Kevin Durant", "LeBron James", "Kristaps Porzingis", "Dirk Nowitzki", "Tim Duncan", "Andre Drummond"), stringsAsFactors = FALSE)
 
 my.data <- data.frame("PLAYER" = c("Stephen Curry", "Damian Lillard", "Jimmy Butler", "James Harden", "Kevin Durant", "LeBron James", "Dirk Nowitzki", "Giannis Antetokounmpo", "DeMarcus Cousins", "Marc Gasol"),
@@ -157,10 +151,8 @@ my.data <- data.frame("PLAYER" = c("Stephen Curry", "Damian Lillard", "Jimmy But
                       "FTM" = c(363, 414, 395, 720, 447, 359, 250, 296, 476, 203),
                       "FTA" = c(400, 464, 475, 837, 498, 491, 280, 409, 663, 245))
 
-
-tablecode(my.data, tabletype="zebra1")
+my.data %>% knitr::kable() %>% kableExtra::kable_styling(full_width = F)
 ```
-</center>
 
 Within the tidyverse, the standard way to store and manipulate tabular data like this is to use what is known as a tbl (pronounced "tibble").
 At a high-level, a tbl is a two-dimensional array whose columns can be of different data types.
@@ -171,7 +163,7 @@ Throughout the course, you will be downloading all datasets we will analyze to y
 Within the tidyverse, we can use the function `read_csv()` to read in a csv file that is stored on your computer and create a tibble containing all of the data.
 The dataset showed above is stored in a csv file named "nba_shooting_small.csv" in the "data" folder of our working directory.
 We will read it into R with the `read_csv()` function like so:
-```{r read-nba-shooting-small}
+```{r}
 nba_shooting_small <- read_csv(file = "data/nba_shooting_small.csv")
 ```
 
@@ -191,7 +183,7 @@ Similarly, the number of field goals made ("FGM") is parsed as integer data.
 
 When we print out our tbl, R outputs many things: the dimension (in this case, $10 \times 8$), the column names, the *type* of data included in each column, and then the actual data.
 
-```{r print-nba-shooting-small}
+```{r}
 nba_shooting_small
 ```
 
@@ -214,13 +206,13 @@ Over the next two days, we will learn each of these
 ### Arranging Data
 The `arrange()` function works by taking a tbl and a set of column names and sorting the data according to the values in these columns.
 
-```{r arrange-fga-1}
+```{r}
 arrange(nba_shooting_small, FGA)
 ```
 The code above takes our tbl and sorts the rows in ascending order of FGA.
 We see that Marc Gasol took the fewest number of field goals (707) while James Harden and Stephen Curry attempted more than twice as many.
 We could also sort the players in descending order using `desc()`:
-```{r arrange-fga-desc}
+```{r}
 arrange(nba_shooting_small, desc(FGA))
 ```
 
@@ -228,12 +220,12 @@ In this small dataset, no two players attempted the same number of field goals.
 In larger datasets (like the one you'll see in [Problem Set1](ps1.html)), it can be the case that there are multiple rows with the same value in a given column.
 When arranging the rows of a tbl, to break ties, we can specify more than column.
 For instance, the code below sorts the players first by the number of field goal attempts and then by the number of three point attempts.
-```{r arrange-fga-mult-cols}
+```{r}
 arrange(nba_shooting_small, FGA, TPA)
 ```
 
 Now consider the two lines of code:
-```{r arrange-print}
+```{r}
 arrange(nba_shooting_small, PLAYER)
 nba_shooting_small
 ```
@@ -241,7 +233,7 @@ In the first line, we've sorted the players in alphabet order of their first nam
 But when we print out our tbl, `nba_shooting_small`, we see that the players are no longer sorted.
 This is because dplyr (and most other R) functions **never** modify their input but work by creating a copy and modifying that copy.
 If we wanted to preserve the new ordering, we would have to *overwrite* `nba_shooting_small` using a combination of the assignment operator and `arrange()`.
-```{r arrnage-override}
+```{r}
 nba_shooting_small <- arrange(nba_shooting_small, PLAYER)
 nba_shooting_small
 ```
@@ -252,7 +244,7 @@ While arranging our data is useful, it is not quite sufficient to determine whic
 Perhaps the simplest way to compare players' shooting ability is with field goal percentage (FGP).
 We can compute this percentage using the formula $\text{FGP} = \frac{\text{FGM}}{\text{FGA}}.$
 We use the function `mutate()` to add a column to our tbl.
-```{r mutate-fgp}
+```{r}
 mutate(nba_shooting_small, FGP = FGM/FGA)
 ```
 
@@ -262,7 +254,7 @@ Just like with `arrange()`, if we call `mutate()` by itself, R will not add the 
 In order to permanently add a column for field goal percentages to `nba_shooting_small`, we're going to need to use the assignment operator.
 
 It turns out that we can add *multiple* columns to a tbl at once by passing more arguments to `mutate()`, one for each column we wish to define.
-```{r mutate-fgp-2}
+```{r}
 mutate(nba_shooting_small, FGP = FGM/FGA, TPP = TPM/TPA, FTP = FTM/FTA)
 ```
 
@@ -270,7 +262,7 @@ mutate(nba_shooting_small, FGP = FGM/FGA, TPP = TPM/TPA, FTP = FTM/FTA)
 
 One huge advantage with working with R script is the ability to separate commands onto multiple lines.
 For instance, to add columns for FGP, FTP, and TPP to our tbl, we can write the following in our script window.
-```{r multiline-syntax, include=TRUE}
+```{r}
 nba_shooting_small <-
   mutate(nba_shooting_small,
          FGP = FGM/FGA,

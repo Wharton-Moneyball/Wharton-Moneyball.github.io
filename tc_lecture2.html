@@ -45,6 +45,109 @@
 
 
 
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  { color: #cccccc; background-color: #303030; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ffcfaf; } /* Alert */
+code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #dca3a3; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #f0dfaf; } /* ControlFlow */
+code span.ch { color: #dca3a3; } /* Char */
+code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code span.co { color: #7f9f7f; } /* Comment */
+code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code span.do { color: #7f9f7f; } /* Documentation */
+code span.dt { color: #dfdfbf; } /* DataType */
+code span.dv { color: #dcdccc; } /* DecVal */
+code span.er { color: #c3bf9f; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #c0bed1; } /* Float */
+code span.fu { color: #efef8f; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+code span.kw { color: #f0dfaf; } /* Keyword */
+code span.op { color: #f0efd0; } /* Operator */
+code span.ot { color: #efef8f; } /* Other */
+code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code span.sc { color: #dca3a3; } /* SpecialChar */
+code span.ss { color: #cc9393; } /* SpecialString */
+code span.st { color: #cc9393; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #cc9393; } /* VerbatimString */
+code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
@@ -395,13 +498,54 @@ href="tc_ps1.html">Problem Set 1</a>, where you wrote a script to create
 a <code>tbl</code> containg several shooting statistics for NBA players
 between the 1996-97 season and the 2015-16 season. Your script could
 look something like what is the code block below, and for reasons that
-will become clear shortly, we are going to call our <code>tbl</code>
+will become clear shortly, we are going to call our tbl
 <code>raw_shooting</code> (remember: writing code in script files is
 good practice!)</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in data</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;data/nba_shooting.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 7447 Columns: 8
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): PLAYER
+## dbl (7): SEASON, FGM, FGA, TPM, TPA, FTM, FTA
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new columns</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="ot">&lt;-</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(raw_shooting,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">FGP =</span> FGM <span class="sc">/</span> FGA,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">TPP =</span> TPM <span class="sc">/</span> TPA,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">FTP =</span> FTM <span class="sc">/</span> FTA,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">eFGP =</span> (FGM <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> TPM) <span class="sc">/</span> (FGA),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">PTS =</span> FTM <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> FGM <span class="sc">+</span> TPM,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">TSP =</span> PTS<span class="sc">/</span>(<span class="dv">2</span> <span class="sc">*</span> (FGA <span class="sc">+</span> <span class="fl">0.44</span> <span class="sc">*</span> FTA)))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort by the TSP in descending order</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="ot">&lt;-</span> <span class="fu">arrange</span>(raw_shooting, <span class="fu">desc</span>(TSP))</span></code></pre></div>
 <p>As we learned at the end of <a href="tc_lecture1.html">Lecture 1</a>,
 rather than repeatedly referring to our <code>tbl</code>, we can use the
 pipe <code>%&gt;%</code> to chain together our operations for a much
 <em>cleaner</em> chunk of code:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First read in the data, assigning pipeline to raw_shooting</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;data/nba_shooting.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Next create the new columns</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">FGP =</span> FGM <span class="sc">/</span> FGA,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">TPP =</span> TPM <span class="sc">/</span> TPA,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">FTP =</span> FTM <span class="sc">/</span> FTA,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">eFGP =</span> (FGM <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> TPM) <span class="sc">/</span> (FGA),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">PTS =</span> FTM <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> FGM <span class="sc">+</span> TPM,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">TSP =</span> PTS <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> (FGA <span class="sc">+</span> <span class="fl">0.44</span> <span class="sc">*</span> FTA))) <span class="sc">%&gt;%</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># And finally sort by TSP</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(TSP)) </span></code></pre></div>
+<pre><code>## Rows: 7447 Columns: 8
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): PLAYER
+## dbl (7): SEASON, FGM, FGA, TPM, TPA, FTM, FTA
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <div id="introduction-to-ggplot2" class="section level2">
 <h2>Introduction to ggplot2</h2>
 <p>We will use visualizations to answer some questions about the data.
@@ -431,6 +575,8 @@ field-goal percentage (FGP). To do so with <code>ggplot2</code>, we
 start by telling <code>R</code> which <code>tbl</code> we want to use as
 the data for the plot. This is done using the <code>ggplot()</code>
 function:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting)</span></code></pre></div>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>As you can see, nothing is displayed! That’s because we’ve just
 initialized the dataset to be used for creating the plot. Next, we need
 to map variables/columns from the data to
@@ -445,6 +591,8 @@ include:</p>
 <p>For the histogram, we map FGP to the <code>x</code> aesthetic with
 the <code>aes()</code> functions, displaying values of FGP along the
 x-axis:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting, <span class="fu">aes</span>(<span class="at">x =</span> FGP))</span></code></pre></div>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now we can see an axis for FGP, but still no histogram! That’s
 because we need to <strong>add</strong> the geometric layer of the
 histogram to the plot. The various geometric objects available in
@@ -460,12 +608,21 @@ include:</p>
 <p>To display the FGP histogram, we will simply add the
 <code>geom_histogram()</code> layer to the plot using the <code>+</code>
 operator:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting, <span class="fu">aes</span>(<span class="at">x =</span> FGP)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>And of course, we can equivalently generate the same figure by
 <strong>piping</strong> our dataset into the <code>ggplot</code>
 function. The remaining examples will use the pipe operator
 <code>%&gt;%</code> for the remainder of this week, emphasizing how you
 can manipulate the <code>tbl</code> with various other functions prior
 to displaying the data:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> FGP)) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Each <code>geom</code> has it various attributes that can be modified
 whether by mapping variables with <code>aes</code> or <em>global</em>
 settings that affects the final displayed plot. A common problem faced
@@ -475,8 +632,16 @@ by default <code>geom_histogram</code> is using 30 bins and prints out a
 message for us about this decision. We can easily modify the number of
 bins in the <code>geom_histogram</code> function using the
 <code>bins</code> argument:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> FGP)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>)</span></code></pre></div>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Or we directly specify the width of the bins reflecting the range of
 FGP included in each bin using <code>binwidth</code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> FGP)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><strong>Now you should spend time making histograms of FTP and TPP,
 and other variables created in code above. Discuss the differences with
 others.</strong></p>
@@ -509,14 +674,62 @@ than or equal to”</li>
 </ul>
 <p>The code below filter out all of the players with at least 100 field
 goals in a single season</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FGA <span class="sc">&gt;</span> <span class="dv">100</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 6,295 × 14
+##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Chris Wil…   2013   110   153     0     1    39    58 0.719 0     0.672 0.719
+##  2 Tyson Cha…   2012   241   355     0     2   217   315 0.679 0     0.689 0.679
+##  3 Kyle Korv…   2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671
+##  4 Steve Nov…   2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675
+##  5 Chris And…   2014   177   275     3    12   120   169 0.644 0.25  0.710 0.649
+##  6 Jeremy Ev…   2011    76   115     0     1    26    37 0.661 0     0.703 0.661
+##  7 Carlos Ro…   2001    75   110     0     1    29    52 0.682 0     0.558 0.682
+##  8 Mason Plu…   2014   199   302     0     3   122   195 0.659 0     0.626 0.659
+##  9 Stephen C…   2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630
+## 10 Brent Bar…   2004   215   427   114   252    91   110 0.504 0.452 0.827 0.637
+## # … with 6,285 more rows, and 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
 <p>When we run this code, you’ll notice that R prints out a
 <code>tbl</code> with 6,295 rows.</p>
 <p>We can also filter on more complicated conditions constructed using
 the AND, OR, and NOT operators: <code>&amp;</code>, <code>|</code>, and
 <code>!</code>. For instance, to filter observations with at least 100
 field goal attempts OR 50 three point attempts, we would do</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FGA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">|</span> TPA <span class="sc">&gt;=</span> <span class="dv">50</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 6,328 × 14
+##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Chris Wil…   2013   110   153     0     1    39    58 0.719 0     0.672 0.719
+##  2 Tyson Cha…   2012   241   355     0     2   217   315 0.679 0     0.689 0.679
+##  3 Kyle Korv…   2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671
+##  4 Steve Nov…   2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675
+##  5 Chris And…   2014   177   275     3    12   120   169 0.644 0.25  0.710 0.649
+##  6 Jeremy Ev…   2011    76   115     0     1    26    37 0.661 0     0.703 0.661
+##  7 Carlos Ro…   2001    75   110     0     1    29    52 0.682 0     0.558 0.682
+##  8 Brian Car…   2011    43   100    42    87    17    18 0.43  0.483 0.944 0.64 
+##  9 Mason Plu…   2014   199   302     0     3   122   195 0.659 0     0.626 0.659
+## 10 Stephen C…   2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630
+## # … with 6,318 more rows, and 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
 <p>We may combine these constraints by enclosing them in
-parantheses.</p>
+parentheses.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>((FGA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">&amp;</span> TPA <span class="sc">&gt;=</span> <span class="dv">50</span>) <span class="sc">|</span> (FGP <span class="sc">&gt;=</span> <span class="fl">0.45</span> <span class="sc">&amp;</span> FGP <span class="sc">&lt;=</span> <span class="fl">0.5</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 4,837 × 14
+##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Keith Bog…   2014     3     6     3     6     3     3 0.5   0.5   1     0.75 
+##  2 Kyle Korv…   2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671
+##  3 Aleksanda…   1997     8    16     5     7     4     5 0.5   0.714 0.8   0.656
+##  4 Steve Nov…   2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675
+##  5 Brian Car…   2011    43   100    42    87    17    18 0.43  0.483 0.944 0.64 
+##  6 Stephen C…   2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630
+##  7 Brent Bar…   2004   215   427   114   252    91   110 0.504 0.452 0.827 0.637
+##  8 Manu Gino…   2012   150   285    52   126    88   101 0.526 0.413 0.871 0.618
+##  9 Steve Kerr   1997   249   467   110   237    54    67 0.533 0.464 0.806 0.651
+## 10 Brent Bar…   2007   202   425   128   287   103   117 0.475 0.446 0.880 0.626
+## # … with 4,827 more rows, and 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
 <p>What if we wanted to pull out the observations corresponding to the
 2015-16 and 2014-15 season? We could do something like
 <code>filter(raw_shooting, (SEASON == 2016) | (SEASON == 2015))</code>,
@@ -524,16 +737,58 @@ which would be perfectly fine. However, what if we wanted data from
 1998-99, 2011-12, and 2015-16? Typing a lot of expressions like
 <code>SEASON == ...</code> would be rather tedious. The
 <code>%in%</code> operator lets us avoid this tedium:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>, <span class="dv">2016</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 1,150 × 14
+##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Tyson Whe…   1999     1     1     1     1     1     2 1     1     0.5   1.5  
+##  2 Tyson Cha…   2012   241   355     0     2   217   315 0.679 0     0.689 0.679
+##  3 Jorge Gut…   2016     6    11     0     2    10    11 0.545 0     0.909 0.545
+##  4 Steve Nov…   2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675
+##  5 Sam Jacob…   1999     3     5     0     1     2     2 0.6   0     1     0.6  
+##  6 Stephen C…   2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630
+##  7 Manu Gino…   2012   150   285    52   126    88   101 0.526 0.413 0.871 0.618
+##  8 James Har…   2012   309   629   114   292   312   369 0.491 0.390 0.846 0.582
+##  9 Steve Nov…   2016     8    18     7    15     1     1 0.444 0.467 1     0.639
+## 10 Brad Mill…   1999    78   138     1     2    81   102 0.565 0.5   0.794 0.569
+## # … with 1,140 more rows, and 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
 <p>We could also filter out data from the two lockout-shortened seasons,
 1998-99 and 2011-12 using a combination of the NOT <code>!</code>
 operator and <code>%in%</code>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 6,721 × 14
+##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Dajuan Wa…   2007     1     1     1     1     1     2 1     1     0.5   1.5  
+##  2 Amir John…   2006     7    10     2     3     4     4 0.7   0.667 1     0.8  
+##  3 Keith Bog…   2014     3     6     3     6     3     3 0.5   0.5   1     0.75 
+##  4 Steve Nov…   2011    35    67    26    46     8     8 0.522 0.565 1     0.716
+##  5 Chris Cra…   2003     8    13     1     3     7     8 0.615 0.333 0.875 0.654
+##  6 Chris Wil…   2013   110   153     0     1    39    58 0.719 0     0.672 0.719
+##  7 Maceo Bas…   2007    49    76     3     7    37    47 0.645 0.429 0.787 0.664
+##  8 Kyle Korv…   2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671
+##  9 Jorge Gut…   2016     6    11     0     2    10    11 0.545 0     0.909 0.545
+## 10 Aleksanda…   1997     8    16     5     7     4     5 0.5   0.714 0.8   0.656
+## # … with 6,711 more rows, and 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
 <p>For the remainder of this module, we will focus on the non-lockout
 seasons (ie <code>!SEASON %in% c(1999, 2012, 2016)</code>) but we still
 need to determine a cutoff for FGA and TPA. Let’s start by making
 histograms of the two variables to see their individual distributions,
 and rather than creating a new temporary <code>tbl</code> we’ll take
 advantage of the <code>%&gt;%</code>. First for FGA,</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> FGA)) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">50</span>)</span></code></pre></div>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>And now for TPA,</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TPA)) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">25</span>)</span></code></pre></div>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>It might not make sense however to make a cutoff for FGA and TPA
 without considering their relationship.</p>
 </div>
@@ -547,6 +802,11 @@ We create a scatterplot by mapping multiple variables to <code>x</code>
 and <code>y</code>, and use <code>geom_point</code> to display the
 desired geometric object of points instead of
 <code>geom_histogram</code> from before.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TPA, <span class="at">y =</span> FGA)) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Immediately, we notice a few things about the figure. First, we see
 the clear relationship between TPA and FGA - where where TPA provides
 the lower threshold on FGA (remember why is this expected). We also see
@@ -565,6 +825,11 @@ the same region, that region will appear darker. Just like
 change such as the <code>alpha</code> setting in this case which ranges
 from 0 (completely transparent) to 1 (solid and opaque, the
 default).</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TPA, <span class="at">y =</span> FGA)) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now we have a much better idea of where the majority of points are,
 with a clear group of players displaying a smaller number of TPA.
 Another type of plot commonly used in this situation is a
@@ -576,9 +841,19 @@ While you can conceptually make the bins any shape you want, there are
 two popular conventions: rectangular binning and hexagonal binning. For
 this plot, we will focus on rectangular binning, using the
 <code>geom_bin2d()</code> function.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TPA, <span class="at">y =</span> FGA)) <span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>()</span></code></pre></div>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now we have a color scale that has appeared to tell us the number of
 points in each bin. Just like histograms, we can increase the number of
 bins to get a much more high-resolution view of our data.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TPA, <span class="at">y =</span> FGA)) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>(<span class="at">bins =</span> <span class="dv">100</span>)</span></code></pre></div>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>In this example, using <code>geom_point</code> with lower values for
 <code>alpha</code> provides a clear interpretation for where to make the
 cutoff. Given the histograms we previously made for each variable as
@@ -586,9 +861,15 @@ well, let’s use a cutoff of <code>TPA &gt; 50</code> and
 <code>FGA &gt; 150</code>. We can create the scatterplot as before but,
 to demonstrate a convenient feature of <code>ggplot2</code>, we’ll now
 assign the plot to a variable named <code>fga_tpa_plot</code>,</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>fga_tpa_plot <span class="ot">&lt;-</span> raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TPA, <span class="at">y =</span> FGA)) <span class="sc">+</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.1</span>)</span></code></pre></div>
 <p>Notice how this code runs without displaying the plot. To display it
 we simply run <code>fga_tpa_plot</code> in the console and the plot
 appear,</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fga_tpa_plot</span></code></pre></div>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now we’re going to annotate this plot with the cutoffs we’ve
 determined. To do so, we’re going to add a vertical line to provide the
 cutoff for the minimum value of TPA, and a horizontal line for the
@@ -598,11 +879,23 @@ where we specify for each the values for the intercepts to draw the
 lines at. Since we’ve stored the plot in <code>fga_tpa_plot</code>, we
 can add these layers with the <code>+</code> operator to
 <code>fga_tpa_plot</code> directly:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>fga_tpa_plot <span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add TPA cutoff</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">50</span>) <span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add FGA cutoff</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">150</span>)</span></code></pre></div>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>This provides us with a good indication of what we’re cutting off,
 but we should distinguish these lines separately from the points more.
 Since these are both <code>geom</code>s with their own set of
 attributes, we’ll change the color and make the line type to be
 dashed,</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fga_tpa_plot <span class="sc">+</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add TPA cutoff</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">50</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add FGA cutoff</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">150</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Although <code>ggplot2</code> automatically provides axis labels
 based on the variables we’ve mapped to the aesthetics in
 <code>aes</code>, we really need text describing what is shown in the
@@ -613,9 +906,41 @@ parts of the plot to label such as the title, subtitle, and caption. We
 add appropriate labels to the plot above, with better descriptions for
 the axes, as well as an informative subtitle regarding the red-dashed
 lines:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fga_tpa_plot <span class="sc">+</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add TPA cutoff</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">50</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add FGA cutoff</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">150</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add appropriate labels:</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Number of three point attempts (TPA)&quot;</span>,</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Number of field goal attempts (FGA)&quot;</span>,</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Scatterplot of FGA and TPA (excluding lockout seasons 1999 and 2012)&quot;</span>,</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Red-dashed lines indicate cutoffs for TPA &gt; 50 and FGA &gt; 150&quot;</span>,</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Created by INSERT YOUR NAME HERE&quot;</span>)</span></code></pre></div>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>As a reminder, the code chunk above is equivalent to running the
 entire pipeline of code without creating any temporary objects, although
 not recommended…</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;data/nba_shooting.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TPA, <span class="at">y =</span> FGA)) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">50</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">150</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Number of three point attempts (TPA)&quot;</span>,</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Number of field goal attempts (FGA)&quot;</span>,</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Scatterplot of FGA and TPA (excluding lockout seasons 1999 and 2012)&quot;</span>,</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Red-dashed lines indicate cutoffs for TPA &gt; 50 and FGA &gt; 150&quot;</span>,</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Created by INSERT YOUR NAME HERE&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 7447 Columns: 8
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): PLAYER
+## dbl (7): SEASON, FGM, FGA, TPM, TPA, FTM, FTA
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p><img src="tc_lecture2_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="saving-our-work" class="section level2">
 <h2>Saving our work</h2>
@@ -627,14 +952,23 @@ condition with commas, and refer to the resulting dataset as
 <code>nba_shooting</code>. Finally, we’ll add a <code>mutate()</code>
 line to create the <code>three_point_fg_rate = TPA / FGA</code> variable
 from <a href="tc_lecture1.html">yesterday</a>.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>nba_shooting <span class="ot">&lt;-</span> raw_shooting <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter on the conditions</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>),</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>         TPA <span class="sc">&gt;</span> <span class="dv">50</span>,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>         FGA <span class="sc">&gt;</span> <span class="dv">150</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create the three point attempt rate variable</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">three_point_fg_rate =</span> TPA <span class="sc">/</span> FGA)</span></code></pre></div>
 <p>While we can always re-run the commands used to produce this
 <code>tbl</code> from our script, when data analyses become more
 complicated, it is helpful to save these objects. <code>R</code> has its
 own special file format for efficiently saving data on your
 computer.</p>
 <p>We will use the <code>save()</code> command.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(nba_shooting, <span class="at">file =</span> <span class="st">&quot;data/clean_nba_shooting.RData&quot;</span>)</span></code></pre></div>
 <p>Then when we want to <em>load</em> the data back into R, we can use
 the <code>load()</code> function</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/clean_nba_shooting.RData&quot;</span>)</span></code></pre></div>
 <p>Next, proceed to practice this lecture’s lessons in <a
 href="tc_ps2.html">Problem Set 2</a>.</p>
 </div>

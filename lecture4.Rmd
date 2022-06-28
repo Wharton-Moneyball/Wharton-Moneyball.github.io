@@ -10,12 +10,14 @@ library(tidyverse)
 
 ## Tidy Data
 
-Before we jump into any analysis, we wanted to start by discussing the notion of "tidy data".
-<!-- Paraphrase some of the stuff in Hadley's article perhaps? -->
+Before we jump into any analysis, we wanted to start by discussing the notion of "tidy data" because not all datasets you find will be organized in a form that's easy to analyze. Thus, you'll often find yourself in a situation where you'll need to manipulate the data into a better form.  The enitre `tidyverse` ecosystem of packages and functions is based on analyzing datasets that are in a "tidy" format. This format, at its simplest, must adhere to the following three rules:
+
+1. Each variable must have its own column.
+2. Each observation must have its own row.
+3. Each value must have its own cell.
 
 To make the above discussion much more concrete, let's go back to the dataset we created in the challenge question at the end of [Problem Set 3](ps3.html).
-Each line of this tbl is a "player-season". 
-Printing out the tbl, we see that there is a separate row for each "player-season".
+Each line of this tbl is a "player-season". Printing out the tbl, we see that there is a separate row for each "player-season".
 
 ```{r load-data}
 library(tidyverse)
@@ -23,20 +25,20 @@ load("data/batting_2014_2015.RData")
 batting_2014_2015
 ```
 
-In order to study the relationship between a player's 2014 batting average and his 2015 batting average, it will be more convenient to store the data as below.
-```{r spread, echo = FALSE, tidy=FALSE}
+Let's say we want to study the relationship between a player's 2014 batting average and his 2015 batting average. In this case, each observation is a player, and that player has two associated variables; batting average in 2014, and batting average in 2015. Thus, it will be more convenient to store the data as below.
+```{r, echo = FALSE, tidy=FALSE}
 batting_2014_2015 %>%
   spread(yearID, BA)
 ```
 In this format, we have a row for each player and two columns for his batting averages, one for 2014 and one for 2015.
 In order to convert our tbl into this format, we use *spreading*.
-```{r, spread-assign, tidy = FALSE}
+```{r, tidy = FALSE}
 batting_2014_2015 <-
   batting_2014_2015 %>%
   spread(yearID, BA)
 ```
 
-When we print out `batting_2014_2015` now, we notice that it is easier to read.
+When we print out `batting_2014_2015` now, we notice that it is easier to read in this proper "tidy" format. Moreover, many of the `tidyverse` functions that we've covered and will continue to learn are much simpler to implement when used on data of this form. We'll continue to see examples of how to "tidy" up our data as we go through the lectures and problem sets.
 
 
 ## Predicting Batting Averages
@@ -52,7 +54,7 @@ We will add columns to our tbl containing these predictions.
 To get things started, let's add a column containing the overall mean of the 2015 batting averages.
 It turns out that this mean is 0.273, whereas the mean 2014 batting average is 0.272.
 
-```{r yhat-0, tidy=FALSE}
+```{r}
 batting_2014_2015 <-
   batting_2014_2015 %>% 
   mutate(yhat_0 = mean(`2015`))
@@ -62,7 +64,7 @@ If the 2014 batting average had no predictive power at all, then this overall me
 Plotting the 2015 batting averages against the 2014 batting averages allows us to assess visually whether there is any relationship between the two variables. 
 We have added dashed red horizontal and vertical lines at the overall means of the 2014 and 2015 data, respectively.
 
-```{r, tidy = FALSE}
+```{r}
 ggplot(batting_2014_2015) +
   geom_point(aes(x = `2014`, y = `2015`), col = 'black', shape = 16, size = 0.9) +
   geom_hline(yintercept = 0.273, col = 'red', lty = 2) +
@@ -86,7 +88,7 @@ To create the column indicating group membership, we will use the powerful `cut(
 
 The following code chunk does precisely that with two more steps: once we have made our predictions, we ungroup the tbl and we can drop the column indicating the interval in which our observation falls.
 
-```{r yhat-1, tidy = FALSE}
+```{r}
 batting_2014_2015 <- 
   batting_2014_2015 %>%
   mutate(bins = cut(`2014`, breaks = c(0.15, 0.272, 0.40))) %>%
@@ -106,7 +108,7 @@ The first element of the cut point vector, 0.15 is much less than the smallest B
 The last element, 0.40 is much greater than the largest BA_2014 value.
 
 Now that we have two different ways of predicting 2015 batting averages, let us see how they compare, visually.
-```{r, tidy = FALSE}
+```{r}
 ggplot(batting_2014_2015) +
   geom_point(aes(x = `2014`, y = `2015`), col = 'black', shape = 16, size = 0.9) +
   geom_point(aes(x = `2014`, y = yhat_0), col = 'red', shape = 3, size = 0.75) + 
@@ -127,7 +129,7 @@ seq(from = 0, to = 1, by = 0.1)
 
 So let's say we wanted to divde the 2014 batting averages into intervals of length 0.05 and predict 2015 batting averages using the average BA_2015 values within the resulting bins.
 We could run
-```{r yhat-2, tidy = FALSE}
+```{r}
 batting_2014_2015 <- 
   batting_2014_2015 %>%
   mutate(bins = cut(`2014`, breaks = seq(from = 0.15, to = 0.4, by = 0.05))) %>%
@@ -138,7 +140,7 @@ batting_2014_2015 <-
 ```
 
 We can also visualize our new predictions, this time with blue triangles
-```{r, tidy = FALSE}
+```{r}
 ggplot(batting_2014_2015) +
   geom_point(aes(x = `2014`, y = `2015`), shape = 16, size = 0.9) + 
   geom_point(aes(x = `2014`, y = yhat_0), col = 'red', shape = 3, size = 0.75) + 
@@ -152,7 +154,7 @@ Why do you think this was the case?
 
 Let's add two more predictions in which we divide the 2014 batting averages into bins of length 0.005 and 0.001.
 The code below generates these predictions, saves them to columns called "yhat_3" and "yhat_4" in our tbl, and then adds the predictions to the plot in purple and orange.
-```{r yhat-34, tidy = FALSE}
+```{r}
 batting_2014_2015 <- 
   batting_2014_2015 %>%
   mutate(bins = cut(`2014`, breaks = seq(from = 0.15, to = 0.4, by = 0.005))) %>%
@@ -182,7 +184,7 @@ We now have a couple of different ways of predicting BA_2015.
 Qualitatively, the predictions in purple (formed by binning BA_2014 into very small intervals) appear to fit the observed data better than the blue, green, and red predictions.
 To assess the predictions quantitatively, we often rely on the root mean square error or RMSE.
 This is the square root of the mean square error (MSE), which is computed by averaging the squared difference between the actual values and the predicted values.
-```{r rmse, tidy = FALSE}
+```{r}
 summarize(batting_2014_2015, 
           rmse_0 = sqrt(mean((`2015` - yhat_0)^2)),
           rmse_1 = sqrt(mean((`2015` - yhat_1)^2)),

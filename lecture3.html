@@ -495,10 +495,9 @@ Comparisons</h1>
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<!-- Original graphic is on pg 18 of Adi's Lecture 3 -->
-<p>In Prof. Wyner’s lecture (Module 3), you saw a graph of Earned Run
-Average (ERA) against year. Also shown was a line connecting the average
-ERA in each year.</p>
+<p>On day 3 of the morning lectures (Lecture 6), you saw a graph of
+Earned Run Average (ERA) against year. Also shown was a line connecting
+the average ERA in each year.</p>
 <p><img src="figures/lecture3_era.png" /></p>
 <p>In order to create this figure we need to be able to compute the mean
 ERA in each year. In <a href="lecture2.html">Lecture 2</a>, we computed
@@ -629,7 +628,7 @@ can plot the ERAs by year</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pitching) <span class="sc">+</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>)</span></code></pre></div>
-<p><img src="lecture3_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture3_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Looking at the plot, it appears that some of the pitchers from the
 first few decades of baseball had the lowest ERA. Using
 <code>arrange()</code>, we can see which pitcher had the best season
@@ -841,7 +840,7 @@ above but with some additional calls to <code>geom_line</code>.</p>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> </span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> pitching_summary, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> mean), <span class="at">col =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
-<p><img src="lecture3_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture3_files/figure-html/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>You’ll notice that the last line of code is a bit different than
 anything we’ve seen before. In particular, we are specifying both the
 data and mapping within the same ggplot2 function. If all of the
