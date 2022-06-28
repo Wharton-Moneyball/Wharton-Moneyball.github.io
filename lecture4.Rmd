@@ -19,20 +19,20 @@ Before we jump into any analysis, we wanted to start by discussing the notion of
 To make the above discussion much more concrete, let's go back to the dataset we created in the challenge question at the end of [Problem Set 3](ps3.html).
 Each line of this tbl is a "player-season". Printing out the tbl, we see that there is a separate row for each "player-season".
 
-```{r load-data}
+```{r}
 library(tidyverse)
 load("data/batting_2014_2015.RData")
 batting_2014_2015
 ```
 
 Let's say we want to study the relationship between a player's 2014 batting average and his 2015 batting average. In this case, each observation is a player, and that player has two associated variables; batting average in 2014, and batting average in 2015. Thus, it will be more convenient to store the data as below.
-```{r, echo = FALSE, tidy=FALSE}
+```{r, echo=FALSE}
 batting_2014_2015 %>%
   spread(yearID, BA)
 ```
 In this format, we have a row for each player and two columns for his batting averages, one for 2014 and one for 2015.
 In order to convert our tbl into this format, we use *spreading*.
-```{r, tidy = FALSE}
+```{r}
 batting_2014_2015 <-
   batting_2014_2015 %>%
   spread(yearID, BA)

@@ -30,7 +30,6 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -117,15 +116,6 @@ code span.va { } /* Variable */
 code span.vs { color: #cc9393; } /* VerbatimString */
 code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 
-.sourceCode .row {
-  width: 100%;
-}
-.sourceCode {
-  overflow-x: auto;
-}
-.code-folding-btn {
-  margin-right: -30px;
-}
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -313,9 +303,6 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -477,14 +464,6 @@ $(document).ready(function () {
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
-
 
 
 <h1 class="title toc-ignore">Lecture 2: The grammar of graphics and
@@ -505,7 +484,7 @@ good practice!)</p>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in data</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;data/nba_shooting.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 7447 Columns: 8
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (1): PLAYER
 ## dbl (7): SEASON, FGM, FGA, TPM, TPA, FTM, FTA
@@ -539,7 +518,7 @@ pipe <code>%&gt;%</code> to chain together our operations for a much
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># And finally sort by TSP</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(TSP)) </span></code></pre></div>
 <pre><code>## Rows: 7447 Columns: 8
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (1): PLAYER
 ## dbl (7): SEASON, FGM, FGA, TPM, TPA, FTM, FTA
@@ -677,19 +656,19 @@ goals in a single season</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FGA <span class="sc">&gt;</span> <span class="dv">100</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 6,295 × 14
-##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
-##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Chris Wil…   2013   110   153     0     1    39    58 0.719 0     0.672 0.719
-##  2 Tyson Cha…   2012   241   355     0     2   217   315 0.679 0     0.689 0.679
-##  3 Kyle Korv…   2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671
-##  4 Steve Nov…   2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675
-##  5 Chris And…   2014   177   275     3    12   120   169 0.644 0.25  0.710 0.649
-##  6 Jeremy Ev…   2011    76   115     0     1    26    37 0.661 0     0.703 0.661
-##  7 Carlos Ro…   2001    75   110     0     1    29    52 0.682 0     0.558 0.682
-##  8 Mason Plu…   2014   199   302     0     3   122   195 0.659 0     0.626 0.659
-##  9 Stephen C…   2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630
-## 10 Brent Bar…   2004   215   427   114   252    91   110 0.504 0.452 0.827 0.637
-## # … with 6,285 more rows, and 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
+##    PLAYER         SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
+##    &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Chris Wilcox     2013   110   153     0     1    39    58 0.719 0     0.672 0.719   259 0.725
+##  2 Tyson Chandler   2012   241   355     0     2   217   315 0.679 0     0.689 0.679   699 0.708
+##  3 Kyle Korver      2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671   911 0.699
+##  4 Steve Novak      2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675   477 0.684
+##  5 Chris Andersen   2014   177   275     3    12   120   169 0.644 0.25  0.710 0.649   477 0.683
+##  6 Jeremy Evans     2011    76   115     0     1    26    37 0.661 0     0.703 0.661   178 0.678
+##  7 Carlos Rogers    2001    75   110     0     1    29    52 0.682 0     0.558 0.682   179 0.674
+##  8 Mason Plumlee    2014   199   302     0     3   122   195 0.659 0     0.626 0.659   520 0.670
+##  9 Stephen Curry    2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
+## 10 Brent Barry      2004   215   427   114   252    91   110 0.504 0.452 0.827 0.637   635 0.668
+## # … with 6,285 more rows</code></pre>
 <p>When we run this code, you’ll notice that R prints out a
 <code>tbl</code> with 6,295 rows.</p>
 <p>We can also filter on more complicated conditions constructed using
@@ -699,37 +678,37 @@ field goal attempts OR 50 three point attempts, we would do</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FGA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">|</span> TPA <span class="sc">&gt;=</span> <span class="dv">50</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 6,328 × 14
-##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
-##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Chris Wil…   2013   110   153     0     1    39    58 0.719 0     0.672 0.719
-##  2 Tyson Cha…   2012   241   355     0     2   217   315 0.679 0     0.689 0.679
-##  3 Kyle Korv…   2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671
-##  4 Steve Nov…   2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675
-##  5 Chris And…   2014   177   275     3    12   120   169 0.644 0.25  0.710 0.649
-##  6 Jeremy Ev…   2011    76   115     0     1    26    37 0.661 0     0.703 0.661
-##  7 Carlos Ro…   2001    75   110     0     1    29    52 0.682 0     0.558 0.682
-##  8 Brian Car…   2011    43   100    42    87    17    18 0.43  0.483 0.944 0.64 
-##  9 Mason Plu…   2014   199   302     0     3   122   195 0.659 0     0.626 0.659
-## 10 Stephen C…   2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630
-## # … with 6,318 more rows, and 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
+##    PLAYER         SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
+##    &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Chris Wilcox     2013   110   153     0     1    39    58 0.719 0     0.672 0.719   259 0.725
+##  2 Tyson Chandler   2012   241   355     0     2   217   315 0.679 0     0.689 0.679   699 0.708
+##  3 Kyle Korver      2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671   911 0.699
+##  4 Steve Novak      2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675   477 0.684
+##  5 Chris Andersen   2014   177   275     3    12   120   169 0.644 0.25  0.710 0.649   477 0.683
+##  6 Jeremy Evans     2011    76   115     0     1    26    37 0.661 0     0.703 0.661   178 0.678
+##  7 Carlos Rogers    2001    75   110     0     1    29    52 0.682 0     0.558 0.682   179 0.674
+##  8 Brian Cardinal   2011    43   100    42    87    17    18 0.43  0.483 0.944 0.64    145 0.672
+##  9 Mason Plumlee    2014   199   302     0     3   122   195 0.659 0     0.626 0.659   520 0.670
+## 10 Stephen Curry    2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
+## # … with 6,318 more rows</code></pre>
 <p>We may combine these constraints by enclosing them in
 parentheses.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>((FGA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">&amp;</span> TPA <span class="sc">&gt;=</span> <span class="dv">50</span>) <span class="sc">|</span> (FGP <span class="sc">&gt;=</span> <span class="fl">0.45</span> <span class="sc">&amp;</span> FGP <span class="sc">&lt;=</span> <span class="fl">0.5</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 4,837 × 14
-##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
-##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Keith Bog…   2014     3     6     3     6     3     3 0.5   0.5   1     0.75 
-##  2 Kyle Korv…   2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671
-##  3 Aleksanda…   1997     8    16     5     7     4     5 0.5   0.714 0.8   0.656
-##  4 Steve Nov…   2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675
-##  5 Brian Car…   2011    43   100    42    87    17    18 0.43  0.483 0.944 0.64 
-##  6 Stephen C…   2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630
-##  7 Brent Bar…   2004   215   427   114   252    91   110 0.504 0.452 0.827 0.637
-##  8 Manu Gino…   2012   150   285    52   126    88   101 0.526 0.413 0.871 0.618
-##  9 Steve Kerr   1997   249   467   110   237    54    67 0.533 0.464 0.806 0.651
-## 10 Brent Bar…   2007   202   425   128   287   103   117 0.475 0.446 0.880 0.626
-## # … with 4,827 more rows, and 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
+##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
+##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Keith Bogans            2014     3     6     3     6     3     3 0.5   0.5   1     0.75     12 0.820
+##  2 Kyle Korver             2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671   911 0.699
+##  3 Aleksandar Djordjevic   1997     8    16     5     7     4     5 0.5   0.714 0.8   0.656    25 0.687
+##  4 Steve Novak             2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675   477 0.684
+##  5 Brian Cardinal          2011    43   100    42    87    17    18 0.43  0.483 0.944 0.64    145 0.672
+##  6 Stephen Curry           2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
+##  7 Brent Barry             2004   215   427   114   252    91   110 0.504 0.452 0.827 0.637   635 0.668
+##  8 Manu Ginobili           2012   150   285    52   126    88   101 0.526 0.413 0.871 0.618   440 0.668
+##  9 Steve Kerr              1997   249   467   110   237    54    67 0.533 0.464 0.806 0.651   662 0.667
+## 10 Brent Barry             2007   202   425   128   287   103   117 0.475 0.446 0.880 0.626   635 0.666
+## # … with 4,827 more rows</code></pre>
 <p>What if we wanted to pull out the observations corresponding to the
 2015-16 and 2014-15 season? We could do something like
 <code>filter(raw_shooting, (SEASON == 2016) | (SEASON == 2015))</code>,
@@ -740,38 +719,38 @@ which would be perfectly fine. However, what if we wanted data from
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>, <span class="dv">2016</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1,150 × 14
-##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
-##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Tyson Whe…   1999     1     1     1     1     1     2 1     1     0.5   1.5  
-##  2 Tyson Cha…   2012   241   355     0     2   217   315 0.679 0     0.689 0.679
-##  3 Jorge Gut…   2016     6    11     0     2    10    11 0.545 0     0.909 0.545
-##  4 Steve Nov…   2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675
-##  5 Sam Jacob…   1999     3     5     0     1     2     2 0.6   0     1     0.6  
-##  6 Stephen C…   2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630
-##  7 Manu Gino…   2012   150   285    52   126    88   101 0.526 0.413 0.871 0.618
-##  8 James Har…   2012   309   629   114   292   312   369 0.491 0.390 0.846 0.582
-##  9 Steve Nov…   2016     8    18     7    15     1     1 0.444 0.467 1     0.639
-## 10 Brad Mill…   1999    78   138     1     2    81   102 0.565 0.5   0.794 0.569
-## # … with 1,140 more rows, and 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
+##    PLAYER          SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
+##    &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Tyson Wheeler     1999     1     1     1     1     1     2 1     1     0.5   1.5       4 1.06 
+##  2 Tyson Chandler    2012   241   355     0     2   217   315 0.679 0     0.689 0.679   699 0.708
+##  3 Jorge Gutierrez   2016     6    11     0     2    10    11 0.545 0     0.909 0.545    22 0.694
+##  4 Steve Novak       2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675   477 0.684
+##  5 Sam Jacobson      1999     3     5     0     1     2     2 0.6   0     1     0.6       8 0.680
+##  6 Stephen Curry     2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
+##  7 Manu Ginobili     2012   150   285    52   126    88   101 0.526 0.413 0.871 0.618   440 0.668
+##  8 James Harden      2012   309   629   114   292   312   369 0.491 0.390 0.846 0.582  1044 0.660
+##  9 Steve Novak       2016     8    18     7    15     1     1 0.444 0.467 1     0.639    24 0.651
+## 10 Brad Miller       1999    78   138     1     2    81   102 0.565 0.5   0.794 0.569   238 0.651
+## # … with 1,140 more rows</code></pre>
 <p>We could also filter out data from the two lockout-shortened seasons,
 1998-99 and 2011-12 using a combination of the NOT <code>!</code>
 operator and <code>%in%</code>.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>raw_shooting <span class="sc">%&gt;%</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 6,721 × 14
-##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
-##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Dajuan Wa…   2007     1     1     1     1     1     2 1     1     0.5   1.5  
-##  2 Amir John…   2006     7    10     2     3     4     4 0.7   0.667 1     0.8  
-##  3 Keith Bog…   2014     3     6     3     6     3     3 0.5   0.5   1     0.75 
-##  4 Steve Nov…   2011    35    67    26    46     8     8 0.522 0.565 1     0.716
-##  5 Chris Cra…   2003     8    13     1     3     7     8 0.615 0.333 0.875 0.654
-##  6 Chris Wil…   2013   110   153     0     1    39    58 0.719 0     0.672 0.719
-##  7 Maceo Bas…   2007    49    76     3     7    37    47 0.645 0.429 0.787 0.664
-##  8 Kyle Korv…   2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671
-##  9 Jorge Gut…   2016     6    11     0     2    10    11 0.545 0     0.909 0.545
-## 10 Aleksanda…   1997     8    16     5     7     4     5 0.5   0.714 0.8   0.656
-## # … with 6,711 more rows, and 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
+##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
+##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Dajuan Wagner           2007     1     1     1     1     1     2 1     1     0.5   1.5       4 1.06 
+##  2 Amir Johnson            2006     7    10     2     3     4     4 0.7   0.667 1     0.8      20 0.850
+##  3 Keith Bogans            2014     3     6     3     6     3     3 0.5   0.5   1     0.75     12 0.820
+##  4 Steve Novak             2011    35    67    26    46     8     8 0.522 0.565 1     0.716   104 0.737
+##  5 Chris Crawford          2003     8    13     1     3     7     8 0.615 0.333 0.875 0.654    24 0.726
+##  6 Chris Wilcox            2013   110   153     0     1    39    58 0.719 0     0.672 0.719   259 0.725
+##  7 Maceo Baston            2007    49    76     3     7    37    47 0.645 0.429 0.787 0.664   138 0.714
+##  8 Kyle Korver             2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671   911 0.699
+##  9 Jorge Gutierrez         2016     6    11     0     2    10    11 0.545 0     0.909 0.545    22 0.694
+## 10 Aleksandar Djordjevic   1997     8    16     5     7     4     5 0.5   0.714 0.8   0.656    25 0.687
+## # … with 6,711 more rows</code></pre>
 <p>For the remainder of this module, we will focus on the non-lockout
 seasons (ie <code>!SEASON %in% c(1999, 2012, 2016)</code>) but we still
 need to determine a cutoff for FGA and TPA. Let’s start by making
@@ -933,7 +912,7 @@ not recommended…</p>
 <span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Red-dashed lines indicate cutoffs for TPA &gt; 50 and FGA &gt; 150&quot;</span>,</span>
 <span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Created by INSERT YOUR NAME HERE&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 7447 Columns: 8
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (1): PLAYER
 ## dbl (7): SEASON, FGM, FGA, TPM, TPA, FTM, FTA
@@ -1006,11 +985,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("show" === "show");
-});
-</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

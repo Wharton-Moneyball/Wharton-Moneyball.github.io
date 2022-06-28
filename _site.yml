@@ -78,4 +78,3 @@ output:
   html_document:
     theme: darkly
     highlight: zenburn
-    code_folding: show

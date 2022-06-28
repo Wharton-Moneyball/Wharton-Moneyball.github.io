@@ -4,11 +4,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
-library(tidyverse)
-library(lubridate)
-library(ggpubr)
-library(modelr)
+knitr::opts_chunk$set(cache = TRUE, fig.align = "center", include = FALSE) # set include = TRUE to see solutions in knitted RMarkdown
 ```
 
 # Regression with Triathlon Data
@@ -17,7 +13,7 @@ Now that we've seen linear regression in R applied to MLB batting averages, let'
 
 Let's read in the data and take a look at the variables.
 
-```{r load data}
+```{r, include=TRUE}
 library(tidyverse)
 data <- read_csv('data/Ironman Data.csv')
 ```
@@ -26,7 +22,7 @@ This is a large data set with hundreds of variables. Digging deeper, we can see 
 
 Moreover, we note that the finishing times are actually character-types in the form of 'minutes:seconds'. Keeping these variables in this form will pose problems as we are going to be performing operations that require numeric data. So, we need to convert these clock times into pure numbers. The best way to work with clock times within the tidyverse framework is to use the 'lubridate' package. Within this package, we can parse the times in the 'minutes:seconds' format using the `ms()` function, and then convert the result to a numeric using the `period_to_seconds()` function (the result will be a time in seconds, so we can get this back to minutes by dividing by 60).
 
-```{r clean data}
+```{r, include=TRUE}
 library(lubridate)
 results_2017 <- data %>% 
   filter(`Source Table` == '2017 - Florida') %>% 
@@ -45,9 +41,8 @@ Now that we have our tidy dataset, let's start looking at the relationships betw
 
 1. Create scatterplots of swim times vs. bike times, bike times vs. run times, and swim times vs. run times. Save them as variables titled 'plot.swim_bike', etc.
 
-2. To compare the relationships between these three variables, we can plot all three plots in the same window, rather than having to scroll through each one individually. To do so, we use the `ggarrange` function within the 'ggpubr' package. As arguments of the function, we select our three plots and can specify the number of rows and columns to be displayed.
-
-```{r create three plots, include = FALSE}
+```{r}
+# solution
 plot.swim_bike<-ggplot(results_2017) +
   geom_point(aes(Swim, Bike))
 plot.bike_run<-ggplot(results_2017) +
@@ -56,7 +51,9 @@ plot.swim_run<-ggplot(results_2017) +
   geom_point(aes(Swim, Run))
 ```
 
-```{r display three plots}
+2. To compare the relationships between these three variables, we can plot all three plots in the same window, rather than having to scroll through each one individually. To do so, we use the `ggarrange` function within the 'ggpubr' package. As arguments of the function, we select our three plots and can specify the number of rows and columns to be displayed.
+
+```{r, include=TRUE}
 library(ggpubr)
 ggarrange(plot.swim_bike, plot.bike_run, plot.swim_run, nrow = 2, ncol = 2)
 ```
@@ -64,16 +61,18 @@ Can you visually compare these associations by looking at the scatterplots? Whic
 
 3. Another way to display three continuous variables at once is by creating a scatterplot for two of the variables and then coloring the points by the values of the third variable. Try doing so with different combinations of our variables to create plots like the one below.
 
-```{r color plot, echo = FALSE}
+```{r, include=TRUE, echo = FALSE}
+# solution
 ggplot(results_2017) +
   geom_point(aes(Bike, Swim, color = Run))
 ```
 From this one, we can see that the racers with faster swim and bike times tended to have faster run times; however, the specific relationship between Swim vs. Run and Bike vs. Run is less clear than in the individual scatter plots.
 
 
-4. To numerically evaluate these relationships, compute the correlation between each of the variables. Note that `cor()` is a Base R function and does not work with the other tidyverse functions, so we cannot pipe our data into it. Instead, we need to specifically point to each variable within the dataset, using the brackets notation we've seen a couple times before: `results_2017[['our_variable_here']]`.
+4. To numerically evaluate these relationships, compute the correlation between each of the variables. Note that `cor()` is a Base R function and does not work with the other tidyverse functions, so we cannot pipe our data into it. Instead, we need to specifically point to each variable within the dataset, using the brackets notation we've seen a couple times before: `results_2017[['our_variable_here']]`. Your results should be as follows. 
 
-```{r correlation, echo = FALSE}
+```{r, include=TRUE, echo = FALSE}
+# solution
 cor(results_2017[['Swim']], results_2017[['Bike']])
 cor(results_2017[['Bike']], results_2017[['Run']])
 cor(results_2017[['Swim']], results_2017[['Run']])
@@ -81,14 +80,24 @@ cor(results_2017[['Swim']], results_2017[['Run']])
 
 5. Now, let's fit our linear model. Right now, we are doing simple linear regression, which involves one response variable and one predictor variable. So, let's start by running a regression with Swim as our predictor and Bike as our response.
 
-```{r run lm}
+```{r, include=TRUE, eval=FALSE}
+lm.swim_bike <- lm( ... ) # fill this part in
+```
+
+```{r}
+# solution
 lm.swim_bike <- lm(data = results_2017, formula = Bike ~ Swim)
+```
+
+We obtain the following slope and intercept for this regression.
+```{r, include=TRUE}
 lm.swim_bike[['coefficients']]
 ```
 
+
 6. We also want to add the regression line to our plot. In [Lecture 6](lecture6.html), we saw that there are two ways of doing this. The first was to take the intercept and slope coefficients produced by our linear model and put them into `geom_abline()` while the second involved creating a `data_grid` over the predictor variable, adding the predictions to the grid, and then drawing a line through the predictions created on the grid using `geom_line`. As discussed in Lecture 6, the first approach only works for simple linear regression, while the second can be extended for all types of regression. For this reason, let's practice using the second approach.
 
-```{r predict}
+```{r, include=TRUE}
 library(modelr)
 grid.swim <- results_2017 %>% data_grid(Swim)
 grid.swim <- grid.swim %>% add_predictions(model = lm.swim_bike, var = 'pred.swim_bike')
@@ -98,6 +107,25 @@ ggplot(results_2017) +
 ```
 
 7. Repeat steps 5 and 6 for the two other combinations of the three race legs. Note that since we're only investigating associations between variables (as opposed to causal relations) it doesn't really matter which variable we choose to be our predictor and response; the resulting plots will be the same, except with flipped axes. If, instead, we were trying to determine causality, we would put the independent/predictor variable on the x-axis and the dependent/response variable on the y-axis.
+
+```{r}
+# solution
+lm.bike_run <- lm(data = results_2017, formula = Run ~ Bike)
+lm.bike_run[['coefficients']]
+grid.bike <- results_2017 %>% data_grid(Bike)
+grid.bike <- grid.bike %>% add_predictions(model = lm.bike_run, var = 'pred.bike_run')
+ggplot(results_2017) +
+  geom_point(aes(Bike, Run)) +
+  geom_line(data = grid.bike, aes(x = Bike, y = pred.bike_run), color = 'red')
+
+lm.run_swim <- lm(data = results_2017, formula = Swim ~ Run)
+lm.run_swim[['coefficients']]
+grid.run <- results_2017 %>% data_grid(Run)
+grid.run <- grid.run %>% add_predictions(model = lm.run_swim, var = 'pred.run_swim')
+ggplot(results_2017) +
+  geom_point(aes(Run, Swim)) +
+  geom_line(data = grid.run, aes(x = Run, y = pred.run_swim), color = 'red')
+```
 
 
 ## Going beyond simple linear regression
@@ -111,7 +139,7 @@ What if we had reason to believe the association between the finishing times of 
 
 1. First let's start by running simple linear regression on Run vs. Bike, because it's best to start with simple models before moving onto more complex models. Similarly as before, we want to draw this regression line on our plot. To do this, we create a grid with discretized Run values as the x values, and the predicted values from our linear model as the y values. Then, we draw a line through these points, which is our regression line. 
 
-```{r run_bike}
+```{r, include=TRUE}
 lm.run_bike <- lm(data = results_2017, formula = Bike ~ Run)
 lm.run_bike[['coefficients']]
 grid.run <- results_2017 %>% data_grid(Run)
@@ -123,14 +151,14 @@ ggplot(results_2017) +
 
 2. Now, we can run the quadratic regression. To include the quadratic relation into our linear model, we will add a quadratic term as an additional predictor variable (which, in this case, is Run).
 
-
-```{r lm quadratic}
+```{r, include=TRUE}
 lm.run_bike2 <- lm(data = results_2017, formula = Bike ~ Run + I(Run^2))
 lm.run_bike2[['coefficients']]
 ```
+
 3. To draw this regression line on our plot, we can take the grid of values used on our simple linear regression in step 1, and add another column with the predicted values from our new quadratic model. This new column contains the new y values of the regression line.
 
-```{r plot quadratic}
+```{r, include=TRUE}
 grid.run <- grid.run  %>%  add_predictions(model = lm.run_bike2, var= 'pred.run_bike2')
 ggplot(results_2017) +
   geom_point(aes(Run, Bike)) +
@@ -138,9 +166,9 @@ ggplot(results_2017) +
   geom_line(data = grid.run, aes(x = Run, y = pred.run_bike2), color = 'green')
 ```
 
-3. Now, we can determine if our quadratic model fits the data better than our linear model. To do this, we can compute the RMSEs of both models (as discussed in [Lecture 4](lecture4.html)) and see which is lower.
+4. Now, we can determine if our quadratic model fits the data better than our linear model. To do this, we can compute the RMSEs of both models (as discussed in [Lecture 4](lecture4.html)) and see which is lower.
 
-```{r rmse quadratic}
+```{r, include=TRUE}
 summarize(results_2017,
           rmse.run_bike = sqrt(mean(lm.run_bike$residuals^2)),
           rmse.run_bike2 = sqrt(mean(lm.run_bike2$residuals^2)))
@@ -155,7 +183,7 @@ Let's start with our Run vs. Bike linear model again; what if we now want to add
 
 1. We have already run the linear model without the gender effect. Now let's add the gender effect in.
 
-```{r lm run_bike_gender}
+```{r, include=TRUE}
 lm.run_bike_gender <- lm(data = results_2017, formula = Bike ~ Run + Gender)
 lm.run_bike_gender[['coefficients']]
 ```
@@ -164,21 +192,22 @@ To interpret these results, we can say that for every increase in one minute of 
 
 2. Now, let's plot our regression. Note that there will be two separate regression lines: one for the association between running and biking for males, and one for the association between running and biking for females. Also note that since we now technically have two predictor variables to go on our x-axis, we need to create a new grid that spans the values of the Run variable as well as the Gender variable
 
-```{r plot run_bike_gender}
+```{r, include=TRUE}
 grid.run_gender <- results_2017 %>% data_grid(Run, Gender)
 grid.run_gender <- grid.run_gender  %>%
   add_predictions(model = lm.run_bike_gender, var= 'pred.run_bike_gender')
 ggplot(results_2017) +
   geom_point(aes(Run, Bike)) +
   geom_line(data = grid.run, aes(x = Run, y = pred.run_bike), color = 'red') +
-  geom_line(data = grid.run_gender, aes(x = Run, y = pred.run_bike_gender, col = Gender))
+  geom_line(data = grid.run_gender, aes(x = Run, y = pred.run_bike_gender, col = Gender)) +
+  scale_color_manual(values = c(Female="blue", Male="green"))
 ```
 
-We can now clearly see that females have slower bike times than males. Note that the darker red line in the middle corresponds to our simple linear regression without the gender effect. 
+We can now clearly see that females have slower bike times than males. Note that the red line in the middle corresponds to our simple linear regression without the gender effect. 
 
 3. We can probably guess that the model with the gender effect fits the data better than our simple linear regression (i.e. knowing the gender of a racer and their run time allows us to better predict their bike time). But let's verify this computationally.
 
-```{r rmse run_bike_gender}
+```{r, include=TRUE}
 summarize(results_2017,
           rmse.run_bike = sqrt(mean(lm.run_bike$residuals^2)),
           rmse.run_bike_gender = sqrt(mean(lm.run_bike_gender$residuals^2)))

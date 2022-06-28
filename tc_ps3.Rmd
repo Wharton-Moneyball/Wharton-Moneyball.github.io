@@ -4,7 +4,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.align = "center")
+knitr::opts_chunk$set(cache = TRUE, fig.align = "center", include = FALSE) # set include = TRUE to see solutions in knitted RMarkdown
 library(tidyverse)
 ```
 
@@ -18,7 +18,7 @@ Like before, you should go through each code block with someone in your group an
 In [Lecture 3](tc_lecture3.html) we saw that three-point shot rates have been increasing
 over time by creating visualizations of the distributions for each season. 
 
-Now, create the same visuals but use TPP as the continous variable of interest. As players
+Now, create the same visuals but use TPP as the continuous variable of interest. As players
 are attempting more three-pointers than ever before, are they also making them more?
 
 Discuss with other students in your group the meaning of these plots.
