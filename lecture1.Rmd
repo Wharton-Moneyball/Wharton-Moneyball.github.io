@@ -4,7 +4,7 @@ output: html_document
 ---
   
   
-```{r lecture1-setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 library(tidyverse)
 ```

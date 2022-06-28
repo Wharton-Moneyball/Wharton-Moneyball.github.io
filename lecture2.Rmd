@@ -3,7 +3,7 @@ title: 'Lecture 2: Visualization and More Data Wrangling'
 output: html_document
 ---
 
-```{r lecture1-setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 library(tidyverse)
 ```
@@ -11,7 +11,7 @@ library(tidyverse)
 We're going to pick up right where we left off yesterday in [Problem Set 1](ps1.html), where you wrote a script to create a tbl containg several shooting statistics for NBA players between the 1996-97 season and the 2015-16 season.
 Your script should look something like what is the code block below.
 For reasons that will become clear shortly, we are going to call our tbl `raw_shooting`. 
-```{r ps2-create-tbl, tidy=FALSE}
+```{r}
 library(tidyverse)
 raw_shooting <- read_csv(file = "data/nba_shooting.csv")
 raw_shooting <-
@@ -39,7 +39,7 @@ You can learn much much more about ggplot2 [here](https://ggplot2.tidyverse.org)
 
 As you saw in Prof. Wyner's lectures, histograms are a powerful way to describe a single dataset.
 
-```{r fgp-histogram, tidy = FALSE}
+```{r}
 ggplot(data = raw_shooting) + 
   geom_histogram(mapping = aes(x = FGP), bins = 5)
 ```
@@ -54,7 +54,7 @@ To improve readability, we have divided the code to produce the historgram over 
 
 In the code above, we also told R how many bins into which to divide the data. We can vary the number of bins to get a higher-resolution view of our data. 
 For instance, we can use 50 bins: 
-```{r, echo=FALSE}
+```{r}
 ggplot(data = raw_shooting) +
   geom_histogram(mapping = aes(x = FGP), bins = 50)
 ```
@@ -104,7 +104,7 @@ That is, does the point at (1.00, 0.50) correspond to a single player or does it
 
 One way to address this is to use *alpha-blending* to change the transparency of each point. 
 When there are many points plotted in the same region, that region will appear darker.
-```{r scatterplot-alpha}
+```{r}
 ggplot(data = raw_shooting) +
   geom_point(mapping = aes(x = FGP, y = FTP), alpha = 0.1)
 ```
@@ -161,19 +161,19 @@ To make such comparisons in R, we have the following operators available at our 
 * `>` and `>=` for "greater than" and "greater than or equal to"
 * `&`, `|`, `!` for "AND" and "OR" and "NOT"
 The code below filter out all of the players with at least 100 field goals in a single season
-```{r filter-fga}
+```{r}
 filter(raw_shooting, FGA > 100)
 ```
 When we run this code, you'll notice that R prints out a tbl with 6,295 rows.
 
 We can also filter on more complicated conditions constructed using the AND, OR, and NOT operators: `&`, `|`, and `!`.
 For instance, to filter observations with at least 100 field goal attempts OR 50 three point attempts, we would do
-```{r filter-or}
+```{r}
 filter(raw_shooting, FGA >= 100 | TPA >= 50)
 ```
 
 We may combine these constraints by enclosing them in parantheses.
-```{r filter-complex}
+```{r}
 filter(raw_shooting, (FGA >= 100 & TPA >= 50) | (FGP >= 0.45 & FGP <= 0.5))
 ```
 
@@ -182,18 +182,18 @@ We could do something like `filter(raw_shooting, (SEASON == 2016) | (SEASON == 2
 However, what if we wanted data from 1998-99, 2011-12, and 2015-16? 
 Typing a lot of expressions like `SEASON == ...` would be rather tedious.
 The `%in%` operator lets us avoid this tedium: 
-```{r filter-in}
+```{r}
 filter(raw_shooting, SEASON %in% c(1999, 2012, 2016))
 ```
 
 We could also filter out data from the two lockout-shortened seasons, 1998-99 and 2011-12 using a combination of the NOT `!` operator and `%in%`.
-```{r filter-not-in}
+```{r}
 filter(raw_shooting, !SEASON %in% c(1999, 2012))
 ```
 
 For the remainder of this module, we will focus on the players who attempted at least 100 field goals, 100 free throws, 50 three pointers in the non-lockout seasons. 
 
-```{r nba-shooting}
+```{r}
 nba_shooting <- 
   filter(raw_shooting, 
          (FGA >= 100 & 
@@ -215,7 +215,7 @@ For instance, we may rather arbitrarily classify players based on their three-po
 * Elite: TPP > 40% 
 
 In order to add a column to `nba_shooting` that includes these classifications, we can use the `case_when()` function
-```{r case-when, tidy = FALSE}
+```{r}
 nba_shooting <- mutate(nba_shooting,
                        Classification = case_when(
                          TPP < 0.2 ~  "Hopeless",
@@ -261,7 +261,7 @@ We will have much more to say about `summarize()` in [Lecture 3](lecture3.html) 
 Oftentimes, the dataset you load into R contains many, many more columns than you need.
 We can use `select()` to pull out the columns we want to use in our subsequent analyses.
 For instance, we may want to only focus on the columns SEASON, FGP, TPP, FTP, eFGP, PTS, and TSP and ignore the rest of the columns.
-```{r select}
+```{r}
 select(nba_shooting, PLAYER, SEASON, FGP, TPP, FTP, eFGP, PTS, TSP)
 ```
 
@@ -272,12 +272,12 @@ While we can always re-run the commands used to produce this tbl from our script
 R has its own special file format for efficiently saving data on your computer.
 
 We will use the `save()` command.
-```{r save}
+```{r}
 save(nba_shooting, file = "data/nba_shooting.RData")
 ```
 
 When we want to *load* the data back into R, we can use the `load()` function
-```{r load}
+```{r}
 load("data/nba_shooting.RData")
 ```
 
