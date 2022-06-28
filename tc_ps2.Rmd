@@ -23,11 +23,13 @@ If you don't have the dataset in your data folder yet, download it from the GitH
 
 1. Read the data in from the file and save it as a tbl called "relative_payroll"
 ```{r}
+# solution
 relative_payroll <- read_csv(file = "data/mlb_relative_payrolls.csv")
 ```
 
 2. Make a histogram of team winning percentages. Play around with different binwidths. 
 ```{r}
+# solution
 ggplot(data = relative_payroll) +
   geom_histogram(mapping = aes(x = Winning_Percentage, y = ..density..))
 
@@ -40,6 +42,7 @@ ggplot(data = relative_payroll) +
 
 3. Make a histogram of the relative payrolls.
 ```{r}
+# solution
 ggplot(data = relative_payroll) +
   geom_histogram(mapping = aes(x = Relative_Payroll, y = ..density..))
 ```
@@ -47,6 +50,7 @@ ggplot(data = relative_payroll) +
 4. Make a scatterplot with relative payroll on the horizontal axis and winning percentage on the vertical axis. 
 
 ```{r}
+# solution
 ggplot(data = relative_payroll) +
   geom_point(mapping = aes(x = Relative_Payroll, y = Winning_Percentage))
 ```
@@ -61,6 +65,7 @@ relative_payroll %>%
 6. Execute the code above. What can you say about how team payrolls have evolved over time? Make a similar plot that visualizes how *relative payrolls* have evolved over time.
 
 ```{r}
+# solution
 relative_payroll %>%
   ggplot(aes(x = Year, y = Team_Payroll)) +
   geom_point()
@@ -73,6 +78,7 @@ relative_payroll %>%
 7. Add an appropriate title and relabel the y-axis using the `labs()` function to the plot above.
 
 ```{r}
+# solution
 relative_payroll %>%
   ggplot(aes(x = Year, y = Team_Payroll)) +
   geom_point() + labs(title = "Scatterplot of Team Payrolls by Year",

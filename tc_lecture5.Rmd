@@ -1,24 +1,26 @@
 ---
-title: "Lecture 5"
+title: "Lecture 5: Correlation, Linear Regression and Prediction"
 output: html_document
 ---
 
-```{r lecture5-setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 library(tidyverse)
 ```
 
 ## MLB Batting Statistics
 
-Let's first load the `Lahman` library used in [Lecture 4](tc_lecture4.html). In
-the code below we'll create a dataset to use that has player batting averages
-from the 2017 and 2018 seasons. **Can you describe what this code is doing?**
+Let's first load the `Lahman` library used in [Lecture 4](tc_lecture4.html). 
 
 ```{r}
 library(tidyverse)
 library(Lahman)
 batting <- as_tibble(Batting)
+```
 
+In the code below we'll create a dataset to use that has player batting averages from the 2017 and 2018 seasons. **Can you describe what this code is doing?**
+
+```{r, message=FALSE}
 batting_2017_2018 <- batting %>%
   filter(yearID %in% c(2017, 2018)) %>%
   group_by(playerID, yearID) %>%
@@ -34,29 +36,26 @@ batting_2017_2018 <- batting %>%
   arrange(playerID)
 ```
 
-
 In order to study the relationship between a player's 2017 batting average and his 2018 batting average, it will be more convenient to store the data as below.
-```{r spread, echo = FALSE, tidy=FALSE}
+```{r, echo = FALSE}
 batting_2017_2018 %>%
   spread(yearID, BA)
 ```
+
 In this format, we have a row for each player and two columns for his batting averages, one for 2017 and one for 2018. In order to convert our data into this format, we use *spreading*.
-```{r, spread-assign, tidy = FALSE}
+```{r}
 batting_2017_2018 <- batting_2017_2018 %>%
   spread(yearID, BA)
 ```
 
-When we print out `batting_2017_2018` now, we notice that it is a grouped dataset
-Before proceeding we will need to remove this grouping
-```{r ungroup, tidy=FALSE}
+When we print out `batting_2017_2018` now, we notice that it is a grouped dataset. Before proceeding we will need to remove this grouping.
+```{r}
 batting_2017_2018 <- batting_2017_2018 %>%
   ungroup()
 ```
 
-
-Notice that the column names of the tbl are now "2017" and "2018".
-We can **rename** these column names with the `rename` function:
-```{r rename, tidy=FALSE}
+Notice that the column names of the tbl are now "2017" and "2018". This can get annoying as we will have to place tick marks around these names (e.g. \`2017\`) whenever referencing the variables since they begin with a number rather than a letter. To avoid having to do this, we will **rename** these column names with the `rename` function:
+```{r}
 batting_2017_2018 <- batting_2017_2018 %>%
   rename(BA_2017 = `2017`, BA_2018 = `2018`)
 ```
@@ -75,9 +74,7 @@ ba_plot
 
 We can see a positive trend between the 2017 and 2018 batting averages. How can we quantify the relationship between the 2017 and 2018 data? 
 
-The **correlation coefficient**, *r*, is one way to summarize the dependence between two seasons with one number. *r* is a standardized measure of the *linear* dependence between two variables (usually called $x$ and $y$) and can take values between -1 and +1.  
-
-If $r = 1$, then the points all lie on a line with positive slope. If $r = -1$, the points all lie on a line with negative slope. 
+The **correlation coefficient**, *r*, is one way to summarize the dependence between two seasons with one number. *r* is a standardized measure of the *linear* dependence between two variables (usually called $x$ and $y$) and can take values between -1 and +1. If $r = 1$, then the points all lie on a line with positive slope. If $r = -1$, the points all lie on a line with negative slope. 
 
 Loosely speaking, we can think of correlation as a measure of how well a line fits our data. [Let's get some practice!](http://guessthecorrelation.com/)
 
@@ -127,8 +124,8 @@ ba_plot
 
 **Question:** Which feature of the best fit line, $a$ or $b$, quantifies the linear dependence between 2017 and 2018 FG%?
 
-
 How does correlation relate to our line of best fit? This brings us to the *regression method*.
+
 
 ### The Regression Method
 

@@ -10,23 +10,21 @@ library(tidyverse)
 
 ## Review Lecture 2 Notes
 
-Please spend a few minutes reading through the notes from [Lecture 2](lecture2.html). 
-Like in [Problem Set 1](ps1.html), you should go through each code block with someone in your group and see if you can both explain to each other what all of the code does.
+Please spend a few minutes reading through the notes from [Lecture 2](lecture2.html). Like in [Problem Set 1](ps1.html), you should go through each code block with someone in your group and see if you can both explain to each other what all of the code does.
 
 ## Payroll and Winning Percentage in the MLB
 
-In lecture, Professory Wyner discussed the relationship between a team's payroll and its winning percentage.
-In particular, for each season, he computed the "relative payroll" of each team by taking its payroll and dividing it by the median of payrolls of all teams in that seaosn.
-We will replicate his analysis in the following problems using the dataset "mlb_relative_payrolls.csv", which you can find in the "data/" folder of your working directory.
-You should save all of the code for this analysis in an R script called "ps2_mlb_payroll.R".
+In lecture, Professor Wyner discussed the relationship between a team's payroll and its winning percentage. In particular, for each season, he computed the "relative payroll" of each team by taking its payroll and dividing it by the median of payrolls of all teams in that season. We will replicate his analysis in the following problems using the dataset "mlb_relative_payrolls.csv", which you can find in the "data/" folder of your working directory. You should save all of the code for this analysis in an R script called "ps2_mlb_payroll.R".
 
 1. Read the data in from the file and save it as a tbl called "relative_payroll"
 ```{r}
+# solution
 relative_payroll <- read_csv(file = "data/mlb_relative_payrolls.csv")
 ```
 
 2. Make a histogram of team winning percentages. Play around with different binwidths. 
 ```{r}
+# solution
 ggplot(data = relative_payroll) +
   geom_histogram(mapping = aes(x = Winning_Percentage, y = ..density..))
 
@@ -38,6 +36,7 @@ ggplot(data = relative_payroll) +
 ```
 3. Make a histogram of the relative payrolls.
 ```{r}
+# solution
 ggplot(data = relative_payroll) +
   geom_histogram(mapping = aes(x = Relative_Payroll, y = ..density..))
 ```
@@ -45,6 +44,7 @@ ggplot(data = relative_payroll) +
 4. Make a scatterplot with relative payroll on the horizontal axis and winning percentage on the vertical axis. 
 
 ```{r}
+# solution
 ggplot(data = relative_payroll) +
   geom_point(mapping = aes(x = Relative_Payroll, y = Winning_Percentage))
 ```
@@ -58,6 +58,7 @@ ggplot(data = relative_payroll) +
 6. Execute the code above. What can you say about how team payrolls have evolved over time? Make a similar plot that visualizes how *relative payrolls* have evolved over time.
 
 ```{r}
+# solution
 ggplot(data = relative_payroll) + 
   geom_point(mapping = aes(x = Year, y = Team_Payroll))
 
@@ -74,6 +75,7 @@ You should write save all of the code for this analyses in an R script called "p
 
 1. Load the data into a tibble called `hitting_qualified` using `read_csv()`.
 ```{r}
+# solution
 hitting_qualified <- read_csv("data/hitting_qualified.csv")
 ```
 
@@ -105,6 +107,7 @@ The columns of this dataset include
 
 2. Use `arrange()` to find out the first and last season for which we have data. *Hint: you may need to use `desc()` as well.*
 ```{r}
+# solution
 arrange(hitting_qualified, yearID)
 arrange(hitting_qualified, desc(yearID))
 ```
@@ -112,6 +115,7 @@ arrange(hitting_qualified, desc(yearID))
 
 3. Use `summarize()` to find out the first and last season for which we have data. *Hint, you only need one line of code to do this*
 ```{r}
+# solution
 summarize(hitting_qualified, first_year= min(yearID), last_year= max(yearID))
 ```
 
@@ -126,6 +130,7 @@ hitting_qualified <- mutate(hitting_qualified,
 ```
 
 ```{r}
+# solution
 hitting_qualified <- mutate(hitting_qualified,
                             IBB = as.integer(IBB),
                             HBP = as.integer(HBP),
@@ -146,17 +151,20 @@ hitting_qualified <- replace_na(hitting_qualified,
 We will discuss the syntax for `replace_na()` later in lecture. Now, rerun the `select()` function from above to check that the NAs were replaced with zeros. 
 
 ```{r}
+# solution
 select(hitting_qualified, playerID, yearID, AB, IBB, HBP, SH, SF, GIDP)
 ```
 
 6. Use `mutate()` to add a column for the number of singles, which can be computed as $\text{X1B} = \text{H} - \text{X2B} - \text{X3B} - \text{HR}$.
 
 ```{r}
+# solution
 hitting_qualified <- mutate(hitting_qualified, X1B = H - X2B - X3B - HR)
 ```
 
 7. The variable BB includes as a subset all intentional walks (IBB). Use `mutate()` to add a column to `hitting_qualified` that counts the number of *un-intentional walks* (uBB). Be sure to save the resulting tibble as `hitting_qualified`.
 ```{r}
+# solution
 hitting_qualified <- mutate(hitting_qualified, uBB = BB - IBB)
 ```
 
@@ -191,6 +199,7 @@ hitting_qualified <- mutate(hitting_qualified,
 ```
 
 ```{r}
+# solution
 hitting_qualified <- mutate(hitting_qualified,
                   BBP = BB/PA,
                   KP = SO/PA,
@@ -211,6 +220,7 @@ hitting_qualified <- mutate(hitting_qualified,
 ```
 
 ```{r}
+# solution
 hitting_qualified <- mutate(hitting_qualified, 
                             BBP_rating = case_when(BBP >= .15 ~ "Excellent",
                                                    BBP < .15 & BBP >= .125 ~ "Great",
@@ -253,12 +263,14 @@ hitting_qualified <- mutate(hitting_qualified,
 10. Use `filter()` to subset the players who played between 2000 and 2015. Call the new tbl `tmp_batting`.
 
 ```{r}
+# solution
 tmp_batting <- filter(hitting_qualified, yearID %in% c(2000:2015))
 ```
 
 11. Use `select()` on `tmp_batting` to create a tibble called `batting_recent` containing all players who played between 2000 and 2015 with the following columns: playerID, yearID, teamID, lgID, and all of the statistics and rankings created in Problems 8 and 9.  
 
 ```{r}
+# solution
 batting_recent <- select(tmp_batting, playerID, yearID, teamID, lgID, BBP, BBP_rating, KP, KP_rating, OBP, OBP_rating, SLG, OPS, OPS_rating, wOBA, wOBA_rating)
 ```
 
@@ -266,6 +278,7 @@ batting_recent <- select(tmp_batting, playerID, yearID, teamID, lgID, BBP, BBP_r
 12. Explore the distribution of some of the batting statistics introduced in problem 8 using the tbl `batting_recent` using histograms. Then explore the relationship between some of these statistics with scatterplots. 
 
 ```{r}
+# solution
 ggplot(batting_recent) +
   geom_histogram(mapping = aes(x=BBP))
 

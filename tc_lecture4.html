@@ -11,7 +11,7 @@
 
 
 
-<title>Lecture 4</title>
+<title>Lecture 4: Defining custom functions and standardizing data</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -487,14 +487,14 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Lecture 4</h1>
+<h1 class="title toc-ignore">Lecture 4: Defining custom functions and
+standardizing data</h1>
 
 </div>
 
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<!-- Original graphic is on pg 18 of Adi's Lecture 3 -->
 <p>On day 3 of the morning lectures (Lecture 6), you saw a graph of
 Earned Run Average (ERA) against year. Also shown was a line connecting
 the average ERA in each year.</p>
@@ -566,7 +566,7 @@ of presenting this information via the different visualizations we
 covered in <a href="tc_lecture3.html">Lecture 3</a>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pitching) <span class="sc">+</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>)</span></code></pre></div>
-<p><img src="tc_lecture4_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture4_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Looking at the plot, it appears that some of the pitchers from the
 first few decades of baseball had the lowest ERA. Using
 <code>arrange()</code>, we can see which pitcher had the best season
@@ -822,19 +822,20 @@ which we specify the variables in <code>group_by()</code> matters.</p>
 <div id="back-to-the-figure" class="section level2">
 <h2>Back to the figure</h2>
 <p>We started this module with a figure similar to one from Professor
-Wyner’s class that plotted ERAs over time. When we run the following
-code, we get a plot that’s very similar to the desired one but that is
-missing the red line showing the average ERA within each season.</p>
+Wyner’s class that plotted ERAs over time. When we previously ran the
+following code, we got a plot that’s very similar to the desired one but
+that is missing the red line showing the average ERA within each
+season.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pitching) <span class="sc">+</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>)</span></code></pre></div>
-<p>To <em>add</em> this to our plot, we need to simply re-run the code
+<p>To add the red line to our plot, we need to simply re-run the code
 above but with some additional calls to <code>geom_line</code>.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pitching) <span class="sc">+</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> </span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> pitching_summary, </span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> mean), <span class="at">col =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
-<p><img src="tc_lecture4_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture4_files/figure-html/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>You’ll notice that the last line of code is a bit different than
 anything we’ve seen before. In particular, we are specifying both the
 data and mapping within the same ggplot2 function. If all of the

@@ -1,15 +1,14 @@
 ---
-title: "Lecture 4"
+title: "Lecture 4: Defining custom functions and standardizing data"
 output: html_document
 ---
 
-```{r lecture4-setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 library(tidyverse)
 ```
 
 ## Introduction
-<!-- Original graphic is on pg 18 of Adi's Lecture 3 -->
 
 On day 3 of the morning lectures (Lecture 6), you saw a graph of Earned Run Average (ERA) against year. 
 Also shown was a line connecting the average ERA in each year.
@@ -32,7 +31,7 @@ install.packages("Lahman")
 ```
 
 Once the package is installed, we can load it into R along with the `tidyverse` packages:
-```{r load-lahman}
+```{r}
 library(tidyverse)
 library(Lahman)
 ```
@@ -40,7 +39,7 @@ library(Lahman)
 We will focus on pitching statistics today.
 To load the pitching data into R from the `Lahman` package, we have to use the `data()` function.
 We also will need to *convert* the data into a `tibble`. 
-```{r load-pitching}
+```{r}
 Pitching <- as_tibble(Pitching)
 ```
 
@@ -49,7 +48,7 @@ For this exercise, we will only want to focus on ERA and also focus only on thos
 
 Using what we covered in previous lectures, we will create a new tibble called `pitching` which contains all players who pitched at least 150 innings, played in either the AL or the NL and which contains only the columns corresponding the player, year, team, league, innings pitched, and ERA.
 
-```{r pitching, tidy = FALSE}
+```{r}
 pitching <- Pitching %>%
   mutate(IP = IPouts / 3) %>% 
   filter(lgID %in% c('AL', 'NL') & IP >= 150) %>%
@@ -60,7 +59,7 @@ pitching
 **IMPORTANT**: Before reading any further, make sure you and your team understand completely what is happening in the code above.
 
 Now that we have ERA for all pitchers eligible for our analysis, we can plot the ERAs by year. Feel free to experiment with different ways of presenting this information via the different visualizations we covered in [Lecture 3](tc_lecture3.html).
-```{r, tidy= FALSE}
+```{r}
 ggplot(data = pitching) + 
   geom_point(mapping = aes(x = yearID, y = ERA), size = 0.3)
 ```
@@ -77,7 +76,7 @@ How much better was Leonard's 0.96 ERA than Brown's 1.04 ERA?
 To answer this, we can transform ERA to standardized units using the `mutate()` function. 
 There is a minor complication: there is not a built-in function for standardizing a variable in R!
 Luckily for us, R allows us to define our own functions like so:
-```{r, tidy = FALSE}
+```{r}
 standardize <- function(x) {
   mu <- mean(x, na.rm = TRUE)
   sigma <- sd(x, na.rm = TRUE)
@@ -86,7 +85,7 @@ standardize <- function(x) {
 ```
 For now, don't worry too much about the syntax or the `na.rm = TRUE` bits - that's just
 telling R to remove any missing values when computing the average and standard deviation (easy way to deal with messy data). Armed with our `standardize()` function, we can add a column called `z_era_all` which transforms ERA to the standardized scale.
-```{r, tidy = FALSE}
+```{r}
 pitching <- pitching %>%
   mutate(z_era_all = standardize(ERA))
 pitching %>% arrange(z_era_all)
@@ -108,7 +107,7 @@ Very often in a data analysis, instead of performing a calculation on the entire
 
 One strength of dplyr is the ease with which you can follow this "split-apply-combine" paradigm using the function `group_by()`.
 We can use this in concert with the pipe as follows
-```{r, tidy = FALSE}
+```{r}
 pitching <- pitching %>% 
   group_by(yearID)
 ```
@@ -116,7 +115,7 @@ pitching <- pitching %>%
 When we print out `pitching` now, we notice an extra line that tells us the grouping variable. Now when we pass this dataset on to subsequent calculations, these calculations will be done on each group. 
 
 We can now summarize each season using another `tidyverse` function called... `summarize()`! This convenient function will compute summary statistics that we specify with respect to the groups from `group_by()`. For instance, we can compute the average ERA in each year in the following way:
-```{r year-ave, tidy = FALSE}
+```{r}
 pitching %>%
   summarize(ave_ERA = mean(ERA))
 ```
@@ -129,14 +128,14 @@ The following functions are quite useful for summarizing several aspects of the 
 * Count: `n()`, `n_distinct()`
 
 We'll now create a dataset, `pitching_summary`, that contains the mean and standard deviation of ERA **within each year**:
-```{r, tidy = FALSE}
+```{r}
 pitching_summary <- pitching %>% 
   summarize(mean = mean(ERA), 
             sd = sd(ERA))
 ```
 
 One of the most commonly used functions, `n()`, returns counts and is especially useful when used on a grouped dataset We can, for instance, count the number of pitchers in our dataset within each year using `n()`.
-```{r, tidy = FALSE}
+```{r}
 pitching %>% 
   summarize(count = n()) %>%
   arrange(count)
@@ -144,7 +143,7 @@ pitching %>%
 
 Or equivalently, we can use the `count` function:
 
-```{r, tidy = FALSE}
+```{r}
 pitching %>% 
   count() %>%
   arrange(n)
@@ -153,7 +152,7 @@ pitching %>%
 What's the difference between the two approaches above?
 
 **Exercise**: Describe, in words, what the following code does.
-```{r, eval = FALSE, tidy = FALSE}
+```{r, eval = FALSE}
 pitching %>% 
   summarize(count = n()) %>%
   filter(count >= 90) %>%
@@ -162,7 +161,7 @@ pitching %>%
 
 Once we add a grouping to our dataset, it also changes the way `mutate()` operates on it.
 We can now standardize each pitcher's ERA within each year and store that result in a column called z_era_year
-```{r, tidy = FALSE}
+```{r}
 pitching <- pitching %>%
   mutate(z_era_year = standardize(ERA))
 pitching %>% arrange(z_era_year)
@@ -174,19 +173,19 @@ As we just saw, when we add a grouping to a dataset, it affects how verbs like `
 To remove the grouping, we have to use the `ungroup()` function.
 Remember, as with the other `tidyverse` verbs we've learned, we need to store the result if we want the dataset to remain ungrouped!
 
-```{r ungroup, tidy = FALSE}
+```{r}
 pitching <- pitching %>%
   ungroup()
 ```
 
 To verify that we've indeed removed the grouping, let's re-run the code from above to compute the mean and standard deviation of ERA.
-```{r verify-ungroup}
+```{r}
 pitching %>% summarize(mean = mean(ERA), sd = sd(ERA))
 ```
 
 Up to this point, we have only grouped on a single variable. It is sometimes desirable to group on multiple variables at once. For instance, we may want to standardize ERA not only within each year but also within each leauge (AL and NL). That is, we may want to standardize each individual pitcher's ERA using only the data from the other pitchers who pitched in the same league and in the same season. We also add a column called `count_year_lg` to record the number of pitchers included in each year-league combination.
 
-```{r multiple-grouping, tidy = FALSE}
+```{r}
 pitching <- pitching %>%
   group_by(yearID, lgID) %>%
   mutate(z_era_year_lg = standardize(ERA),
@@ -194,7 +193,7 @@ pitching <- pitching %>%
 ```
 When we arrange by the ERA standardized within the year and league, we now see that Pedro Martinez's 1999 and 2000 season with the Red Sox were even better than Dutch Leonard's 1914 season! 
 
-```{r pedro-arrange, tidy = FALSE}
+```{r}
 pitching %>%
   arrange(z_era_year_lg)
 ```
@@ -204,14 +203,14 @@ As a final note, when we group by multiple variables, the order in which we spec
 ## Back to the figure
 
 We started this module with a figure similar to one from Professor Wyner's class that plotted ERAs over time.
-When we run the following code, we get a plot that's very similar to the desired one but that is missing the red line showing the average ERA within each season. 
-```{r, eval = FALSE, tidy = FALSE}
+When we previously ran the following code, we got a plot that's very similar to the desired one but that is missing the red line showing the average ERA within each season. 
+```{r, eval = FALSE}
 ggplot(pitching) +
   geom_point(aes(x = yearID, y = ERA), size = 0.3)
 ```
 
-To *add* this to our plot, we need to simply re-run the code above but with some additional calls to `geom_line`.
-```{r, tidy = FALSE}
+To add the red line to our plot, we need to simply re-run the code above but with some additional calls to `geom_line`.
+```{r}
 ggplot(pitching) +
   geom_point(aes(x = yearID, y = ERA), size = 0.3) +
   ylim(0, 10) + 
