@@ -11,7 +11,7 @@ library(tidyverse)
 We're going to pick up right where we left off yesterday in [Problem Set 1](tc_ps1.html), where you wrote a script to create a `tbl` containg several shooting statistics for NBA players between the 1996-97 season and the 2015-16 season.
 Your script could look something like what is the code block below, and for reasons that will become clear shortly, we are going to call our tbl `raw_shooting` (remember: writing code in script files is good practice!)
 
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
 # Read in data
 raw_shooting <- read_csv(file = "data/nba_shooting.csv")
@@ -32,7 +32,7 @@ As we learned at the end of [Lecture 1](tc_lecture1.html), rather than repeatedl
 referring to our `tbl`, we can use the pipe `%>%` to chain together our operations
 for a much _cleaner_ chunk of code:
 
-```{r}
+```{r, message=FALSE}
 # First read in the data, assigning pipeline to raw_shooting
 raw_shooting <- read_csv(file = "data/nba_shooting.csv") %>%
   # Next create the new columns
@@ -317,7 +317,7 @@ fga_tpa_plot +
 As a reminder, the code chunk above is equivalent to running the entire pipeline
 of code without creating any temporary objects, although not recommended...
 
-```{r}
+```{r, message=FALSE}
 read_csv(file = "data/nba_shooting.csv") %>%
   filter(!SEASON %in% c(1999, 2012)) %>%
   ggplot(aes(x = TPA, y = FGA)) +
@@ -333,7 +333,7 @@ read_csv(file = "data/nba_shooting.csv") %>%
 
 ## Saving our work
 
-For next [lecture](tc_lecture3.html) we will focus on the dataset of players who attempted at least 150 field goals and 50 three pointers in the non-lockout seasons. We'll make this _clean_ dataset using the
+For the next [lecture](tc_lecture3.html) we will focus on the dataset of players who attempted at least 150 field goals and 50 three pointers in the non-lockout seasons. We'll make this _clean_ dataset using the
 `filter()` function separating each condition with commas, and refer to
 the resulting dataset as `nba_shooting`. Finally, we'll add a `mutate()` line to
 create the `three_point_fg_rate = TPA / FGA` variable from [yesterday](tc_lecture1.html).
