@@ -109,7 +109,7 @@ Comments are useful because they allow you to explain what your code is doing.
 
 
 ## The tidyverse  
-For the rest of the course, we will be working within the [``tidyverse''](https://www.tidyverse.org/), which consists of several R packages for data manipulation, exploration, and visualization. 
+For the rest of the course, we will be working within the [tidyverse](https://www.tidyverse.org/), which consists of several R packages for data manipulation, exploration, and visualization. 
 They are all based on a common design philosophy, mostly developed by Hadley Wickham (whose name you will encounter a lot as you gain more experience with R). 
 
 To access tidyverse, first we first need to install the tidyverse package:
