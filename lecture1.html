@@ -513,7 +513,7 @@ to vectors and plot graphs.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">18</span>,<span class="dv">20</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y)</span></code></pre></div>
-<p><img src="lecture1_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" />
+<p><img src="lecture1_files/figure-html/base%20R-1.png" width="672" style="display: block; margin: auto;" />
 In the above code, we assigned the numbers 1-8 to x and assigned the
 numbers 5, 7, …, 18, 20 to y. Then we plotted the graph with x and y, as
 if they were coordinate points.</p>
@@ -565,59 +565,6 @@ the package.<br />
 other package.</li>
 </ol>
 </div>
-<div id="a-quick-digression-r-scripts" class="section level2">
-<h2>A quick digression: R Scripts</h2>
-<p>Up to this point, we have been working strictly within the R console,
-proceeding line-by-line. In the previous code block, we tried to add
-three columns to our tbl and the mutate call got a little bit
-over-whelming. Imagine trying to add five or six more columns
-simultaneously! As our commands become more and more complex, you’ll
-find that using the console can get pretty cramped. And if you make a
-mistake in entering your code, you’ll get an error and have to start all
-over again. Plus, when we start a new session of R Studio, the console
-is cleared. How can we save the commands we typed into R? We do so using
-an <strong>R Script</strong>.</p>
-<p>An R Script is a file type which R recognizes as storing R commands
-and is saved as a .R file. R Scripts are useful as we can edit our code
-before sending it to be run in the console.</p>
-<p>We can start a new R Script by clicking on the top left symbol in R
-Studio and selecting “R Script”.</p>
-<p><img src="figures/lecture1_fig1.png" /></p>
-<p>The untitled R Script will then appear in the top left hand box of R
-Studio.</p>
-<p><img src="figures/lecture1_fig2.png" /></p>
-<p>In the R Script, type the following:</p>
-<pre><code>2 * 3
-x &lt;- 4
-sqrt(x)</code></pre>
-<p>Now our code is just sitting in the R Script. To run the code (that
-is, evaluate it in the console) we click the “Run” button in the top
-right of the script. This will run one line of code at a time -
-whichever line the cursor is on. Place your cursor on the first line and
-click “Run”. Observe how <code>2 * 3</code> now appears in the console,
-as well as the output <code>6</code>.</p>
-<p><img src="figures/lecture1_fig3.png" /></p>
-<p>If we want to run multiple lines at once, we highlight them all and
-click “Run”.</p>
-<p><img src="figures/lecture1_fig4.png" /></p>
-<p>Note in the above that we had to run <code>x &lt;- 4</code> before
-<code>sqrt(x)</code>. We need to define our variables first and run this
-code in the console before performing calculations with those variables.
-The console can’t “see” the script unless you run the code in the
-script.</p>
-<p>One very nice thing about RStudio’s script editor is that it will
-highlight syntax errors with a red squiggly line and a red cross in the
-sidebar. If you move your mouse over the line, a pop-up will appear that
-can help you diagnose the potential problem.</p>
-<p>Another advantage of R scripts is that you can add comments to your
-code, which are preceded by the pound sign / hash sign #. Comments are
-useful because they allow you to explain what your code is doing.
-<strong>Throughout the rest of this course, we will be working almost
-exclusively with R scripts rather than directly entering commands into
-the console.</strong> For the sake of organization, you should save all
-of your scripts into the ‘scripts’ folder we created within the
-‘Moneyball’ working directory.</p>
-</div>
 <div id="the-tidyverse" class="section level2">
 <h2>The tidyverse</h2>
 <p>For the rest of the course, we will be working within the <a
@@ -628,14 +575,14 @@ developed by Hadley Wickham (whose name you will encounter a lot as you
 gain more experience with R).</p>
 <p>To access tidyverse, first we first need to install the tidyverse
 package:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
 <p>The <code>install.packages()</code> function is one way of installing
 packages in R. You can also use Tools/Install Packages or click on the
 Packages tab in the bottom right pane of your RStudio view and then
 click on Install to type in the package you want to install.</p>
 <p>Now with the <code>tidyverse</code> suite of packages installed, we
 can load them with the following code:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <p>When you do that, you’ll see a lot of output to the console, most of
 which you can safely ignore for now. <strong>Note you only need to
 install the package once. However, each time you open up a new R session
@@ -649,9 +596,9 @@ real world) will be tabular. Each row will represent a separate
 observation and each column will record a particular measurement. For
 instance, the table below lists different statistics for several
 basketball players from the 2015-16 NBA regular season. The statistics
-are: * field goal makes (FGM) * field goal attempts (FGA) * three point
-makes (TPM) * three point attempts (TPA) * free throw makes (FTM) * free
-throw attempts (FTA)</p>
+are: field goal makes (FGM), field goal attempts (FGA), three point
+makes (TPM), three point attempts (TPA), free throw makes (FTM), and
+free throw attempts (FTA).</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -961,9 +908,9 @@ tibble containing all of the data. The dataset showed above is stored in
 a csv file named “nba_shooting_small.csv” in the “data” folder of our
 working directory. We will read it into R with the
 <code>read_csv()</code> function like so:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;data/nba_shooting_small.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;data/nba_shooting_small.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 10 Columns: 8
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (1): PLAYER
 ## dbl (7): SEASON, FGM, FGA, TPM, TPA, FTM, FTA
@@ -997,7 +944,7 @@ column. We see, for instance, that the column named “PLAYER” contains
 this case, <span class="math inline">\(10 \times 8\)</span>), the column
 names, the <em>type</em> of data included in each column, and then the
 actual data.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 8
 ##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA
 ##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1041,7 +988,7 @@ learn each of these</p>
 <p>The <code>arrange()</code> function works by taking a tbl and a set
 of column names and sorting the data according to the values in these
 columns.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(nba_shooting_small, FGA)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(nba_shooting_small, FGA)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 8
 ##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA
 ##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1060,7 +1007,7 @@ FGA. We see that Marc Gasol took the fewest number of field goals (707)
 while James Harden and Stephen Curry attempted more than twice as many.
 We could also sort the players in descending order using
 <code>desc()</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(nba_shooting_small, <span class="fu">desc</span>(FGA))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(nba_shooting_small, <span class="fu">desc</span>(FGA))</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 8
 ##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA
 ##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1081,7 +1028,7 @@ multiple rows with the same value in a given column. When arranging the
 rows of a tbl, to break ties, we can specify more than column. For
 instance, the code below sorts the players first by the number of field
 goal attempts and then by the number of three point attempts.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(nba_shooting_small, FGA, TPA)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(nba_shooting_small, FGA, TPA)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 8
 ##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA
 ##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1096,7 +1043,7 @@ goal attempts and then by the number of three point attempts.</p>
 ##  9 Stephen Curry           2016   805  1597   402   887   363   400
 ## 10 James Harden            2016   710  1617   236   657   720   837</code></pre>
 <p>Now consider the two lines of code:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(nba_shooting_small, PLAYER)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(nba_shooting_small, PLAYER)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 8
 ##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA
 ##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1110,7 +1057,7 @@ goal attempts and then by the number of three point attempts.</p>
 ##  8 LeBron James            2016   737  1416    87   282   359   491
 ##  9 Marc Gasol              2016   328   707     2     3   203   245
 ## 10 Stephen Curry           2016   805  1597   402   887   363   400</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 8
 ##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA
 ##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1132,8 +1079,8 @@ sorted. This is because dplyr (and most other R) functions
 and modifying that copy. If we wanted to preserve the new ordering, we
 would have to <em>overwrite</em> <code>nba_shooting_small</code> using a
 combination of the assignment operator and <code>arrange()</code>.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small <span class="ot">&lt;-</span> <span class="fu">arrange</span>(nba_shooting_small, PLAYER)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>nba_shooting_small</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small <span class="ot">&lt;-</span> <span class="fu">arrange</span>(nba_shooting_small, PLAYER)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>nba_shooting_small</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 8
 ##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA
 ##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1157,7 +1104,7 @@ percentage (FGP). We can compute this percentage using the formula <span
 class="math inline">\(\text{FGP} =
 \frac{\text{FGM}}{\text{FGA}}.\)</span> We use the function
 <code>mutate()</code> to add a column to our tbl.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(nba_shooting_small, <span class="at">FGP =</span> FGM<span class="sc">/</span>FGA)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(nba_shooting_small, <span class="at">FGP =</span> FGM<span class="sc">/</span>FGA)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 9
 ##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP
 ##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1184,21 +1131,74 @@ assignment operator.</p>
 <p>It turns out that we can add <em>multiple</em> columns to a tbl at
 once by passing more arguments to <code>mutate()</code>, one for each
 column we wish to define.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(nba_shooting_small, <span class="at">FGP =</span> FGM<span class="sc">/</span>FGA, <span class="at">TPP =</span> TPM<span class="sc">/</span>TPA, <span class="at">FTP =</span> FTM<span class="sc">/</span>FTA)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(nba_shooting_small, <span class="at">FGP =</span> FGM<span class="sc">/</span>FGA, <span class="at">TPP =</span> TPM<span class="sc">/</span>TPA, <span class="at">FTP =</span> FTM<span class="sc">/</span>FTA)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 11
-##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP
-##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Damian Lillard          2016   618  1474   229   610   414   464 0.419 0.375 0.892
-##  2 DeMarcus Cousins        2016   601  1332    70   210   476   663 0.451 0.333 0.718
-##  3 Dirk Nowitzki           2016   498  1112   126   342   250   280 0.448 0.368 0.893
-##  4 Giannis Antetokounmpo   2016   513  1013    28   110   296   409 0.506 0.255 0.724
-##  5 James Harden            2016   710  1617   236   657   720   837 0.439 0.359 0.860
-##  6 Jimmy Butler            2016   470  1034    64   206   395   475 0.455 0.311 0.832
-##  7 Kevin Durant            2016   698  1381   186   480   447   498 0.505 0.388 0.898
-##  8 LeBron James            2016   737  1416    87   282   359   491 0.520 0.309 0.731
-##  9 Marc Gasol              2016   328   707     2     3   203   245 0.464 0.667 0.829
-## 10 Stephen Curry           2016   805  1597   402   887   363   400 0.504 0.453 0.908</code></pre>
+##    PLAYER           SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Damian Lillard     2016   618  1474   229   610   414   464 0.419 0.375 0.892
+##  2 DeMarcus Cousins   2016   601  1332    70   210   476   663 0.451 0.333 0.718
+##  3 Dirk Nowitzki      2016   498  1112   126   342   250   280 0.448 0.368 0.893
+##  4 Giannis Antetok…   2016   513  1013    28   110   296   409 0.506 0.255 0.724
+##  5 James Harden       2016   710  1617   236   657   720   837 0.439 0.359 0.860
+##  6 Jimmy Butler       2016   470  1034    64   206   395   475 0.455 0.311 0.832
+##  7 Kevin Durant       2016   698  1381   186   480   447   498 0.505 0.388 0.898
+##  8 LeBron James       2016   737  1416    87   282   359   491 0.520 0.309 0.731
+##  9 Marc Gasol         2016   328   707     2     3   203   245 0.464 0.667 0.829
+## 10 Stephen Curry      2016   805  1597   402   887   363   400 0.504 0.453 0.908</code></pre>
 </div>
+</div>
+<div id="a-quick-digression-r-scripts" class="section level2">
+<h2>A quick digression: R Scripts</h2>
+<p>Up to this point, we have been working strictly within the R console,
+proceeding line-by-line. In the previous code block, we tried to add
+three columns to our tbl and the mutate call got a little bit
+overwhelming. Imagine trying to add five or six more columns
+simultaneously! As our commands become more and more complex, you’ll
+find that using the console can get pretty cramped. And if you make a
+mistake in entering your code, you’ll get an error and have to start all
+over again. Plus, when we start a new session of R Studio, the console
+is cleared. How can we save the commands we typed into R? We do so using
+an <strong>R Script</strong>.</p>
+<p>An R Script is a file type which R recognizes as storing R commands
+and is saved as a .R file. R Scripts are useful as we can edit our code
+before sending it to be run in the console.</p>
+<p>We can start a new R Script by clicking on the top left symbol in R
+Studio and selecting “R Script”.</p>
+<p><img src="figures/lecture1_fig1.png" /></p>
+<p>The untitled R Script will then appear in the top left hand box of R
+Studio.</p>
+<p><img src="figures/lecture1_fig2.png" /></p>
+<p>In the R Script, type the following:</p>
+<pre><code>2 * 3
+x &lt;- 4
+sqrt(x)</code></pre>
+<p>Now our code is just sitting in the R Script. To run the code (that
+is, evaluate it in the console) we click the “Run” button in the top
+right of the script. This will run one line of code at a time -
+whichever line the cursor is on. Place your cursor on the first line and
+click “Run”. Observe how <code>2 * 3</code> now appears in the console,
+as well as the output <code>6</code>.</p>
+<p><img src="figures/lecture1_fig3.png" /></p>
+<p>If we want to run multiple lines at once, we highlight them all and
+click “Run”.</p>
+<p><img src="figures/lecture1_fig4.png" /></p>
+<p>Note in the above that we had to run <code>x &lt;- 4</code> before
+<code>sqrt(x)</code>. We need to define our variables first and run this
+code in the console before performing calculations with those variables.
+The console can’t “see” the script unless you run the code in the
+script.</p>
+<p>One very nice thing about RStudio’s script editor is that it will
+highlight syntax errors with a red squiggly line and a red cross in the
+sidebar. If you move your mouse over the line, a pop-up will appear that
+can help you diagnose the potential problem.</p>
+<p>Another advantage of R scripts is that you can add comments to your
+code, which are preceded by the pound sign / hash sign #. Comments are
+useful because they allow you to explain what your code is doing.
+<strong>Throughout the rest of this course, we will be working almost
+exclusively with R scripts rather than directly entering commands into
+the console.</strong> For the sake of organization, you should save all
+of your scripts into the ‘scripts’ folder we created within the
+‘Moneyball’ working directory.</p>
 </div>
 <div id="back-to-the-nba-data" class="section level2">
 <h2>Back to the NBA data</h2>

@@ -20,7 +20,7 @@ Welcome to Problem Set 1. This problem set contains two parts. In the first part
 
 4. Following along with the notes in Lecture 1, in your newly created script, write code that (i) reads in the dataset "nba_shooting_small.csv" and (ii) adds columns for field goal percentage (FGP), three point percentage (TPP), and free throw percentage (FTP). **Do not run any part of your script.**
 
-```{r}
+```{r pt1 q4 solution}
 # solution
 nba_shooting_small <- read_csv('data/nba_shooting_small.csv')
 nba_shooting_small <- mutate(nba_shooting_small, FGP = FGM/FGA, TPP = TPM/TPA, FTP = FTM/FTA)
@@ -40,14 +40,14 @@ This data is stored in the "data/" folder of your working directory in the CSV f
 
 3. Read in the dataset using `read_csv()`. Save it as a tbl called `nba_shooting.`
 
-```{r}
+```{r pt2 q3 solution}
 # solution
 nba_shooting <- read_csv('data/nba_shooting.csv')
 ```
 
 4. Add columns to the tbl containing field goal percentage (FGP), three point percentage (TPP), and (FTP). You should write the code to do this in your R Script and then go ahead execute the code.
 
-```{r}
+```{r pt2 q4 solution}
 # solution
 nba_shooting <- mutate(nba_shooting, FGP = FGM/FGA, TPP = TPM/TPA, FTP = FTM/FTA)
 ```
@@ -59,7 +59,7 @@ The formula for eFGP is
 $$ \text{eFGP} = \frac{\text{FGM} + 0.5 \times \text{TPM}}{\text{FGA}}.$$
 Write another line of code to your script which will add a column for eFGP to the data. 
 
-```{r}
+```{r pt2 q5 solution}
 # solution
 nba_shooting <- mutate(nba_shooting, eFGP = (FGM+.5*TPM)/FGA)
 ```
@@ -70,7 +70,7 @@ $$
 $$
 Remember, FGM records the number of 2-point shots made as well as the number of 3-point shots made.
 
-```{r}
+```{r pt2 q6 solution}
 # solution
 nba_shooting <- mutate(nba_shooting, PTS = FTM + 2*FGM + 3*TPM)
 ```
@@ -82,14 +82,14 @@ $$
 $$
 Add another column to the tbl for TSP
 
-```{r}
+```{r pt2 q7 solution}
 # solution
 nba_shooting <- mutate(nba_shooting, TSP = PTS/(2*(FGA+.44*FTA)))
 ```
 
 8. Arrange your tbl so that the players are sorted in increasing order of true shooting percentage. Which player has the best true shooting percentage?
 
-```{r}
+```{r pt2 q8 solution}
 # solution
 nba_shooting <- arrange(nba_shooting, desc(TSP))
 nba_shooting %>% head(1)

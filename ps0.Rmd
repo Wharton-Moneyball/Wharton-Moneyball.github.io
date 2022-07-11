@@ -3,7 +3,7 @@ title: "Problem Set 0"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r ps0 setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 ```
 
@@ -26,12 +26,12 @@ Throughout the course, you should try to replicate the code and output in these 
 
 We see that R returns the value of the expression $2 + 3 \times (6 - 4)^5$ immediately underneath and the answer is preceded by a [1]. 
 For now, don't worry about this ``[1]''; we'll return to it later.
-```{r}
+```{r calculator}
 2 + 3 * (6 - 4)^5
 ```
 
 Like any scientific calculator, R comes with a number of built-in functions
-```{r}
+```{r built-in fns}
 sqrt(4)
 log(10)
 cos(pi)
@@ -42,7 +42,7 @@ cos(pi)
 When you enter expressions like those above, R evaluates them, prints them, and then immediately discards them. Oftentimes, however, you'll want to store a value as a named variable and use it in subsequent calculations. For instance, let's say that we want to store the value of $2 + 3\times (6 - 4)^5$ as $x$ and then compute the following: $1/x, x + 1,$ and $\sqrt{x}.$
 To *assign* the value of the expression `2 + 3*(6 - 4)^5` to the variable `x` we use the *assignment operator* `<-`. 
 The assignment operator evaluates the expression immediately to the right of it and stores that value in an object whose name is whatever text came to the left of the operator. 
-```{r}
+```{r assignment}
 x <- 2 + 3*(6-4)^5
 ```
 Now when we execute this expression, R does not auotmatically print anything like it did in an earlier example.
@@ -52,7 +52,7 @@ However, if you look closely at the **Environment** pane (top right-hand side of
 This pane will show every variable that we have defined. As we start creating more and more variables, this list will be really helpful to keep track of what we've defined. 
 Now that we have created the variable x, we can use the symbol ``x'' in more expressions.
 For example, we can compute $1/x, x + 1,$ and $\sqrt{x}$ as follows:
-```{r}
+```{r more expressions}
 x
 1/x
 x + 1
@@ -70,12 +70,12 @@ R follows the conventional order of operations, in that it evaluates the inner-m
 
 If we try to evaluate an expression using the name of a variable that we haven't defined yet, R will throw an error.
 For instance, in the code below, if we try to add 5 to a previously undeclared variable, we get an error.
-```{r error=TRUE}
+```{r error, error=TRUE}
 y + 5
 ```
 
-## Exercises
 
+## Exercises
 
 1. Save the value of `8/5 + 3^3` as a new variable `y`.
 2. Save the values of `y/x` as a new variable `z`.

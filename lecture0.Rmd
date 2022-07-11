@@ -3,15 +3,14 @@ title: "Lecture 0: Installation and Setting up Workspace"
 output: html_document
 ---
 
-```{r install-setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 ```
-
-
 
 ## Installing R and R Studio on computer:
 
 So that we can jump right into working with data on the first day, we'd like for you to install R and RStudio onto your computer prior to the start of camp. 
+
 
 #### For Windows Users:
 
@@ -32,6 +31,7 @@ Click on "Download RStudio Desktop."
 Click on the version recommended for your system, or the latest Windows version, and save the executable file.
 Run the .exe file and follow the installation instructions.
 
+
 #### For Mac Users:
 
 **To Install R:**
@@ -49,7 +49,6 @@ Now that R is installed, you need to download and install RStudio.
 Go to www.rstudio.com and click on the "Download RStudio" button.
 Click on "Download RStudio Desktop."
 Click on the version recommended for your system, or the latest Mac version, save the .dmg file on your computer, double-click it to open, and then drag and drop it to your applications folder.
-
 
 
 ## Creating a Working Directory
