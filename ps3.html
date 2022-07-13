@@ -478,7 +478,7 @@ $(document).ready(function () {
 taken from the Lahman dataset. We will compute the same statistics as we
 did in <a href="ps2.html">Problem Set 2</a> and also standardize these
 statistics within year, year and league, and also historical era.</p>
-<p>To load the batting data into R, we can do the following</p>
+<p>To load the batting data into R, we can do the following:</p>
 <p>Unfortunately, some statistics like hit-by-pitch (HBP) were not
 recorded in the earlier decades of baseball. In the tbl, these missing
 values are designated <code>NA</code>. To see some of these, we can run
@@ -597,7 +597,7 @@ dplyr, we will read in a different dataset and re-compute these relative
 payrolls.</p>
 <ol style="list-style-type: decimal">
 <li>Remember the function we wrote in <a href="lecture3.html">Lecture
-3</a> to standardize various statistics? It is reproduced below</li>
+3</a> to standardize various statistics? It is reproduced below:</li>
 </ol>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>standardize <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
