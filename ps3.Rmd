@@ -14,7 +14,7 @@ In this problem set, you will practice using the pipe `%>%` and grouped calculat
 
 To load the batting data into R, we can do the following:
 
-```{r batting load, message=FALSE}
+```{r batting load, include=TRUE}
 library(tidyverse)
 library(Lahman)
 batting <- as_tibble(Batting)
@@ -23,7 +23,7 @@ batting <- as_tibble(Batting)
 Unfortunately, some statistics like hit-by-pitch (HBP) were not recorded in the earlier decades of baseball. 
 In the tbl, these missing values are designated `NA`. To see some of these, we can run the following code:
 
-```{r batting select, include= TRUE}
+```{r batting select, include=TRUE}
 batting %>% 
   select(playerID, yearID, teamID, AB, BB, HBP, SH, SF, IBB, GIDP)
 ```
