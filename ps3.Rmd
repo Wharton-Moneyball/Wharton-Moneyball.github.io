@@ -7,7 +7,6 @@ output: html_document
 knitr::opts_chunk$set(cache = TRUE, fig.align = "center", include = FALSE) # set include = TRUE to see solutions in knitted RMarkdown
 ```
 
-
 ## MLB Batting Statistics
 
 In this problem set, you will practice using the pipe `%>%` and grouped calculations with batting statistics taken from the Lahman dataset. We will compute the same statistics as we did in [Problem Set 2](ps2.html) and also standardize these statistics within year, year and league, and also historical era.
@@ -59,9 +58,9 @@ batting %>% select(playerID, yearID, teamID, AB, BB, HBP, SH, SF, IBB)
 
 2. Using the pipe `%>%`, `mutate()`, `filter()`, and `select()`, create a tbl `batting` by:
 
-- Adding columns (with `mutate()`) for plate appearances (PA), unintentional walks (uBB), singles (X1B), batting average (BA), on-base percentage (OBP), on-base plus slugging (OPS), and weighted On-Base Average (wOBA). Note that the formula for plate appearances is $\text{PA} = \text{AB} + \text{BB} + \text{HBP} + \text{SH} + \text{SF}.$ Formulae for the remaining statistics are given in [Problem Set 2](ps2.html).
-- Pulling out only those rows of players with at least 502 plate appearances **and** who played in either the AL or NL with `filter()`
-- Select the following columns: playerID, yearID, lgID, teamID, PA, BA, OBP, OPS, wOBA. 
+    * Adding columns (with `mutate()`) for plate appearances (PA), unintentional walks (uBB), singles (X1B), batting average (BA), on-base percentage (OBP), on-base plus slugging (OPS), and weighted On-Base Average (wOBA). Note that the formula for plate appearances is $\text{PA} = \text{AB} + \text{BB} + \text{HBP} + \text{SH} + \text{SF}.$ Formulae for the remaining statistics are given in [Problem Set 2](ps2.html).
+    * Pulling out only those rows of players with at least 502 plate appearances **and** who played in either the AL or NL with `filter()`
+    * Select the following columns: playerID, yearID, lgID, teamID, PA, BA, OBP, OPS, wOBA. <p/>
 
 ```{r pt1 q2 solution}
 # solution
@@ -81,6 +80,7 @@ batting <-
   filter(lgID %in% c('AL', 'NL') & PA >= 502.2) %>% 
   select(playerID, yearID, teamID, lgID, PA,BA, OBP, OPS, wOBA)
 ```
+
 
 3. Standardize each of BA, OBP, OPS, and wOBA using data from all of the years. Name the columns containing these new standardized values `zBA_all`, `zOPB_all`, etc. *Remember, you must re-define the `standardize()` function we wrote in [Lecture 3](lecture3.html)* Who were the best and worst batters according to these four metrics?
 
@@ -223,15 +223,14 @@ batting %>%
 ```
 
 6. Remove the grouping you created in Problem 4. Bill James [divided baseball history into several eras](https://www.billjamesonline.com/dividing_baseball_history_into_eras/) as follows:
-
-* Pioneer Era: 1871 -- 1892
-* Spitball Era: 1893 -- 1919
-* Landis Era: 1920 -- 1946
-* Baby Boomer Era: 1947 -- 1968
-* Artifical Turf Era: 1969 -- 1992
-* Camden Yards Era: 1993 -- present
-
-Use `mutate()` and `case_when()` (just like we did in [Lecture 2](lecture2.html)) to add a column called Hist_era to `batting` that records the historical era.
+    * Pioneer Era: 1871 -- 1892
+    * Spitball Era: 1893 -- 1919
+    * Landis Era: 1920 -- 1946
+    * Baby Boomer Era: 1947 -- 1968
+    * Artifical Turf Era: 1969 -- 1992
+    * Camden Yards Era: 1993 -- present <p/> 
+    
+    Use `mutate()` and `case_when()` (just like we did in [Lecture 2](lecture2.html)) to add a column called Hist_era to `batting` that records the historical era.
 
 ```{r pt1 q6 solution}
 # solution
@@ -316,8 +315,7 @@ standardize <- function(x){
 }
 ```
 
-We need to write another function in order to compute "relative payroll".
-This function will take in a vector `x`, compute its median, and then divides every element of `x` by the median.
+* We need to write another function in order to compute "relative payroll". This function will take in a vector `x`, compute its median, and then divides every element of `x` by the median.
 
 ```{r relative fn}
 # solution
@@ -400,9 +398,9 @@ batting_2014_2015 <-
   arrange(playerID)
 ```
 
-2. Run the code above and save the tbl `batting_2014_2015.RData` to the file "data/batting_2014_2015.RData". We will return to this dataset in [Lecture 4](lecture4.html).
+Now, run the code above and save the tbl `batting_2014_2015.RData` to the file "data/batting_2014_2015.RData" using the `save()` function. We will return to this dataset in [Lecture 4](lecture4.html).
 
-```{r challenge Q 2}
+```{r challenge Q solution}
 # solution
 batting_2014_2015 <-
   batting %>%

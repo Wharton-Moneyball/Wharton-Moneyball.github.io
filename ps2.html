@@ -518,10 +518,9 @@ contained in the file “data/hitting_qualified.csv”. You should write
 save all of the code for this analyses in an R script called
 “ps2_mlb_batting.R”.</p>
 <ol style="list-style-type: decimal">
-<li>Load the data into a tibble called <code>hitting_qualified</code>
-using <code>read_csv()</code>.</li>
-</ol>
-<p>The columns of this dataset include</p>
+<li><p>Load the data into a tibble called <code>hitting_qualified</code>
+using <code>read_csv()</code>.</p>
+<p>The columns of this dataset include:</p>
 <ul>
 <li><code>playerID</code>: the player’s ID code</li>
 <li><code>yearID</code>: Year</li>
@@ -554,8 +553,7 @@ year</li>
 <li><code>SH</code>: Sacrifice hits</li>
 <li><code>SF</code> Sacrifice flies</li>
 <li><code>GIDP</code> Grounded into double plays</li>
-</ul>
-<ol start="2" style="list-style-type: decimal">
+</ul></li>
 <li><p>Use <code>arrange()</code> to find out the first and last season
 for which we have data. <em>Hint: you may need to use
 <code>desc()</code> as well.</em></p></li>
@@ -592,19 +590,23 @@ integers. We can do this using <code>mutate()</code> and the function
 ##  9 jonesch01   1884   472    NA    10    NA    NA    NA
 ## 10 nelsoca01   1884   432    NA     9    NA    NA    NA
 ## # … with 12,033 more rows</code></pre>
-<p>You’ll notice that a lot of these columns contain <code>NA</code>
-values, which indicates that some of these values are missing. This make
-sense, since a lot of these statistics were not recorded in the early
-years of baseball. A popular convention for dealing with these missing
-statistics is to <strong>impute</strong> the missing values with 0. That
-is, for instance, every place we see an <code>NA</code> we need to
-replace it with a 0. We can do that with <code>mutate()</code> and
-<code>replace_na()</code> function as follows.</p>
+<ul>
+<li>You’ll notice that a lot of these columns contain <code>NA</code>
+values, which indicates that some of these values are missing. This
+makes sense, since a lot of these statistics were not recorded in the
+early years of baseball. A popular convention for dealing with these
+missing statistics is to <strong>impute</strong> the missing values with
+0. That is, for instance, every place we see an <code>NA</code> we need
+to replace it with a 0. We can do that with <code>mutate()</code> and
+<code>replace_na()</code> function as follows.</li>
+</ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hitting_qualified <span class="ot">&lt;-</span> <span class="fu">replace_na</span>(hitting_qualified, </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">list</span>(<span class="at">IBB =</span> <span class="dv">0</span>, <span class="at">HBP =</span> <span class="dv">0</span>, <span class="at">SH =</span> <span class="dv">0</span>, <span class="at">SF =</span> <span class="dv">0</span>, <span class="at">GIDP =</span> <span class="dv">0</span>))</span></code></pre></div>
-<p>We will discuss the syntax for <code>replace_na()</code> later in
+<ul>
+<li>We will discuss the syntax for <code>replace_na()</code> later in
 lecture. Now, rerun the <code>select()</code> function from above to
-check that the NAs were replaced with zeros.</p>
+check that the NAs were replaced with zeros.</li>
+</ul>
 <ol start="6" style="list-style-type: decimal">
 <li><p>Use <code>mutate()</code> to add a column for the number of
 singles, which can be computed as <span class="math inline">\(\text{X1B}
@@ -618,54 +620,51 @@ tibble as <code>hitting_qualified</code>.</p></li>
 offensive statistics, whose formulae are given below. We have also
 included links to pages on <a
 href="https://www.fangraphs.com">Fangraphs</a> that define and discuss
-each of these statistics.</p></li>
-</ol>
+each of these statistics.</p>
 <ul>
-<li><p><a
-href="https://www.fangraphs.com/library/offense/rate-stats/">Walk
+<li><a href="https://www.fangraphs.com/library/offense/rate-stats/">Walk
 Percentage</a> (BBP): <span class="math display">\[
 \text{BBP} = \frac{\text{BB}}{\text{PA}}
-\]</span></p></li>
-<li><p><a
+\]</span></li>
+<li><a
 href="https://www.fangraphs.com/library/offense/rate-stats/">Strike-out
 Percentage</a> (KP): <span class="math display">\[\text{KP} =
-\frac{\text{SO}}{\text{PA}}\]</span></p></li>
-<li><p><a href="https://www.fangraphs.com/library/offense/obp/">On-Base
+\frac{\text{SO}}{\text{PA}}\]</span></li>
+<li><a href="https://www.fangraphs.com/library/offense/obp/">On-Base
 Percentage</a> (OBP): <span class="math display">\[\text{OBP} =
 \frac{\text{H} + \text{BB} + \text{HBP}}{\text{AB} + \text{BB} +
-\text{HBP} + \text{SF}}\]</span></p></li>
-<li><p>Slugging (SLG): <span class="math display">\[
+\text{HBP} + \text{SF}}\]</span></li>
+<li>Slugging (SLG): <span class="math display">\[
 \text{SLG} = \frac{\text{X1B} + 2 \times \text{X2B} + 3\times \text{X3B}
 + 4\times \text{HR}}{\text{AB}}
-\]</span></p></li>
-<li><p><a href="https://www.fangraphs.com/library/offense/ops/">On-Base
+\]</span></li>
+<li><a href="https://www.fangraphs.com/library/offense/ops/">On-Base
 Plus Slugging</a> (OPS): <span class="math display">\[\text{OPS} =
-\text{OBP} + \text{SLG}\]</span></p></li>
-<li><p><a
-href="https://www.fangraphs.com/library/offense/woba/">weighted On-Base
-Average</a> (wOBA): We will use the 2013 weights which can be found <a
-href="https://www.fangraphs.com/guts.aspx?type=cn">here</a> <span
-class="math display">\[
+\text{OBP} + \text{SLG}\]</span></li>
+<li><a href="https://www.fangraphs.com/library/offense/woba/">weighted
+On-Base Average</a> (wOBA): We will use the 2013 weights which can be
+found <a href="https://www.fangraphs.com/guts.aspx?type=cn">here</a>
+<span class="math display">\[
 \text{wOBA} = \frac{0.687 \times \text{uBB} + 0.718 \times \text{HBP} +
 0.881 \times \text{X1B} + 1.256 \times \text{X2B} + 1.594 \times
 \text{X3B} + 2.065 \times \text{HR}}{\text{AB} + \text{uBB} + \text{SF}
 + \text{HBP}}
-\]</span></p></li>
-</ul>
+\]</span></li>
+</ul></li>
+</ol>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>hitting_qualified <span class="ot">&lt;-</span> <span class="fu">mutate</span>(hitting_qualified,</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">BBP =</span> BB<span class="sc">/</span>PA,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">KP =</span> SO<span class="sc">/</span>PA,</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                  <span class="co"># finish on your own</span></span></code></pre></div>
 <ol start="9" style="list-style-type: decimal">
-<li>For most of the statistics in the previous question, <a
-href="https://www.fangraphs.com">Fangraphs</a> has defined rating scales
-(to see these ratings, click on the linked page for each statistic in
-Question 6 and scroll down to the “Context” section of the page). Use
-<code>mutate()</code> and <code>case_when()</code> to add the ratings
-for walk percentage (BBP), strike-out percentage (KP), on-base
-percentage (OBP), on-base plus slugging (OPS), and wOBA. Call the
-columns “BBP_rating”, “KP_rating”, “OBP_rating”, “OPS_rating”, and
-“wOBA_rating.”</li>
+<li>For most of the statistics in the previous question, Fangraphs has
+defined rating scales (to see these ratings, click on the linked page
+for each statistic in Question 6 and scroll down to the “Context”
+section of the page). Use <code>mutate()</code> and
+<code>case_when()</code> to add the ratings for walk percentage (BBP),
+strike-out percentage (KP), on-base percentage (OBP), on-base plus
+slugging (OPS), and wOBA. Call the columns “BBP_rating”, “KP_rating”,
+“OBP_rating”, “OPS_rating”, and “wOBA_rating.”</li>
 </ol>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>hitting_qualified <span class="ot">&lt;-</span> <span class="fu">mutate</span>(hitting_qualified, </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">BBP_rating =</span> <span class="fu">case_when</span>(BBP <span class="sc">&gt;=</span> .<span class="dv">15</span> <span class="sc">~</span> <span class="st">&quot;Excellent&quot;</span>,</span>

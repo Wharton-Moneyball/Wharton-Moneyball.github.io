@@ -9,27 +9,26 @@ library(tidyverse)
 ```
 
 ## Visualizing the Strike Zone
-In this part, we will continue to use heatmaps (introduced briefly in [Lecture 2](lecture2.html)) to explore the strike zone in baseball.
-We will focus on data collected by PITCHf/x.
-At a high-level, PITCHf/x consists of a set of cameras installed at every ballpark which tracks the motion of each pitch.
-For more information about the system, check out this [article by Mike Fast](http://baseball.physics.illinois.edu/FastPFXGuide.pdf) 
-The data collected by PITCHf/x is then transmitted to the MLB Gameday application along with contextual information about the pitch.
-The [data](data/pitchfx_2015.csv) contains the measurements from the PITCHf/x system recorded in 2015.
 
-1. Read the data into a tbl called `pitches'. 
+In this part, we will continue to use heatmaps (introduced briefly in [Lecture 2](lecture2.html)) to explore the strike zone in baseball. We will focus on data collected by PITCHf/x. At a high-level, PITCHf/x consists of a set of cameras installed at every ballpark which tracks the motion of each pitch. For more information about the system, check out this [article by Mike Fast](http://baseball.physics.illinois.edu/FastPFXGuide.pdf)  The data collected by PITCHf/x is then transmitted to the MLB Gameday application along with contextual information about the pitch. The dataset we'll be using contains the measurements from the PITCHf/x system recorded in 2015.
 
-```{r}
+1. Download [pitchfx_2015.csv](data/pitchfx_2015.csv) to your `data` folder. Read the CSV file into a tbl called `pitches` using the `read_csv` function. 
+
+```{r pt1 q1 solution}
 # solution
 pitches <- read_csv("data/pitchfx_2015.csv")
 ```
-The columns are:
-* `Description`: Records the outcome of the pitch (Called Strike, Swinging Strike, Foul, etc.)
-* `X` and `Z`: the horizontal and vertical coordinates of the pitch in inches. Note that the center of home plate corresponds to `X = 0`. Note that the `X` coordinate are recorded from the catcher's perspective, with negative values on the left and positive values on the right. In this coordinate system, a right-handed batter will line up to the left (i.e. negative `X` values). 
-* `COUNT`: The ball-strike count for each pitch
-* `P_HAND` and `B_HAND`: the handedness of the batter and pitcher. 
+
+    The columns are:
+    * `Description`: Records the outcome of the pitch (Called Strike, Swinging Strike, Foul, etc.)
+    * `X` and `Z`: the horizontal and vertical coordinates of the pitch in inches. Note that the center of home plate corresponds to `X = 0`. 
+      + Note that the `X` coordinate are recorded from the catcher's perspective, with negative values on the left and positive values on the right. In this coordinate system, a right-handed batter will line up to the left (i.e. negative `X` values). 
+    * `COUNT`: The ball-strike count for each pitch
+    * `P_HAND` and `B_HAND`: the handedness of the batter and pitcher. <p/>
 
 2. To visualize the strike zone, we are going to want to filter out only the called strikes and balls. Moreover, it will be helpful to convert the Description to numeric values (1 for called strikes, 0 for balls). Use the pipe operator, `filter()`, `mutate()`, and `case_when()` to create a new tbl `called_pitches` containing only the called strike and balls and that includes a new column "Call" whose value is 0 for balls and 1 for called strike. 
-```{r}
+
+```{r pt1 q2 solution}
 #solution
 called_pitches <- pitches %>%
   filter(Description == "Called Strike" | Description == "Ball") %>%
@@ -39,23 +38,25 @@ called_pitches <- pitches %>%
 ```
 
 3. To get started, we will create a plot and then add to it sequentially:
-```{r, include=TRUE}
+
+```{r pt1 q3, include=TRUE}
 g <- ggplot(data = called_pitches)
 ```
 
 4. To estimate the probability of a called strike given the pitch location, we will use a strategy similar to what we used to make heatmaps in [Lecture 2](lecture2.html). Essentially, we divide the plane into several small rectangular bins and compute the proportion of called strikes within each bin. To compute this, we use the `stat_summary_2d()` function, which takes three aesthetics:
-* x: variable on the horizontal axis
-* y: variable on vertical axis
-* z: variable that is passed to the summary function.
-
-By default, `stat_summary_2d()` divides the plane into rectangles based on the aesthetics x and y, and then computes the average value of z for observations in the bin. 
-We can add this layer to our plot `g` as follows and obtain the following plot.
+    * x: variable on the horizontal axis
+    * y: variable on vertical axis
+    * z: variable that is passed to the summary function.
+    
+    By default, `stat_summary_2d()` divides the plane into rectangles based on the aesthetics x and y, and then computes the average value of z for observations in the bin. We can add this layer to our plot `g` as follows and obtain the following plot.
+    
 ```{r, include=TRUE}
 g <- g + stat_summary_2d(mapping = aes(x = X, y = Z, z = Call))
 g
 ```
 
-5. You'll notice in the plot above that `stat_summary_2d()` has added a legend to our plot. However, the title of the legend is a somewhat non-informative. The color scheme does not distinguish between different values particularly well. 
+5. You'll notice in the plot above that `stat_summary_2d()` has added a legend to our plot. However, the title of the legend is a somewhat non-informative. Moreover, the color scheme does not distinguish between different values particularly well. We can change both the title of the legend and the color scheme inside a function called `scale_fill_distiller`. Don't worry too much about what this function means for now; we will cover it in more depth in Lecture 5. 
+
 ```{r, include=TRUE}
 g <- g + scale_fill_distiller("P(Called Strike)", palette = "RdBu")
 g
@@ -67,7 +68,8 @@ g <- g + annotate("rect", xmin = -8.5, xmax = 8.5, ymin = 19, ymax = 41.5, alpha
 g
 ```
 
-We can additionally make the plot a bit more attractive visually as follows:
+* We can additionally make the plot a bit more attractive visually as follows:
+
 ```{r, include=TRUE}
 g <- g + theme_classic()
 g <- g + theme(axis.title.x = element_blank())
@@ -77,11 +79,9 @@ g
 ```
 
 
-
 ## NBA Team Shooting Statistics
 
-The file "nba_boxscore.csv" lists detailed box score information about every NBA player in every season ranging from 1996--97 season and 2015-16 season.
-We will look at team shooting statistics over this 20-season span. 
+The file "nba_boxscore.csv" lists detailed box score information about every NBA player in every season ranging from 1996--97 season and 2015-16 season. We will look at team shooting statistics over this 20-season span. 
 
 1. Load the data into a tbl called `raw_boxscore`. 
 ```{r}
@@ -89,30 +89,29 @@ We will look at team shooting statistics over this 20-season span.
 raw_boxscore <- read_csv("data/nba_boxscore.csv")
 ```
 
-The column "Tm" lists the team on which each player played. We can look at the relative frequencies of the teams using the `table()` function. This function takes a vector and returns the frequencies of each unique value. 
+* The column "Tm" lists the team on which each player played. We can look at the relative frequencies of the teams using the `table()` function. This function takes a vector and returns the frequencies of each unique value. 
 
 ```{r, include=TRUE}
 table(raw_boxscore[["Tm"]])
 ```
 
-Looking at the list of teams you may see a few that you don't recognize.
-For instance, there are 15 players listed as playing on "WSB". We can use `filter()` to take a closer look at these players.
+* Looking at the list of teams you may see a few that you don't recognize. For instance, there are 15 players listed as playing on "WSB". We can use `filter()` to take a closer look at these players.
 
 ```{r, include=TRUE}
 filter(raw_boxscore, Tm == "WSB")
 ```
 
-These fifteen players during the 1996-97 season on the Washington Bullets, which was renamed the Washington Wizards at the end of that season.There are a few other examples: VAN refers to the Vancouver Grizzlies who moved to Memphis and CHH refers to the original Charlotte Hornets franchise, which ultimately relocated to New Orleans.
+* These fifteen players during the 1996-97 season on the Washington Bullets, which was renamed the Washington Wizards at the end of that season.There are a few other examples: VAN refers to the Vancouver Grizzlies who moved to Memphis and CHH refers to the original Charlotte Hornets franchise, which ultimately relocated to New Orleans.
 
-One of the teams listed is "TOT". This does not refer any specific team. Instead these rows record the *total* statistics recorded by a player if he played for multiple teams in a single season. For the purposes of understanding how team shooting statistics changed over time, we will not want to include these rows in our analysis.
+* One of the teams listed is "TOT". This does not refer any specific team. Instead these rows record the *total* statistics recorded by a player if he played for multiple teams in a single season. For the purposes of understanding how team shooting statistics changed over time, we will not want to include these rows in our analysis.
 
 2. Use `filter()`, `group_by()`, `summary()`, and `mutate()` to create a new tbl called `team_boxscore` that does the following:
 
-* removes the rows corresponding to player totals (i.e. `Tm == "TOT"`)
-* groups the tbl according to Season and Tm. **Note: it is important to group on season first and team second **
-* Computes the total number of made and attempted field goals, three pointers, and free throws, along with points scored by each team in each season. 
-* Adds a column for team field goal percentage (FGP), three point percentage (TPP), and free throw percentages (FTP). 
-* Ungroup the resulting tbl
+    * removes the rows corresponding to player totals (i.e. `Tm == "TOT"`)
+    * groups the tbl according to Season and Tm. **Note: it is important to group on season first and team second **
+    * Computes the total number of made and attempted field goals, three pointers, and free throws, along with points scored by each team in each season. 
+    * Adds a column for team field goal percentage (FGP), three point percentage (TPP), and free throw percentages (FTP). 
+    * Ungroup the resulting tbl <p/>
 
 ```{r}
 # solution

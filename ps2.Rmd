@@ -84,33 +84,34 @@ In this problem set, we will gain more experience using the dplyr verbs we learn
 hitting_qualified <- read_csv("data/hitting_qualified.csv")
 ```
 
-The columns of this dataset include
-
-* `playerID`: the player's ID code
-* `yearID`: Year
-* `stint`: the player's stint (order of appearances within a season)
-* `teamID`: the player's team
-* `lgID`: the player's league
-* `G`: the number of Games the player played in that year
-* `AB`: number of At Bats of that player in that year
-* `PA`: number of plate appearances by the player that year
-* `R`: number of Runs the player made in that year
-* `H`: number of Hits the player had in that year
-* `X2B`: number of Doubles (hits on which the batter reached second base safely)
-* `X3B`: number of Triples (hits on which the batter reached third base safely)
-* `HR`: number of Homeruns the player made that year
-* `RBI`: number of Runs Batted In the player made that year
-* `SB`: number of Bases Stolen by the player in that year
-* `CS`: number of times a player was Caught Stealing that year
-* `BB`: Base on Balls
-* `SO`: number of Strikeouts the player had that year
-* `IBB` Intentional walks
-* `HBP`: Hit by pitch
-* `SH`: Sacrifice hits
-* `SF` Sacrifice flies
-* `GIDP` Grounded into double plays
+    The columns of this dataset include:
+    
+    * `playerID`: the player's ID code
+    * `yearID`: Year
+    * `stint`: the player's stint (order of appearances within a season)
+    * `teamID`: the player's team
+    * `lgID`: the player's league
+    * `G`: the number of Games the player played in that year
+    * `AB`: number of At Bats of that player in that year
+    * `PA`: number of plate appearances by the player that year
+    * `R`: number of Runs the player made in that year
+    * `H`: number of Hits the player had in that year
+    * `X2B`: number of Doubles (hits on which the batter reached second base safely)
+    * `X3B`: number of Triples (hits on which the batter reached third base safely)
+    * `HR`: number of Homeruns the player made that year
+    * `RBI`: number of Runs Batted In the player made that year
+    * `SB`: number of Bases Stolen by the player in that year
+    * `CS`: number of times a player was Caught Stealing that year
+    * `BB`: Base on Balls
+    * `SO`: number of Strikeouts the player had that year
+    * `IBB` Intentional walks
+    * `HBP`: Hit by pitch
+    * `SH`: Sacrifice hits
+    * `SF` Sacrifice flies
+    * `GIDP` Grounded into double plays
 
 2. Use `arrange()` to find out the first and last season for which we have data. *Hint: you may need to use `desc()` as well.*
+
 ```{r pt2 q2 solution}
 # solution
 arrange(hitting_qualified, yearID)
@@ -143,21 +144,21 @@ hitting_qualified <- mutate(hitting_qualified,
                             SF = as.integer(SF),
                             GIDP = as.integer(GIDP))
 ```
-
+    
 5. Let's take a look at some of the columns we just converted:
 
-```{r pt2 q5 1, include = TRUE}
+```{r pt2 q5 select, include=TRUE}
 select(hitting_qualified, playerID, yearID, AB, IBB, HBP, SH, SF, GIDP)
-```
-
-You'll notice that a lot of these columns contain `NA` values, which indicates that some of these values are missing. This make sense, since a lot of these statistics were not recorded in the early years of baseball. A popular convention for dealing with these missing statistics is to **impute** the missing values with 0. That is, for instance, every place we see an `NA` we need to replace it with a 0. We can do that with `mutate()` and `replace_na()` function as follows.
-
-```{r pt2 q5 2, include = TRUE}
+``` 
+    
+* You'll notice that a lot of these columns contain `NA` values, which indicates that some of these values are missing. This makes sense, since a lot of these statistics were not recorded in the early years of baseball. A popular convention for dealing with these missing statistics is to **impute** the missing values with 0. That is, for instance, every place we see an `NA` we need to replace it with a 0. We can do that with `mutate()` and `replace_na()` function as follows.
+    
+```{r pt2 q5 replace_na, include = TRUE}
 hitting_qualified <- replace_na(hitting_qualified, 
                                 list(IBB = 0, HBP = 0, SH = 0, SF = 0, GIDP = 0))
 ```
 
-We will discuss the syntax for `replace_na()` later in lecture. Now, rerun the `select()` function from above to check that the NAs were replaced with zeros. 
+* We will discuss the syntax for `replace_na()` later in lecture. Now, rerun the `select()` function from above to check that the NAs were replaced with zeros. 
 
 ```{r pt2 q5 solution}
 # solution
@@ -179,24 +180,21 @@ hitting_qualified <- mutate(hitting_qualified, uBB = BB - IBB)
 ```
 
 8. Use `mutate()` to add columns for the following offensive statistics, whose formulae are given below. We have also included links to pages on [Fangraphs](https://www.fangraphs.com) that define and discuss each of these statistics.
-
-* [Walk Percentage](https://www.fangraphs.com/library/offense/rate-stats/) (BBP):
+    * [Walk Percentage](https://www.fangraphs.com/library/offense/rate-stats/) (BBP):
 $$
 \text{BBP} = \frac{\text{BB}}{\text{PA}}
 $$
-* [Strike-out Percentage](https://www.fangraphs.com/library/offense/rate-stats/) (KP): 
+    * [Strike-out Percentage](https://www.fangraphs.com/library/offense/rate-stats/) (KP): 
 $$\text{KP} = \frac{\text{SO}}{\text{PA}}$$
-
-* [On-Base Percentage](https://www.fangraphs.com/library/offense/obp/) (OBP): 
+    * [On-Base Percentage](https://www.fangraphs.com/library/offense/obp/) (OBP): 
 $$\text{OBP} = \frac{\text{H} + \text{BB} + \text{HBP}}{\text{AB} + \text{BB} + \text{HBP} + \text{SF}}$$
-* Slugging (SLG): 
+    * Slugging (SLG): 
 $$
 \text{SLG} = \frac{\text{X1B} + 2 \times \text{X2B} + 3\times \text{X3B} + 4\times \text{HR}}{\text{AB}}
 $$
-
-* [On-Base Plus Slugging](https://www.fangraphs.com/library/offense/ops/) (OPS): 
+    * [On-Base Plus Slugging](https://www.fangraphs.com/library/offense/ops/) (OPS): 
 $$\text{OPS} = \text{OBP} + \text{SLG}$$
-* [weighted On-Base Average](https://www.fangraphs.com/library/offense/woba/) (wOBA): We will use the 2013 weights which can be found [here](https://www.fangraphs.com/guts.aspx?type=cn)
+    * [weighted On-Base Average](https://www.fangraphs.com/library/offense/woba/) (wOBA): We will use the 2013 weights which can be found [here](https://www.fangraphs.com/guts.aspx?type=cn)
 $$
 \text{wOBA} = \frac{0.687 \times \text{uBB} + 0.718 \times \text{HBP} + 0.881 \times \text{X1B} + 1.256 \times \text{X2B} + 1.594 \times \text{X3B} + 2.065 \times \text{HR}}{\text{AB} + \text{uBB} + \text{SF} + \text{HBP}}
 $$
@@ -220,7 +218,7 @@ hitting_qualified <- mutate(hitting_qualified,
                             1.594 * X3B+ 2.065 * HR)/(AB + uBB + SF + HBP))
 ```
 
-9. For most of the statistics in the previous question, [Fangraphs](https://www.fangraphs.com) has defined rating scales (to see these ratings, click on the linked page for each statistic in Question 6 and scroll down to the "Context" section of the page). Use `mutate()` and `case_when()` to add the ratings for walk percentage (BBP), strike-out percentage (KP), on-base percentage (OBP), on-base plus slugging (OPS), and wOBA. Call the columns "BBP_rating", "KP_rating", "OBP_rating", "OPS_rating", and "wOBA_rating." 
+9. For most of the statistics in the previous question, Fangraphs has defined rating scales (to see these ratings, click on the linked page for each statistic in Question 6 and scroll down to the "Context" section of the page). Use `mutate()` and `case_when()` to add the ratings for walk percentage (BBP), strike-out percentage (KP), on-base percentage (OBP), on-base plus slugging (OPS), and wOBA. Call the columns "BBP_rating", "KP_rating", "OBP_rating", "OPS_rating", and "wOBA_rating." 
 
 ```{r pt2 q9, include=TRUE, eval=FALSE}
 hitting_qualified <- mutate(hitting_qualified, 

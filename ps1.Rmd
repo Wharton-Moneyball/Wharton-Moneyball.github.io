@@ -52,10 +52,8 @@ nba_shooting <- read_csv('data/nba_shooting.csv')
 nba_shooting <- mutate(nba_shooting, FGP = FGM/FGA, TPP = TPM/TPA, FTP = FTM/FTA)
 ```
 
-5. One criticism of FGP is that it treats 2-point shots the same as 3-point shots.
-As a result, the league leader in FGP is usually a center whose shots mostly come from near the rim.
-[effective Field Goal Percentage](https://en.wikipedia.org/wiki/Effective_field_goal_percentage) is a statistic that adjusts FGP to account for the fact that a made 3-point shots is worth 50% more than a made 2-point shot. 
-The formula for eFGP is
+5. One criticism of FGP is that it treats 2-point shots the same as 3-point shots. As a result, the league leader in FGP is usually a center whose shots mostly come from near the rim.
+[effective Field Goal Percentage](https://en.wikipedia.org/wiki/Effective_field_goal_percentage) is a statistic that adjusts FGP to account for the fact that a made 3-point shots is worth 50% more than a made 2-point shot. The formula for eFGP is
 $$ \text{eFGP} = \frac{\text{FGM} + 0.5 \times \text{TPM}}{\text{FGA}}.$$
 Write another line of code to your script which will add a column for eFGP to the data. 
 

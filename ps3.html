@@ -534,8 +534,7 @@ important to remember to include the <code>list(...)</code> bit.</p>
 the columns <code>IBB, HBP, SH, SF</code> and GIDP`.</p></li>
 <li><p>Using the pipe <code>%&gt;%</code>, <code>mutate()</code>,
 <code>filter()</code>, and <code>select()</code>, create a tbl
-<code>batting</code> by:</p></li>
-</ol>
+<code>batting</code> by:</p>
 <ul>
 <li>Adding columns (with <code>mutate()</code>) for plate appearances
 (PA), unintentional walks (uBB), singles (X1B), batting average (BA),
@@ -548,9 +547,9 @@ statistics are given in <a href="ps2.html">Problem Set 2</a>.</li>
 appearances <strong>and</strong> who played in either the AL or NL with
 <code>filter()</code></li>
 <li>Select the following columns: playerID, yearID, lgID, teamID, PA,
-BA, OBP, OPS, wOBA.</li>
-</ul>
-<ol start="3" style="list-style-type: decimal">
+BA, OBP, OPS, wOBA.
+<p/></li>
+</ul></li>
 <li><p>Standardize each of BA, OBP, OPS, and wOBA using data from all of
 the years. Name the columns containing these new standardized values
 <code>zBA_all</code>, <code>zOPB_all</code>, etc. <em>Remember, you must
@@ -569,20 +568,20 @@ values <code>zBA_year_lg</code>, <code>zOBP_year_lg</code>, etc. Are the
 best and worst batters still the same?</p></li>
 <li><p>Remove the grouping you created in Problem 4. Bill James <a
 href="https://www.billjamesonline.com/dividing_baseball_history_into_eras/">divided
-baseball history into several eras</a> as follows:</p></li>
-</ol>
+baseball history into several eras</a> as follows:</p>
 <ul>
 <li>Pioneer Era: 1871 – 1892</li>
 <li>Spitball Era: 1893 – 1919</li>
 <li>Landis Era: 1920 – 1946</li>
 <li>Baby Boomer Era: 1947 – 1968</li>
 <li>Artifical Turf Era: 1969 – 1992</li>
-<li>Camden Yards Era: 1993 – present</li>
+<li>Camden Yards Era: 1993 – present
+<p/></li>
 </ul>
 <p>Use <code>mutate()</code> and <code>case_when()</code> (just like we
 did in <a href="lecture2.html">Lecture 2</a>) to add a column called
-Hist_era to <code>batting</code> that records the historical era.</p>
-<ol start="7" style="list-style-type: decimal">
+Hist_era to <code>batting</code> that records the historical
+era.</p></li>
 <li><p>Group <code>batting</code> by Hist_era and standardize BA, OBP,
 OPS, and wOBA within historical era. Who are the best and worst batters
 now? Name the columns containing these new standardized values
@@ -607,10 +606,12 @@ payrolls.</p>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>( (x <span class="sc">-</span> mu)<span class="sc">/</span>sigma)</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>We need to write another function in order to compute “relative
+<ul>
+<li>We need to write another function in order to compute “relative
 payroll”. This function will take in a vector <code>x</code>, compute
 its median, and then divides every element of <code>x</code> by the
-median.</p>
+median.</li>
+</ul>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Read in the <a href="data/mlb_payrolls.csv">MLB Payroll Data</a>
 and load it into a tibble called <code>mlb_payrolls</code>.</p></li>
@@ -651,12 +652,11 @@ figure out what the code below is doing.</p>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, BA) <span class="sc">%&gt;%</span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(playerID)</span></code></pre></div>
-<ol start="2" style="list-style-type: decimal">
-<li>Run the code above and save the tbl
+<p>Now, run the code above and save the tbl
 <code>batting_2014_2015.RData</code> to the file
-“data/batting_2014_2015.RData”. We will return to this dataset in <a
-href="lecture4.html">Lecture 4</a>.</li>
-</ol>
+“data/batting_2014_2015.RData” using the <code>save()</code> function.
+We will return to this dataset in <a href="lecture4.html">Lecture
+4</a>.</p>
 </div>
 
 

@@ -482,23 +482,30 @@ check out this <a
 href="http://baseball.physics.illinois.edu/FastPFXGuide.pdf">article by
 Mike Fast</a> The data collected by PITCHf/x is then transmitted to the
 MLB Gameday application along with contextual information about the
-pitch. The <a href="data/pitchfx_2015.csv">data</a> contains the
-measurements from the PITCHf/x system recorded in 2015.</p>
+pitch. The dataset we’ll be using contains the measurements from the
+PITCHf/x system recorded in 2015.</p>
 <ol style="list-style-type: decimal">
-<li>Read the data into a tbl called `pitches’.</li>
-</ol>
-<p>The columns are: * <code>Description</code>: Records the outcome of
-the pitch (Called Strike, Swinging Strike, Foul, etc.) * <code>X</code>
-and <code>Z</code>: the horizontal and vertical coordinates of the pitch
-in inches. Note that the center of home plate corresponds to
-<code>X = 0</code>. Note that the <code>X</code> coordinate are recorded
-from the catcher’s perspective, with negative values on the left and
-positive values on the right. In this coordinate system, a right-handed
-batter will line up to the left (i.e. negative <code>X</code> values). *
-<code>COUNT</code>: The ball-strike count for each pitch *
-<code>P_HAND</code> and <code>B_HAND</code>: the handedness of the
-batter and pitcher.</p>
-<ol start="2" style="list-style-type: decimal">
+<li><p>Download <a href="data/pitchfx_2015.csv">pitchfx_2015.csv</a> to
+your <code>data</code> folder. Read the CSV file into a tbl called
+<code>pitches</code> using the <code>read_csv</code> function.</p>
+<p>The columns are:</p>
+<ul>
+<li><code>Description</code>: Records the outcome of the pitch (Called
+Strike, Swinging Strike, Foul, etc.)</li>
+<li><code>X</code> and <code>Z</code>: the horizontal and vertical
+coordinates of the pitch in inches. Note that the center of home plate
+corresponds to <code>X = 0</code>.
+<ul>
+<li>Note that the <code>X</code> coordinate are recorded from the
+catcher’s perspective, with negative values on the left and positive
+values on the right. In this coordinate system, a right-handed batter
+will line up to the left (i.e. negative <code>X</code> values).</li>
+</ul></li>
+<li><code>COUNT</code>: The ball-strike count for each pitch</li>
+<li><code>P_HAND</code> and <code>B_HAND</code>: the handedness of the
+batter and pitcher.
+<p/></li>
+</ul></li>
 <li><p>To visualize the strike zone, we are going to want to filter out
 only the called strikes and balls. Moreover, it will be helpful to
 convert the Description to numeric values (1 for called strikes, 0 for
@@ -518,29 +525,33 @@ heatmaps in <a href="lecture2.html">Lecture 2</a>. Essentially, we
 divide the plane into several small rectangular bins and compute the
 proportion of called strikes within each bin. To compute this, we use
 the <code>stat_summary_2d()</code> function, which takes three
-aesthetics:</li>
-</ol>
+aesthetics:
 <ul>
 <li>x: variable on the horizontal axis</li>
 <li>y: variable on vertical axis</li>
 <li>z: variable that is passed to the summary function.</li>
 </ul>
-<p>By default, <code>stat_summary_2d()</code> divides the plane into
+By default, <code>stat_summary_2d()</code> divides the plane into
 rectangles based on the aesthetics x and y, and then computes the
 average value of z for observations in the bin. We can add this layer to
-our plot <code>g</code> as follows and obtain the following plot.</p>
+our plot <code>g</code> as follows and obtain the following plot.</li>
+</ol>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">stat_summary_2d</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> Z, <span class="at">z =</span> Call))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>g</span></code></pre></div>
-<p><img src="ps4_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="ps4_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="5" style="list-style-type: decimal">
 <li>You’ll notice in the plot above that <code>stat_summary_2d()</code>
 has added a legend to our plot. However, the title of the legend is a
-somewhat non-informative. The color scheme does not distinguish between
-different values particularly well.</li>
+somewhat non-informative. Moreover, the color scheme does not
+distinguish between different values particularly well. We can change
+both the title of the legend and the color scheme inside a function
+called <code>scale_fill_distiller</code>. Don’t worry too much about
+what this function means for now; we will cover it in more depth in
+Lecture 5.</li>
 </ol>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">scale_fill_distiller</span>(<span class="st">&quot;P(Called Strike)&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>g</span></code></pre></div>
-<p><img src="ps4_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="ps4_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>According to the official rule book, the strike zone is a
 rectangular region that spans the width of home plate and extends
@@ -558,15 +569,17 @@ larger dataset</strong></li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">&quot;rect&quot;</span>, <span class="at">xmin =</span> <span class="sc">-</span><span class="fl">8.5</span>, <span class="at">xmax =</span> <span class="fl">8.5</span>, <span class="at">ymin =</span> <span class="dv">19</span>, <span class="at">ymax =</span> <span class="fl">41.5</span>, <span class="at">alpha =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>g</span></code></pre></div>
-<p><img src="ps4_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>We can additionally make the plot a bit more attractive visually as
-follows:</p>
+<p><img src="ps4_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>We can additionally make the plot a bit more attractive visually as
+follows:</li>
+</ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">theme_classic</span>()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.title.y =</span> <span class="fu">element_blank</span>())</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Estimated Strike Zone&quot;</span>)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>g</span></code></pre></div>
-<p><img src="ps4_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="ps4_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="nba-team-shooting-statistics" class="section level2">
 <h2>NBA Team Shooting Statistics</h2>
@@ -577,55 +590,64 @@ about every NBA player in every season ranging from 1996–97 season and
 <ol style="list-style-type: decimal">
 <li>Load the data into a tbl called <code>raw_boxscore</code>.</li>
 </ol>
-<p>The column “Tm” lists the team on which each player played. We can
+<ul>
+<li>The column “Tm” lists the team on which each player played. We can
 look at the relative frequencies of the teams using the
 <code>table()</code> function. This function takes a vector and returns
-the frequencies of each unique value.</p>
+the frequencies of each unique value.</li>
+</ul>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(raw_boxscore[[<span class="st">&quot;Tm&quot;</span>]])</span></code></pre></div>
 <pre><code>## 
-##  ATL  BOS  BRK  CHA  CHH  CHI  CHO  CLE  DAL  DEN  DET  GSW  HOU  IND  LAC  LAL  MEM  MIA  MIL  MIN  NJN  NOH  NOK  NOP  NYK  OKC 
-##  347  350   72  183  101  335   34  359  356  354  321  355  359  319  347  319  271  348  337  328  298  161   34   63  345  144 
-##  ORL  PHI  PHO  POR  SAC  SAS  SEA  TOR  TOT  UTA  VAN  WAS  WSB 
-##  340  352  348  338  332  342  195  366 1047  309   80  333   15</code></pre>
-<p>Looking at the list of teams you may see a few that you don’t
+##  ATL  BOS  BRK  CHA  CHH  CHI  CHO  CLE  DAL  DEN  DET  GSW  HOU  IND  LAC  LAL 
+##  347  350   72  183  101  335   34  359  356  354  321  355  359  319  347  319 
+##  MEM  MIA  MIL  MIN  NJN  NOH  NOK  NOP  NYK  OKC  ORL  PHI  PHO  POR  SAC  SAS 
+##  271  348  337  328  298  161   34   63  345  144  340  352  348  338  332  342 
+##  SEA  TOR  TOT  UTA  VAN  WAS  WSB 
+##  195  366 1047  309   80  333   15</code></pre>
+<ul>
+<li>Looking at the list of teams you may see a few that you don’t
 recognize. For instance, there are 15 players listed as playing on
 “WSB”. We can use <code>filter()</code> to take a closer look at these
-players.</p>
+players.</li>
+</ul>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(raw_boxscore, Tm <span class="sc">==</span> <span class="st">&quot;WSB&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 15 × 22
-##    Season Player    Pos     Age Tm        G    GS    MP   FGM   FGA   TPM   TPA   FTM   FTA   ORB   DRB   AST   STL   BLK   TOV    PF
-##     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1   1997 Ashraf A… PF       25 WSB      31     0   144    12    40     1     1    15    28    19    33     3     7     3    10    29
-##  2   1997 Calbert … SG       25 WSB      79    79  2411   369   730     4    30    95   137    70   198   114    77    18    94   226
-##  3   1997 Matt Fish C        27 WSB       5     0     7     1     3     0     0     0     0     1     4     0     0     0     2     2
-##  4   1997 Harvey G… PF       31 WSB      78    25  1604   129   314    28    89    30    39    63   193    68    46    48    30   167
-##  5   1997 Juwan Ho… SF       23 WSB      82    82  3324   638  1313     0     2   294   389   202   450   311    93    23   246   259
-##  6   1997 Jaren Ja… SG       29 WSB      75     0  1133   134   329    53   158    53    69    31   101    65    45    16    60   131
-##  7   1997 Tim Legl… SG       30 WSB      15     0   182    15    48     8    29     6     7     0    21     7     3     5     9    21
-##  8   1997 Gheorghe… C        25 WSB      73    69  1849   327   541     0     0   123   199   141   340    29    43    96   117   230
-##  9   1997 Tracy Mu… SF       25 WSB      82     1  1814   288   678   106   300   135   161    84   169    78    69    19    86   150
-## 10   1997 Gaylon N… SG       27 WSB       1     0     6     1     3     0     1     0     0     0     1     0     1     0     1     0
-## 11   1997 Rod Stri… PG       30 WSB      82    81  2997   515  1105    13    77   367   497    95   240   727   143    14   270   166
-## 12   1997 Ben Wall… PF       22 WSB      34     0   197    16    46     0     0     6    20    25    33     2     8    11    18    27
-## 13   1997 Chris We… PF       23 WSB      72    72  2806   604  1167    60   151   177   313   238   505   331   122   137   230   258
-## 14   1997 Chris Wh… PG       25 WSB      82     1  1117   139   330    58   163    94   113    13    91   182    49     4    68   100
-## 15   1997 Lorenzo … C        27 WSB      19     0   264    20    31     0     0     5     7    28    41     4     6     8    18    49
-## # … with 1 more variable: PTS &lt;dbl&gt;</code></pre>
-<p>These fifteen players during the 1996-97 season on the Washington
+##    Season Player     Pos     Age Tm        G    GS    MP   FGM   FGA   TPM   TPA
+##     &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1   1997 Ashraf Am… PF       25 WSB      31     0   144    12    40     1     1
+##  2   1997 Calbert C… SG       25 WSB      79    79  2411   369   730     4    30
+##  3   1997 Matt Fish  C        27 WSB       5     0     7     1     3     0     0
+##  4   1997 Harvey Gr… PF       31 WSB      78    25  1604   129   314    28    89
+##  5   1997 Juwan How… SF       23 WSB      82    82  3324   638  1313     0     2
+##  6   1997 Jaren Jac… SG       29 WSB      75     0  1133   134   329    53   158
+##  7   1997 Tim Legler SG       30 WSB      15     0   182    15    48     8    29
+##  8   1997 Gheorghe … C        25 WSB      73    69  1849   327   541     0     0
+##  9   1997 Tracy Mur… SF       25 WSB      82     1  1814   288   678   106   300
+## 10   1997 Gaylon Ni… SG       27 WSB       1     0     6     1     3     0     1
+## 11   1997 Rod Stric… PG       30 WSB      82    81  2997   515  1105    13    77
+## 12   1997 Ben Walla… PF       22 WSB      34     0   197    16    46     0     0
+## 13   1997 Chris Web… PF       23 WSB      72    72  2806   604  1167    60   151
+## 14   1997 Chris Whi… PG       25 WSB      82     1  1117   139   330    58   163
+## 15   1997 Lorenzo W… C        27 WSB      19     0   264    20    31     0     0
+## # … with 10 more variables: FTM &lt;dbl&gt;, FTA &lt;dbl&gt;, ORB &lt;dbl&gt;, DRB &lt;dbl&gt;,
+## #   AST &lt;dbl&gt;, STL &lt;dbl&gt;, BLK &lt;dbl&gt;, TOV &lt;dbl&gt;, PF &lt;dbl&gt;, PTS &lt;dbl&gt;</code></pre>
+<ul>
+<li><p>These fifteen players during the 1996-97 season on the Washington
 Bullets, which was renamed the Washington Wizards at the end of that
 season.There are a few other examples: VAN refers to the Vancouver
 Grizzlies who moved to Memphis and CHH refers to the original Charlotte
-Hornets franchise, which ultimately relocated to New Orleans.</p>
-<p>One of the teams listed is “TOT”. This does not refer any specific
-team. Instead these rows record the <em>total</em> statistics recorded
-by a player if he played for multiple teams in a single season. For the
-purposes of understanding how team shooting statistics changed over
-time, we will not want to include these rows in our analysis.</p>
+Hornets franchise, which ultimately relocated to New Orleans.</p></li>
+<li><p>One of the teams listed is “TOT”. This does not refer any
+specific team. Instead these rows record the <em>total</em> statistics
+recorded by a player if he played for multiple teams in a single season.
+For the purposes of understanding how team shooting statistics changed
+over time, we will not want to include these rows in our
+analysis.</p></li>
+</ul>
 <ol start="2" style="list-style-type: decimal">
-<li>Use <code>filter()</code>, <code>group_by()</code>,
+<li><p>Use <code>filter()</code>, <code>group_by()</code>,
 <code>summary()</code>, and <code>mutate()</code> to create a new tbl
-called <code>team_boxscore</code> that does the following:</li>
-</ol>
+called <code>team_boxscore</code> that does the following:</p>
 <ul>
 <li>removes the rows corresponding to player totals
 (i.e. <code>Tm == "TOT"</code>)</li>
@@ -636,15 +658,15 @@ pointers, and free throws, along with points scored by each team in each
 season.</li>
 <li>Adds a column for team field goal percentage (FGP), three point
 percentage (TPP), and free throw percentages (FTP).</li>
-<li>Ungroup the resulting tbl</li>
-</ul>
-<ol start="3" style="list-style-type: decimal">
-<li>Use <code>filter()</code> to create a new tbl called
+<li>Ungroup the resulting tbl
+<p/></li>
+</ul></li>
+<li><p>Use <code>filter()</code> to create a new tbl called
 <code>reduced_boxscore</code> that pulls out the rows of
 <code>team_boxscore</code> corresponding to the following teams: BOS,
 CLE, DAL, DET, GSW, LAL, MIA, and SAS. Then create a plot of these
 teams’ three point percentage in each season. Be sure to color the
-points according to the team. What patterns do you notice?</li>
+points according to the team. What patterns do you notice?</p></li>
 </ol>
 </div>
 <div id="work-with-new-data" class="section level2">
