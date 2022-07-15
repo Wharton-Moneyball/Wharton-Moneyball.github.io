@@ -407,7 +407,7 @@ $(document).ready(function () {
     </li>
     <li class="divider"></li>
     <li>
-      <a href="lecture_nflscrapR.html">nflscrapR Lecture</a>
+      <a href="lecture_nflfastR.html">nflfastR Lecture</a>
     </li>
     <li>
       <a href="psX.html">Problem Set X</a>
@@ -477,19 +477,17 @@ $(document).ready(function () {
 averages, let’s practice what we’ve learned in a context we haven’t
 worked with before. We will look at past results of the Ironman
 Triathlon and investigate relationships between racing splits and
-demographic variables. First let us download the data by going to our <a
-href="https://github.com/Wharton-Moneyball/Wharton-Moneyball.github.io/tree/master/data">course
-GitHub</a> and saving the file titled ‘Ironman Data.csv’ to our
-Moneyball/data folder.</p>
+demographic variables. First let us download the <a
+href="data/Ironman%20Data.csv">Ironman Data</a> and save it to our
+“data” folder.</p>
 <p>Let’s read in the data and take a look at the variables.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&#39;data/Ironman Data.csv&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&#39;data/Ironman Data.csv&#39;</span>)</span></code></pre></div>
 <pre><code>## Rows: 22124 Columns: 389
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr  (103): Source Table, Name, Country, Gender, Division, Swim, Bike, Run, ...
-## dbl  (102): BIB, Gender Rank, Overall Rank, Log Rank, Bike 28.2 mi Distance,...
-## time (184): Swim Total Split Time, Swim Total Race Time, T1, Bike 28.2 mi Sp...
+## chr  (103): Source Table, Name, Country, Gender, Division, Swim, Bike, Run, Overall, Division Rank, Swim Total Pace, Bike 28.2 mi...
+## dbl  (102): BIB, Gender Rank, Overall Rank, Log Rank, Bike 28.2 mi Distance, Bike 50.4 mi Distance, Bike 68.6 mi Distance, Bike 8...
+## time (184): Swim Total Split Time, Swim Total Race Time, T1, Bike 28.2 mi Split Time, Bike 28.2 mi Race Time, Bike 50.4 mi Split ...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
@@ -512,15 +510,20 @@ format using the <code>ms()</code> function, and then convert the result
 to a numeric using the <code>period_to_seconds()</code> function (the
 result will be a time in seconds, so we can get this back to minutes by
 dividing by 60).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>results_2017 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Source Table</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&#39;2017 - Florida&#39;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country, Gender, Division, Swim, Bike, Run, Overall) <span class="sc">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Swim =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Swim))<span class="sc">/</span><span class="dv">60</span>, </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">Bike =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Bike))<span class="sc">/</span><span class="dv">60</span>, </span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">Run =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Run))<span class="sc">/</span><span class="dv">60</span>, </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">Overall =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Overall))<span class="sc">/</span><span class="dv">60</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     date, intersect, setdiff, union</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>results_2017 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Source Table</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&#39;2017 - Florida&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country, Gender, Division, Swim, Bike, Run, Overall) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Swim =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Swim))<span class="sc">/</span><span class="dv">60</span>, </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">Bike =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Bike))<span class="sc">/</span><span class="dv">60</span>, </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">Run =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Run))<span class="sc">/</span><span class="dv">60</span>, </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">Overall =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Overall))<span class="sc">/</span><span class="dv">60</span>)</span></code></pre></div>
 <div id="simple-linear-regression" class="section level2">
 <h2>Simple Linear Regression</h2>
 <p>Now that we have our tidy dataset, let’s start looking at the
@@ -536,23 +539,32 @@ scroll through each one individually. To do so, we use the
 arguments of the function, we select our three plots and can specify the
 number of rows and columns to be displayed.</p></li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(plot.swim_bike, plot.bike_run, plot.swim_run, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="ps6_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" />
-Can you visually compare these associations by looking at the
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;ggpubr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggimage&#39;:
+## 
+##     theme_transparent</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(plot.swim_bike, plot.bike_run, plot.swim_run, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="ps6_files/figure-html/pt1%20q2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Can you visually compare these associations by looking at the
 scatterplots? Which legs of the race seem to be more highly
-correlated?</p>
+correlated?</li>
+</ul>
 <ol start="3" style="list-style-type: decimal">
 <li>Another way to display three continuous variables at once is by
 creating a scatterplot for two of the variables and then coloring the
 points by the values of the third variable. Try doing so with different
 combinations of our variables to create plots like the one below.</li>
 </ol>
-<p><img src="ps6_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" />
-From this one, we can see that the racers with faster swim and bike
+<p><img src="ps6_files/figure-html/pt1%20q3%20solution-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>From this one, we can see that the racers with faster swim and bike
 times tended to have faster run times; however, the specific
 relationship between Swim vs. Run and Bike vs. Run is less clear than in
-the individual scatter plots.</p>
+the individual scatter plots.</li>
+</ul>
 <ol start="4" style="list-style-type: decimal">
 <li>To numerically evaluate these relationships, compute the correlation
 between each of the variables. Note that <code>cor()</code> is a Base R
@@ -571,9 +583,12 @@ linear regression, which involves one response variable and one
 predictor variable. So, let’s start by running a regression with Swim as
 our predictor and Bike as our response.</li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lm.swim_bike <span class="ot">&lt;-</span> <span class="fu">lm</span>( ... ) <span class="co"># fill this part in</span></span></code></pre></div>
-<p>We obtain the following slope and intercept for this regression.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lm.swim_bike[[<span class="st">&#39;coefficients&#39;</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lm.swim_bike <span class="ot">&lt;-</span> <span class="fu">lm</span>( ... ) <span class="co"># fill this part in</span></span></code></pre></div>
+<ul>
+<li>We obtain the following slope and intercept for this
+regression.</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>lm.swim_bike[[<span class="st">&#39;coefficients&#39;</span>]]</span></code></pre></div>
 <pre><code>## (Intercept)        Swim 
 ##  179.129651    2.395295</code></pre>
 <ol start="6" style="list-style-type: decimal">
@@ -589,13 +604,13 @@ Lecture 6, the first approach only works for simple linear regression,
 while the second can be extended for all types of regression. For this
 reason, let’s practice using the second approach.</li>
 </ol>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>grid.swim <span class="ot">&lt;-</span> results_2017 <span class="sc">%&gt;%</span> <span class="fu">data_grid</span>(Swim)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>grid.swim <span class="ot">&lt;-</span> grid.swim <span class="sc">%&gt;%</span> <span class="fu">add_predictions</span>(<span class="at">model =</span> lm.swim_bike, <span class="at">var =</span> <span class="st">&#39;pred.swim_bike&#39;</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_2017) <span class="sc">+</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(Swim, Bike)) <span class="sc">+</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid.swim, <span class="fu">aes</span>(<span class="at">x =</span> Swim, <span class="at">y =</span> pred.swim_bike), <span class="at">color =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
-<p><img src="ps6_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>grid.swim <span class="ot">&lt;-</span> results_2017 <span class="sc">%&gt;%</span> <span class="fu">data_grid</span>(Swim)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>grid.swim <span class="ot">&lt;-</span> grid.swim <span class="sc">%&gt;%</span> <span class="fu">add_predictions</span>(<span class="at">model =</span> lm.swim_bike, <span class="at">var =</span> <span class="st">&#39;pred.swim_bike&#39;</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_2017) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(Swim, Bike)) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid.swim, <span class="fu">aes</span>(<span class="at">x =</span> Swim, <span class="at">y =</span> pred.swim_bike), <span class="at">color =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
+<p><img src="ps6_files/figure-html/pt1%20q6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="7" style="list-style-type: decimal">
 <li>Repeat steps 5 and 6 for the two other combinations of the three
 race legs. Note that since we’re only investigating associations between
@@ -634,23 +649,23 @@ discretized Run values as the x values, and the predicted values from
 our linear model as the y values. Then, we draw a line through these
 points, which is our regression line.</li>
 </ol>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>lm.run_bike <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> results_2017, <span class="at">formula =</span> Bike <span class="sc">~</span> Run)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lm.run_bike[[<span class="st">&#39;coefficients&#39;</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>lm.run_bike <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> results_2017, <span class="at">formula =</span> Bike <span class="sc">~</span> Run)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>lm.run_bike[[<span class="st">&#39;coefficients&#39;</span>]]</span></code></pre></div>
 <pre><code>## (Intercept)         Run 
 ## 205.7610166   0.5147168</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>grid.run <span class="ot">&lt;-</span> results_2017 <span class="sc">%&gt;%</span> <span class="fu">data_grid</span>(Run)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>grid.run <span class="ot">&lt;-</span> grid.run  <span class="sc">%&gt;%</span>  <span class="fu">add_predictions</span>(<span class="at">model =</span> lm.run_bike, <span class="at">var=</span> <span class="st">&#39;pred.run_bike&#39;</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_2017) <span class="sc">+</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(Run, Bike)) <span class="sc">+</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid.run, <span class="fu">aes</span>(<span class="at">x =</span> Run, <span class="at">y =</span> pred.run_bike), <span class="at">color =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
-<p><img src="ps6_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>grid.run <span class="ot">&lt;-</span> results_2017 <span class="sc">%&gt;%</span> <span class="fu">data_grid</span>(Run)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>grid.run <span class="ot">&lt;-</span> grid.run  <span class="sc">%&gt;%</span>  <span class="fu">add_predictions</span>(<span class="at">model =</span> lm.run_bike, <span class="at">var=</span> <span class="st">&#39;pred.run_bike&#39;</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_2017) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(Run, Bike)) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid.run, <span class="fu">aes</span>(<span class="at">x =</span> Run, <span class="at">y =</span> pred.run_bike), <span class="at">color =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
+<p><img src="ps6_files/figure-html/pt2%20q1-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Now, we can run the quadratic regression. To include the quadratic
 relation into our linear model, we will add a quadratic term as an
 additional predictor variable (which, in this case, is Run).</li>
 </ol>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>lm.run_bike2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> results_2017, <span class="at">formula =</span> Bike <span class="sc">~</span> Run <span class="sc">+</span> <span class="fu">I</span>(Run<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>lm.run_bike2[[<span class="st">&#39;coefficients&#39;</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>lm.run_bike2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> results_2017, <span class="at">formula =</span> Bike <span class="sc">~</span> Run <span class="sc">+</span> <span class="fu">I</span>(Run<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>lm.run_bike2[[<span class="st">&#39;coefficients&#39;</span>]]</span></code></pre></div>
 <pre><code>##  (Intercept)          Run     I(Run^2) 
 ## 26.222478107  1.649746436 -0.001732342</code></pre>
 <ol start="3" style="list-style-type: decimal">
@@ -659,27 +674,29 @@ values used on our simple linear regression in step 1, and add another
 column with the predicted values from our new quadratic model. This new
 column contains the new y values of the regression line.</li>
 </ol>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>grid.run <span class="ot">&lt;-</span> grid.run  <span class="sc">%&gt;%</span>  <span class="fu">add_predictions</span>(<span class="at">model =</span> lm.run_bike2, <span class="at">var=</span> <span class="st">&#39;pred.run_bike2&#39;</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_2017) <span class="sc">+</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(Run, Bike)) <span class="sc">+</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid.run, <span class="fu">aes</span>(<span class="at">x =</span> Run, <span class="at">y =</span> pred.run_bike), <span class="at">color =</span> <span class="st">&#39;red&#39;</span>) <span class="sc">+</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid.run, <span class="fu">aes</span>(<span class="at">x =</span> Run, <span class="at">y =</span> pred.run_bike2), <span class="at">color =</span> <span class="st">&#39;green&#39;</span>)</span></code></pre></div>
-<p><img src="ps6_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>grid.run <span class="ot">&lt;-</span> grid.run  <span class="sc">%&gt;%</span>  <span class="fu">add_predictions</span>(<span class="at">model =</span> lm.run_bike2, <span class="at">var=</span> <span class="st">&#39;pred.run_bike2&#39;</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_2017) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(Run, Bike)) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid.run, <span class="fu">aes</span>(<span class="at">x =</span> Run, <span class="at">y =</span> pred.run_bike), <span class="at">color =</span> <span class="st">&#39;red&#39;</span>) <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid.run, <span class="fu">aes</span>(<span class="at">x =</span> Run, <span class="at">y =</span> pred.run_bike2), <span class="at">color =</span> <span class="st">&#39;green&#39;</span>)</span></code></pre></div>
+<p><img src="ps6_files/figure-html/pt2%20q3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Now, we can determine if our quadratic model fits the data better
 than our linear model. To do this, we can compute the RMSEs of both
 models (as discussed in <a href="lecture4.html">Lecture 4</a>) and see
 which is lower.</li>
 </ol>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(results_2017,</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">rmse.run_bike =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(lm.run_bike<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)),</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">rmse.run_bike2 =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(lm.run_bike2<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(results_2017,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">rmse.run_bike =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(lm.run_bike<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)),</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">rmse.run_bike2 =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(lm.run_bike2<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 2
 ##   rmse.run_bike rmse.run_bike2
 ##           &lt;dbl&gt;          &lt;dbl&gt;
 ## 1          37.3           36.5</code></pre>
-<p>In fact, it does appear that the quadratic model appears to fit our
-data better!</p>
+<ul>
+<li>In fact, it does appear that the quadratic model appears to fit our
+data better!</li>
+</ul>
 </div>
 <div id="regression-with-multiple-predictors" class="section level3">
 <h3>Regression with multiple predictors</h3>
@@ -690,14 +707,16 @@ bike times differ depending on a racer’s gender.</p>
 <li>We have already run the linear model without the gender effect. Now
 let’s add the gender effect in.</li>
 </ol>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>lm.run_bike_gender <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> results_2017, <span class="at">formula =</span> Bike <span class="sc">~</span> Run <span class="sc">+</span> Gender)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>lm.run_bike_gender[[<span class="st">&#39;coefficients&#39;</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>lm.run_bike_gender <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> results_2017, <span class="at">formula =</span> Bike <span class="sc">~</span> Run <span class="sc">+</span> Gender)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>lm.run_bike_gender[[<span class="st">&#39;coefficients&#39;</span>]]</span></code></pre></div>
 <pre><code>## (Intercept)         Run  GenderMale 
 ##  229.316963    0.502562  -26.143851</code></pre>
-<p>To interpret these results, we can say that for every increase in one
-minute of run times, bike times increase by about half a minute.
+<ul>
+<li>To interpret these results, we can say that for every increase in
+one minute of run times, bike times increase by about half a minute.
 Moreover, being a male is associated with bike time that is on average
-26 minutes lower than the alternative (being a female).</p>
+26 minutes lower than the alternative (being a female).</li>
+</ul>
 <ol start="2" style="list-style-type: decimal">
 <li>Now, let’s plot our regression. Note that there will be two separate
 regression lines: one for the association between running and biking for
@@ -706,34 +725,38 @@ females. Also note that since we now technically have two predictor
 variables to go on our x-axis, we need to create a new grid that spans
 the values of the Run variable as well as the Gender variable</li>
 </ol>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>grid.run_gender <span class="ot">&lt;-</span> results_2017 <span class="sc">%&gt;%</span> <span class="fu">data_grid</span>(Run, Gender)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>grid.run_gender <span class="ot">&lt;-</span> grid.run_gender  <span class="sc">%&gt;%</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_predictions</span>(<span class="at">model =</span> lm.run_bike_gender, <span class="at">var=</span> <span class="st">&#39;pred.run_bike_gender&#39;</span>)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_2017) <span class="sc">+</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(Run, Bike)) <span class="sc">+</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid.run, <span class="fu">aes</span>(<span class="at">x =</span> Run, <span class="at">y =</span> pred.run_bike), <span class="at">color =</span> <span class="st">&#39;red&#39;</span>) <span class="sc">+</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid.run_gender, <span class="fu">aes</span>(<span class="at">x =</span> Run, <span class="at">y =</span> pred.run_bike_gender, <span class="at">col =</span> Gender)) <span class="sc">+</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">Female=</span><span class="st">&quot;blue&quot;</span>, <span class="at">Male=</span><span class="st">&quot;green&quot;</span>))</span></code></pre></div>
-<p><img src="ps6_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>We can now clearly see that females have slower bike times than
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>grid.run_gender <span class="ot">&lt;-</span> results_2017 <span class="sc">%&gt;%</span> <span class="fu">data_grid</span>(Run, Gender)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>grid.run_gender <span class="ot">&lt;-</span> grid.run_gender  <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_predictions</span>(<span class="at">model =</span> lm.run_bike_gender, <span class="at">var=</span> <span class="st">&#39;pred.run_bike_gender&#39;</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_2017) <span class="sc">+</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(Run, Bike)) <span class="sc">+</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid.run, <span class="fu">aes</span>(<span class="at">x =</span> Run, <span class="at">y =</span> pred.run_bike), <span class="at">color =</span> <span class="st">&#39;red&#39;</span>) <span class="sc">+</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid.run_gender, <span class="fu">aes</span>(<span class="at">x =</span> Run, <span class="at">y =</span> pred.run_bike_gender, <span class="at">col =</span> Gender)) <span class="sc">+</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">Female=</span><span class="st">&quot;blue&quot;</span>, <span class="at">Male=</span><span class="st">&quot;green&quot;</span>))</span></code></pre></div>
+<p><img src="ps6_files/figure-html/pt3%20q2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>We can now clearly see that females have slower bike times than
 males. Note that the red line in the middle corresponds to our simple
-linear regression without the gender effect.</p>
+linear regression without the gender effect.</li>
+</ul>
 <ol start="3" style="list-style-type: decimal">
 <li>We can probably guess that the model with the gender effect fits the
 data better than our simple linear regression (i.e. knowing the gender
 of a racer and their run time allows us to better predict their bike
 time). But let’s verify this computationally.</li>
 </ol>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(results_2017,</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">rmse.run_bike =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(lm.run_bike<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)),</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">rmse.run_bike_gender =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(lm.run_bike_gender<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(results_2017,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">rmse.run_bike =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(lm.run_bike<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)),</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">rmse.run_bike_gender =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(lm.run_bike_gender<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 2
 ##   rmse.run_bike rmse.run_bike_gender
 ##           &lt;dbl&gt;                &lt;dbl&gt;
 ## 1          37.3                 35.5</code></pre>
-<p>Indeed! We will have lower residuals on average by making predictions
-from our gender-included model than with our simple linear
-regression.</p>
+<ul>
+<li>Indeed! We will have lower residuals on average by making
+predictions from our gender-included model than with our simple linear
+regression.</li>
+</ul>
 </div>
 </div>
 </div>

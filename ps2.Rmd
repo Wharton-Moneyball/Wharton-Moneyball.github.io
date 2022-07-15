@@ -16,9 +16,9 @@ Please spend a few minutes reading through the notes from [Lecture 2](lecture2.h
 
 ## Payroll and Winning Percentage in the MLB
 
-In lecture, Professor Wyner discussed the relationship between a team's payroll and its winning percentage. In particular, for each season, he computed the "relative payroll" of each team by taking its payroll and dividing it by the median of payrolls of all teams in that season. We will replicate his analysis in the following problems using the dataset "mlb_relative_payrolls.csv", which you can find in the "data/" folder of your working directory. You should save all of the code for this analysis in an R script called "ps2_mlb_payroll.R".
+In lecture, Professor Wyner discussed the relationship between a team's payroll and its winning percentage. In particular, for each season, he computed the "relative payroll" of each team by taking its payroll and dividing it by the median of payrolls of all teams in that season. We will replicate his analysis in the following problems using the dataset "mlb_relative_payrolls.csv", which we saved to the "data" folder of our working directory back in [Lecture 0](lecture0). You should save all of the code for this analysis in an R script called "ps2_mlb_payroll.R".
 
-1. Read the data in from the file and save it as a tbl called "relative_payroll"
+1. Read the data in from "mlb_relative_payrolls.csv" and save it as a tbl called "relative_payroll"
 
 ```{r pt1 q1 solution}
 # solution
@@ -75,7 +75,7 @@ ggplot(data = relative_payroll) +
 
 ## MLB Batting Statistics
 
-In this problem set, we will gain more experience using the dplyr verbs we learned in Lecture 2 to analyze batting statistics of MLB players with at least 502.2 plate appearances. All of the data is contained in the file "data/hitting_qualified.csv". You should write save all of the code for this analyses in an R script called "ps2_mlb_batting.R".
+In this problem set, we will gain more experience using the dplyr verbs we learned in Lecture 2 to analyze batting statistics of MLB players with at least 502.2 plate appearances. We will be using the dataset [hitting_qualified.csv](data/hitting_qualified.csv) (click on that link to download it, then move it into your "data" folder). You should write save all of the code for this analyses in an R script called "ps2_mlb_batting.R".
 
 1. Load the data into a tibble called `hitting_qualified` using `read_csv()`.
 

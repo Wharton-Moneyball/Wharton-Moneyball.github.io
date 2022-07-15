@@ -407,7 +407,7 @@ $(document).ready(function () {
     </li>
     <li class="divider"></li>
     <li>
-      <a href="lecture_nflscrapR.html">nflscrapR Lecture</a>
+      <a href="lecture_nflfastR.html">nflfastR Lecture</a>
     </li>
     <li>
       <a href="psX.html">Problem Set X</a>
@@ -487,12 +487,13 @@ team’s payroll and its winning percentage. In particular, for each
 season, he computed the “relative payroll” of each team by taking its
 payroll and dividing it by the median of payrolls of all teams in that
 season. We will replicate his analysis in the following problems using
-the dataset “mlb_relative_payrolls.csv”, which you can find in the
-“data/” folder of your working directory. You should save all of the
-code for this analysis in an R script called “ps2_mlb_payroll.R”.</p>
+the dataset “mlb_relative_payrolls.csv”, which we saved to the “data”
+folder of our working directory back in <a href="lecture0">Lecture
+0</a>. You should save all of the code for this analysis in an R script
+called “ps2_mlb_payroll.R”.</p>
 <ol style="list-style-type: decimal">
-<li><p>Read the data in from the file and save it as a tbl called
-“relative_payroll”</p></li>
+<li><p>Read the data in from “mlb_relative_payrolls.csv” and save it as
+a tbl called “relative_payroll”</p></li>
 <li><p>Make a histogram of team winning percentages. Play around with
 different binwidths.</p></li>
 <li><p>Make a histogram of the relative payrolls.</p></li>
@@ -513,10 +514,11 @@ have evolved over time? Make a similar plot that visualizes how
 <h2>MLB Batting Statistics</h2>
 <p>In this problem set, we will gain more experience using the dplyr
 verbs we learned in Lecture 2 to analyze batting statistics of MLB
-players with at least 502.2 plate appearances. All of the data is
-contained in the file “data/hitting_qualified.csv”. You should write
-save all of the code for this analyses in an R script called
-“ps2_mlb_batting.R”.</p>
+players with at least 502.2 plate appearances. We will be using the
+dataset <a href="data/hitting_qualified.csv">hitting_qualified.csv</a>
+(click on that link to download it, then move it into your “data”
+folder). You should write save all of the code for this analyses in an R
+script called “ps2_mlb_batting.R”.</p>
 <ol style="list-style-type: decimal">
 <li><p>Load the data into a tibble called <code>hitting_qualified</code>
 using <code>read_csv()</code>.</p>

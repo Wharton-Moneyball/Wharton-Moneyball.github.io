@@ -47,8 +47,8 @@ navbar:
         - text: "Problem Set 6"
           href: ps6.html
         - text: "---"
-        - text: "nflscrapR Lecture"
-          href: lecture_nflscrapR.html
+        - text: "nflfastR Lecture"
+          href: lecture_nflfastR.html
         - text: "Problem Set X"
           href: psX.html
     - text: "Training Camp"

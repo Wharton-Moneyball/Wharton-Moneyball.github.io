@@ -67,16 +67,21 @@ library(tidyverse)
 library(Lahman)
 ```
 
-We will focus on pitching statistics today. To load the pitching data into R from the Lahman package, we have to use the `data()` function. We also will need to *convert* the data into a tibble.
+As we know, many packages not only contain new functions, but also new datasets. Whenever we load a package, the datasets that are part of the package get implicitly loaded into the background. To see which datasets come with the Lahman package, we use the `data()` function. 
 
-```{r load Pitching}
-Pitching <- as_tibble(Pitching)
+```{r Lahman datasets, eval=FALSE}
+data(package = "Lahman")
 ```
 
-There are tons of rows and columns in the dataset. For this exercise, we will only want to focus on ERA and also focus only on those pitchers who have pitched at least 150 innings.
-Unfortuntaely, the Lahman pitching dataset does not contain the number of innings pitched (IP). Instead, it has a column called ``IPouts'', which is the number of outs pitched and whose formula is $\text{IPOuts} = 3 \times \text{IP}.$
+This will open up a new window with all of the names of the datasets contained in the Lahman package. Today, we will specifically be focusing on the dataset called `Pitching`, which contains season-level statistics on all pitchers going all the way back to 1871. We can view the first few rows of by using the `head()` function on the `Pitching` dataset.
 
-Using the pipe and the dplyr verbs we learned in [Lecture 2](lecture2.html), we will create a new tibble called `pitching` which contains all players who pitched at least 150 innings, played in either the AL or the NL and which contains only the columns corresponding the player, year, team, league, innings pitched, and ERA.
+```{r print Pitching}
+head(Pitching)
+```
+
+There are tons of rows and columns in the dataset. For this exercise, we will only want to focus on ERA and also focus only on those pitchers who have pitched at least 150 innings. Unfortunately, the Lahman pitching dataset does not contain the number of innings pitched (IP). Instead, it has a column called "IPouts", which is the number of outs pitched and whose formula is $\text{IPOuts} = 3 \times \text{IP}.$
+
+Using the pipe and the dplyr verbs we learned in [Lecture 2](lecture2.html), we will create a new dataset called `pitching` (we make it all lowercase to differentiate from the original Lahman `Pitching` dataset), then add the "IP" column, filter the data to include only all players who pitched at least 150 innings and played in either the AL or the NL, and select only the columns corresponding to the player, year, team, league, innings pitched, and ERA.
 
 ```{r pitching}
 pitching <- 
@@ -105,8 +110,7 @@ arrange(pitching, ERA)
 
 It would appear that the best pitching season of all time was [Dutch Leonard's](https://en.wikipedia.org/wiki/Dutch_Leonard_(left-handed_pitcher)) 1914 season with the Red Sox. The next best was [Mordecai Brown](https://en.wikipedia.org/wiki/Mordecai_Brown)'s 1906 season with the Cubs. How much better was Leonard's 0.96 ERA than Brown's 1.04 ERA?
 
-To answer this, we can transform ERA to standardized units using the `mutate()` function. 
-There is a minor complication: there is not a built-in function for standardizing a variable in R! Luckily for us, R allows us to define our own functions like so:
+To answer this, we can transform ERA to standardized units using the `mutate()` function. There is a minor complication: there is not a built-in function for standardizing a variable in R! Luckily for us, R allows us to define our own functions like so:
 
 ```{r standardize function}
 standardize <- function(x){
@@ -116,7 +120,7 @@ standardize <- function(x){
 }
 ```
 
-For now, don't worry too much about the syntax or the `na.rm = TRUE` bits.We will discuss them in more depth later. Armed with our `standardize()` function, we can add a column called zERA_all which transforms ERA to the standardized scale.
+For now, don't worry too much about the syntax or the `na.rm = TRUE` bits; we will discuss them in more depth later. Armed with our `standardize()` function, we can add a column called zERA_all which transforms ERA to the standardized scale.
 
 ```{r mutate zERA}
 pitching <-
@@ -125,8 +129,7 @@ pitching <-
 pitching %>% arrange(zERA_all)
 ```
 
-Now we see that Leonard's 0.96 ERA was about 3 standard deviations below the overall mean of qualified pitchers, while Brown's was about 2.91 standard deviations below the mean.
-On the other hand, the ostensibly worst pitching season was Philadelphia's own [Les Sweetland](https://en.wikipedia.org/wiki/Les_Sweetland) in 1930. Incidentally enough, Sweetland started that season with a three-hit shutout! Check out this [ESPN blog post](http://www.espn.com/blog/sweetspot/post/_/id/48687/the-amazing-1930-philadelphia-phillies) about the 1930's Phillies pitching staff.
+Now we see that Leonard's 0.96 ERA was about 3 standard deviations below the overall mean of qualified pitchers, while Brown's was about 2.91 standard deviations below the mean. On the other hand, the ostensibly worst pitching season was Philadelphia's own [Les Sweetland](https://en.wikipedia.org/wiki/Les_Sweetland) in 1930. Incidentally enough, Sweetland started that season with a three-hit shutout! Check out this [ESPN blog post](http://www.espn.com/blog/sweetspot/post/_/id/48687/the-amazing-1930-philadelphia-phillies) about the 1930's Phillies pitching staff.
 
 Of course, you might argue that comparing the raw ERAs across the various years is somewhat unfair. After all, the game as it was played in 1914 is very different to the one played today!  As such, it may be more appropriate to standardize all of the ERAs within each season separately. To do this, we will have to compute the mean and standard deviation of ERAs within each season.
 
@@ -149,8 +152,7 @@ pitching <-
   group_by(yearID)
 ```
 
-When we print out `pitching` now, we notice an extra line that tells us the grouping variable.
-Now when we pass this tibble on to subsequent calculations, these calculations will be done on each group. Recall from earlier that the code `pitching %>% summarize(mean = mean(ERA))` returned a single row containing the average of ERA over all players and year. If we now run the same code again, we actually get a tibble with one row per year that lists the mean and standard deviation of ERA *within each year*. We will save this tibble as `pitching_summary`:
+When we print out `pitching` now, we notice an extra line that tells us the grouping variable. Now when we pass this tibble on to subsequent calculations, these calculations will be done on each group. Recall from earlier that the code `pitching %>% summarize(mean = mean(ERA))` returned a single row containing the average of ERA over all players and year. If we now run the same code again, we actually get a tibble with one row per year that lists the mean and standard deviation of ERA *within each year*. We will save this tibble as `pitching_summary`:
 
 ```{r pitching_summary}
 pitching_summary <- 
@@ -235,6 +237,4 @@ ggplot(pitching) +
   geom_line(data = pitching_summary, mapping = aes(x = yearID, y = mean), col = 'red')
 ```
 
-You'll notice that the last line of code is a bit different than anything we've seen before.
-In particular, we are specifying both the data and mapping within the same ggplot2 function.
-If all of the information we want to include in the plot is coming from the same data source, it's enough to just specify the `data` argument in the first line, like we do with `ggplot(data = pitching)` and not in every subsequent call to functions like `geom_point` or `geom_line`. However, whenever we want to add layers to a plot using data from another source (in this case, using data from `pitching_summary` to plot the average ERAs), we need to tell R explicitly and specify the data argument in `geom_line`.
+You'll notice that the last line of code is a bit different than anything we've seen before. In particular, we are specifying both the data and mapping within the same ggplot2 function. If all of the information we want to include in the plot is coming from the same data source, it's enough to just specify the `data` argument in the first line, like we do with `ggplot(data = pitching)` and not in every subsequent call to functions like `geom_point` or `geom_line`. However, whenever we want to add layers to a plot using data from another source (in this case, using data from `pitching_summary` to plot the average ERAs), we need to tell R explicitly and specify the data argument in `geom_line`.

@@ -27,10 +27,7 @@ raw_shooting <-
 raw_shooting <- arrange(raw_shooting, desc(TSP))
 ```
 
-
-We will use visualization to answer some questions about the data.
-Specifically, we will study the distribution of the individual columns as well as try to understand the relationship between pairs of variables.
-For instance, is a player's free throw percentage predictive of his three point percentage?
+We will use visualization to answer some questions about the data. Specifically, we will study the distribution of the individual columns as well as try to understand the relationship between pairs of variables. For instance, is a player's free throw percentage predictive of his three point percentage?
 
 To produce graphics throughout this course, we will use ggplot2, which is a package contained in the tidyverse. 
 At a very high level, ggplot2 works by layering graphics, adding different features one on top of another. 

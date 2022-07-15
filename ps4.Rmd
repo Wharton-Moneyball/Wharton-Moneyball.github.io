@@ -12,7 +12,7 @@ library(tidyverse)
 
 In this part, we will continue to use heatmaps (introduced briefly in [Lecture 2](lecture2.html)) to explore the strike zone in baseball. We will focus on data collected by PITCHf/x. At a high-level, PITCHf/x consists of a set of cameras installed at every ballpark which tracks the motion of each pitch. For more information about the system, check out this [article by Mike Fast](http://baseball.physics.illinois.edu/FastPFXGuide.pdf)  The data collected by PITCHf/x is then transmitted to the MLB Gameday application along with contextual information about the pitch. The dataset we'll be using contains the measurements from the PITCHf/x system recorded in 2015.
 
-1. Download [pitchfx_2015.csv](data/pitchfx_2015.csv) to your `data` folder. Read the CSV file into a tbl called `pitches` using the `read_csv` function. 
+1. Download [pitchfx_2015.csv](data/pitchfx_2015.csv) to your "data" folder. Read the CSV file into a tbl called `pitches` using the `read_csv` function. 
 
 ```{r pt1 q1 solution}
 # solution
@@ -50,31 +50,32 @@ g <- ggplot(data = called_pitches)
     
     By default, `stat_summary_2d()` divides the plane into rectangles based on the aesthetics x and y, and then computes the average value of z for observations in the bin. We can add this layer to our plot `g` as follows and obtain the following plot.
     
-```{r, include=TRUE}
+```{r pt1 q4, include=TRUE}
 g <- g + stat_summary_2d(mapping = aes(x = X, y = Z, z = Call))
 g
 ```
 
-5. You'll notice in the plot above that `stat_summary_2d()` has added a legend to our plot. However, the title of the legend is a somewhat non-informative. Moreover, the color scheme does not distinguish between different values particularly well. We can change both the title of the legend and the color scheme inside a function called `scale_fill_distiller`. Don't worry too much about what this function means for now; we will cover it in more depth in Lecture 5. 
+5. You'll notice in the plot above that `stat_summary_2d()` has added a legend to our plot. However, the title of the legend is a somewhat non-informative. Moreover, the color scheme does not distinguish between different values particularly well. We can change both the title of the legend and the color scheme inside a function called `scale_fill_distiller`. Don't worry too much about what this function means for now; we will cover it in more depth in [Lecture 5](lecture5.html). 
 
-```{r, include=TRUE}
+```{r pt1 q5, include=TRUE}
 g <- g + scale_fill_distiller("P(Called Strike)", palette = "RdBu")
 g
 ```
 
 6. According to the official rule book, the strike zone is a rectangular region that spans the width of home plate and extends vertically from the batter's knee to the middle of his chest. From the plot above, we see that the region in which the strike zone probability is higher than 90% is definitely not rectangular. To better visualize the discrepancy, we can add another layer to plot which delimits an approximation of the rule book strike zone. The code below does just that. The `xmin` and `xmax` arguments give the horizontal limits of the strike zone (in this case, the coordinates of the edges of the strike zone) and the `ymin` and `ymax` arguments are the average vertical limits measured by PITCHf/x. **Note: these values were pre-computed using a much larger dataset**
-```{r, include=TRUE}
+
+```{r pt1 q6, include=TRUE}
 g <- g + annotate("rect", xmin = -8.5, xmax = 8.5, ymin = 19, ymax = 41.5, alpha = 0, color = "black")
 g
 ```
 
 * We can additionally make the plot a bit more attractive visually as follows:
 
-```{r, include=TRUE}
-g <- g + theme_classic()
-g <- g + theme(axis.title.x = element_blank())
-g <- g + theme(axis.title.y = element_blank())
-g <- g + labs(title = "Estimated Strike Zone")
+```{r pt1 q7, include=TRUE}
+g <- g + theme_classic() + 
+  theme(axis.title.x = element_blank(), 
+        axis.title.y = element_blank()) + 
+  labs(title = "Estimated Strike Zone")
 g
 ```
 
@@ -84,28 +85,29 @@ g
 The file "nba_boxscore.csv" lists detailed box score information about every NBA player in every season ranging from 1996--97 season and 2015-16 season. We will look at team shooting statistics over this 20-season span. 
 
 1. Load the data into a tbl called `raw_boxscore`. 
-```{r}
+
+```{r pt2 q1 solution}
 # solution
 raw_boxscore <- read_csv("data/nba_boxscore.csv")
 ```
 
 * The column "Tm" lists the team on which each player played. We can look at the relative frequencies of the teams using the `table()` function. This function takes a vector and returns the frequencies of each unique value. 
 
-```{r, include=TRUE}
-table(raw_boxscore[["Tm"]])
+```{r pt2 q1 table, include=TRUE}
+raw_boxscore %>% select(Tm) %>% table()
 ```
 
 * Looking at the list of teams you may see a few that you don't recognize. For instance, there are 15 players listed as playing on "WSB". We can use `filter()` to take a closer look at these players.
 
-```{r, include=TRUE}
-filter(raw_boxscore, Tm == "WSB")
+```{r pt2 q1 filter, include=TRUE}
+raw_boxscore %>% filter(Tm == "WSB")
 ```
 
 * These fifteen players during the 1996-97 season on the Washington Bullets, which was renamed the Washington Wizards at the end of that season.There are a few other examples: VAN refers to the Vancouver Grizzlies who moved to Memphis and CHH refers to the original Charlotte Hornets franchise, which ultimately relocated to New Orleans.
 
 * One of the teams listed is "TOT". This does not refer any specific team. Instead these rows record the *total* statistics recorded by a player if he played for multiple teams in a single season. For the purposes of understanding how team shooting statistics changed over time, we will not want to include these rows in our analysis.
 
-2. Use `filter()`, `group_by()`, `summary()`, and `mutate()` to create a new tbl called `team_boxscore` that does the following:
+2. Use `filter()`, `group_by()`, `summarize()`, and `mutate()` to create a new tbl called `team_boxscore` that does the following:
 
     * removes the rows corresponding to player totals (i.e. `Tm == "TOT"`)
     * groups the tbl according to Season and Tm. **Note: it is important to group on season first and team second **
@@ -113,36 +115,36 @@ filter(raw_boxscore, Tm == "WSB")
     * Adds a column for team field goal percentage (FGP), three point percentage (TPP), and free throw percentages (FTP). 
     * Ungroup the resulting tbl <p/>
 
-```{r}
+```{r pt2 q2 solution}
 # solution
-team_boxscore <- 
+team_boxscore <-
   raw_boxscore %>% 
-  filter(Tm != "TOT") %>%
-  group_by(Season, Tm) %>%
-  summarise(FGM = sum(FGM),
-            FGA = sum(FGA),
-            TPM = sum(TPM),
-            TPA = sum(TPA),
-            FTM = sum(FTM),
-            FTA = sum(FTA)) %>% 
-  mutate(FGP = FGM/FGA,
-         TPP = TPM/TPA,
-         FTP = FTM/FTA) %>%
+  filter(Tm != 'TOT') %>%
+  group_by(Season, Tm) %>% 
+  summarize(total_FGM = sum(FGM), 
+            total_FGA = sum(FGA),
+            total_TPM = sum(TPM), 
+            total_TPA = sum(TPA),
+            total_FTM = sum(FTM), 
+            total_FTA = sum(FTA),
+            total_PTS = sum(PTS)) %>%
+  mutate(FGP = total_FGM/total_FGA,
+         TPP = total_TPM/total_TPA,
+         FTP = total_FTM/total_FTA) %>%
   ungroup()
 ```
 
-3. Use `filter()` to create a new tbl called `reduced_boxscore` that pulls out the rows of `team_boxscore` corresponding to the following teams: BOS, CLE, DAL, DET, GSW, LAL, MIA, and SAS. Then create a plot of these teams' three point percentage in each season. Be sure to color the points according to the team. What patterns do you notice?
+3. Use `filter()` to create a new tbl called `reduced_boxscore` that pulls out the rows of `team_boxscore` corresponding to the following teams: BOS, CLE, DAL, DET, GSW, LAL, MIA, and SAS. Then create a plot of these teams' three point percentage in each season. Be sure to color the points according to the team (*Hint*: to map the `Tm` variable to the points as colors, use the `color =` argument within the `aes` function. We will learn more about this in [Lecture 5](lecture5.html)). What patterns do you notice?
 
-```{r}
+```{r pt2 q3 solution}
 # solution
 reduced_boxscore <-
-  team_boxscore %>% 
-  filter(Tm %in% c("BOS", "CLE", "DAL", "DET", 
-                   "GSW", "LAL", "MIA", "SAS"))
+  team_boxscore %>%
+  filter(Tm %in% c('BOS', 'CLE', 'DAL', 'DET', 'GSW', 'LAL', 'MIA', 'SAS'))
 
-ggplot(data = reduced_boxscore) + 
-  geom_point(mapping = aes(x = Season, y = TPP, color = Tm)) + 
-  geom_line(mapping = aes(x = Season, y = TPP, color = Tm))
+ggplot(data = reduced_boxscore) +
+  geom_point(mapping = aes(x = Season, y = TPP, color = Tm), size = 2, alpha = .5) +
+  scale_color_manual(values = c('green', 'dark red', 'blue', 'red', 'yellow', 'purple', 'dark red', 'dark gray'))
 ```
 
 

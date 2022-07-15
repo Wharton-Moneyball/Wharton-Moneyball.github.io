@@ -12,11 +12,11 @@ library(tidyverse)
 
 Before we jump into any analysis, we wanted to start by discussing the notion of "tidy data" because not all datasets you find will be organized in a form that's easy to analyze. Thus, you'll often find yourself in a situation where you'll need to manipulate the data into a better form.  The entire `tidyverse` ecosystem of packages and functions is based on analyzing datasets that are in a "tidy" format. This format, at its simplest, must adhere to the following three rules:
 
-1. Each variable must have its own column.
-2. Each observation must have its own row.
-3. Each value must have its own cell.
+1. Each **variable** must have its own **column**.
+2. Each **observation** must have its own **row**.
+3. Each **value** must have its own **cell**.
 
-To make the above discussion much more concrete, let's go back to the dataset we created in the challenge question at the end of [Problem Set 3](ps3.html). Each line of this tbl is a "player-season". Printing out the tbl, we see that there is a separate row for each "player-season".
+To make the above discussion much more concrete, let's go back to the dataset we created in the challenge question at the end of [Problem Set 3](ps3.html). If you haven't yet completed that, you can download the final [batting_2014_2015 dataset here](data/batting_2014_2015.Rdata) (then save it to your "data" folder). Printing out the tbl, we see that there is a separate row for each "player-season".
 
 ```{r load batting_2014_2015}
 library(tidyverse)
@@ -31,13 +31,14 @@ batting_2014_2015 %>%
   spread(yearID, BA)
 ```
 
-In this format, we have a row for each player and two columns for his batting averages, one for 2014 and one for 2015.
-In order to convert our tbl into this format, we use *spreading*.
+In this format, we have a row for each player and two columns for his batting averages, one for 2014 and one for 2015. In order to convert our tbl into this format, we use the `spread` function. Also we rename the new columns "BA_2014" and "BA_2015" so that they don't begin with numbers, which can cause problems.
 
 ```{r spread batting_2014_2015}
 batting_2014_2015 <-
   batting_2014_2015 %>%
-  spread(yearID, BA)
+  spread(yearID, BA) %>%
+  rename(BA_2014 = `2014`,
+         BA_2015 = `2015`)
 ```
 
 When we print out `batting_2014_2015` now, we notice that it is easier to read in this proper "tidy" format. Moreover, many of the `tidyverse` functions that we've covered and will continue to learn are much simpler to implement when used on data of this form. We'll continue to see examples of how to "tidy" up our data as we go through the lectures and problem sets.
@@ -52,14 +53,14 @@ Now what if we also told you this extra player's 2014 batting average? Can we im
 ```{r batting yhat_0}
 batting_2014_2015 <-
   batting_2014_2015 %>% 
-  mutate(yhat_0 = mean(`2015`))
+  mutate(yhat_0 = mean(BA_2015))
 ```
 
 If the 2014 batting average had no predictive power at all, then this overall mean will be the best prediction model possible, given what data we have. Plotting the 2015 batting averages against the 2014 batting averages allows us to assess visually whether there is any relationship between the two variables.We have added dashed red horizontal and vertical lines at the overall means of the 2014 and 2015 data, respectively.
 
 ```{r plot batting yhat_0}
 ggplot(batting_2014_2015) +
-  geom_point(aes(x = `2014`, y = `2015`), col = 'black', shape = 16, size = 0.9) +
+  geom_point(aes(x = BA_2014, y = BA_2015), col = 'black', shape = 16, size = 0.9) +
   geom_hline(yintercept = 0.273, col = 'red', lty = 2) +
   geom_vline(xintercept = 0.272, col = 'red', lty = 2)
 ```
@@ -80,9 +81,9 @@ The following code chunk does precisely that with two more steps: once we have m
 ```{r batting yhat_1}
 batting_2014_2015 <- 
   batting_2014_2015 %>%
-  mutate(bins = cut(`2014`, breaks = c(0.15, 0.272, 0.40))) %>%
+  mutate(bins = cut(BA_2014, breaks = c(0.15, 0.272, 0.40))) %>%
   group_by(bins) %>%
-  mutate(yhat_1 = mean(`2015`)) %>%
+  mutate(yhat_1 = mean(BA_2015)) %>%
   ungroup() %>%
   select(-bins)
 ```
@@ -93,9 +94,9 @@ Now that we have two different ways of predicting 2015 batting averages, let us 
 
 ```{r plot batting yhat_1}
 ggplot(batting_2014_2015) +
-  geom_point(aes(x = `2014`, y = `2015`), col = 'black', shape = 16, size = 0.9) +
-  geom_point(aes(x = `2014`, y = yhat_0), col = 'red', shape = 3, size = 0.75) + 
-  geom_point(aes(x = `2014`, y = yhat_1), col = 'green', shape = 15, size = 0.75)
+  geom_point(aes(x = BA_2014, y = BA_2015), col = 'black', shape = 16, size = 0.9) +
+  geom_point(aes(x = BA_2014, y = yhat_0), col = 'red', shape = 3, size = 0.75) + 
+  geom_point(aes(x = BA_2014, y = yhat_1), col = 'green', shape = 15, size = 0.75)
 ```
 
 Visually it appears that the green squares (corresponding to yhat_1) are a bit closer to the actual values than the red crosses (corresponding to yhat_0).  This would suggest that dividing the players into the two bins according to their 2014 batting average and using the average BA_2015 value within each bin as our forecast was better than using the overall average BA_2015 value for all players.
@@ -112,9 +113,9 @@ So let's say we wanted to divide the 2014 batting averages into intervals of len
 ```{r batting yhat_2}
 batting_2014_2015 <- 
   batting_2014_2015 %>%
-  mutate(bins = cut(`2014`, breaks = seq(from = 0.15, to = 0.4, by = 0.05))) %>%
+  mutate(bins = cut(BA_2014, breaks = seq(from = 0.15, to = 0.4, by = 0.05))) %>%
   group_by(bins) %>%
-  mutate(yhat_2 = mean(`2015`)) %>%
+  mutate(yhat_2 = mean(BA_2015)) %>%
   ungroup() %>%
   select(-bins)
 ```
@@ -123,10 +124,10 @@ We can also visualize our new predictions, this time with blue triangles.
 
 ```{r plot batting yhat_2}
 ggplot(batting_2014_2015) +
-  geom_point(aes(x = `2014`, y = `2015`), shape = 16, size = 0.9) + 
-  geom_point(aes(x = `2014`, y = yhat_0), col = 'red', shape = 3, size = 0.75) + 
-  geom_point(aes(x = `2014`, y = yhat_1), col = 'green', shape = 15, size = 0.75) +
-  geom_point(aes(x = `2014`, y = yhat_2), col = 'blue', shape = 17, size = 0.75)
+  geom_point(aes(x = BA_2014, y = BA_2015), shape = 16, size = 0.9) + 
+  geom_point(aes(x = BA_2014, y = yhat_0), col = 'red', shape = 3, size = 0.75) + 
+  geom_point(aes(x = BA_2014, y = yhat_1), col = 'green', shape = 15, size = 0.75) +
+  geom_point(aes(x = BA_2014, y = yhat_2), col = 'blue', shape = 17, size = 0.75)
 ```
 
 It appears that we are able to perfectly predict the 2015 batting average of the player with the lowest batting average in 2014. Why do you think this was the case?
@@ -136,27 +137,27 @@ Let's add two more predictions in which we divide the 2014 batting averages into
 ```{r batting yhat_3 yhat_4 plot}
 batting_2014_2015 <- 
   batting_2014_2015 %>%
-  mutate(bins = cut(`2014`, breaks = seq(from = 0.15, to = 0.4, by = 0.005))) %>%
+  mutate(bins = cut(BA_2014, breaks = seq(from = 0.15, to = 0.4, by = 0.005))) %>%
   group_by(bins) %>%
-  mutate(yhat_3 = mean(`2015`)) %>%
+  mutate(yhat_3 = mean(BA_2015)) %>%
   ungroup() %>%
   select(-bins)
 
 batting_2014_2015 <- 
   batting_2014_2015 %>%
-  mutate(bins = cut(`2014`, breaks = seq(from = 0.15, to = 0.4, by = 0.001))) %>%
+  mutate(bins = cut(BA_2014, breaks = seq(from = 0.15, to = 0.4, by = 0.001))) %>%
   group_by(bins) %>%
-  mutate(yhat_4 = mean(`2015`)) %>%
+  mutate(yhat_4 = mean(BA_2015)) %>%
   ungroup() %>%
   select(-bins)
 
 ggplot(batting_2014_2015) +
-  geom_point(aes(x = `2014`, y = `2015`), shape = 16, size = 0.9) + 
-  geom_point(aes(x = `2014`, y = yhat_0), col = 'red', shape = 3, size = 0.75) + 
-  geom_point(aes(x = `2014`, y = yhat_1), col = 'green', shape = 15, size = 0.75) +
-  geom_point(aes(x = `2014`, y = yhat_2), col = 'blue', shape = 17, size = 0.75) + 
-  geom_point(aes(x = `2014`, y = yhat_3), col = 'purple', shape = 8, size = 0.75) + 
-  geom_point(aes(x = `2014`, y = yhat_4), col = 'orange', shape = 10, size = 0.75)
+  geom_point(aes(x = BA_2014, y = BA_2015), shape = 16, size = 0.9) + 
+  geom_point(aes(x = BA_2014, y = yhat_0), col = 'red', shape = 3, size = 0.75) + 
+  geom_point(aes(x = BA_2014, y = yhat_1), col = 'green', shape = 15, size = 0.75) +
+  geom_point(aes(x = BA_2014, y = yhat_2), col = 'blue', shape = 17, size = 0.75) + 
+  geom_point(aes(x = BA_2014, y = yhat_3), col = 'purple', shape = 8, size = 0.75) + 
+  geom_point(aes(x = BA_2014, y = yhat_4), col = 'orange', shape = 10, size = 0.75)
 ```
 
 
@@ -166,11 +167,11 @@ We now have a couple of different ways of predicting BA_2015. Qualitatively, the
 
 ```{r summarize rmse}
 summarize(batting_2014_2015, 
-          rmse_0 = sqrt(mean((`2015` - yhat_0)^2)),
-          rmse_1 = sqrt(mean((`2015` - yhat_1)^2)),
-          rmse_2 = sqrt(mean((`2015` - yhat_2)^2)),
-          rmse_3 = sqrt(mean((`2015` - yhat_3)^2)),
-          rmse_4 = sqrt(mean((`2015` - yhat_4)^2)))
+          rmse_0 = sqrt(mean((BA_2015 - yhat_0)^2)),
+          rmse_1 = sqrt(mean((BA_2015 - yhat_1)^2)),
+          rmse_2 = sqrt(mean((BA_2015 - yhat_2)^2)),
+          rmse_3 = sqrt(mean((BA_2015 - yhat_3)^2)),
+          rmse_4 = sqrt(mean((BA_2015 - yhat_4)^2)))
 ```
  
 We see that the the orange predictions have the lowest RMSE, followed by the purple, blue, green, and red predictions. This tells us that the predictions formed by binning into smaller intervals fit the data better than the predictions formed by binning into larger intervals, confirming what we could see visually. 

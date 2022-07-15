@@ -62,16 +62,13 @@ Then inside that folder, create a new folder named 'data', and a separate folder
 
 ## Downloading data and saving into Moneyball/data folder
 
-After you get the folders ready, go to the following page: https://github.com/Wharton-Moneyball/Wharton-Moneyball.github.io/tree/master/data
+After you get the folders ready, download the following files, and move them into your "data" folder created above: 
 
-From here, download the following CSV files: 
+* [nba_shooting_small.csv](data/nba_shooting_small.csv)
+* [nba_shooting.csv](data/nba_shooting.csv)
+* [mlb_relative_payrolls.csv](data/mlb_relative_payrolls.csv)
 
-+ nba_shooting_small.csv
-+ nba_shooting.csv
-+ mlb_relative_payrolls.csv
-
-**To download a file, clink on its link on the page. Then click on the 'Raw' button. From there, right-click on some open space and 'Save As...' or 'Save Page As..' (depending on your browser). Name it exactly as it appears above (e.g. 'nba_shooting_small.csv'), including the '.csv' part at the end. This will save the dataset as a .CSV file. Choose the save location to be the Moneyball/data folder you created.**
-
+We will be working with these datasets in the first two Lectures and Problem Sets.
 
 ## Getting Started With R
 

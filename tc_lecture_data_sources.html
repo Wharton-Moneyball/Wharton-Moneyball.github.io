@@ -407,7 +407,7 @@ $(document).ready(function () {
     </li>
     <li class="divider"></li>
     <li>
-      <a href="lecture_nflscrapR.html">nflscrapR Lecture</a>
+      <a href="lecture_nflfastR.html">nflfastR Lecture</a>
     </li>
     <li>
       <a href="psX.html">Problem Set X</a>
@@ -486,26 +486,29 @@ database directly via complicated computing procedures, there is an R
 package we can install to access the data instead. The following code
 installs the package from the CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;Lahman&quot;</span>)</span></code></pre></div>
-<p>Next we load the package, and checkout what datasets are
+<p>Next we load the package, and check out what datasets are
 available:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="at">package =</span> <span class="st">&quot;Lahman&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="at">package =</span> <span class="st">&quot;Lahman&quot;</span>)</span></code></pre></div>
 <p>There is an incredible amount of data here going up through the 2021
 season (it updates following the end of each season). As an example,
 let’s access the Teams dataset, use a <code>group_by</code> operation to
 calculate the number of strikeouts each year since 1871, and plot the
 line over time:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;Teams&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Teams <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID) <span class="sc">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_so =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> n_so)) <span class="sc">+</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of strikeouts&quot;</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Total number of strikeouts in each baseball season since 1871&quot;</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data courtesy of Lahman&quot;</span>) <span class="sc">+</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="tc_lecture_data_sources_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Teams <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_so =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> n_so)) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of strikeouts&quot;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Total number of strikeouts in each baseball season since 1871&quot;</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data courtesy of Lahman&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="tc_lecture_data_sources_files/figure-html/Lahman%20strikeouts%20year-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Note that rather than supplying the data as an argument to the
+<code>ggplot()</code> function, we can start with a dataset, make
+manipulations to it using pipes, and then pipe the new data into the
+<code>ggplot()</code> function.</p>
 <p>We can see the increasing trend over time, but note some of the
 outliers like 2020 (pandemic-shortened season) and 1994
 (strike-shortened season). How could this display be improved to handle
@@ -524,7 +527,7 @@ accessing sports data that are currently only available through GitHub.
 In order to access these packages, we first need to install them using a
 package called <code>devtools</code>. The code below installs the
 <code>devtools</code> package:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span></code></pre></div>
 <p>The <code>devtools</code> package has a function,
 <code>install_github</code> that we will use for installing the
 remaining packages used below.</p>
@@ -543,38 +546,41 @@ data available from <a
 href="https://baseballsavant.mlb.com/">baseball-savant</a>.</p>
 <p>We first install the package using the <code>devtools</code> package
 explained above, and then load its functions:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;BillPetti/baseballr&quot;</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(baseballr)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;BillPetti/baseballr&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(baseballr)</span></code></pre></div>
 <p>Using the <code>baseballr</code> package we can access all pitches
 thrown to a hitter in the current season, giving us Statcast data like
 exit velocity and launch angle. We first use the
 <code>playerid_lookup</code> function to find the Statcast ID for
 Yankees star (and potential AL MVP) Aaron Judge:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">playerid_lookup</span>(<span class="at">last_name =</span> <span class="st">&quot;Judge&quot;</span>, <span class="at">first_name =</span> <span class="st">&quot;Aaron&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">playerid_lookup</span>(<span class="at">last_name =</span> <span class="st">&quot;Judge&quot;</span>, <span class="at">first_name =</span> <span class="st">&quot;Aaron&quot;</span>)</span></code></pre></div>
 <p>This will load up a look-up table with all identifiers joining
 various sources together (it may take a couple minutes to run and don’t
 worry about the warning messages). We find that Aaron Judge’s unique
 <code>mlbam_id</code> is 592450. Using this id, we can grab all pitches
 thrown to Judge in the current MLB season so far:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>judge_statcast_data <span class="ot">&lt;-</span> <span class="fu">scrape_statcast_savant_batter</span>(<span class="at">start_date =</span> <span class="st">&quot;2022-01-01&quot;</span>, </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">batterid =</span> <span class="dv">592450</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>judge_statcast_data <span class="ot">&lt;-</span> <span class="fu">scrape_statcast_savant_batter</span>(<span class="at">start_date =</span> <span class="st">&quot;2022-01-01&quot;</span>, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">batterid =</span> <span class="dv">592450</span>)</span></code></pre></div>
 <p>This dataset contains many columns; for now we will look at the
 relationship between the distance traveled of Aaron Judge’s batted balls
 (denoted by <code>type == "X"</code>) and the launch angle
 (<code>launch_angle</code>) as well as the exit velocity
 (<code>launch_speed</code>):</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>judge_statcast_data <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">&quot;X&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> launch_speed, <span class="at">y =</span> launch_angle, </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> hit_distance_sc)) <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">&quot;A&quot;</span>) <span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Exit velocity (MPH)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Launch angle (degrees)&quot;</span>, </span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Distance (feet)&quot;</span>,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Aaron Judge&#39;s launch angle, exit velocity, and distance traveled&quot;</span>,</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data accessed via baseballr&quot;</span>)</span></code></pre></div>
-<p><img src="tc_lecture_data_sources_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>judge_statcast_data <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">&quot;X&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> launch_speed, <span class="at">y =</span> launch_angle, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> hit_distance_sc)) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">&quot;A&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Exit velocity (MPH)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Launch angle (degrees)&quot;</span>, </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Distance (feet)&quot;</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Aaron Judge&#39;s launch angle, exit velocity, and distance traveled&quot;</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data accessed via baseballr&quot;</span>)</span></code></pre></div>
+<p><img src="tc_lecture_data_sources_files/figure-html/Judge%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><em>Note that this plot has been updated through July 15th of the
+2022 season. Pitches thrown to Judge after this date will not appear on
+the above plot.</em></p>
 <p>This is just a single example of the type of data available using
 <code>baseballr</code>. See the package website for more <a
 href="https://billpetti.github.io/baseballr/reference/index.html">data
@@ -591,48 +597,47 @@ package</a> created by Alex Bresler is analogous to the
 <code>baseballr</code> package as it provides many different functions
 for accessing NBA data from a variety of websites. Again to be able to
 use the package you need to install it from GitHub:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;abresler/nbastatR&quot;</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nbastatR)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;abresler/nbastatR&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nbastatR)</span></code></pre></div>
 <p><strong>There will likely be several messages that appear when
 installing this package, please let us know if you encounter any strange
 issues.</strong> The code below demonstrates how to get all shot
 attempts by the 2022 NBA champions, the Golden State Warriors, in the
 past season using this package:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>warriors_shots <span class="ot">&lt;-</span> <span class="fu">teams_shots</span>(<span class="at">teams =</span> <span class="st">&quot;Golden State Warriors&quot;</span>, </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">seasons =</span> <span class="fu">c</span>(<span class="dv">2022</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>warriors_shots <span class="ot">&lt;-</span> <span class="fu">teams_shots</span>(<span class="at">teams =</span> <span class="st">&quot;Golden State Warriors&quot;</span>, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">seasons =</span> <span class="fu">c</span>(<span class="dv">2022</span>))</span></code></pre></div>
 <p>Using this shot data, we can view the all shot attempts by the
 Warriors throughout the season colored by whether or not they made the
 shot.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>warriors_shots <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> locationX, <span class="at">y =</span> locationY, <span class="at">color =</span> isShotMade)) <span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#FFC72C&quot;</span>, <span class="st">&quot;#1D428A&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Shot attempts by Golden State Warriors in 2021-22 NBA season&quot;</span>,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data accessed via nbastatR&quot;</span>)</span></code></pre></div>
-<p><img src="tc_lecture_data_sources_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>warriors_shots <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> locationX, <span class="at">y =</span> locationY, <span class="at">color =</span> isShotMade)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#FFC72C&quot;</span>, <span class="st">&quot;#1D428A&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Shot attempts by Golden State Warriors in 2021-22 NBA season&quot;</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data accessed via nbastatR&quot;</span>)</span></code></pre></div>
+<p><img src="tc_lecture_data_sources_files/figure-html/Warriors%20shots%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>It’s apparent from this chart the effect of the three-point line of
 their shot selection.</p>
 </div>
-<div id="nflscrapr" class="section level3">
-<h3><code>nflscrapR</code></h3>
-<p>Created by Max Horowitz, Ron Yurko, and Sam Ventura, the <a
-href="https://github.com/maksimhorowitz/nflscrapR"><code>nflscrapR</code>
+<div id="nflfastr" class="section level3">
+<h3><code>nflfastR</code></h3>
+<p>The <a href="https://www.nflfastr.com/"><code>nflfastR</code>
 package</a> gives R users the ability to scrape play-by-play data from
 the NFL in real-time during games providing expected points and win
-probability estimates. Just like the <code>baseballr</code> and
-<code>nbastatR</code> packages, the <code>nflscrapR</code> package must
-be installed from GitHub:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;maksimhorowitz/nflscrapR&quot;</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nflscrapR)</span></code></pre></div>
-<p>Now we can use this package to gather play-by-play data, but this can
-take some time to run. Instead, one of the package authors (and former
-Moneyball Academy instructor) has already scraped <a
-href="https://github.com/ryurko/nflscrapR-data">all NFL data going back
-to the 2009 season and made it available to access on GitHub</a>. We can
-directly read in the play-by-play data from this 2018 regular season
-using the following url in the <code>read_csv</code> function:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pbp_2018 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/ryurko/nflscrapR-data/master/play_by_play_data/regular_season/reg_pbp_2018.csv&quot;</span>)</span></code></pre></div>
+probability estimates. Unlike like the <code>baseballr</code> and
+<code>nbastatR</code> packages, the <code>nflfastR</code> package can be
+installed the normal way (i.e. without <code>devtools</code>). Lets also
+install the <code>ggimage</code> package, which will allow us to plot
+the team logos as points.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;nflfastR&quot;</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggimage&quot;</span>)</span></code></pre></div>
+<p>Next, we load these packages.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nflfastR)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggimage)</span></code></pre></div>
+<p>Now we can use <code>nflfastR</code> to gather play-by-play data for
+the 2021 season.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pbp_2021 <span class="ot">&lt;-</span> <span class="fu">load_pbp</span>(<span class="dv">2021</span>)</span></code></pre></div>
 <p>With this data, we can summarize the performance of all NFL teams
 using the expected points added (EPA) per game on offense and defense.
 EPA tells us how much value the team provided relative to an average
@@ -642,56 +647,42 @@ code chunk below we multiply the defensive values by -1 so it’s similar
 to offensive performance higher values meaning better performance. The
 following code uses this data to create offensive and defensive
 summaries that we will join together to plot:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>offense_epa_18 <span class="ot">&lt;-</span> pbp_2018 <span class="sc">%&gt;%</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(posteam)) <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(posteam) <span class="sc">%&gt;%</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_games =</span> <span class="fu">length</span>(<span class="fu">unique</span>(game_id)), <span class="at">off_total_epa =</span> <span class="fu">sum</span>(epa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">off_epa_per_game =</span> off_total_epa <span class="sc">/</span> n_games)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>defense_epa_18 <span class="ot">&lt;-</span> pbp_2018 <span class="sc">%&gt;%</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(defteam)) <span class="sc">%&gt;%</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(defteam) <span class="sc">%&gt;%</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_games =</span> <span class="fu">length</span>(<span class="fu">unique</span>(game_id)), <span class="at">def_total_epa =</span> <span class="fu">sum</span>(epa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This time multiply by -1, since negative values are better for defense:</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">def_epa_per_game =</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">*</span> def_total_epa <span class="sc">/</span> n_games)</span></code></pre></div>
-<p>Now rather than displaying just points or team abbreviations, we can
-take advantage of files provided to use by <a
-href="https://statsbylopez.netlify.com/">Michael Lopez, the Director of
-Data and Analytics for the NFL</a>, and plot the team logos directly.
-This can be done using the <code>ggimage</code> package that can be
-installed as follows:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggimage&quot;</span>)</span></code></pre></div>
-<p>Next we access the images as a dataset, and join it together to the
-offense and defense summaries before creating our chart:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggimage)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>nfl_logos_df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/statsbylopez/BlogPosts/master/nfl_teamlogos.csv&quot;</span>)</span></code></pre></div>
-<pre><code>## Rows: 35 Columns: 3
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (3): team, team_code, url
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the data frame to be used for all of the charts:</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>offense_epa_18 <span class="sc">%&gt;%</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(defense_epa_18, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;posteam&quot;</span> <span class="ot">=</span> <span class="st">&quot;defteam&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(nfl_logos_df, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;posteam&quot;</span> <span class="ot">=</span> <span class="st">&quot;team_code&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> off_epa_per_game, <span class="at">y =</span> def_epa_per_game)) <span class="sc">+</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(<span class="fu">aes</span>(<span class="at">image =</span> url), <span class="at">size =</span> <span class="fl">0.05</span>) <span class="sc">+</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Offensive EPA per game&quot;</span>,</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Defensive EPA per game&quot;</span>,</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data accessed via nflscrapR&quot;</span>,</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Offensive and defensive EPA per game for each team in 2018 NFL season&quot;</span>) <span class="sc">+</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add reference lines at 0</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="tc_lecture_data_sources_files/figure-html/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>offense_epa_21 <span class="ot">&lt;-</span> pbp_2021 <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(posteam)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(posteam) <span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_games =</span> <span class="fu">length</span>(<span class="fu">unique</span>(game_id)), <span class="at">off_total_epa =</span> <span class="fu">sum</span>(epa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">off_epa_per_game =</span> off_total_epa <span class="sc">/</span> n_games)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>defense_epa_21 <span class="ot">&lt;-</span> pbp_2021 <span class="sc">%&gt;%</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(defteam)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(defteam) <span class="sc">%&gt;%</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_games =</span> <span class="fu">length</span>(<span class="fu">unique</span>(game_id)), <span class="at">def_total_epa =</span> <span class="fu">sum</span>(epa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This time multiply by -1, since negative values are better for defense:</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">def_epa_per_game =</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">*</span> def_total_epa <span class="sc">/</span> n_games)</span></code></pre></div>
+<p>Next, we join together the offensive and defensive EPA datasets, then
+pass this new dataset into <code>ggplot</code>, where we make a plot of
+offensive EPA per game vs. defensive EPA per game for all teams in the
+2021 season.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the data frame to be used for all of the charts:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>offense_epa_21 <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(defense_epa_21, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;posteam&quot;</span> <span class="ot">=</span> <span class="st">&quot;defteam&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(teams_colors_logos, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;posteam&quot;</span> <span class="ot">=</span> <span class="st">&quot;team_abbr&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> off_epa_per_game, <span class="at">y =</span> def_epa_per_game)) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(<span class="fu">aes</span>(<span class="at">image =</span> team_logo_espn), <span class="at">size =</span> <span class="fl">0.05</span>) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Offensive EPA per game&quot;</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Defensive EPA per game&quot;</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data accessed via nflfastR&quot;</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Offensive and defensive EPA per game for each team in the 2021 NFL season&quot;</span>) <span class="sc">+</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add reference lines at 0</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="tc_lecture_data_sources_files/figure-html/join%20epa%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The top right displays the teams that excelled at both offense and
 defense, while the lower right shows teams that had the best offenses
 such as the Chiefs but performed poorly on defense. The lower left shows
-the worst overall teams, which should not come as a surprise that the
-Arizona Cardinals and Oakland Raiders jump out.</p>
+the worst overall teams, where the Jags, Jets, and Texans unsurprisingly
+stand out.</p>
 </div>
 
 

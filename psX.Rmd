@@ -12,12 +12,12 @@ knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 
 ## Outline {-}
 
-Problem Set X is an additional, challenge problem set, designed to accompany the material covered in Moneyball Academy. Topics covered include advanced dplyr, merging datasets, simple regression, and ggplot2 graphing. You are strongly encouraged to attempt the problems for a significant amount of time before looking at the answers for help. A large portion of becoming an effective R-user is learning how to use Google and StackOverflow to help you solve problems you've never encountered before. You will be provided some direction and hints in the problem descriptions. So, the code is by default "hidden"; to check the solutions, click "Show All Code" in the upper right-hand corner of the page. When looking through the solutions, if you don't understand a function, I encourage you to utilize the `?function` command in the Console (e.g. `?group_by`). This will pull up the corresponding R Documentation in the bottom right of your RStudio window, under the "Help" section.
+Problem Set X is an additional, challenge problem set, designed to accompany the material covered in Moneyball Academy. Topics covered include advanced dplyr, merging datasets, simple regression, and ggplot2 graphing. You are strongly encouraged to attempt the problems for a significant amount of time before looking at the answers for help. A large portion of becoming an effective R-user is learning how to use Google and StackOverflow to help you solve problems you've never encountered before. You will be provided some direction and hints in the problem descriptions. So, the solution code is by default "hidden"; to check the solutions, click the "Code" buttons on the right of the page. When looking through the solutions, if you don't understand a function, I encourage you to utilize the `?function` command in the Console (e.g. `?group_by`). This will pull up the corresponding R Documentation in the bottom right of your RStudio window, under the "Help" section.
 
 Suggested background reading:
 
-+ Calculating Run Values: http://tangotiger.com/index.php/site/article/statcast-lab-swing-take-and-a-primer-on-run-value
-+ Interpreting Run Values: https://www.lookoutlanding.com/2019/9/20/20875992/statcast-swing-take-tool-debuts-daniel-vogelbach-should-swing-more-mariners-swing-analysis-seattle
+- [Calculating Run Values](http://tangotiger.com/index.php/site/article/statcast-lab-swing-take-and-a-primer-on-run-value)
+- [Interpreting Run Values](https://www.lookoutlanding.com/2019/9/20/20875992/statcast-swing-take-tool-debuts-daniel-vogelbach-should-swing-more-mariners-swing-analysis-seattle)
 
 
 ## Preparation
@@ -26,28 +26,27 @@ Suggested background reading:
 
 2. Download into your Moneyball/data folder and read into your environment the following datasets: 
 
-    - Statcast 2019 as `statcast_2019` (access here: https://upenn.box.com/s/6r1byuxnh0dbinbidpgaztpuqv5gdv38)
-    - The Chadwick Register as `chadwick_register` (access here: https://github.com/chadwickbureau/register -> data -> people.csv -> Download)
-    - FanGraphs Batters 2019 as `fangraphs_2019` (access here: https://www.fangraphs.com/leaders.aspx?pos=all&stats=bat&lg=all&qual=0&type=8&season=2019&month=0&season1=2019&ind=0&team=&rost=&age=&filter=&players=&startdate=&enddate= -> Export Data). The Min PA filter on the FanGraphs leaderboard has been set to 0 for this download. FanGraphs is an excellent resource for advanced baseball statistics; if you are doing an MLB final project, I would recommend you use it to source your data.
+    - [statcast_2019.RData](data/statcast_2019.RData) as `statcast_2019`
+    - [chadwick_register.csv](data/chadwick_register.csv) as `chadwick_register`
+    - [fangraphs_2019.csv](data/fangraphs_2019.csv) as `fangraphs_2019`
+        + Data comes from [this page](https://www.fangraphs.com/leaders.aspx?pos=all&stats=bat&lg=all&qual=0&type=8&season=2019&month=0&season1=2019&ind=0&team=&rost=&age=&filter=&players=&startdate=&enddate=), then clicking "Export Data" in the top right of the table. The Min PA filter on the FanGraphs leaderboard has been set to 0 for this download. FanGraphs is an excellent resource for advanced baseball statistics; if you are doing an MLB final project, I would recommend you use it to source your data.
 
 3. The "playerid" column in `fangraphs_2019` is FanGraphs' own identification system. The corresponding MLB player id can be found as "key_mlbam" in `chadwick_register`. Use `left_join()` to add the MLB player id to `fangraphs_2019`. This will enable us to later add FanGraphs statistics to additional data frames, merging on MLB player id.
 
 4. Remove rows from `statcast_2019` with unrecorded attack regions using the `is.na()` function. Also remove rows describing games outside of the regular season, and save as a new data frame `names`. Reference the README.md in Box (the download location) to understand the features of the statcast dataset (this will also help you in future problems). Using `summarize()`, reduce `names` to a smaller, three column data frame, with each row containing a single batter, with their id, name, and number of pitches seen in the regular season. Consider what you will need to group by to achieve this result.
 
-```{r, message=FALSE, warning=FALSE}
+```{r preparation solution, message=FALSE, warning=FALSE}
+### Solution ###
 library(tidyverse)
 library(reshape2)
 library(ggrepel)
 
-statcast_2019 <- read_csv("data/statcast_2019.csv")
-
+load("data/statcast_2019.RData")
 chadwick_register <- read_csv("data/chadwick_register.csv")
-
-# note the use of select within left_join(), 
-# keeping only the columns needed from chadwick_register
 fangraphs_2019 <- read_csv("data/fangraphs_2019.csv") %>%
   left_join(select(chadwick_register, key_mlbam, key_fangraphs), 
             by = c("playerid" = "key_fangraphs"))
+# note the use of select within left_join(), keeping only the columns needed from chadwick_register
 
 names <- statcast_2019 %>%
   filter(!is.na(attack_region), game_type == "Regular Season") %>%
@@ -55,6 +54,7 @@ names <- statcast_2019 %>%
   summarize(batter_name = last(batter_name), 
             pitches = n())                   
 ```
+
 
 ## Swing Take Batter Summary 
 
@@ -92,7 +92,8 @@ All of the following problems can be piped together, as one complete block of co
 
 16. Add wOBA values for each batter. *Hint: join the previously created `fangraphs_2019`. Use select within the join command to keep only only the merge id column and wOBA.*
 
-```{r, message=FALSE}
+```{r swing take solution, message=FALSE}
+### Solution ###
 swtk19_summary <- statcast_2019 %>%
   filter(!is.na(attack_region), game_type == "Regular Season") %>%
   mutate(is_sw = ifelse(
@@ -123,6 +124,7 @@ swtk19_summary <- statcast_2019 %>%
             by = c("batterid" = "key_mlbam"))
 ```
 
+
 ## Interpreting Run Value
 
 ### wOBA and Run Value
@@ -137,7 +139,8 @@ swtk19_summary <- statcast_2019 %>%
 
 5. What predictions for the 2020 season would you make about these eight batters, and why?
 
-```{r}
+```{r run value solution}
+### Solution ###
 fit <- lm(wOBA ~ TR_p100p, data = swtk19_summary)
 
 swtk19_summary <- swtk19_summary %>%
@@ -168,7 +171,8 @@ ggplot(swtk19_summary, aes(x = TR_p100p, y = wOBA)) +
 
 1. Graph the relationship between run value generated from swings and takes. Add guide lines using `geom_abline()` to identify total run value benchmarks: 30, 40, and 50. Using a nested `filter()`, label players with >30 total run value. 
 
-```{r}
+```{r run value generation solution}
+### Solution ###
 ggplot(swtk19_summary, aes(x = Swing_Runs, y = Take_Runs)) +
   geom_point(alpha = 0.5) +
   geom_abline(intercept = 50, slope = -1, linetype = "dashed", color = "blue") +

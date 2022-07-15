@@ -409,7 +409,7 @@ $(document).ready(function () {
     </li>
     <li class="divider"></li>
     <li>
-      <a href="lecture_nflscrapR.html">nflscrapR Lecture</a>
+      <a href="lecture_nflfastR.html">nflfastR Lecture</a>
     </li>
     <li>
       <a href="psX.html">Problem Set X</a>
@@ -910,7 +910,7 @@ working directory. We will read it into R with the
 <code>read_csv()</code> function like so:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nba_shooting_small <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;data/nba_shooting_small.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 10 Columns: 8
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (1): PLAYER
 ## dbl (7): SEASON, FGM, FGA, TPM, TPA, FTM, FTA
@@ -1133,18 +1133,18 @@ once by passing more arguments to <code>mutate()</code>, one for each
 column we wish to define.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(nba_shooting_small, <span class="at">FGP =</span> FGM<span class="sc">/</span>FGA, <span class="at">TPP =</span> TPM<span class="sc">/</span>TPA, <span class="at">FTP =</span> FTM<span class="sc">/</span>FTA)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 11
-##    PLAYER           SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP
-##    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Damian Lillard     2016   618  1474   229   610   414   464 0.419 0.375 0.892
-##  2 DeMarcus Cousins   2016   601  1332    70   210   476   663 0.451 0.333 0.718
-##  3 Dirk Nowitzki      2016   498  1112   126   342   250   280 0.448 0.368 0.893
-##  4 Giannis Antetok…   2016   513  1013    28   110   296   409 0.506 0.255 0.724
-##  5 James Harden       2016   710  1617   236   657   720   837 0.439 0.359 0.860
-##  6 Jimmy Butler       2016   470  1034    64   206   395   475 0.455 0.311 0.832
-##  7 Kevin Durant       2016   698  1381   186   480   447   498 0.505 0.388 0.898
-##  8 LeBron James       2016   737  1416    87   282   359   491 0.520 0.309 0.731
-##  9 Marc Gasol         2016   328   707     2     3   203   245 0.464 0.667 0.829
-## 10 Stephen Curry      2016   805  1597   402   887   363   400 0.504 0.453 0.908</code></pre>
+##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP
+##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Damian Lillard          2016   618  1474   229   610   414   464 0.419 0.375 0.892
+##  2 DeMarcus Cousins        2016   601  1332    70   210   476   663 0.451 0.333 0.718
+##  3 Dirk Nowitzki           2016   498  1112   126   342   250   280 0.448 0.368 0.893
+##  4 Giannis Antetokounmpo   2016   513  1013    28   110   296   409 0.506 0.255 0.724
+##  5 James Harden            2016   710  1617   236   657   720   837 0.439 0.359 0.860
+##  6 Jimmy Butler            2016   470  1034    64   206   395   475 0.455 0.311 0.832
+##  7 Kevin Durant            2016   698  1381   186   480   447   498 0.505 0.388 0.898
+##  8 LeBron James            2016   737  1416    87   282   359   491 0.520 0.309 0.731
+##  9 Marc Gasol              2016   328   707     2     3   203   245 0.464 0.667 0.829
+## 10 Stephen Curry           2016   805  1597   402   887   363   400 0.504 0.453 0.908</code></pre>
 </div>
 </div>
 <div id="a-quick-digression-r-scripts" class="section level2">
@@ -1215,7 +1215,8 @@ window.</p>
 makes our script much easier to read. While it seems a bit cumbersome to
 write our code like this now, it will make our code much easier to read
 when we start to string multiple manipulations together using the pipe
-operator <code>%&gt;%</code>, which we will meet in Lecture 3.</p>
+operator <code>%&gt;%</code>, which we will meet in <a
+href="lecture3.html">Lecture 3</a>.</p>
 </div>
 
 

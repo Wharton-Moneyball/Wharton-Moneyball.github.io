@@ -5,22 +5,31 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
+library(tidyverse)
 ```
 
 In [Lecture 4](lecture4.html), we looked at predicting an MLB player's 2015 batting average using their 2014 batting average. We did so by binning the data and looking at the average within each bin. What if we wanted to make the bins infinitesimally small? This brings us to the ideas of *correlation* and the *regression method*.
 
-We again read in the data and plot the 2014 batting averages against the 2015 batting averages:
-```{r, message = FALSE}
-library(tidyverse)
-batting_2014_2015 <- read_csv("data/batting_2014_2015.csv")
+We again load the data (if you don't have it, download [here](data/batting_2014_2015.RData)) and use the `spread` function to separate the 2014 and 2015 batting averages into separate columns. 
+
+```{r load batting_2014_2015, message = FALSE}
+load("data/batting_2014_2015.RData")
+batting_2014_2015 <-
+  batting_2014_2015 %>%
+  spread(yearID, BA) %>%
+  rename(BA_2014 = `2014`,
+         BA_2015 = `2015`)
 ```
 
-```{r}
-g <- ggplot(data = batting_2014_2015)
-g <- g + geom_point(aes(x = BA_2014, y = BA_2015))
-g <- g + labs(x = "2014 Batting Average", y = "2015 Batting Average")
+Again we plot the 2014 batting averages against the 2015 batting averages:
+
+```{r plot batting_2014_2015}
+g <- ggplot(data = batting_2014_2015) +
+  geom_point(aes(x = BA_2014, y = BA_2015)) + 
+  labs(x = "2014 Batting Average", y = "2015 Batting Average")
 g
 ```
+
 
 ### Correlation
 
@@ -34,7 +43,7 @@ Loosely speaking, we can think of correlation as a measure of how well a line fi
 
 We can calculate the correlation between two variables in `R` using the function `cor()`. The correlation between the 2014 and 2015 batting averages is:
 
-```{r}
+```{r cor}
 cor(batting_2014_2015[["BA_2014"]], batting_2014_2015[["BA_2015"]])
 ```
 
@@ -42,7 +51,7 @@ We have a moderate amount of correlation between 2014 and 2015 batting averages,
 
 It is important to remember that correlation is only a measure of *linear* dependence between two variables. The below example shows data where $y = x^2$ exactly. 
 
-```{r, echo = F}
+```{r quadratic plot, echo = F}
 set.seed(1234)
 x <- runif(50, -1, 1)
 y <- x^2
@@ -53,7 +62,7 @@ eg
 
 Even though $x$ and $y$ are dependent, $r = -0.1$, indicating a weak linear dependence. If we were to draw a line to fit this data, it would be quite flat!
 
-```{r, echo = F}
+```{r quadratic plot line, echo = F}
 fit <- summary(lm(y~x, data = dat))
 a  <- fit$coefficients[1,1]
 b <- fit$coefficients[2,1]
@@ -63,15 +72,15 @@ eg
 
 Now let's go back to the 2014 and 2015 batting data. To visualize our correlation, we draw the *line of best fit* through our data.  In this example, the line of best fit has $y$-intercept = 0.141 and slope = 0.485 (we'll talk about how we find this values later). 
 
-```{r, echo=FALSE}
+```{r slope intercept, echo=FALSE}
 fit <- summary(lm(BA_2015~BA_2014, data = batting_2014_2015))
 a_best   <- fit$coefficients[1,1]
 b_best   <- fit$coefficients[2,1]
 ```
 
-```{r}
-g <- g + geom_abline(intercept = 0.141, slope = 0.485, color = "red")
-g <- g + labs(title = "y = 0.141 + 0.485x")
+```{r slope intercept plot}
+g <- g + geom_abline(intercept = 0.141, slope = 0.485, color = "red") + 
+  labs(title = "y = 0.141 + 0.485x")
 g
 ```
 
@@ -95,28 +104,29 @@ Now that we have our regression line, we can predict a future $y$ value given we
 $$\widehat{y} = 0.141 + 0.485 \times 0.31 = 0.291.$$
 Note that we use $\widehat{y}$ for a predicted value of $y$; we can think of this as $\widehat{y} = E[Y|x]$.
 
-```{r, echo = F}
-g <- ggplot(data = batting_2014_2015)
-g <- g + geom_point(aes(x = BA_2014, y = BA_2015))
-g <- g + labs(x = "2014 Batting Average", y = "2015 Batting Average")
-g <- g + geom_abline(intercept = 0.141, slope = 0.485, color = "red")
-g <- g + labs(title = "y = 0.141 + 0.485x")
-g <- g + geom_segment(aes(x = 0.19, y = 0.291, yend = 0.291, xend = 0.31), linetype = "dashed", color = "dodgerblue")
-g <- g + geom_segment(aes(x = 0.31, y = 0.20, yend = 0.291, xend = 0.31), linetype = "dashed", color = "dodgerblue")
-g <- g + geom_point(aes(x = 0.31, y = 0.291), color = "dodgerblue", size = 2)
-g <- g + ylim(0.2, 0.35)
-g <- g + xlim(0.19, 0.355)
-g <- g + coord_cartesian(expand = FALSE)
+```{r plot predicted y, echo = F}
+g <- ggplot(data = batting_2014_2015) + 
+  geom_point(aes(x = BA_2014, y = BA_2015)) + 
+  labs(x = "2014 Batting Average", y = "2015 Batting Average") + 
+  geom_abline(intercept = 0.141, slope = 0.485, color = "red") +
+  labs(title = "y = 0.141 + 0.485x") +
+  geom_segment(aes(x = 0.19, y = 0.291, yend = 0.291, xend = 0.31), linetype = "dashed", color = "dodgerblue") +
+  geom_segment(aes(x = 0.31, y = 0.20, yend = 0.291, xend = 0.31), linetype = "dashed", color = "dodgerblue") +
+  geom_point(aes(x = 0.31, y = 0.291), color = "dodgerblue", size = 2) +
+  ylim(0.2, 0.35) +
+  xlim(0.19, 0.355) +
+  coord_cartesian(expand = FALSE)
 g
 ```
 
 **Question:** What is the interpretation of the slope coefficient, $b$?
 
+
 ### Fitting linear models
 
 To find the regression coefficients, $a$ and $b$, we use the function `lm()`. The usage of `lm()` is as follows:
 
-```{r}
+```{r lm fn}
 fit <- lm(BA_2015 ~ BA_2014, data = batting_2014_2015)
 ```
 
@@ -125,29 +135,31 @@ The first argument in the `lm()` call is called a `formula`. This takes input `y
 The second argument in `lm()` is where we specifiy our data: `batting_2014_2015`. `R` then looks for the columns `BA_2014` and `BA_2015` in the given dataset to calculate the regression coefficients.
 
 Our new object, `fit`, contains a lot of information about our regression line. At the moment, we just want the coefficients. We can access the coefficients as follows:
-```{r}
+```{r get coefficients}
 fit[["coefficients"]]
 ```
+
 
 ### The `modelr` package
 
 `modelr` is another package that is part of the `tidyverse`. It has a number of useful functions for linear regression models.
 
-```{r}
+```{r load modelr}
 library(modelr)
 ```
 
 We can use the function `rsquare` to get the square of the correlation, $r^2$. The quantity $r^2$ is the *proportion of variance* explained by the linear model. The first argument of the `rsquare` function is the output `fit` from our linear model function `lm`. The second argument is our original dataset, `batting_2014_2015`:
 
-```{r}
+```{r rsquare}
 rsquare(fit, batting_2014_2015)
 ```
+
 
 #### Adding Predictions and Residuals
 
 We can also use `modelr` to add predictions and residuals to our original dataset:
 
-```{r}
+```{r add predictions residuals}
 batting_2014_2015 <- batting_2014_2015 %>% 
   add_predictions(model = fit, type = "response", var = "pred") %>%
   add_residuals(model = fit, var = "resid")
@@ -159,13 +171,14 @@ We similarly have to specify a `model` and `var` argument in `add_residual`.
 
 Using these new columns, we can create the original plot and add the residual lengths:
 
-```{r}
-g <- ggplot(batting_2014_2015)
-g <- g + geom_segment(aes(x = BA_2014, xend = BA_2014, y = BA_2015, yend = pred), color = "dodgerblue")
-g <- g + geom_point(aes(x = BA_2014, y = BA_2015))
-g <- g + geom_abline(intercept = 0.1409779, slope = 0.4851417, color = "red")
+```{r plot residuals}
+g <- ggplot(batting_2014_2015) +
+  geom_segment(aes(x = BA_2014, xend = BA_2014, y = BA_2015, yend = pred), color = "dodgerblue") + 
+  geom_point(aes(x = BA_2014, y = BA_2015)) + 
+  geom_abline(intercept = 0.1409779, slope = 0.4851417, color = "red")
 g
 ```
+
 
 ### Predict
 
@@ -173,14 +186,15 @@ So far we have looked at the predicted values from our *training* data; that is,
 
 In the below code, we enter the players' 2014 batting averages as the tibble `new_data`. We then use the function `predict`. The first argument of `predict` is the fitted model, `fit`. The second argument is `new_data`.
 
-```{r}
+```{r new_data predict}
 new_data <- tibble(BA_2014 = c(0.241, 0.31, 0.265))
 new_pred <- predict(fit, new_data)
 new_pred
 ```
 
 We can also add these predictions to `new_data` using `add_predictions`:
-```{r}
+
+```{r new_data add_predictions}
 new_data <- new_data %>%
   add_predictions(fit)
 new_data
@@ -188,20 +202,20 @@ new_data
 
 We add these predictions to our plot:
 
-```{r}
-g <- ggplot(batting_2014_2015)
-g <- g + geom_point(aes(x = BA_2014, y = BA_2015))
-g <- g + geom_abline(intercept = 0.1409779, slope = 0.4851417, color = "red")
-g <- g + geom_point(data = new_data, mapping = aes(x = BA_2014, y = pred), color = "dodgerblue")
+```{r plot new predictions}
+g <- ggplot(batting_2014_2015) +
+  geom_point(aes(x = BA_2014, y = BA_2015)) +
+  geom_abline(intercept = 0.1409779, slope = 0.4851417, color = "red") +
+  geom_point(data = new_data, mapping = aes(x = BA_2014, y = pred), color = "dodgerblue")
 g
 ```
 
 
 ### More visualization with `data_grid`
 
-In the above code, we drew our fitted line using our coefficients from `fit` and `geom_abline` to specifiy the slope and the intercept. An alternative way to plot our fitted line is to use the function `data_grid`. This function creates a grid of evenly spaced points over the range of our `x` data.
+In the above code, we drew our fitted line using our coefficients from `fit` and `geom_abline` to specify the slope and the intercept. An alternative way to plot our fitted line is to use the function `data_grid`. This function creates a grid of evenly spaced points over the range of our `x` data.
 
-```{r}
+```{r data_grid}
 grid <- batting_2014_2015 %>%
   data_grid(BA_2014)
 grid
@@ -209,17 +223,17 @@ grid
 
 We can then add our predicted values at these grid points using `add_predictions` and our linear model, `fit`.
 
-```{r}
+```{r grid predict}
 grid <- grid %>%
   add_predictions(fit)
 ```
 
 Using this `grid` dataset, we can add a `geom_line` over our scatter plot of 2014 vs 2015 batting averages. This just "connects the dots" between the points in `grid`. 
 
-```{r}
+```{r plot grid predictions}
 ggplot(data = batting_2014_2015) +
   geom_point(aes(x = BA_2014, y = BA_2015)) +
-  geom_line(data = grid, aes(x = BA_2014, y = pred), colour = "red")
+  geom_line(data = grid, aes(x = BA_2014, y = pred), color = "red")
 ```
 
 At this point you might ask: why should I use `data_grid` instead of just `geom_abline`? The real benefit of using `data_grid` is when you want to visualize a more complicated model for which there is no `geom`. For instance, if you have a probit or logistic model!

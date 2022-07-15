@@ -407,7 +407,7 @@ $(document).ready(function () {
     </li>
     <li class="divider"></li>
     <li>
-      <a href="lecture_nflscrapR.html">nflscrapR Lecture</a>
+      <a href="lecture_nflfastR.html">nflfastR Lecture</a>
     </li>
     <li>
       <a href="psX.html">Problem Set X</a>
@@ -560,72 +560,397 @@ the following in our console.</p>
 tidyverse packages:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span></code></pre></div>
-<p>We will focus on pitching statistics today. To load the pitching data
-into R from the Lahman package, we have to use the <code>data()</code>
-function. We also will need to <em>convert</em> the data into a
-tibble.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Pitching <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(Pitching)</span></code></pre></div>
+<p>As we know, many packages not only contain new functions, but also
+new datasets. Whenever we load a package, the datasets that are part of
+the package get implicitly loaded into the background. To see which
+datasets come with the Lahman package, we use the <code>data()</code>
+function.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="at">package =</span> <span class="st">&quot;Lahman&quot;</span>)</span></code></pre></div>
+<p>This will open up a new window with all of the names of the datasets
+contained in the Lahman package. Today, we will specifically be focusing
+on the dataset called <code>Pitching</code>, which contains season-level
+statistics on all pitchers going all the way back to 1871. We can view
+the first few rows of by using the <code>head()</code> function on the
+<code>Pitching</code> dataset.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Pitching)</span></code></pre></div>
+<pre><code>##    playerID yearID stint teamID lgID  W  L  G GS CG SHO SV IPouts   H  ER HR BB SO BAOpp   ERA IBB WP HBP BK  BFP GF   R SH SF GIDP
+## 1 bechtge01   1871     1    PH1   NA  1  2  3  3  2   0  0     78  43  23  0 11  1    NA  7.96  NA  7  NA  0  146  0  42 NA NA   NA
+## 2 brainas01   1871     1    WS3   NA 12 15 30 30 30   0  0    792 361 132  4 37 13    NA  4.50  NA  7  NA  0 1291  0 292 NA NA   NA
+## 3 fergubo01   1871     1    NY2   NA  0  0  1  0  0   0  0      3   8   3  0  0  0    NA 27.00  NA  2  NA  0   14  0   9 NA NA   NA
+## 4 fishech01   1871     1    RC1   NA  4 16 24 24 22   1  0    639 295 103  3 31 15    NA  4.35  NA 20  NA  0 1080  1 257 NA NA   NA
+## 5 fleetfr01   1871     1    NY2   NA  0  1  1  1  1   0  0     27  20  10  0  3  0    NA 10.00  NA  0  NA  0   57  0  21 NA NA   NA
+## 6 flowedi01   1871     1    TRO   NA  0  0  1  0  0   0  0      3   1   0  0  0  0    NA  0.00  NA  0  NA  0    3  1   0 NA NA   NA</code></pre>
 <p>There are tons of rows and columns in the dataset. For this exercise,
 we will only want to focus on ERA and also focus only on those pitchers
-who have pitched at least 150 innings. Unfortuntaely, the Lahman
+who have pitched at least 150 innings. Unfortunately, the Lahman
 pitching dataset does not contain the number of innings pitched (IP).
-Instead, it has a column called ``IPouts’’, which is the number of outs
+Instead, it has a column called “IPouts”, which is the number of outs
 pitched and whose formula is <span class="math inline">\(\text{IPOuts} =
 3 \times \text{IP}.\)</span></p>
 <p>Using the pipe and the dplyr verbs we learned in <a
-href="lecture2.html">Lecture 2</a>, we will create a new tibble called
-<code>pitching</code> which contains all players who pitched at least
-150 innings, played in either the AL or the NL and which contains only
-the columns corresponding the player, year, team, league, innings
+href="lecture2.html">Lecture 2</a>, we will create a new dataset called
+<code>pitching</code> (we make it all lowercase to differentiate from
+the original Lahman <code>Pitching</code> dataset), then add the “IP”
+column, filter the data to include only all players who pitched at least
+150 innings and played in either the AL or the NL, and select only the
+columns corresponding to the player, year, team, league, innings
 pitched, and ERA.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  Pitching <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">IP =</span> IPouts<span class="sc">/</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(lgID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;AL&#39;</span>, <span class="st">&#39;NL&#39;</span>) <span class="sc">&amp;</span> IP <span class="sc">&gt;=</span> <span class="dv">150</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, teamID, lgID, IP, ERA)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>pitching</span></code></pre></div>
-<pre><code>## # A tibble: 9,577 × 6
-##    playerID  yearID teamID lgID     IP   ERA
-##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 bondto01    1876 HAR    NL     408   1.68
-##  2 bordejo01   1876 BSN    NL     218.  2.89
-##  3 bradlfo01   1876 BSN    NL     173.  2.49
-##  4 bradlge01   1876 SL3    NL     573   1.23
-##  5 cummica01   1876 HAR    NL     216   1.67
-##  6 deando01    1876 CN1    NL     263.  3.73
-##  7 devliji01   1876 LS1    NL     622   1.56
-##  8 fishech01   1876 CN1    NL     229.  3.02
-##  9 knighlo01   1876 PHN    NL     282   2.62
-## 10 mannija01   1876 BSN    NL     197.  2.14
-## # … with 9,567 more rows</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  Pitching <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">IP =</span> IPouts<span class="sc">/</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(lgID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;AL&#39;</span>, <span class="st">&#39;NL&#39;</span>) <span class="sc">&amp;</span> IP <span class="sc">&gt;=</span> <span class="dv">150</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, teamID, lgID, IP, ERA)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>pitching</span></code></pre></div>
+<pre><code>##      playerID yearID teamID lgID       IP  ERA
+## 1    bondto01   1876    HAR   NL 408.0000 1.68
+## 2   bordejo01   1876    BSN   NL 218.3333 2.89
+## 3   bradlfo01   1876    BSN   NL 173.3333 2.49
+## 4   bradlge01   1876    SL3   NL 573.0000 1.23
+## 5   cummica01   1876    HAR   NL 216.0000 1.67
+## 6    deando01   1876    CN1   NL 262.6667 3.73
+## 7   devliji01   1876    LS1   NL 622.0000 1.56
+## 8   fishech01   1876    CN1   NL 229.3333 3.02
+## 9   knighlo01   1876    PHN   NL 282.0000 2.62
+## 10  mannija01   1876    BSN   NL 197.3333 2.14
+## 11  mathebo01   1876    NY3   NL 516.0000 2.86
+## 12  spaldal01   1876    CHN   NL 528.6667 1.75
+## 13  zettlge01   1876    PHN   NL 234.0000 3.88
+## 14  blongjo01   1877    SL3   NL 187.3333 2.74
+## 15   bondto01   1877    BSN   NL 521.0000 2.11
+## 16  bradlge01   1877    CHN   NL 394.0000 3.31
+## 17  cummica01   1877    CN1   NL 155.6667 4.34
+## 18  devliji01   1877    LS1   NL 559.0000 2.25
+## 19  larkite01   1877    HAR   NL 501.0000 2.14
+## 20  nichotr01   1877    SL3   NL 350.0000 2.60
+## 21   bondto01   1878    BSN   NL 532.6667 2.06
+## 22  goldemi01   1878    ML2   NL 161.0000 4.14
+## 23  larkite01   1878    CHN   NL 506.0000 2.24
+## 24  nolanth01   1878    IN1   NL 347.0000 2.57
+## 25   wardjo01   1878    PRO   NL 334.0000 1.51
+## 26  weavesa01   1878    ML2   NL 383.0000 1.95
+## 27  whitewi01   1878    CN1   NL 468.0000 1.79
+## 28   bondto01   1879    BSN   NL 555.3333 1.96
+## 29  bradlge01   1879    TRN   NL 487.0000 2.85
+## 30  foleycu01   1879    BSN   NL 161.6667 2.51
+## 31  galvipu01   1879    BFN   NL 593.0000 2.28
+## 32  hankifr01   1879    CHN   NL 230.6667 2.50
+## 33  larkite01   1879    CHN   NL 513.3333 2.44
+## 34  mathebo01   1879    PRO   NL 189.0000 2.29
+## 35  mccorha01   1879    SR1   NL 457.3333 2.99
+## 36  mccorji01   1879    CL2   NL 546.3333 2.42
+## 37  mitchbo01   1879    CL2   NL 194.6667 3.28
+## 38  purcebl01   1879    SR1   NL 179.6667 3.76
+## 39   wardjo01   1879    PRO   NL 587.0000 2.15
+## 40  whitewi01   1879    CN1   NL 680.0000 1.99
+## 41   bondto01   1880    BSN   NL 493.0000 2.67
+## 42  bradlge01   1880    PRO   NL 196.0000 1.38
+## 43  corcola01   1880    CHN   NL 536.3333 1.95
+## 44  foleycu01   1880    BSN   NL 238.0000 3.89
+## 45  galvipu01   1880    BFN   NL 458.6667 2.71
+## 46  goldsfr01   1880    CHN   NL 210.3333 1.75
+## 47  mccorji01   1880    CL2   NL 657.6667 1.85
+## 48  purcebl01   1880    CN1   NL 196.0000 3.21
+## 49  richmle01   1880    WOR   NL 590.6667 2.15
+## 50   wardjo01   1880    PRO   NL 595.0000 1.74
+## 51  welchmi01   1880    TRN   NL 574.0000 2.54
+## 52  whitewi01   1880    CN1   NL 517.3333 2.14
+## 53  corcola01   1881    CHN   NL 396.6667 2.31
+## 54  coreyfr01   1881    WOR   NL 188.6667 3.72
+## 55  derbyge01   1881    DTN   NL 494.6667 2.20
+## 56  galvipu01   1881    BFN   NL 474.0000 2.37
+## 57  goldsfr01   1881    CHN   NL 330.0000 2.59
+## 58  keefeti01   1881    TRN   NL 403.0000 3.24
+## 59  lynchja01   1881    BFN   NL 165.6667 3.59
+## 60  mccorji01   1881    CL2   NL 526.0000 2.45
+## 61  nolanth01   1881    CL2   NL 180.0000 3.05
+## 62  radboch01   1881    PRO   NL 325.3333 2.43
+## 63  richmle01   1881    WOR   NL 462.3333 3.39
+## 64   wardjo01   1881    PRO   NL 330.0000 2.13
+## 65  welchmi01   1881    TRN   NL 368.0000 2.67
+## 66  whitnji01   1881    BSN   NL 552.3333 2.48
+## 67  corcola01   1882    CHN   NL 355.6667 1.95
+## 68  dailyhu01   1882    BFN   NL 255.6667 2.99
+## 69  derbyge01   1882    DTN   NL 362.0000 3.26
+## 70  galvipu01   1882    BFN   NL 445.3333 3.17
+## 71  goldsfr01   1882    CHN   NL 405.0000 2.42
+## 72  keefeti01   1882    TRN   NL 376.0000 2.49
+## 73  mathebo01   1882    BSN   NL 285.0000 2.87
+## 74  mccorji01   1882    CL2   NL 595.6667 2.37
+## 75  radboch01   1882    PRO   NL 466.0000 2.11
+## 76  richmle01   1882    WOR   NL 411.0000 3.74
+## 77   wardjo01   1882    PRO   NL 286.0000 2.55
+## 78  welchmi01   1882    TRN   NL 281.0000 3.46
+## 79  whitnji01   1882    BSN   NL 420.0000 2.64
+## 80  wiedmst01   1882    DTN   NL 411.0000 2.63
+## 81  buffich01   1883    BSN   NL 333.0000 3.03
+## 82  colemjo01   1883    PHI   NL 538.3333 4.87
+## 83  corcola01   1883    CHN   NL 473.6667 2.49
+## 84  dailyhu01   1883    CL2   NL 378.6667 2.42
+## 85  galvipu01   1883    BFN   NL 656.3333 2.72
+## 86  goldsfr01   1883    CHN   NL 383.3333 3.15
+## 87  mccorji01   1883    CL2   NL 342.0000 1.84
+## 88  radboch01   1883    PRO   NL 632.3333 2.05
+## 89   shawdu01   1883    DTN   NL 227.0000 2.50
+## 90   wardjo01   1883    NY1   NL 277.0000 2.70
+## 91  welchmi01   1883    NY1   NL 426.0000 2.73
+## 92  whitnji01   1883    BSN   NL 514.0000 2.24
+## 93  wiedmst01   1883    DTN   NL 402.3333 3.53
+## 94  begleed01   1884    NY1   NL 266.0000 4.16
+## 95  buffich01   1884    BSN   NL 587.0000 2.15
+## 96  colemjo01   1884    PHI   NL 154.3333 4.90
+## 97  corcola01   1884    CHN   NL 516.6667 2.40
+## 98  ferguch01   1884    PHI   NL 416.6667 3.54
+## 99  galvipu01   1884    BFN   NL 636.3333 1.99
+## 100 goldsfr01   1884    CHN   NL 188.0000 4.26
+## 101 harkijo01   1884    CL2   NL 391.0000 3.68
+## 102 mccorji01   1884    CL2   NL 359.0000 2.86
+## 103 meinkfr01   1884    DTN   NL 289.0000 3.18
+## 104 moffesa01   1884    CL2   NL 197.6667 3.87
+## 105 radboch01   1884    PRO   NL 678.6667 1.38
+## 106 seradbi01   1884    BFN   NL 308.0000 4.27
+## 107  shawdu01   1884    DTN   NL 227.6667 3.04
+## 108 sweench01   1884    PRO   NL 221.0000 1.55
+## 109 vintobi01   1884    PHI   NL 182.0000 2.23
+## 110 welchmi01   1884    NY1   NL 557.3333 2.50
+## 111 whitnji01   1884    BSN   NL 336.0000 2.09
+## 112 wiedmst01   1884    DTN   NL 212.6667 3.72
+## 113 baldwla01   1885    DTN   NL 179.3333 1.86
+## 114 boylehe01   1885    SL5   NL 366.6667 2.75
+## 115 buffich01   1885    BSN   NL 434.3333 2.88
+## 116 clarkjo01   1885    CHN   NL 623.0000 1.85
+## 117 conwape01   1885    BFN   NL 210.0000 4.67
+## 118 dailyed01   1885    PHI   NL 440.0000 2.21
+## 119 ferguch01   1885    PHI   NL 405.0000 2.22
+## 120 galvipu01   1885    BFN   NL 284.0000 4.09
+## 121 getzich01   1885    DTN   NL 330.0000 3.03
+## 122 keefeti01   1885    NY1   NL 400.0000 1.58
+## 123 mccorji01   1885    CHN   NL 215.0000 2.43
+## 124 radboch01   1885    PRO   NL 445.6667 2.20
+## 125 seradbi01   1885    BFN   NL 241.3333 4.10
+## 126  shawdu01   1885    PRO   NL 399.6667 2.57
+## 127 sweench01   1885    SL5   NL 275.0000 3.93
+## 128 welchmi01   1885    NY1   NL 492.0000 1.66
+## 129 whitnji01   1885    BSN   NL 441.3333 2.98
+## 130 wiedmst01   1885    DTN   NL 330.0000 3.14
+## 131  woodpe01   1885    BFN   NL 198.6667 4.44
+## 132 baldwla01   1886    DTN   NL 487.0000 2.24
+## 133  barrbo01   1886    WS8   NL 191.6667 4.41
+## 134 boylehe01   1886    SL5   NL 210.0000 1.76
+## 135 buffich01   1886    BSN   NL 151.0000 4.59
+## 136 caseyda01   1886    PHI   NL 369.0000 2.41
+## 137 clarkjo01   1886    CHN   NL 466.6667 2.41
+## 138 conwape01   1886    KCN   NL 180.0000 5.75
+## 139 dailyed01   1886    PHI   NL 218.0000 3.06
+## 140 ferguch01   1886    PHI   NL 395.6667 1.98
+## 141 flynnjo02   1886    CHN   NL 257.0000 2.24
+## 142 getzich01   1886    DTN   NL 386.6667 3.03
+## 143 healyjo01   1886    SL5   NL 353.6667 2.88
+## 144 keefeti01   1886    NY1   NL 535.0000 2.56
+## 145 kirbyjo01   1886    SL5   NL 325.0000 3.30
+## 146 mccorji01   1886    CHN   NL 347.6667 2.82
+## 147 radboch01   1886    BSN   NL 509.3333 3.00
+## 148  shawdu01   1886    WS8   NL 385.6667 3.34
+## 149 stemmbi01   1886    BSN   NL 348.6667 3.02
+## 150 welchmi01   1886    NY1   NL 500.0000 2.99
+## 151 whitnji01   1886    KCN   NL 393.0000 4.49
+## 152 wiedmst01   1886    KCN   NL 427.6667 4.52
+## 153 baldwla01   1887    DTN   NL 211.0000 3.84
+## 154 baldwma01   1887    CHN   NL 334.0000 3.40
+## 155 boylehe01   1887    IN3   NL 328.0000 3.65
+## 156 buffich01   1887    PHI   NL 332.3333 3.66
+## 157 caseyda01   1887    PHI   NL 390.3333 2.86
+## 158 clarkjo01   1887    CHN   NL 523.0000 3.08
+## 159 conwadi01   1887    BSN   NL 222.3333 4.66
+## 160 ferguch01   1887    PHI   NL 297.3333 3.00
+## 161 galvipu01   1887    PIT   NL 440.6667 3.29
+## 162 getzich01   1887    DTN   NL 366.6667 3.73
+## 163 gilmofr01   1887    WS8   NL 234.6667 3.87
+## 164 healyjo01   1887    IN3   NL 341.0000 5.17
+## 165 keefeti01   1887    NY1   NL 476.6667 3.12
+## 166 maddeki01   1887    BSN   NL 321.0000 3.79
+##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 9411 rows ]</code></pre>
 <p><strong>IMPORTANT</strong>: Before reading any further, make sure you
 and your team understand completely what is happening in the code
 above.</p>
 <p>Now that we have ERA for all pitchers eligible for our analysis, we
 can plot the ERAs by year.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pitching) <span class="sc">+</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pitching) <span class="sc">+</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>)</span></code></pre></div>
 <p><img src="lecture3_files/figure-html/plot%20ERAs%20year-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Looking at the plot, it appears that some of the pitchers from the
 first few decades of baseball had the lowest ERA. Using
 <code>arrange()</code>, we can see which pitcher had the best season
 according to ERA.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(pitching, ERA)</span></code></pre></div>
-<pre><code>## # A tibble: 9,577 × 6
-##    playerID  yearID teamID lgID     IP   ERA
-##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 leonadu01   1914 BOS    AL     225.  0.96
-##  2 brownmo01   1906 CHN    NL     277.  1.04
-##  3 gibsobo01   1968 SLN    NL     305.  1.12
-##  4 mathech01   1909 NY1    NL     275.  1.14
-##  5 johnswa01   1913 WS1    AL     346   1.14
-##  6 pfiesja01   1907 CHN    NL     195   1.15
-##  7 jossad01    1908 CLE    AL     325   1.16
-##  8 lundgca01   1907 CHN    NL     207   1.17
-##  9 alexape01   1915 PHI    NL     376.  1.22
-## 10 bradlge01   1876 SL3    NL     573   1.23
-## # … with 9,567 more rows</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(pitching, ERA)</span></code></pre></div>
+<pre><code>##      playerID yearID teamID lgID       IP  ERA
+## 1   leonadu01   1914    BOS   AL 224.6667 0.96
+## 2   brownmo01   1906    CHN   NL 277.3333 1.04
+## 3   gibsobo01   1968    SLN   NL 304.6667 1.12
+## 4   mathech01   1909    NY1   NL 275.3333 1.14
+## 5   johnswa01   1913    WS1   AL 346.0000 1.14
+## 6   pfiesja01   1907    CHN   NL 195.0000 1.15
+## 7    jossad01   1908    CLE   AL 325.0000 1.16
+## 8   lundgca01   1907    CHN   NL 207.0000 1.17
+## 9   alexape01   1915    PHI   NL 376.3333 1.22
+## 10  bradlge01   1876    SL3   NL 573.0000 1.23
+## 11  youngcy01   1908    BOS   AL 299.0000 1.26
+## 12  walshed01   1910    CHA   AL 369.6667 1.27
+## 13  johnswa01   1918    WS1   AL 326.0000 1.27
+## 14  mathech01   1905    NY1   NL 338.6667 1.28
+## 15  tayloja02   1902    CHN   NL 333.6667 1.29
+## 16  coombja01   1910    PHA   AL 353.0000 1.30
+## 17  brownmo01   1909    CHN   NL 342.6667 1.31
+## 18  johnswa01   1910    WS1   AL 370.0000 1.36
+## 19  bradlge01   1880    PRO   NL 196.0000 1.38
+## 20  radboch01   1884    PRO   NL 678.6667 1.38
+## 21  brownmo01   1907    CHN   NL 233.0000 1.39
+## 22  krausha01   1909    PHA   AL 213.0000 1.39
+## 23  johnswa01   1912    WS1   AL 369.0000 1.39
+## 24  walshed01   1909    CHA   AL 230.3333 1.41
+## 25  reulbed01   1905    CHN   NL 291.6667 1.42
+## 26  walshed01   1908    CHA   AL 464.0000 1.42
+## 27  overaor01   1909    CHN   NL 285.0000 1.42
+## 28  mathech01   1908    NY1   NL 390.6667 1.43
+## 29  anderfr01   1917    NY1   NL 162.0000 1.44
+## 30  brownmo01   1908    CHN   NL 312.3333 1.47
+## 31  wadderu01   1905    PHA   AL 328.6667 1.48
+## 32   woodjo02   1915    BOS   AL 157.3333 1.49
+## 33  johnswa01   1919    WS1   AL 290.3333 1.49
+## 34   wardjo01   1878    PRO   NL 334.0000 1.51
+## 35  pfiesja01   1906    CHN   NL 250.6667 1.51
+## 36  whitedo01   1906    CHA   AL 219.3333 1.52
+## 37  mcquige01   1908    PHI   NL 359.6667 1.53
+## 38  cicoted01   1917    CHA   AL 346.6667 1.53
+## 39  goodedw01   1985    NYN   NL 276.6667 1.53
+## 40  sweench01   1884    PRO   NL 221.0000 1.55
+## 41  morgacy01   1910    PHA   AL 290.6667 1.55
+## 42  johnswa01   1915    WS1   AL 336.6667 1.55
+## 43  alexape01   1916    PHI   NL 389.0000 1.55
+## 44  devliji01   1876    LS1   NL 622.0000 1.56
+## 45  camniho01   1908    PIT   NL 236.6667 1.56
+## 46  maddugr01   1994    ATL   NL 202.0000 1.56
+## 47  keefeti01   1885    NY1   NL 400.0000 1.58
+## 48  bendech01   1910    PHA   AL 250.0000 1.58
+## 49  cicoted01   1913    CHA   AL 268.0000 1.58
+## 50  toneyfr01   1915    CIN   NL 222.6667 1.58
+## 51  marquru01   1916    BRO   NL 205.0000 1.58
+## 52   jossad01   1904    CLE   AL 192.3333 1.59
+## 53  peltyba01   1906    SLA   AL 260.6667 1.59
+## 54  walshed01   1907    CHA   AL 422.3333 1.60
+## 55  mcquige01   1910    PHI   NL 152.3333 1.60
+## 56  tiantlu01   1968    CLE   AL 258.3333 1.60
+## 57  mcginjo01   1904    NY1   NL 408.0000 1.61
+## 58  youngcy01   1901    BOS   AL 371.3333 1.62
+## 59  wadderu01   1904    PHA   AL 383.0000 1.62
+## 60  camniho01   1909    PIT   NL 283.0000 1.62
+## 61  collira01   1910    BOS   AL 244.6667 1.62
+## 62  maddugr01   1995    ATL   NL 209.6667 1.63
+## 63  summeed01   1908    DET   AL 301.0000 1.64
+## 64  shoreer01   1915    BOS   AL 247.0000 1.64
+## 65  chandsp01   1943    NYA   AL 253.0000 1.64
+## 66  reulbed01   1906    CHN   NL 218.0000 1.65
+## 67  johnswa01   1908    WS1   AL 256.3333 1.65
+## 68  morgacy01   1909    PHA   AL 228.6667 1.65
+## 69   fordru01   1910    NYA   AL 299.6667 1.65
+## 70  chancde01   1964    LAA   AL 278.3333 1.65
+## 71  welchmi01   1885    NY1   NL 492.0000 1.66
+## 72  leevesa01   1907    PIT   NL 216.6667 1.66
+## 73  bendech01   1909    PHA   AL 250.0000 1.66
+## 74  hubbeca01   1933    NY1   NL 308.6667 1.66
+## 75  greinza01   2015    LAN   NL 222.6667 1.66
+## 76  cummica01   1876    HAR   NL 216.0000 1.67
+## 77   hessot01   1904    CLE   AL 151.3333 1.67
+## 78   bondto01   1876    HAR   NL 408.0000 1.68
+## 79  garvine01   1904    BRO   NL 181.6667 1.68
+## 80  overaor01   1907    CHN   NL 268.3333 1.68
+## 81  reulbed01   1907    CHN   NL 192.0000 1.69
+## 82   woodjo02   1910    BOS   AL 196.6667 1.69
+## 83  burnsbi01   1908    WS1   AL 164.0000 1.70
+## 84  fosteru01   1914    BOS   AL 211.6667 1.70
+## 85  degroja01   2018    NYN   NL 217.0000 1.70
+## 86   jossad01   1909    CLE   AL 242.6667 1.71
+## 87  killied01   1909    DET   AL 173.3333 1.71
+## 88   jossad01   1906    CLE   AL 282.0000 1.72
+## 89  whitedo01   1909    CHA   AL 177.6667 1.72
+## 90   doakbi01   1914    SLN   NL 256.0000 1.72
+## 91  johnswa01   1914    WS1   AL 371.6667 1.72
+## 92  alexape01   1919    CHN   NL 235.0000 1.72
+## 93  eichhma01   1986    TOR   AL 157.0000 1.72
+## 94  willivi01   1906    PIT   NL 322.0000 1.73
+## 95  ewingbo01   1907    CIN   NL 332.6667 1.73
+## 96  koufasa01   1966    LAN   NL 323.0000 1.73
+## 97   wardjo01   1880    PRO   NL 595.0000 1.74
+## 98  keefeti01   1888    NY1   NL 434.3333 1.74
+## 99  mooreea01   1903    CLE   AL 247.6667 1.74
+## 100 chechch01   1908    CLE   AL 165.6667 1.74
+## 101  maysca01   1917    BOS   AL 289.0000 1.74
+## 102 vaughhi01   1918    CHN   NL 290.3333 1.74
+## 103 koufasa01   1964    LAN   NL 223.0000 1.74
+## 104 guidrro01   1978    NYA   AL 273.6667 1.74
+## 105 martipe02   2000    BOS   AL 217.0000 1.74
+## 106 spaldal01   1876    CHN   NL 528.6667 1.75
+## 107 goldsfr01   1880    CHN   NL 210.3333 1.75
+## 108  ruthba01   1916    BOS   AL 323.6667 1.75
+## 109 boylehe01   1886    SL5   NL 210.0000 1.76
+## 110 whitedo01   1905    CHA   AL 260.3333 1.76
+## 111 planked01   1909    PHA   AL 265.3333 1.76
+## 112 seaveto01   1971    NYN   NL 286.3333 1.76
+## 113  hahnno01   1902    CIN   NL 321.0000 1.77
+## 114 powelja01   1906    SLA   AL 244.0000 1.77
+## 115 rhoadbo01   1908    CLE   AL 270.0000 1.77
+## 116 kershcl01   2014    LAN   NL 198.3333 1.77
+## 117 arrieja01   2015    CHN   NL 229.0000 1.77
+## 118 whitedo01   1904    CHA   AL 228.0000 1.78
+## 119 killied01   1907    DET   AL 314.0000 1.78
+## 120 reulbed01   1909    CHN   NL 262.6667 1.78
+## 121 cicoted01   1916    CHA   AL 187.0000 1.78
+## 122 coopemo01   1942    SLN   NL 278.6667 1.78
+## 123 whitewi01   1878    CN1   NL 468.0000 1.79
+## 124 vaughhi01   1919    CHN   NL 306.6667 1.79
+## 125 rhoadbo01   1906    CLE   AL 315.0000 1.80
+## 126 smithfr03   1909    CHA   AL 365.0000 1.80
+## 127  coleki01   1910    CHN   NL 239.6667 1.80
+## 128 greggve01   1911    CLE   AL 244.6667 1.80
+## 129 covelst01   1917    CLE   AL 298.3333 1.81
+## 130 newhoha01   1945    DET   AL 313.3333 1.81
+## 131 mcdowsa01   1968    CLE   AL 269.0000 1.81
+## 132 chesbja01   1904    NYA   AL 454.6667 1.82
+## 133 youngcy01   1905    BOS   AL 320.6667 1.82
+## 134 covelst01   1918    CLE   AL 311.0000 1.82
+## 135 cicoted01   1919    CHA   AL 306.6667 1.82
+## 136 ruethdu01   1919    CIN   NL 242.6667 1.82
+## 137  bluevi01   1971    OAK   AL 312.0000 1.82
+## 138  hessot01   1906    CLE   AL 333.6667 1.83
+## 139  jossad01   1907    CLE   AL 338.6667 1.83
+## 140 richile01   1908    PHI   NL 157.6667 1.83
+## 141 vaughhi01   1910    NYA   AL 221.6667 1.83
+## 142 alexape01   1917    PHI   NL 388.0000 1.83
+## 143 kershcl01   2013    LAN   NL 236.0000 1.83
+## 144 mccorji01   1883    CL2   NL 342.0000 1.84
+## 145 coaklan01   1905    PHA   AL 255.0000 1.84
+## 146 toneyfr01   1919    NY1   NL 181.0000 1.84
+## 147 mccorji01   1880    CL2   NL 657.6667 1.85
+## 148 clarkjo01   1885    CHN   NL 623.0000 1.85
+## 149 rixeyep01   1916    PHI   NL 287.0000 1.85
+## 150 baldwla01   1885    DTN   NL 179.3333 1.86
+## 151 brownmo01   1904    CHN   NL 212.3333 1.86
+## 152 coaklan01   1908    CIN   NL 242.3333 1.86
+## 153 brownmo01   1910    CHN   NL 295.3333 1.86
+## 154 leifile01   1906    PIT   NL 255.6667 1.87
+## 155 wilheka01   1908    BRO   NL 332.0000 1.87
+## 156 coopewi01   1916    PIT   NL 246.0000 1.87
+## 157 niekrph01   1967    ATL   NL 207.0000 1.87
+## 158  woodwi01   1968    CHA   AL 159.0000 1.87
+## 159 clemero02   2005    HOU   NL 211.3333 1.87
+## 160 griffcl01   1898    CHN   NL 325.6667 1.88
+## 161 altroni01   1905    CHA   AL 315.6667 1.88
+## 162 walshed01   1906    CHA   AL 278.3333 1.88
+## 163  lakejo01   1909    NYA   AL 215.3333 1.88
+## 164 perripo01   1917    NY1   NL 215.0000 1.88
+## 165 koufasa01   1963    LAN   NL 311.0000 1.88
+## 166 horlejo01   1964    CHA   AL 210.6667 1.88
+##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 9411 rows ]</code></pre>
 <p>It would appear that the best pitching season of all time was <a
 href="https://en.wikipedia.org/wiki/Dutch_Leonard_(left-handed_pitcher)">Dutch
 Leonard’s</a> 1914 season with the Red Sox. The next best was <a
@@ -636,33 +961,164 @@ Brown’s 1.04 ERA?</p>
 <code>mutate()</code> function. There is a minor complication: there is
 not a built-in function for standardizing a variable in R! Luckily for
 us, R allows us to define our own functions like so:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>standardize <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>( (x <span class="sc">-</span> mu)<span class="sc">/</span>sigma )</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>standardize <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>( (x <span class="sc">-</span> mu)<span class="sc">/</span>sigma )</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>For now, don’t worry too much about the syntax or the
-<code>na.rm = TRUE</code> bits.We will discuss them in more depth later.
-Armed with our <code>standardize()</code> function, we can add a column
-called zERA_all which transforms ERA to the standardized scale.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  pitching <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">zERA_all =</span> <span class="fu">standardize</span>(ERA))</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(zERA_all)</span></code></pre></div>
-<pre><code>## # A tibble: 9,577 × 7
-##    playerID  yearID teamID lgID     IP   ERA zERA_all
-##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-##  1 leonadu01   1914 BOS    AL     225.  0.96    -3.01
-##  2 brownmo01   1906 CHN    NL     277.  1.04    -2.92
-##  3 gibsobo01   1968 SLN    NL     305.  1.12    -2.83
-##  4 mathech01   1909 NY1    NL     275.  1.14    -2.81
-##  5 johnswa01   1913 WS1    AL     346   1.14    -2.81
-##  6 pfiesja01   1907 CHN    NL     195   1.15    -2.79
-##  7 jossad01    1908 CLE    AL     325   1.16    -2.78
-##  8 lundgca01   1907 CHN    NL     207   1.17    -2.77
-##  9 alexape01   1915 PHI    NL     376.  1.22    -2.71
-## 10 bradlge01   1876 SL3    NL     573   1.23    -2.70
-## # … with 9,567 more rows</code></pre>
+<code>na.rm = TRUE</code> bits; we will discuss them in more depth
+later. Armed with our <code>standardize()</code> function, we can add a
+column called zERA_all which transforms ERA to the standardized
+scale.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  pitching <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">zERA_all =</span> <span class="fu">standardize</span>(ERA))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(zERA_all)</span></code></pre></div>
+<pre><code>##      playerID yearID teamID lgID       IP  ERA  zERA_all
+## 1   leonadu01   1914    BOS   AL 224.6667 0.96 -3.009996
+## 2   brownmo01   1906    CHN   NL 277.3333 1.04 -2.919195
+## 3   gibsobo01   1968    SLN   NL 304.6667 1.12 -2.828394
+## 4   mathech01   1909    NY1   NL 275.3333 1.14 -2.805694
+## 5   johnswa01   1913    WS1   AL 346.0000 1.14 -2.805694
+## 6   pfiesja01   1907    CHN   NL 195.0000 1.15 -2.794344
+## 7    jossad01   1908    CLE   AL 325.0000 1.16 -2.782993
+## 8   lundgca01   1907    CHN   NL 207.0000 1.17 -2.771643
+## 9   alexape01   1915    PHI   NL 376.3333 1.22 -2.714893
+## 10  bradlge01   1876    SL3   NL 573.0000 1.23 -2.703543
+## 11  youngcy01   1908    BOS   AL 299.0000 1.26 -2.669492
+## 12  walshed01   1910    CHA   AL 369.6667 1.27 -2.658142
+## 13  johnswa01   1918    WS1   AL 326.0000 1.27 -2.658142
+## 14  mathech01   1905    NY1   NL 338.6667 1.28 -2.646792
+## 15  tayloja02   1902    CHN   NL 333.6667 1.29 -2.635442
+## 16  coombja01   1910    PHA   AL 353.0000 1.30 -2.624092
+## 17  brownmo01   1909    CHN   NL 342.6667 1.31 -2.612742
+## 18  johnswa01   1910    WS1   AL 370.0000 1.36 -2.555991
+## 19  bradlge01   1880    PRO   NL 196.0000 1.38 -2.533291
+## 20  radboch01   1884    PRO   NL 678.6667 1.38 -2.533291
+## 21  brownmo01   1907    CHN   NL 233.0000 1.39 -2.521941
+## 22  krausha01   1909    PHA   AL 213.0000 1.39 -2.521941
+## 23  johnswa01   1912    WS1   AL 369.0000 1.39 -2.521941
+## 24  walshed01   1909    CHA   AL 230.3333 1.41 -2.499241
+## 25  reulbed01   1905    CHN   NL 291.6667 1.42 -2.487890
+## 26  walshed01   1908    CHA   AL 464.0000 1.42 -2.487890
+## 27  overaor01   1909    CHN   NL 285.0000 1.42 -2.487890
+## 28  mathech01   1908    NY1   NL 390.6667 1.43 -2.476540
+## 29  anderfr01   1917    NY1   NL 162.0000 1.44 -2.465190
+## 30  brownmo01   1908    CHN   NL 312.3333 1.47 -2.431140
+## 31  wadderu01   1905    PHA   AL 328.6667 1.48 -2.419790
+## 32   woodjo02   1915    BOS   AL 157.3333 1.49 -2.408440
+## 33  johnswa01   1919    WS1   AL 290.3333 1.49 -2.408440
+## 34   wardjo01   1878    PRO   NL 334.0000 1.51 -2.385739
+## 35  pfiesja01   1906    CHN   NL 250.6667 1.51 -2.385739
+## 36  whitedo01   1906    CHA   AL 219.3333 1.52 -2.374389
+## 37  mcquige01   1908    PHI   NL 359.6667 1.53 -2.363039
+## 38  cicoted01   1917    CHA   AL 346.6667 1.53 -2.363039
+## 39  goodedw01   1985    NYN   NL 276.6667 1.53 -2.363039
+## 40  sweench01   1884    PRO   NL 221.0000 1.55 -2.340339
+## 41  morgacy01   1910    PHA   AL 290.6667 1.55 -2.340339
+## 42  johnswa01   1915    WS1   AL 336.6667 1.55 -2.340339
+## 43  alexape01   1916    PHI   NL 389.0000 1.55 -2.340339
+## 44  devliji01   1876    LS1   NL 622.0000 1.56 -2.328989
+## 45  camniho01   1908    PIT   NL 236.6667 1.56 -2.328989
+## 46  maddugr01   1994    ATL   NL 202.0000 1.56 -2.328989
+## 47  keefeti01   1885    NY1   NL 400.0000 1.58 -2.306289
+## 48  bendech01   1910    PHA   AL 250.0000 1.58 -2.306289
+## 49  cicoted01   1913    CHA   AL 268.0000 1.58 -2.306289
+## 50  toneyfr01   1915    CIN   NL 222.6667 1.58 -2.306289
+## 51  marquru01   1916    BRO   NL 205.0000 1.58 -2.306289
+## 52   jossad01   1904    CLE   AL 192.3333 1.59 -2.294938
+## 53  peltyba01   1906    SLA   AL 260.6667 1.59 -2.294938
+## 54  walshed01   1907    CHA   AL 422.3333 1.60 -2.283588
+## 55  mcquige01   1910    PHI   NL 152.3333 1.60 -2.283588
+## 56  tiantlu01   1968    CLE   AL 258.3333 1.60 -2.283588
+## 57  mcginjo01   1904    NY1   NL 408.0000 1.61 -2.272238
+## 58  youngcy01   1901    BOS   AL 371.3333 1.62 -2.260888
+## 59  wadderu01   1904    PHA   AL 383.0000 1.62 -2.260888
+## 60  camniho01   1909    PIT   NL 283.0000 1.62 -2.260888
+## 61  collira01   1910    BOS   AL 244.6667 1.62 -2.260888
+## 62  maddugr01   1995    ATL   NL 209.6667 1.63 -2.249538
+## 63  summeed01   1908    DET   AL 301.0000 1.64 -2.238188
+## 64  shoreer01   1915    BOS   AL 247.0000 1.64 -2.238188
+## 65  chandsp01   1943    NYA   AL 253.0000 1.64 -2.238188
+## 66  reulbed01   1906    CHN   NL 218.0000 1.65 -2.226838
+## 67  johnswa01   1908    WS1   AL 256.3333 1.65 -2.226838
+## 68  morgacy01   1909    PHA   AL 228.6667 1.65 -2.226838
+## 69   fordru01   1910    NYA   AL 299.6667 1.65 -2.226838
+## 70  chancde01   1964    LAA   AL 278.3333 1.65 -2.226838
+## 71  welchmi01   1885    NY1   NL 492.0000 1.66 -2.215488
+## 72  leevesa01   1907    PIT   NL 216.6667 1.66 -2.215488
+## 73  bendech01   1909    PHA   AL 250.0000 1.66 -2.215488
+## 74  hubbeca01   1933    NY1   NL 308.6667 1.66 -2.215488
+## 75  greinza01   2015    LAN   NL 222.6667 1.66 -2.215488
+## 76  cummica01   1876    HAR   NL 216.0000 1.67 -2.204138
+## 77   hessot01   1904    CLE   AL 151.3333 1.67 -2.204138
+## 78   bondto01   1876    HAR   NL 408.0000 1.68 -2.192787
+## 79  garvine01   1904    BRO   NL 181.6667 1.68 -2.192787
+## 80  overaor01   1907    CHN   NL 268.3333 1.68 -2.192787
+## 81  reulbed01   1907    CHN   NL 192.0000 1.69 -2.181437
+## 82   woodjo02   1910    BOS   AL 196.6667 1.69 -2.181437
+## 83  burnsbi01   1908    WS1   AL 164.0000 1.70 -2.170087
+## 84  fosteru01   1914    BOS   AL 211.6667 1.70 -2.170087
+## 85  degroja01   2018    NYN   NL 217.0000 1.70 -2.170087
+## 86   jossad01   1909    CLE   AL 242.6667 1.71 -2.158737
+## 87  killied01   1909    DET   AL 173.3333 1.71 -2.158737
+## 88   jossad01   1906    CLE   AL 282.0000 1.72 -2.147387
+## 89  whitedo01   1909    CHA   AL 177.6667 1.72 -2.147387
+## 90   doakbi01   1914    SLN   NL 256.0000 1.72 -2.147387
+## 91  johnswa01   1914    WS1   AL 371.6667 1.72 -2.147387
+## 92  alexape01   1919    CHN   NL 235.0000 1.72 -2.147387
+## 93  eichhma01   1986    TOR   AL 157.0000 1.72 -2.147387
+## 94  willivi01   1906    PIT   NL 322.0000 1.73 -2.136037
+## 95  ewingbo01   1907    CIN   NL 332.6667 1.73 -2.136037
+## 96  koufasa01   1966    LAN   NL 323.0000 1.73 -2.136037
+## 97   wardjo01   1880    PRO   NL 595.0000 1.74 -2.124687
+## 98  keefeti01   1888    NY1   NL 434.3333 1.74 -2.124687
+## 99  mooreea01   1903    CLE   AL 247.6667 1.74 -2.124687
+## 100 chechch01   1908    CLE   AL 165.6667 1.74 -2.124687
+## 101  maysca01   1917    BOS   AL 289.0000 1.74 -2.124687
+## 102 vaughhi01   1918    CHN   NL 290.3333 1.74 -2.124687
+## 103 koufasa01   1964    LAN   NL 223.0000 1.74 -2.124687
+## 104 guidrro01   1978    NYA   AL 273.6667 1.74 -2.124687
+## 105 martipe02   2000    BOS   AL 217.0000 1.74 -2.124687
+## 106 spaldal01   1876    CHN   NL 528.6667 1.75 -2.113337
+## 107 goldsfr01   1880    CHN   NL 210.3333 1.75 -2.113337
+## 108  ruthba01   1916    BOS   AL 323.6667 1.75 -2.113337
+## 109 boylehe01   1886    SL5   NL 210.0000 1.76 -2.101987
+## 110 whitedo01   1905    CHA   AL 260.3333 1.76 -2.101987
+## 111 planked01   1909    PHA   AL 265.3333 1.76 -2.101987
+## 112 seaveto01   1971    NYN   NL 286.3333 1.76 -2.101987
+## 113  hahnno01   1902    CIN   NL 321.0000 1.77 -2.090636
+## 114 powelja01   1906    SLA   AL 244.0000 1.77 -2.090636
+## 115 rhoadbo01   1908    CLE   AL 270.0000 1.77 -2.090636
+## 116 kershcl01   2014    LAN   NL 198.3333 1.77 -2.090636
+## 117 arrieja01   2015    CHN   NL 229.0000 1.77 -2.090636
+## 118 whitedo01   1904    CHA   AL 228.0000 1.78 -2.079286
+## 119 killied01   1907    DET   AL 314.0000 1.78 -2.079286
+## 120 reulbed01   1909    CHN   NL 262.6667 1.78 -2.079286
+## 121 cicoted01   1916    CHA   AL 187.0000 1.78 -2.079286
+## 122 coopemo01   1942    SLN   NL 278.6667 1.78 -2.079286
+## 123 whitewi01   1878    CN1   NL 468.0000 1.79 -2.067936
+## 124 vaughhi01   1919    CHN   NL 306.6667 1.79 -2.067936
+## 125 rhoadbo01   1906    CLE   AL 315.0000 1.80 -2.056586
+## 126 smithfr03   1909    CHA   AL 365.0000 1.80 -2.056586
+## 127  coleki01   1910    CHN   NL 239.6667 1.80 -2.056586
+## 128 greggve01   1911    CLE   AL 244.6667 1.80 -2.056586
+## 129 covelst01   1917    CLE   AL 298.3333 1.81 -2.045236
+## 130 newhoha01   1945    DET   AL 313.3333 1.81 -2.045236
+## 131 mcdowsa01   1968    CLE   AL 269.0000 1.81 -2.045236
+## 132 chesbja01   1904    NYA   AL 454.6667 1.82 -2.033886
+## 133 youngcy01   1905    BOS   AL 320.6667 1.82 -2.033886
+## 134 covelst01   1918    CLE   AL 311.0000 1.82 -2.033886
+## 135 cicoted01   1919    CHA   AL 306.6667 1.82 -2.033886
+## 136 ruethdu01   1919    CIN   NL 242.6667 1.82 -2.033886
+## 137  bluevi01   1971    OAK   AL 312.0000 1.82 -2.033886
+## 138  hessot01   1906    CLE   AL 333.6667 1.83 -2.022536
+## 139  jossad01   1907    CLE   AL 338.6667 1.83 -2.022536
+## 140 richile01   1908    PHI   NL 157.6667 1.83 -2.022536
+## 141 vaughhi01   1910    NYA   AL 221.6667 1.83 -2.022536
+## 142 alexape01   1917    PHI   NL 388.0000 1.83 -2.022536
+##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 9435 rows ]</code></pre>
 <p>Now we see that Leonard’s 0.96 ERA was about 3 standard deviations
 below the overall mean of qualified pitchers, while Brown’s was about
 2.91 standard deviations below the mean. On the other hand, the
@@ -683,7 +1139,7 @@ deviation of ERAs within each season.</p>
 <h2>Grouped Calculations</h2>
 <p>Before proceeding, let’s think for a minute about what the following
 code does:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
 <p>Very often in a data analysis, instead of performing a calculation on
 the entire data set, you’ll want to first <em>split</em> the data into
 smaller subsets, <em>apply</em> the same calculation on every subset,
@@ -696,9 +1152,9 @@ tidyverse) is the ease with which you can follow this
 “split-apply-combine” paradigm using the function
 <code>group_by()</code>. We can use this in concert with the pipe as
 follows.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  pitching <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID)</span></code></pre></div>
 <p>When we print out <code>pitching</code> now, we notice an extra line
 that tells us the grouping variable. Now when we pass this tibble on to
 subsequent calculations, these calculations will be done on each group.
@@ -709,17 +1165,17 @@ we now run the same code again, we actually get a tibble with one row
 per year that lists the mean and standard deviation of ERA <em>within
 each year</em>. We will save this tibble as
 <code>pitching_summary</code>:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pitching_summary <span class="ot">&lt;-</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pitching_summary <span class="ot">&lt;-</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  pitching <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
 <p>In <a href="lecture2.html">Lecture 2</a>, we listed a few useful
 functions to be used within <code>summarize()</code>. One of them,
 <code>n()</code>, returns counts and is especially useful when used on a
 grouped tibble. We can, for instance, count the number of pitchers in
 our dataset within each year using <code>n()</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(count)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(count)</span></code></pre></div>
 <pre><code>## # A tibble: 145 × 2
 ##    yearID count
 ##     &lt;int&gt; &lt;int&gt;
@@ -736,18 +1192,18 @@ our dataset within each year using <code>n()</code>.</p>
 ## # … with 135 more rows</code></pre>
 <p><strong>Exercise</strong>: Describe, in words, what the following
 code does.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(count <span class="sc">&gt;=</span> <span class="dv">90</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(count))</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(count <span class="sc">&gt;=</span> <span class="dv">90</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(count))</span></code></pre></div>
 <p>Once we add a grouping to our tibble, it also changes the way
 <code>mutate()</code> operates on the tibble. We can now standardize
 each pitcher’s ERA within each year and save that result in a column
 called zERA_year.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  pitching <span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">zERA_year =</span> <span class="fu">standardize</span>(ERA))</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(zERA_year)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  pitching <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">zERA_year =</span> <span class="fu">standardize</span>(ERA))</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(zERA_year)</span></code></pre></div>
 <pre><code>## # A tibble: 9,577 × 8
 ## # Groups:   yearID [145]
 ##    playerID  yearID teamID lgID     IP   ERA zERA_all zERA_year
@@ -773,12 +1229,12 @@ let these verbs (and others) operate on the entire dataset again. To
 remove the grouping, we have to use the <code>ungroup()</code> function.
 Remember, as with the other dplyr verbs we’ve learned, we need to save
 the result if we want the tbl to remain ungrouped!</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span> </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  pitching <span class="sc">%&gt;%</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  pitching <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 <p>To verify that we’ve indeed removed the grouping, let’s re-run the
 code from above to compute the mean and standard deviation of ERA.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 2
 ##    mean    sd
 ##   &lt;dbl&gt; &lt;dbl&gt;
@@ -791,27 +1247,27 @@ each individual pitcher’s ERA using only the data from the other
 pitchers who pitched in the same league and in the same season. We also
 add a column called count_year_lg to record the number of pitchers
 included in each year-league combination.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  pitching <span class="sc">%&gt;%</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID, lgID) <span class="sc">%&gt;%</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">zERA_year_lg =</span> <span class="fu">standardize</span>(ERA),</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">count_year_lg =</span> <span class="fu">n</span>())</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>pitching</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  pitching <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID, lgID) <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">zERA_year_lg =</span> <span class="fu">standardize</span>(ERA),</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">count_year_lg =</span> <span class="fu">n</span>())</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>pitching</span></code></pre></div>
 <pre><code>## # A tibble: 9,577 × 10
 ## # Groups:   yearID, lgID [265]
-##    playerID  yearID teamID lgID     IP   ERA zERA_all zERA_year zERA_year_lg
-##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-##  1 bondto01    1876 HAR    NL     408   1.68   -2.19    -0.887       -0.887 
-##  2 bordejo01   1876 BSN    NL     218.  2.89   -0.819    0.554        0.554 
-##  3 bradlfo01   1876 BSN    NL     173.  2.49   -1.27     0.0779       0.0779
-##  4 bradlge01   1876 SL3    NL     573   1.23   -2.70    -1.42        -1.42  
-##  5 cummica01   1876 HAR    NL     216   1.67   -2.20    -0.899       -0.899 
-##  6 deando01    1876 CN1    NL     263.  3.73    0.134    1.55         1.55  
-##  7 devliji01   1876 LS1    NL     622   1.56   -2.33    -1.03        -1.03  
-##  8 fishech01   1876 CN1    NL     229.  3.02   -0.672    0.709        0.709 
-##  9 knighlo01   1876 PHN    NL     282   2.62   -1.13     0.233        0.233 
-## 10 mannija01   1876 BSN    NL     197.  2.14   -1.67    -0.339       -0.339 
-## # … with 9,567 more rows, and 1 more variable: count_year_lg &lt;int&gt;</code></pre>
+##    playerID  yearID teamID lgID     IP   ERA zERA_all zERA_year zERA_year_lg count_year_lg
+##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;         &lt;int&gt;
+##  1 bondto01    1876 HAR    NL     408   1.68   -2.19    -0.887       -0.887             13
+##  2 bordejo01   1876 BSN    NL     218.  2.89   -0.819    0.554        0.554             13
+##  3 bradlfo01   1876 BSN    NL     173.  2.49   -1.27     0.0779       0.0779            13
+##  4 bradlge01   1876 SL3    NL     573   1.23   -2.70    -1.42        -1.42              13
+##  5 cummica01   1876 HAR    NL     216   1.67   -2.20    -0.899       -0.899             13
+##  6 deando01    1876 CN1    NL     263.  3.73    0.134    1.55         1.55              13
+##  7 devliji01   1876 LS1    NL     622   1.56   -2.33    -1.03        -1.03              13
+##  8 fishech01   1876 CN1    NL     229.  3.02   -0.672    0.709        0.709             13
+##  9 knighlo01   1876 PHN    NL     282   2.62   -1.13     0.233        0.233             13
+## 10 mannija01   1876 BSN    NL     197.  2.14   -1.67    -0.339       -0.339             13
+## # … with 9,567 more rows</code></pre>
 <p>When we arrange by the ERA standardized within the year and league,
 we now see that Pedro Martinez’s 1999 and 2000 season with the Red Sox
 were even better than Dutch Leonard’s 1914 season!</p>
@@ -825,15 +1281,15 @@ which we specify the variables in <code>group_by()</code> matters.</p>
 Wyner’s class that plotted ERAs over time. When we run the following
 code, we get a plot that’s very similar to the desired one but that is
 missing the red line showing the average ERA within each season.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pitching) <span class="sc">+</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pitching) <span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>)</span></code></pre></div>
 <p>To <em>add</em> this to our plot, we need to simply re-run the code
 above but with some additional calls to <code>geom_line</code>.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pitching) <span class="sc">+</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> </span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> pitching_summary, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> mean), <span class="at">col =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pitching) <span class="sc">+</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> ERA), <span class="at">size =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> pitching_summary, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> mean), <span class="at">col =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
 <p><img src="lecture3_files/figure-html/plot%20pitching%20line-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>You’ll notice that the last line of code is a bit different than
 anything we’ve seen before. In particular, we are specifying both the
