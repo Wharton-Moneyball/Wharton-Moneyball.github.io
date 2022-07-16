@@ -489,7 +489,7 @@ following what we learned in <a href="tc_lecture2.html">Lecture
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>,</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of three-pointer shot rate&quot;</span>)</span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture3_files/figure-html/hist%203pt%20rate-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nba_shooting <span class="sc">%&gt;%</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TPP)) <span class="sc">+</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
@@ -497,7 +497,7 @@ following what we learned in <a href="tc_lecture2.html">Lecture
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Three-point shot proportion = TPM / TPA&quot;</span>,</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>,</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of three-point shot proportion&quot;</span>)</span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture3_files/figure-html/hist%203pt%20prop-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Next let’s make a scatterplot showing the relationship between the
 rate at which players attempt three point shots and the proportion at
 which they make them:</p>
@@ -507,7 +507,7 @@ which they make them:</p>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three-point shot proportion = TPM / TPA&quot;</span>,</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Relationship between three point shot rate and efficiency&quot;</span>)</span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture3_files/figure-html/scatter%20rate%20vs%20prop-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Unsurprisingly, for the most part we see a random scattering of
 points. But we can see that players who attempt a minimal proportion of
 three-point shots for their field goal attempts also have typically low
@@ -531,7 +531,7 @@ y-axis, such as:</p>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Season&quot;</span>,</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of three point shot rate each year&quot;</span>)</span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture3_files/figure-html/plot%203pt%20rate%20season-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>It is hard to see any real differences between the years this way.
 Instead, we can treat the season as a <strong>categorical
 variable</strong> to then more appropriately compare the distributions
@@ -559,7 +559,7 @@ for us just like <code>geom_histogram</code>.</p>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Season&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>, </span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Number of players in each season meeting TPA and FGA cutoffs&quot;</span>,</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Excluding lockout seasons 1999 and 2012&quot;</span>)</span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture3_files/figure-html/geom_bar-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>What shouldn’t come as a surprise is that we’re seeing more and more
 players in more recent years. This makes sense since more players are
 shooting three-pointers more frequently now.</p>
@@ -587,12 +587,11 @@ which to display the graphs.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nba_shooting <span class="sc">%&gt;%</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> three_point_fg_rate)) <span class="sc">+</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># label!</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of 3PT shot rate by season&quot;</span>) <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>season_factor, <span class="at">nrow =</span> <span class="dv">3</span>)</span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of 3PT shot rate by season&quot;</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>season_factor, <span class="at">nrow =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="tc_lecture3_files/figure-html/facet-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Although we can now see a histogram of three-point shot rate for each
 separate season, it’s a little hard to make comparisons across all the
 years.</p>
@@ -610,12 +609,11 @@ in mind when making plots.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nba_shooting <span class="sc">%&gt;%</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> three_point_fg_rate, <span class="at">fill =</span> season_factor)) <span class="sc">+</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>) <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># label!</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">&quot;Season&quot;</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of 3PT shot rate by season&quot;</span>) </span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">&quot;Season&quot;</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of 3PT shot rate by season&quot;</span>) </span></code></pre></div>
+<p><img src="tc_lecture3_files/figure-html/color%20stacked-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Well that’s a weird looking plot! This is because by default the
 multiple histograms will be stacked on top of one another. We can
 instead change the <code>position</code> of the
@@ -627,15 +625,14 @@ the <code>alpha</code> to be a lower value.</p>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> three_point_fg_rate, <span class="at">fill =</span> season_factor)) <span class="sc">+</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">position =</span> <span class="st">&quot;identity&quot;</span>,</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># label!</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">&quot;Season&quot;</span>,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of 3PT shot rate by season&quot;</span>) </span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">&quot;Season&quot;</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of 3PT shot rate by season&quot;</span>) </span></code></pre></div>
+<p><img src="tc_lecture3_files/figure-html/color%20identity-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Overall this is still a rather difficult figure to digest. Instead,
 we should make figures that take advantage of the natural ordering
-implied by the season along an axis while displying various comparisons
+implied by the season along an axis while displaying various comparisons
 of the distributions.</p>
 </div>
 <div id="boxplots" class="section level3">
@@ -649,11 +646,10 @@ y-axis.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nba_shooting <span class="sc">%&gt;%</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> season_factor, <span class="at">y =</span> three_point_fg_rate)) <span class="sc">+</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># label!</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Season&quot;</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Comparison of 3PT shot rate for each season with boxplots&quot;</span>) </span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Season&quot;</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Comparison of 3PT shot rate for each season with boxplots&quot;</span>) </span></code></pre></div>
+<p><img src="tc_lecture3_files/figure-html/boxplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Remember, boxplots are displaying summary statistics (median, min,
 max, and percentiles) which allows us to easily see an increase in the
 median three-point shot rate over time. <strong>But boxplots are
@@ -671,11 +667,10 @@ general shape of a distribution. And of course, there’s a
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>nba_shooting <span class="sc">%&gt;%</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> season_factor, <span class="at">y =</span> three_point_fg_rate)) <span class="sc">+</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># label!</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Season&quot;</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Comparison of 3PT shot rate for each season with violin plots&quot;</span>) </span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Season&quot;</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Comparison of 3PT shot rate for each season with violin plots&quot;</span>) </span></code></pre></div>
+<p><img src="tc_lecture3_files/figure-html/violin%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>This gives us a sense of the distributions in each season, and any
 sort of subtle differences over time. What’s missing from this plot is
 the key points provided by boxplots to show the increasing rate of three
@@ -688,11 +683,10 @@ violin plots.</p>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> season_factor, <span class="at">y =</span> three_point_fg_rate)) <span class="sc">+</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span> </span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># label!</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Season&quot;</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Comparison of 3PT shot rate for each season with violin and boxplots&quot;</span>) </span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Season&quot;</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Comparison of 3PT shot rate for each season with violin and boxplots&quot;</span>) </span></code></pre></div>
+<p><img src="tc_lecture3_files/figure-html/violin%20boxplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="ridgeplots" class="section level3">
 <h3>Ridgeplots</h3>
@@ -710,12 +704,11 @@ to be a slightly different mapping then boxplots and violin plots:</p>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>nba_shooting <span class="sc">%&gt;%</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> three_point_fg_rate, <span class="at">y =</span> season_factor)) <span class="sc">+</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>() <span class="sc">+</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># label!</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Season&quot;</span>,</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Comparison of 3PT shot rate for each season with ridges&quot;</span>) </span></code></pre></div>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Season&quot;</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Comparison of 3PT shot rate for each season with ridges&quot;</span>) </span></code></pre></div>
 <pre><code>## Picking joint bandwidth of 0.0435</code></pre>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture3_files/figure-html/ridgeplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The code above is similar to <code>geom_histogram</code> but now maps
 the y-axis to a variable for separating the distributions. The idea is
 it eliminates the redundancy in the symmetry of violin plots by just
@@ -736,11 +729,10 @@ placement resembling the histogram and density curve shape.</p>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>nba_shooting <span class="sc">%&gt;%</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> season_factor, <span class="at">y =</span> three_point_fg_rate)) <span class="sc">+</span></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_quasirandom</span>(<span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># label!</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Season&quot;</span>,</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Comparison of 3PT shot rate for each season with beeswarms&quot;</span>) </span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Season&quot;</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Comparison of 3PT shot rate for each season with beeswarms&quot;</span>) </span></code></pre></div>
+<p><img src="tc_lecture3_files/figure-html/beeswarm%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="group-by-and-summarize" class="section level2">
@@ -825,7 +817,7 @@ line:</p>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Season&quot;</span>,</span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three point shot rate = TPA / FGA&quot;</span>,</span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Average three point shot rate with +/- 1 standard deviation&quot;</span>)</span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture3_files/figure-html/plot%20mean%20sd-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>And one of the best parts of using <code>ggplot</code> is that we can
 take this code, and <strong>add</strong> it to our previous code - such
 as the violin plots or beeswarm plots. All we have to do is specify the
@@ -850,7 +842,7 @@ piping the whole dataset into the operation:</p>
 <span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
 <span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of 3PT shot rate for each season&quot;</span>,</span>
 <span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Red points indicate average for each year with +/- 1 standard deviation&quot;</span>)</span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture3_files/figure-html/violin%20plot%20mean%20sd-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start with blank canvas:</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Now add the beeswarm plot layer:</span></span>
@@ -871,7 +863,7 @@ piping the whole dataset into the operation:</p>
 <span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
 <span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of 3PT shot rate for each season&quot;</span>,</span>
 <span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Red points indicate average for each year with +/- 1 standard deviation&quot;</span>)</span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture3_files/figure-html/beeswarm%20plot%20mean%20sd-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>You probably noticed that the first season in the dataset (labeled
 1997 but corresponds to 1996-1997) has a higher three-point shot rate
 than other earlier years. As it turns out, this was the last year of a
@@ -892,12 +884,11 @@ bars.</p>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> <span class="st">&quot;mean_sdl&quot;</span>,</span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">fun.args =</span> <span class="fu">list</span>(<span class="at">mult =</span> <span class="dv">1</span>),</span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># label!</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Season&quot;</span>,</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of 3PT shot rate for each season&quot;</span>,</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Red points indicate average for each year with +/- 1 standard deviation&quot;</span>)</span></code></pre></div>
-<p><img src="tc_lecture3_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Season&quot;</span>,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Three-point shot rate = TPA / FGA&quot;</span>,</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of 3PT shot rate for each season&quot;</span>,</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Red points indicate average for each year with +/- 1 standard deviation&quot;</span>)</span></code></pre></div>
+<p><img src="tc_lecture3_files/figure-html/stat_summary-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>This is a completely different style of plotting than you have seen
 before, but it is extremely convenient since we don’t need to create a
 separate dataset to display summaries of the data. The

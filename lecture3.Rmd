@@ -10,7 +10,7 @@ library(tidyverse)
 
 ## Introduction
 
-On day 3 of the morning lectures (Lecture 6), you saw a graph of Earned Run Average (ERA) against year. Also shown was a line connecting the average ERA in each year.
+On day 4 of the morning lectures (Lecture 8), you see a graph of Earned Run Average (ERA) against year along with a line connecting the average ERA in each year.
 
 ![](figures/lecture3_era.png)
 
@@ -73,10 +73,11 @@ As we know, many packages not only contain new functions, but also new datasets.
 data(package = "Lahman")
 ```
 
-This will open up a new window with all of the names of the datasets contained in the Lahman package. Today, we will specifically be focusing on the dataset called `Pitching`, which contains season-level statistics on all pitchers going all the way back to 1871. We can view the first few rows of by using the `head()` function on the `Pitching` dataset.
+This will open up a new window with all of the names of the datasets contained in the Lahman package. Today, we will specifically be focusing on the dataset called `Pitching`, which contains season-level statistics on all pitchers going all the way back to 1871. Let's load this dataset as a tibble (which is easier to read than the default data.frame) called `pitching`.
 
-```{r print Pitching}
-head(Pitching)
+```{r load print pitching}
+pitching <- as_tibble(Pitching)
+pitching
 ```
 
 There are tons of rows and columns in the dataset. For this exercise, we will only want to focus on ERA and also focus only on those pitchers who have pitched at least 150 innings. Unfortunately, the Lahman pitching dataset does not contain the number of innings pitched (IP). Instead, it has a column called "IPouts", which is the number of outs pitched and whose formula is $\text{IPOuts} = 3 \times \text{IP}.$
@@ -84,8 +85,7 @@ There are tons of rows and columns in the dataset. For this exercise, we will on
 Using the pipe and the dplyr verbs we learned in [Lecture 2](lecture2.html), we will create a new dataset called `pitching` (we make it all lowercase to differentiate from the original Lahman `Pitching` dataset), then add the "IP" column, filter the data to include only all players who pitched at least 150 innings and played in either the AL or the NL, and select only the columns corresponding to the player, year, team, league, innings pitched, and ERA.
 
 ```{r pitching}
-pitching <- 
-  Pitching %>%
+pitching <- pitching %>%
   mutate(IP = IPouts/3) %>% 
   filter(lgID %in% c('AL', 'NL') & IP >= 150) %>%
   select(playerID, yearID, teamID, lgID, IP, ERA)

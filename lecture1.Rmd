@@ -13,14 +13,9 @@ The *working directory* is a really powerful concept in R -- it is where R saves
 When you installed R & RStudio in [Lecture 0](lecture0.html), we asked you to create a folder on your Desktop called Moneyball.
 This will be your working directory for the duration of the course. 
 
-Every time you open RStudio, it automatically sets the working directory to some default folder on your computer.
-To see what that is, we'll open RStudio and look at the console pane
-<!-- show console pane -->
-We can also check our working directory with the code `getwd()`
+Every time you open RStudio, it automatically sets the working directory to some default folder on your computer. To see what that is, we'll open RStudio and look at the console pane. We can also check our working directory with the code `getwd()`
 
-Once we open RStudio, before we do anything, we need to tell R to change the working directory to our Moneyball folder.
-We can do this in a couple of ways:
-<!-- show the different ways to do this -->
+Once we open RStudio, before we do anything, we need to tell R to change the working directory to our Moneyball folder. We can do this in a couple of ways:
 
 1. In the top toolbar, Session/Set Working Directory/Choose Working Directory allows us to select and set our working directory from our files.  
 2. The code `setwd("~/Desktop/Moneyball")` sets our working directory to the Moneyball folder, and can be edited for any file location.
@@ -42,13 +37,7 @@ We did all that with Base R. However, the functionality provided by a fresh inst
 
 
 ## Packages
-So far we have seen only the most basic of R's functionality. 
-Arguably, one of the things that makes R so powerful is the ease with which users are able to define their own functions and release them to the public.
-As [Hadley Wickham](http://hadley.nz) defines them, "[R] packages are fundamental units of reproducible code. They include reusable R functions, the documentation that describes how to use them, and sample data." 
-As of June 18, 2020, there are 15,805 packages available from the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org). 
-The scope of these packages is vast: there are some designed for scraping data from the web, pre-processing data to get it into an analyzable format, performing standard and specialized statistical analyses, and to publish your results.
-People have also released packages tailored to very specific applications like analyzing baseball data.
-There are also some more whimsical packages, like one that allow you to display your favorite [XKCD](https://xkcd.com) comic strip! 
+So far we have seen only the most basic of R's functionality. Arguably, one of the things that makes R so powerful is the ease with which users are able to define their own functions and release them to the public.As [Hadley Wickham](http://hadley.nz) defines them, "[R] packages are fundamental units of reproducible code. They include reusable R functions, the documentation that describes how to use them, and sample data." As of June 18, 2020, there are 15,805 packages available from the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org). The scope of these packages is vast: there are some designed for scraping data from the web, pre-processing data to get it into an analyzable format, performing standard and specialized statistical analyses, and to publish your results. People have also released packages tailored to very specific applications like analyzing baseball data. There are also some more whimsical packages, like one that allow you to display your favorite [XKCD](https://xkcd.com) comic strip! 
 
 We can install packages in several ways:  
 
@@ -64,6 +53,7 @@ After installing a package, we have to load the package before using it. Again, 
 
 
 ## The tidyverse  
+
 For the rest of the course, we will be working within the [tidyverse](https://www.tidyverse.org/), which consists of several R packages for data manipulation, exploration, and visualization. 
 They are all based on a common design philosophy, mostly developed by Hadley Wickham (whose name you will encounter a lot as you gain more experience with R). 
 
@@ -77,8 +67,7 @@ Now with the `tidyverse` suite of packages installed, we can load them with the 
 ```{r load tidyverse, eval=FALSE}
 library(tidyverse)
 ```
-When you do that, you'll see a lot of output to the console, most of which you can safely ignore for now.
-**Note you only need to install the package once. However, each time you open up a new R session and want to use the tidyverse, you will need to run line** `library(tidyverse)` **at the start.**
+When you do that, you'll see a lot of output to the console, most of which you can safely ignore for now. **Note you only need to install the package once. However, each time you open up a new R session and want to use the tidyverse, you will need to run line** `library(tidyverse)` **at the start.**
 
 
 ## Reading in tabular data
@@ -238,5 +227,3 @@ nba_shooting_small <-
 ```
 
 Notice how we have separated our command into multiple lines. This makes our script much easier to read. While it seems a bit cumbersome to write our code like this now, it will make our code much easier to read when we start to string multiple manipulations together using the pipe operator `%>%`, which we will meet in [Lecture 3](lecture3.html). 
-
-

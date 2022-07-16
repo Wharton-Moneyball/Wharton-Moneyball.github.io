@@ -552,7 +552,7 @@ that we are saving the predictions in a column called
 <pre><code>## # A tibble: 1 × 6
 ##   phat_all phat_kicker phat_dist_10 phat_dist_5 phat_dist_2 phat_dist_logit
 ##      &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;
-## 1    0.140       0.138        0.125       0.123       0.123           0.123</code></pre>
+## 1  0.14028     0.13832      0.12452     0.12333     0.12310         0.12335</code></pre>
 <p>Looking at the Brier scores, we see that our new logistic model fits
 the data much better than “phat_all”, the overall average success rate,
 and “phat_kicker”, the kicker-specific overall average. Moreover, it
@@ -577,7 +577,7 @@ look at how well it performs out-of-sample on the
 <pre><code>## # A tibble: 1 × 6
 ##   phat_all phat_kicker phat_dist_10 phat_dist_5 phat_dist_2 phat_dist_logit
 ##      &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;
-## 1    0.134       0.133        0.120       0.118       0.118           0.117</code></pre>
+## 1  0.13404     0.13320      0.11979     0.11771     0.11796         0.11745</code></pre>
 <p>We see clearly, now, that our logistic regression model has the best
 out-of-sample performance. This would indicate that “phat_dist_5” and
 “phat_dist_2”, the models formed by binning distances into 5-yard and
@@ -647,7 +647,7 @@ out-of-sample prediction performance by computing the Brier score:</p>
 <pre><code>## # A tibble: 1 × 7
 ##   phat_all phat_kicker phat_dist_10 phat_dist_5 phat_dist_2 phat_dist_logit phat_dist_kick_logit
 ##      &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;                &lt;dbl&gt;
-## 1    0.140       0.138        0.125       0.123       0.123           0.123                0.121</code></pre>
+## 1  0.14028     0.13832      0.12452     0.12333     0.12310         0.12335              0.12112</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fg_test <span class="ot">&lt;-</span> fg_test <span class="sc">%&gt;%</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_predictions</span>(<span class="at">model =</span> logit_dist_kicker, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">var =</span> <span class="st">&quot;phat_dist_kick_logit&quot;</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -662,7 +662,7 @@ out-of-sample prediction performance by computing the Brier score:</p>
 <pre><code>## # A tibble: 1 × 7
 ##   phat_all phat_kicker phat_dist_10 phat_dist_5 phat_dist_2 phat_dist_logit phat_dist_kick_logit
 ##      &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;                &lt;dbl&gt;
-## 1    0.134       0.133        0.120       0.118       0.118           0.117                0.118</code></pre>
+## 1  0.13404     0.13320      0.11979     0.11771     0.11796         0.11745              0.11769</code></pre>
 <p>It turns out that even though accounting for the distance and kicker
 resulted in even better in-sample performance (i.e. lower Brier score on
 the training data), the out-of-sample performance was worse than the

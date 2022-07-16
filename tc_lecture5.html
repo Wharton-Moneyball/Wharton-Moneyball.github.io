@@ -485,16 +485,15 @@ describe what this code is doing?</strong></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>batting_2017_2018 <span class="ot">&lt;-</span> batting <span class="sc">%&gt;%</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2017</span>, <span class="dv">2018</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(playerID, yearID) <span class="sc">%&gt;%</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">H =</span> <span class="fu">sum</span>(H),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">AB =</span> <span class="fu">sum</span>(AB)) <span class="sc">%&gt;%</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AB <span class="sc">&gt;=</span> <span class="dv">300</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">BA =</span> H <span class="sc">/</span> AB) <span class="sc">%&gt;%</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(BA)) <span class="sc">%&gt;%</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(playerID) <span class="sc">%&gt;%</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, BA) <span class="sc">%&gt;%</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(playerID)</span></code></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">H =</span> <span class="fu">sum</span>(H), <span class="at">AB =</span> <span class="fu">sum</span>(AB)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AB <span class="sc">&gt;=</span> <span class="dv">300</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">BA =</span> H <span class="sc">/</span> AB) <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(BA)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(playerID) <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, BA) <span class="sc">%&gt;%</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(playerID)</span></code></pre></div>
 <p>In order to study the relationship between a player’s 2017 batting
 average and his 2018 batting average, it will be more convenient to
 store the data as below.</p>
@@ -539,7 +538,7 @@ function:</p>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;2017 Batting Average&quot;</span>, <span class="at">y =</span> <span class="st">&quot;2018 Batting Average&quot;</span>)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>ba_plot</span></code></pre></div>
-<p><img src="tc_lecture5_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture5_files/figure-html/plot%20BA%202017%202018-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="correlation" class="section level3">
 <h3>Correlation</h3>
 <p>We can see a positive trend between the 2017 and 2018 batting
@@ -568,13 +567,13 @@ batting averages, but there is still a lot of noise.</p>
 <em>linear</em> dependence between two variables. The below example
 shows data where <span class="math inline">\(y = x^2\)</span>
 exactly.</p>
-<p><img src="tc_lecture5_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture5_files/figure-html/plot%20quadratic-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Even though <span class="math inline">\(x\)</span> and <span
 class="math inline">\(y\)</span> are dependent, <span
 class="math inline">\(r = -0.1\)</span>, indicating a weak linear
 dependence. If we were to draw a line to fit this data, it would be
 quite flat!</p>
-<p><img src="tc_lecture5_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture5_files/figure-html/plot%20quadratic%20line-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now let’s go back to the 2017 and 2018 batting data. To visualize our
 correlation, we draw the <em>line of best fit</em> through our data. In
 this example, the line of best fit has <span
@@ -584,7 +583,7 @@ class="math inline">\(y\)</span>-intercept = 0.131 and slope = 0.474
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> a_best, <span class="at">slope =</span> b_best, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;y = 0.131 + 0.474x&quot;</span>)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>ba_plot</span></code></pre></div>
-<p><img src="tc_lecture5_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture5_files/figure-html/ba_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><strong>Question:</strong> Which feature of the best fit line, <span
 class="math inline">\(a\)</span> or <span
 class="math inline">\(b\)</span>, quantifies the linear dependence
@@ -689,7 +688,7 @@ residual lengths:</p>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> BA_2017, <span class="at">xend =</span> BA_2017, <span class="at">y =</span> BA_2018, <span class="at">yend =</span> pred), <span class="at">color =</span> <span class="st">&quot;dodgerblue&quot;</span>) <span class="sc">+</span></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> BA_2017, <span class="at">y =</span> BA_2018)) <span class="sc">+</span> </span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">0.1305237</span>, <span class="at">slope =</span> <span class="fl">0.4735976</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="tc_lecture5_files/figure-html/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture5_files/figure-html/plot%20pred%20resid-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="predict" class="section level3">
@@ -726,7 +725,7 @@ fitted model, <code>fit</code>. The second argument is
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> batting_2017_2018, <span class="fu">aes</span>(<span class="at">x =</span> BA_2017, <span class="at">y =</span> BA_2018)) <span class="sc">+</span> </span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">0.1305237</span>, <span class="at">slope =</span> <span class="fl">0.4735976</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> new_data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> BA_2017, <span class="at">y =</span> pred), <span class="at">color =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
-<p><img src="tc_lecture5_files/figure-html/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="tc_lecture5_files/figure-html/plot%20new_data%20pred-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 

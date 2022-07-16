@@ -10,25 +10,23 @@ library(tidyverse)
 
 ## Review Lecture 2 Notes
 
-Please spend a few minutes reading through the notes from [Lecture 2](tc_lecture2.html). 
-Like in [Problem Set 1](tc_ps1.html), you should go through each code block with someone in your group and see if you can both explain to each other what all of the code does.
+Please spend a few minutes reading through the notes from [Lecture 2](tc_lecture2.html).  Like in [Problem Set 1](tc_ps1.html), you should go through each code block with someone in your group and see if you can both explain to each other what all of the code does.
 
 ## Payroll and Winning Percentage in the MLB
 
-In lecture, Prof. Wyner discussed the relationship between a team's payroll and its winning percentage.
-We will create plots from his analysis in the following problems using the dataset "mlb_relative_payrolls.csv", which you can find in the "data/" folder of your working directory.
-You should save all of the code for this analysis in an R script called "ps2_mlb_payroll.R".
+In lecture, Prof. Wyner discussed the relationship between a team's payroll and its winning percentage. We will create plots from his analysis in the following problems using the dataset "mlb_relative_payrolls.csv", which you can find in the "data/" folder of your working directory. You should save all of the code for this analysis in an R script called "ps2_mlb_payroll.R".
 
 If you don't have the dataset in your data folder yet, download it from the GitHub page [here](https://github.com/skdeshpande91/wharton_moneyball/raw/master/website_files/data/mlb_relative_payrolls.csv).
 
 1. Read the data in from the file and save it as a tbl called "relative_payroll"
-```{r}
+
+```{r q1 solution}
 # solution
 relative_payroll <- read_csv(file = "data/mlb_relative_payrolls.csv")
 ```
 
 2. Make a histogram of team winning percentages. Play around with different binwidths. 
-```{r}
+```{r q2 solution}
 # solution
 ggplot(data = relative_payroll) +
   geom_histogram(mapping = aes(x = Winning_Percentage, y = ..density..))
@@ -41,7 +39,7 @@ ggplot(data = relative_payroll) +
 ```
 
 3. Make a histogram of the relative payrolls.
-```{r}
+```{r q3 solution}
 # solution
 ggplot(data = relative_payroll) +
   geom_histogram(mapping = aes(x = Relative_Payroll, y = ..density..))
@@ -49,14 +47,15 @@ ggplot(data = relative_payroll) +
 
 4. Make a scatterplot with relative payroll on the horizontal axis and winning percentage on the vertical axis. 
 
-```{r}
+```{r q4 solution}
 # solution
 ggplot(data = relative_payroll) +
   geom_point(mapping = aes(x = Relative_Payroll, y = Winning_Percentage))
 ```
 
 5. Without executing the code below, discuss with your group and see if you can figure out what it is doing.
-```{r, include = TRUE, eval = FALSE}
+
+```{r q5, include = TRUE, eval = FALSE}
 relative_payroll %>%
   ggplot(aes(x = Year, y = Team_Payroll)) +
   geom_point()
@@ -64,7 +63,7 @@ relative_payroll %>%
 
 6. Execute the code above. What can you say about how team payrolls have evolved over time? Make a similar plot that visualizes how *relative payrolls* have evolved over time.
 
-```{r}
+```{r q6 solution}
 # solution
 relative_payroll %>%
   ggplot(aes(x = Year, y = Team_Payroll)) +
@@ -77,7 +76,7 @@ relative_payroll %>%
 
 7. Add an appropriate title and relabel the y-axis using the `labs()` function to the plot above.
 
-```{r}
+```{r q7 solution}
 # solution
 relative_payroll %>%
   ggplot(aes(x = Year, y = Team_Payroll)) +
