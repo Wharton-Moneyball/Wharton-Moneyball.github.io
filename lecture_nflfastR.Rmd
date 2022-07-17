@@ -217,3 +217,5 @@ pbp_2017 %>%
 
 Congratulations, you now have what it takes to cover NFL games for the Athletic!
 
+For more information on `nflfastR`, check out its [website](https://www.nflfastr.com/), which also has a [good tutorial](https://www.nflfastr.com/articles/nflfastR.html) on the main functions and data available within the package. 
+

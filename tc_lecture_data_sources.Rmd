@@ -45,16 +45,78 @@ Note that rather than supplying the data as an argument to the `ggplot()` functi
 
 We can see the increasing trend over time, but note some of the outliers like 2020 (pandemic-shortened season) and 1994 (strike-shortened season). How could this display be improved to handle these outliers, as well as the other gameplay-related changes that have taken place in baseball? 
 
+### `nflfastR`
 
-### Installing GitHub Packages
+The [`nflfastR` package](https://www.nflfastr.com/) gives R users the ability to scrape play-by-play data from the NFL in real-time during games, also providing expected points and win probability estimates. [Here's a good tutorial](https://www.nflfastr.com/articles/nflfastR.html) on the main functions and data available within the package. To get started, we install the package below. Let's also install the `ggimage` package, which will allow us to plot the team logos for more intriguing visualizations.
 
-**An important note to keep in mind is that most of these resources are largely still in development, this means you may face challenges with installation and use.** While the vast majority of `R` packages you will commonly use are able to be installed using `install.packages()` because they are on the CRAN, there are a variety of popular `R` packages for accessing sports data that are currently only available through GitHub. In order to access these packages, we first need to install them using a package called `devtools`. The code below installs the `devtools` package:
+```{r install nflfastR ggimage, eval = FALSE}
+install.packages("nflfastR")
+install.packages("ggimage")
+```
+
+Next, we load these packages.
+
+```{r load nflfastR ggimage}
+library(nflfastR)
+library(ggimage)
+```
+
+Now we can use `nflfastR` to gather play-by-play data for the 2021 season.
+
+```{r load pbp_2021, warning = FALSE, message = FALSE}
+pbp_2021 <- load_pbp(2021)
+```
+
+With this data, we can summarize the performance of all NFL teams using the expected points added (EPA) per game on offense and defense. EPA tells us how much value the team provided relative to an average baseline. The more positive the better the offensive performance. This means the more negative the value the defensive performance, so in the code chunk below we multiply the defensive values by -1 so it's similar to offensive performance higher values meaning better performance. The following code uses this data to create offensive and defensive summaries that we will join together to plot:
+
+```{r epa}
+offense_epa_21 <- pbp_2021 %>%
+  filter(!is.na(posteam)) %>%
+  group_by(posteam) %>%
+  summarise(n_games = length(unique(game_id)), off_total_epa = sum(epa, na.rm = TRUE)) %>%
+  mutate(off_epa_per_game = off_total_epa / n_games)
+
+defense_epa_21 <- pbp_2021 %>%
+  filter(!is.na(defteam)) %>%
+  group_by(defteam) %>%
+  summarise(n_games = length(unique(game_id)), def_total_epa = sum(epa, na.rm = TRUE)) %>%
+  # This time multiply by -1, since negative values are better for defense:
+  mutate(def_epa_per_game = -1 * def_total_epa / n_games)
+```
+
+Next, we join together the offensive and defensive EPA datasets, then pass this new dataset into `ggplot`, where we make a plot of offensive EPA per game vs. defensive EPA per game for all teams in the 2021 season.
+
+```{r join epa plot}
+# Create the data frame to be used for all of the charts:
+offense_epa_21 %>%
+  inner_join(defense_epa_21, by = c("posteam" = "defteam")) %>%
+  left_join(teams_colors_logos, by = c("posteam" = "team_abbr")) %>%
+  ggplot(aes(x = off_epa_per_game, y = def_epa_per_game)) +
+  geom_image(aes(image = team_logo_espn), size = 0.05) +
+  labs(x = "Offensive EPA per game",
+       y = "Defensive EPA per game",
+       caption = "Data accessed via nflfastR",
+       title = "Offensive and defensive EPA per game for each team in the 2021 NFL season") +
+  # Add reference lines at 0
+  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
+  geom_vline(xintercept = 0, color = "red", linetype = "dashed") +
+  theme_bw()
+```
+
+The top right displays the teams that excelled at both offense and defense, while the lower right shows teams that had the best offenses such as the Chiefs but performed poorly on defense. The lower left shows the worst overall teams, where the Jags, Jets, and Texans unsurprisingly stand out. 
+
+
+## Installing GitHub Packages
+
+While the vast majority of `R` packages you will commonly use are able to be installed using `install.packages()` because they are on the CRAN, there are a variety of popular `R` packages for accessing sports data that are currently only available through GitHub. In order to access these packages, we first need to install them using a package called `devtools`. The code below installs the `devtools` package:
 
 ```{r install devtools, eval = FALSE}
 install.packages("devtools")
 ```
 
 The `devtools` package has a function, `install_github` that we will use for installing the remaining packages used below.
+
+**An important note to keep in mind is that most of these resources are largely still in development, so you may face challenges with installation and use.**
 
 
 ### `baseballr`
@@ -142,64 +204,3 @@ warriors_shots %>%
 ```
 
 It's apparent from this chart the effect of the three-point line of their shot selection.
-
-
-### `nflfastR`
-
-The [`nflfastR` package](https://www.nflfastr.com/) gives R users the ability to scrape play-by-play data from the NFL in real-time during games providing expected points and win probability estimates. Unlike like the `baseballr` and `nbastatR` packages, the `nflfastR` package can be installed the normal way (i.e. without `devtools`). Lets also install the `ggimage` package, which will allow us to plot the team logos as points.
-
-```{r install nflfastR ggimage, eval = FALSE}
-install.packages("nflfastR")
-install.packages("ggimage")
-```
-
-Next, we load these packages.
-
-```{r load nflfastR ggimage}
-library(nflfastR)
-library(ggimage)
-```
-
-Now we can use `nflfastR` to gather play-by-play data for the 2021 season.
-
-```{r load pbp_2021, warning = FALSE, message = FALSE}
-pbp_2021 <- load_pbp(2021)
-```
-
-With this data, we can summarize the performance of all NFL teams using the expected points added (EPA) per game on offense and defense. EPA tells us how much value the team provided relative to an average baseline. The more positive the better the offensive performance. This means the more negative the value the defensive performance, so in the code chunk below we multiply the defensive values by -1 so it's similar to offensive performance higher values meaning better performance. The following code uses this data to create offensive and defensive summaries that we will join together to plot:
-
-```{r epa}
-offense_epa_21 <- pbp_2021 %>%
-  filter(!is.na(posteam)) %>%
-  group_by(posteam) %>%
-  summarise(n_games = length(unique(game_id)), off_total_epa = sum(epa, na.rm = TRUE)) %>%
-  mutate(off_epa_per_game = off_total_epa / n_games)
-
-defense_epa_21 <- pbp_2021 %>%
-  filter(!is.na(defteam)) %>%
-  group_by(defteam) %>%
-  summarise(n_games = length(unique(game_id)), def_total_epa = sum(epa, na.rm = TRUE)) %>%
-  # This time multiply by -1, since negative values are better for defense:
-  mutate(def_epa_per_game = -1 * def_total_epa / n_games)
-```
-
-Next, we join together the offensive and defensive EPA datasets, then pass this new dataset into `ggplot`, where we make a plot of offensive EPA per game vs. defensive EPA per game for all teams in the 2021 season.
-
-```{r join epa plot}
-# Create the data frame to be used for all of the charts:
-offense_epa_21 %>%
-  inner_join(defense_epa_21, by = c("posteam" = "defteam")) %>%
-  left_join(teams_colors_logos, by = c("posteam" = "team_abbr")) %>%
-  ggplot(aes(x = off_epa_per_game, y = def_epa_per_game)) +
-  geom_image(aes(image = team_logo_espn), size = 0.05) +
-  labs(x = "Offensive EPA per game",
-       y = "Defensive EPA per game",
-       caption = "Data accessed via nflfastR",
-       title = "Offensive and defensive EPA per game for each team in the 2021 NFL season") +
-  # Add reference lines at 0
-  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
-  geom_vline(xintercept = 0, color = "red", linetype = "dashed") +
-  theme_bw()
-```
-
-The top right displays the teams that excelled at both offense and defense, while the lower right shows teams that had the best offenses such as the Chiefs but performed poorly on defense. The lower left shows the worst overall teams, where the Jags, Jets, and Texans unsurprisingly stand out. 
