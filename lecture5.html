@@ -574,9 +574,8 @@ Then. we can display this median on our plots this with
 value. To “pull” out the single median value from our tbl, we use the
 <code>pull</code> function.</p>
 </div>
-</div>
-<div id="boxplots" class="section level2">
-<h2>Boxplots</h2>
+<div id="boxplots" class="section level3">
+<h3>Boxplots</h3>
 <p>Boxplots are also an important visualization tool. We now create
 boxplots of the judges’ scores, separated by diving round. We can also
 color our boxplots according to the <code>Round</code> variable by
@@ -599,12 +598,13 @@ layer:</p>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(), <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(), <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>())</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>diving_box</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/boxplot%20theme-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
 <div id="barplots" class="section level3">
 <h3>Barplots</h3>
 <p>We can also create barplots using <code>geom_bar</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>bar <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diving) <span class="sc">+</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> JCountry, <span class="at">fill =</span> JCountry)) <span class="sc">+</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Judge Country&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Judge Country&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Judge Country&quot;</span>) <span class="sc">+</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>bar</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/barplot-1.png" width="672" style="display: block; margin: auto;" /></p>

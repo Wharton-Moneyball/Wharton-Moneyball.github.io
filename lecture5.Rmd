@@ -94,7 +94,7 @@ diving_hist
 Note that when calculating our `median_score`, the `summarize` function returns a tbl rather than a single value. To "pull" out the single median value from our tbl, we use the `pull` function.
 
 
-## Boxplots
+### Boxplots
 
 Boxplots are also an important visualization tool. We now create boxplots of the judges' scores, separated by diving round. We can also color our boxplots according to the `Round` variable by including the `fill` argument within the `aes()` function. Note that if we included the `fill` argument outside of the `aes()` function, we would only be able to color all boxplots the same color (by putting `fill` inside of the aesthetic, we are able to "map" the variable `Round` to the fill color of the plot based on the values of `Round`).
 
@@ -121,7 +121,7 @@ We can also create barplots using `geom_bar`:
 ```{r barplot}
 bar <- ggplot(data = diving) +
   geom_bar(aes(x = JCountry, fill = JCountry)) + 
-  labs(x = "Judge Country", fill = "Judge Country") +
+  labs(x = "Judge Country") +
   theme(legend.position = "none")
 bar
 ```
