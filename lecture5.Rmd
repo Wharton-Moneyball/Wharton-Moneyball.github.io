@@ -70,12 +70,12 @@ diving_hist
 
 ### Facets
 
-What if we want to separate the judges' scores by country? We can use *facets*. Facets allow you to separate graphs by category. We do not need to redo our above code for the histogram - we only need to add a *facet* layer to our graph `hist`. The first argument of `facet_wrap` is the column of our dataset that contains the category information. Note that we need a tilde (`~`) in front of `JCountry`: later in the course we will discuss why this is needed. The second argument of `facet_wrap` specifies the number of rows for which to display the graphs.
+What if we want to separate the judges' scores by country? We can use *facets*. Facets allow you to separate graphs by category. We do not need to redo our above code for the histogram - we only need to add a *facet* layer to our graph `hist`. The first argument of `facet_wrap` is the column of our dataset that contains the category information. The second argument of `facet_wrap` specifies the number of rows for which to display the graphs.
 
 ```{r facet_wrap}
 diving_hist <- 
   diving_hist + 
-  facet_wrap(~ JCountry, nrow = 3)
+  facet_wrap("JCountry", nrow = 3)
 diving_hist
 ```
 

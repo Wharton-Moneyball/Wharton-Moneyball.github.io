@@ -547,14 +547,12 @@ layer.</p>
 not need to redo our above code for the histogram - we only need to add
 a <em>facet</em> layer to our graph <code>hist</code>. The first
 argument of <code>facet_wrap</code> is the column of our dataset that
-contains the category information. Note that we need a tilde
-(<code>~</code>) in front of <code>JCountry</code>: later in the course
-we will discuss why this is needed. The second argument of
+contains the category information. The second argument of
 <code>facet_wrap</code> specifies the number of rows for which to
 display the graphs.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>diving_hist <span class="ot">&lt;-</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  diving_hist <span class="sc">+</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> JCountry, <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="st">&quot;JCountry&quot;</span>, <span class="at">nrow =</span> <span class="dv">3</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>diving_hist</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/facet_wrap-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>To get a sense of whether a particular country’s judges are biased,
