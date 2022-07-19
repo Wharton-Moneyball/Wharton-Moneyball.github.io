@@ -20,9 +20,10 @@ data <- read_csv('data/Ironman Data.csv')
 
 This is a large data set with hundreds of variables. Digging deeper, we can see that many of the variables seem to be repeated and many have data only in certain rows. This is common in historical racing results, so it's important to determine which variables are most important for our analysis. In our case, this analysis will be looking at the results from the 2017 Florida race, and we will focus on the swim, bike, run, and overall finishing times as well as demographics including country, gender, and division.
 
-Moreover, we note that the finishing times are actually character-types in the form of 'minutes:seconds'. Keeping these variables in this form will pose problems as we are going to be performing operations that require numeric data. So, we need to convert these clock times into pure numbers. The best way to work with clock times within the tidyverse framework is to use the 'lubridate' package. Within this package, we can parse the times in the 'minutes:seconds' format using the `ms()` function, and then convert the result to a numeric using the `period_to_seconds()` function (the result will be a time in seconds, so we can get this back to minutes by dividing by 60).
+Moreover, we note that the finishing times are actually character-types in the form of 'minutes:seconds'. Keeping these variables in this form will pose problems as we are going to be performing operations that require numeric data. So, we need to convert these clock times into pure numbers. The best way to work with clock times within the tidyverse framework is to use the `lubridate` package. Within this package, we can parse the times in the 'minutes:seconds' format using the `ms()` function, and then convert the result to a numeric using the `period_to_seconds()` function (the result will be a time in seconds, so we can get this back to minutes by dividing by 60).
 
 ```{r clean Ironman data, include=TRUE, message=FALSE}
+#install.packages("lubridate")
 library(lubridate)
 results_2017 <- data %>% 
   filter(`Source Table` == '2017 - Florida') %>% 
@@ -51,6 +52,7 @@ plot.swim_run<-ggplot(results_2017) +
   geom_point(aes(Swim, Run))
 ```
 
+
 2. To compare the relationships between these three variables, we can plot all three plots in the same window, rather than having to scroll through each one individually. To do so, we use the `ggarrange` function within the 'ggpubr' package. As arguments of the function, we select our three plots and can specify the number of rows and columns to be displayed.
 
 ```{r pt1 q2, include=TRUE, message=FALSE}
@@ -59,6 +61,7 @@ ggarrange(plot.swim_bike, plot.bike_run, plot.swim_run, nrow = 2, ncol = 2)
 ```
 
 * Can you visually compare these associations by looking at the scatterplots? Which legs of the race seem to be more highly correlated?
+
 
 3. Another way to display three continuous variables at once is by creating a scatterplot for two of the variables and then coloring the points by the values of the third variable. Try doing so with different combinations of our variables to create plots like the one below.
 
@@ -109,6 +112,7 @@ ggplot(results_2017) +
   geom_point(aes(Swim, Bike)) +
   geom_line(data = grid.swim, aes(x = Swim, y = pred.swim_bike), color = 'red')
 ```
+
 
 7. Repeat steps 5 and 6 for the two other combinations of the three race legs. Note that since we're only investigating associations between variables (as opposed to causal relations) it doesn't really matter which variable we choose to be our predictor and response; the resulting plots will be the same, except with flipped axes. If, instead, we were trying to determine causality, we would put the independent/predictor variable on the x-axis and the dependent/response variable on the y-axis.
 

@@ -504,21 +504,22 @@ character-types in the form of ‘minutes:seconds’. Keeping these
 variables in this form will pose problems as we are going to be
 performing operations that require numeric data. So, we need to convert
 these clock times into pure numbers. The best way to work with clock
-times within the tidyverse framework is to use the ‘lubridate’ package.
-Within this package, we can parse the times in the ‘minutes:seconds’
-format using the <code>ms()</code> function, and then convert the result
-to a numeric using the <code>period_to_seconds()</code> function (the
-result will be a time in seconds, so we can get this back to minutes by
-dividing by 60).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>results_2017 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Source Table</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&#39;2017 - Florida&#39;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country, Gender, Division, Swim, Bike, Run, Overall) <span class="sc">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Swim =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Swim))<span class="sc">/</span><span class="dv">60</span>, </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">Bike =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Bike))<span class="sc">/</span><span class="dv">60</span>, </span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">Run =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Run))<span class="sc">/</span><span class="dv">60</span>, </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">Overall =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Overall))<span class="sc">/</span><span class="dv">60</span>)</span></code></pre></div>
+times within the tidyverse framework is to use the
+<code>lubridate</code> package. Within this package, we can parse the
+times in the ‘minutes:seconds’ format using the <code>ms()</code>
+function, and then convert the result to a numeric using the
+<code>period_to_seconds()</code> function (the result will be a time in
+seconds, so we can get this back to minutes by dividing by 60).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;lubridate&quot;)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>results_2017 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Source Table</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&#39;2017 - Florida&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country, Gender, Division, Swim, Bike, Run, Overall) <span class="sc">%&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Swim =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Swim))<span class="sc">/</span><span class="dv">60</span>, </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">Bike =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Bike))<span class="sc">/</span><span class="dv">60</span>, </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">Run =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Run))<span class="sc">/</span><span class="dv">60</span>, </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">Overall =</span> <span class="fu">period_to_seconds</span>(<span class="fu">ms</span>(Overall))<span class="sc">/</span><span class="dv">60</span>)</span></code></pre></div>
 <div id="simple-linear-regression" class="section level2">
 <h2>Simple Linear Regression</h2>
 <p>Now that we have our tidy dataset, let’s start looking at the
