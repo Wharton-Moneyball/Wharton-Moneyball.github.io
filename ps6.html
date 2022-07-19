@@ -531,12 +531,13 @@ titled ‘plot.swim_bike’, etc.</p></li>
 <li><p>To compare the relationships between these three variables, we
 can plot all three plots in the same window, rather than having to
 scroll through each one individually. To do so, we use the
-<code>ggarrange</code> function within the ‘ggpubr’ package. As
-arguments of the function, we select our three plots and can specify the
-number of rows and columns to be displayed.</p></li>
+<code>ggarrange</code> function within the <code>ggpubr</code> package.
+As arguments of the function, we select our three plots and can specify
+the number of rows and columns to be displayed.</p></li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(plot.swim_bike, plot.bike_run, plot.swim_run, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;ggpubr&quot;)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(plot.swim_bike, plot.bike_run, plot.swim_run, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="ps6_files/figure-html/pt1%20q2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ul>
 <li>Can you visually compare these associations by looking at the

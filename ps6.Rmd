@@ -53,9 +53,10 @@ plot.swim_run<-ggplot(results_2017) +
 ```
 
 
-2. To compare the relationships between these three variables, we can plot all three plots in the same window, rather than having to scroll through each one individually. To do so, we use the `ggarrange` function within the 'ggpubr' package. As arguments of the function, we select our three plots and can specify the number of rows and columns to be displayed.
+2. To compare the relationships between these three variables, we can plot all three plots in the same window, rather than having to scroll through each one individually. To do so, we use the `ggarrange` function within the `ggpubr` package. As arguments of the function, we select our three plots and can specify the number of rows and columns to be displayed.
 
 ```{r pt1 q2, include=TRUE, message=FALSE}
+#install.packages("ggpubr")
 library(ggpubr)
 ggarrange(plot.swim_bike, plot.bike_run, plot.swim_run, nrow = 2, ncol = 2)
 ```

@@ -145,6 +145,7 @@ fit[["coefficients"]]
 `modelr` is another package that is part of the `tidyverse`. It has a number of useful functions for linear regression models.
 
 ```{r load modelr}
+#install.packages("modelr")
 library(modelr)
 ```
 
