@@ -16,7 +16,7 @@ Before we jump into any analysis, we wanted to start by discussing the notion of
 2. Each **observation** must have its own **row**.
 3. Each **value** must have its own **cell**.
 
-To make the above discussion much more concrete, let's go back to the dataset we created in the challenge question at the end of [Problem Set 3](ps3.html). If you haven't yet completed that, you can download the final [batting_2014_2015 dataset here](data/batting_2014_2015.Rdata) (then save it to your "data" folder). Printing out the tbl, we see that there is a separate row for each "player-season".
+To make the above discussion much more concrete, let's go back to the dataset we created in the challenge question at the end of [Problem Set 3](ps3.html). If you haven't yet completed that, you can download the final [batting_2014_2015 dataset here](data/batting_2014_2015.RData) (then save it to your "data" folder). Printing out the tbl, we see that there is a separate row for each "player-season".
 
 ```{r load batting_2014_2015}
 library(tidyverse)
