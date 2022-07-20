@@ -167,7 +167,7 @@ We are now ready to apply our `fg_train` model's forecasts to `fg_test`. For ins
 ```{r fg_test phat_all}
 fg_test <-
   fg_test %>%
-  mutate(phat_all = mean(fg_train[["Success"]]))
+  mutate(phat_all = mean(fg_train$Success))
 ```
 
 Joining is a powerful technique to combine data from two different tables based on a *key*.  The key is what enables us to match rows between the tables. For instance, to add the forecasts from the tbl `phat_kicker` to the tbl `fg_test` join works row-by-row. First, for each field goal in `fg_test`, the function identifies the kicker who attempted the field goal. Then it matches the with corresponding kicker row from the tbl `phat_kicker`. The join function then appends that kicker's forecast from `phat_kicker` to the row in `fg_test.` What we have just described is what is known as an "inner join". In this situation, the key was the Kicker. The code to carry out these operations is given below.

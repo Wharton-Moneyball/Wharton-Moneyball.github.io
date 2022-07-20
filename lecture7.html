@@ -692,7 +692,7 @@ kickers. Notice that instead of computing the mean of the column
 <code>fg_train</code>.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fg_test <span class="ot">&lt;-</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  fg_test <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">phat_all =</span> <span class="fu">mean</span>(fg_train[[<span class="st">&quot;Success&quot;</span>]]))</span></code></pre></div>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">phat_all =</span> <span class="fu">mean</span>(fg_train<span class="sc">$</span>Success))</span></code></pre></div>
 <p>Joining is a powerful technique to combine data from two different
 tables based on a <em>key</em>. The key is what enables us to match rows
 between the tables. For instance, to add the forecasts from the tbl

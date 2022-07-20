@@ -559,12 +559,8 @@ the individual scatter plots.</li>
 </ul>
 <ol start="4" style="list-style-type: decimal">
 <li>To numerically evaluate these relationships, compute the correlation
-between each of the variables. Note that <code>cor()</code> is a Base R
-function and does not work with the other tidyverse functions, so we
-cannot pipe our data into it. Instead, we need to specifically point to
-each variable within the dataset, using the brackets notation we’ve seen
-a couple times before: <code>results_2017[['our_variable_here']]</code>.
-Your results should be as follows.</li>
+between each of the variables (you should compute 3 different
+correlations).</li>
 </ol>
 <pre><code>## [1] 0.6379414</code></pre>
 <pre><code>## [1] 0.642096</code></pre>
@@ -580,7 +576,7 @@ our predictor and Bike as our response.</li>
 <li>We obtain the following slope and intercept for this
 regression.</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lm.swim_bike[[<span class="st">&#39;coefficients&#39;</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lm.swim_bike<span class="sc">$</span>coefficients</span></code></pre></div>
 <pre><code>## (Intercept)        Swim 
 ##  179.129651    2.395295</code></pre>
 <ol start="6" style="list-style-type: decimal">
@@ -642,7 +638,7 @@ our linear model as the y values. Then, we draw a line through these
 points, which is our regression line.</li>
 </ol>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>lm.run_bike <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> results_2017, <span class="at">formula =</span> Bike <span class="sc">~</span> Run)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lm.run_bike[[<span class="st">&#39;coefficients&#39;</span>]]</span></code></pre></div>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lm.run_bike<span class="sc">$</span>coefficients</span></code></pre></div>
 <pre><code>## (Intercept)         Run 
 ## 205.7610166   0.5147168</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>grid.run <span class="ot">&lt;-</span> results_2017 <span class="sc">%&gt;%</span> <span class="fu">data_grid</span>(Run)</span>
@@ -657,7 +653,7 @@ relation into our linear model, we will add a quadratic term as an
 additional predictor variable (which, in this case, is Run).</li>
 </ol>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>lm.run_bike2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> results_2017, <span class="at">formula =</span> Bike <span class="sc">~</span> Run <span class="sc">+</span> <span class="fu">I</span>(Run<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>lm.run_bike2[[<span class="st">&#39;coefficients&#39;</span>]]</span></code></pre></div>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>lm.run_bike2<span class="sc">$</span>coefficients</span></code></pre></div>
 <pre><code>##  (Intercept)          Run     I(Run^2) 
 ## 26.222478107  1.649746436 -0.001732342</code></pre>
 <ol start="3" style="list-style-type: decimal">
@@ -700,7 +696,7 @@ bike times differ depending on a racer’s gender.</p>
 let’s add the gender effect in.</li>
 </ol>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>lm.run_bike_gender <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> results_2017, <span class="at">formula =</span> Bike <span class="sc">~</span> Run <span class="sc">+</span> Gender)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>lm.run_bike_gender[[<span class="st">&#39;coefficients&#39;</span>]]</span></code></pre></div>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>lm.run_bike_gender<span class="sc">$</span>coefficients</span></code></pre></div>
 <pre><code>## (Intercept)         Run  GenderMale 
 ##  229.316963    0.502562  -26.143851</code></pre>
 <ul>

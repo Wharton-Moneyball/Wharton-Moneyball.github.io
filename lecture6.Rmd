@@ -41,10 +41,12 @@ If $r = 1$, then the points all lie on a line with positive slope. If $r = -1$, 
 
 Loosely speaking, we can think of correlation as a measure of how well a line fits our data. [Let's get some practice!](http://guessthecorrelation.com/)
 
-We can calculate the correlation between two variables in `R` using the function `cor()`. The correlation between the 2014 and 2015 batting averages is:
+We can calculate the correlation between two variables in `R` using the function `cor()`. Note that `cor()` is a Base R function and does not work with the other tidyverse functions, so we cannot pipe our data into it. Instead, we need to specifically point to each variable within the dataset, using the dollar sign symbol we've seen a couple times before: `our_dataset$our_variable`. This is equivalent to the tidyverse notation for doing `our_dataset %>% select(our_variable)`.
+
+The correlation between the 2014 and 2015 batting averages is:
 
 ```{r cor}
-cor(batting_2014_2015[["BA_2014"]], batting_2014_2015[["BA_2015"]])
+cor(batting_2014_2015$BA_2014, batting_2014_2015$BA_2015)
 ```
 
 We have a moderate amount of correlation between 2014 and 2015 batting averages, but there is still a lot of noise. 
@@ -136,7 +138,7 @@ The second argument in `lm()` is where we specifiy our data: `batting_2014_2015`
 
 Our new object, `fit`, contains a lot of information about our regression line. At the moment, we just want the coefficients. We can access the coefficients as follows:
 ```{r get coefficients}
-fit[["coefficients"]]
+fit$coefficients
 ```
 
 

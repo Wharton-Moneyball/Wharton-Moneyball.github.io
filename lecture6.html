@@ -513,9 +513,16 @@ lie on a line with positive slope. If <span class="math inline">\(r =
 well a line fits our data. <a
 href="http://guessthecorrelation.com/">Let’s get some practice!</a></p>
 <p>We can calculate the correlation between two variables in
-<code>R</code> using the function <code>cor()</code>. The correlation
-between the 2014 and 2015 batting averages is:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(batting_2014_2015[[<span class="st">&quot;BA_2014&quot;</span>]], batting_2014_2015[[<span class="st">&quot;BA_2015&quot;</span>]])</span></code></pre></div>
+<code>R</code> using the function <code>cor()</code>. Note that
+<code>cor()</code> is a Base R function and does not work with the other
+tidyverse functions, so we cannot pipe our data into it. Instead, we
+need to specifically point to each variable within the dataset, using
+the dollar sign symbol we’ve seen a couple times before:
+<code>our_dataset$our_variable</code>. This is equivalent to the
+tidyverse notation for doing
+<code>our_dataset %&gt;% select(our_variable)</code>.</p>
+<p>The correlation between the 2014 and 2015 batting averages is:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(batting_2014_2015<span class="sc">$</span>BA_2014, batting_2014_2015<span class="sc">$</span>BA_2015)</span></code></pre></div>
 <pre><code>## [1] 0.4928799</code></pre>
 <p>We have a moderate amount of correlation between 2014 and 2015
 batting averages, but there is still a lot of noise.</p>
@@ -592,7 +599,7 @@ dataset to calculate the regression coefficients.</p>
 <p>Our new object, <code>fit</code>, contains a lot of information about
 our regression line. At the moment, we just want the coefficients. We
 can access the coefficients as follows:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fit[[<span class="st">&quot;coefficients&quot;</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span>coefficients</span></code></pre></div>
 <pre><code>## (Intercept)     BA_2014 
 ##   0.1409779   0.4851417</code></pre>
 </div>
