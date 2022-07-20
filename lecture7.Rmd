@@ -6,6 +6,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, fig.align = "center")
 library(tidyverse)
+options(pillar.sigfig = 4) # increase sigfigs of tibble output from 3 to 5, increase width of output to fit more columns
 ```
 
 In [Lecture 4](lecture4.html) and [Lecture 6](lecture6.html), we started building a model for predicting a baseball player's 2015 batting average using his 2014 batting average. We found that some models, even though they fit the data quite well, appeared to *overfit* and may not predict future observations well. Overfitting happens when the model is too complex; the model is improperly describing the random error rather than properly describing the relationship between variables. We will switch gears a little bit and discuss how to diagnose overfit issues using data on field goals in the NFL.
@@ -170,7 +171,7 @@ fg_test <-
   mutate(phat_all = mean(fg_train$Success))
 ```
 
-Joining is a powerful technique to combine data from two different tables based on a *key*.  The key is what enables us to match rows between the tables. For instance, to add the forecasts from the tbl `phat_kicker` to the tbl `fg_test` join works row-by-row. First, for each field goal in `fg_test`, the function identifies the kicker who attempted the field goal. Then it matches the with corresponding kicker row from the tbl `phat_kicker`. The join function then appends that kicker's forecast from `phat_kicker` to the row in `fg_test.` What we have just described is what is known as an "inner join". In this situation, the key was the Kicker. The code to carry out these operations is given below.
+Joining is a powerful technique to combine data from two different tables based on a *key*.  The key is what enables us to match rows between the tables. For instance, to add the forecasts from the tbl `phat_kicker` to the tbl `fg_test` join works row-by-row. First, for each field goal in `fg_test`, the function identifies the kicker who attempted the field goal. Then it matches that kicker with corresponding kicker row from the tbl `phat_kicker`. The join function then appends that kicker's forecast from `phat_kicker` to the row in `fg_test.` What we have just described is what is known as an "inner join". In this situation, the key was the Kicker. The code to carry out these operations is given below.
 
 ```{r fg_test join}
 fg_test <-
@@ -181,7 +182,7 @@ fg_test <-
 To verify that we have successfully performed this join, we can print out a few rows of `fg_test`:
 
 ```{r verify join}
-select(fg_test, Kicker, Success, phat_kicker)
+select(fg_test, Kicker, Success, phat_all, phat_kicker)
 ```
 
 Let's unpack the inner join code line-by-line:  in the first two lines, we are telling R that we want to over-write `fg_test`. Next, we pipe `fg_test` to the function `inner_join`, which takes two more arguments.  The first argument `phat_kicker` tells the function where the additional data corresponding to each key value is. The last argument `by = "Kicker"` tells the function that the key we want to use is the kicker.

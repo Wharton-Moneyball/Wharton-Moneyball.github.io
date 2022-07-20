@@ -507,7 +507,7 @@ href="data/nfl_fg_test">nfl_fg_test.csv</a>. Download both of these
 files and move them to your “data” folder.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fg_train <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/nfl_fg_train.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 9505 Columns: 8
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (2): Team, Kicker
 ## dbl (5): Year, GameMinute, Distance, ScoreDiff, Success
@@ -632,7 +632,7 @@ each of our prediction models.</p>
 <pre><code>## # A tibble: 1 × 5
 ##   phat_all phat_kicker phat_dist_10 phat_dist_5 phat_dist_2
 ##      &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-## 1    0.140       0.138        0.125       0.123       0.123</code></pre>
+## 1   0.1403      0.1383       0.1245      0.1233      0.1231</code></pre>
 <p>Which model has the lowest Brier score? Do you think this model
 over-fits the data?</p>
 <p>Before assessing how well our models predict <em>out-of-sample</em>,
@@ -668,7 +668,7 @@ at how well they predict these field goals. We first load the data into
 a tbl called <code>fg_test</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fg_test <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/nfl_fg_test.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 1682 Columns: 8
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (2): Team, Kicker
 ## dbl (5): Year, GameMinute, Distance, ScoreDiff, Success
@@ -699,7 +699,7 @@ between the tables. For instance, to add the forecasts from the tbl
 <code>phat_kicker</code> to the tbl <code>fg_test</code> join works
 row-by-row. First, for each field goal in <code>fg_test</code>, the
 function identifies the kicker who attempted the field goal. Then it
-matches the with corresponding kicker row from the tbl
+matches that kicker with corresponding kicker row from the tbl
 <code>phat_kicker</code>. The join function then appends that kicker’s
 forecast from <code>phat_kicker</code> to the row in
 <code>fg_test.</code> What we have just described is what is known as an
@@ -710,20 +710,20 @@ carry out these operations is given below.</p>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(phat_kicker, <span class="at">by =</span> <span class="st">&quot;Kicker&quot;</span>)</span></code></pre></div>
 <p>To verify that we have successfully performed this join, we can print
 out a few rows of <code>fg_test</code>:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(fg_test, Kicker, Success, phat_kicker)</span></code></pre></div>
-<pre><code>## # A tibble: 1,682 × 3
-##    Kicker  Success phat_kicker
-##    &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt;
-##  1 Akers         1       0.788
-##  2 Akers         1       0.788
-##  3 Bironas       1       0.850
-##  4 Bironas       1       0.850
-##  5 Bironas       1       0.850
-##  6 Brien         0       0.333
-##  7 Brown         0       0.829
-##  8 Brown         1       0.829
-##  9 Brown         1       0.829
-## 10 Brown         1       0.829
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(fg_test, Kicker, Success, phat_all, phat_kicker)</span></code></pre></div>
+<pre><code>## # A tibble: 1,682 × 4
+##    Kicker  Success phat_all phat_kicker
+##    &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Akers         1   0.8312      0.7884
+##  2 Akers         1   0.8312      0.7884
+##  3 Bironas       1   0.8312      0.8504
+##  4 Bironas       1   0.8312      0.8504
+##  5 Bironas       1   0.8312      0.8504
+##  6 Brien         0   0.8312      0.3333
+##  7 Brown         0   0.8312      0.8291
+##  8 Brown         1   0.8312      0.8291
+##  9 Brown         1   0.8312      0.8291
+## 10 Brown         1   0.8312      0.8291
 ## # … with 1,672 more rows</code></pre>
 <p>Let’s unpack the inner join code line-by-line: in the first two
 lines, we are telling R that we want to over-write <code>fg_test</code>.
@@ -746,7 +746,7 @@ models. Which has the best out-of-sample performance?</p>
 <pre><code>## # A tibble: 1 × 5
 ##   phat_all phat_kicker phat_dist_10 phat_dist_5 phat_dist_2
 ##      &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-## 1    0.134       0.133        0.120       0.118       0.118</code></pre>
+## 1   0.1340      0.1332       0.1198      0.1177      0.1180</code></pre>
 </div>
 <div id="looking-ahead-to-tomorrow" class="section level2">
 <h2>Looking ahead to tomorrow</h2>
