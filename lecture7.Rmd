@@ -24,7 +24,7 @@ A common alternative is to split our original dataset into two parts: a *trainin
 
 ## Field Goal Success in the NFL
 
-The file [nfl_fg_train.csv](data/nfl_fg_train.csv) contains a large dataset about field goals attempted in the NFL between 2005 and 2015. First, we will train several models of field goal success with this data. Then, we will evaluate their predictive performance using the data contained in [nfl_fg_test.csv](data/nfl_fg_test). Download both of these files and move them to your "data" folder. 
+The file [nfl_fg_train.csv](data/nfl_fg_train.csv) contains a large dataset about field goals attempted in the NFL between 2005 and 2015. First, we will train several models of field goal success with this data. Then, we will evaluate their predictive performance using the data contained in [nfl_fg_test.csv](data/nfl_fg_test.csv). Download both of these files and move them to your "data" folder. 
 
 ```{r load fg_train}
 fg_train <- read_csv("data/nfl_fg_train.csv")
