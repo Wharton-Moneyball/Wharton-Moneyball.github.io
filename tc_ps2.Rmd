@@ -14,9 +14,7 @@ Please spend a few minutes reading through the notes from [Lecture 2](tc_lecture
 
 ## Payroll and Winning Percentage in the MLB
 
-In lecture, Prof. Wyner discussed the relationship between a team's payroll and its winning percentage. We will create plots from his analysis in the following problems using the dataset "mlb_relative_payrolls.csv", which you can find in the "data/" folder of your working directory. You should save all of the code for this analysis in an R script called "ps2_mlb_payroll.R".
-
-If you don't have the dataset in your data folder yet, download it from the GitHub page [here](https://github.com/skdeshpande91/wharton_moneyball/raw/master/website_files/data/mlb_relative_payrolls.csv).
+In lecture, Prof. Wyner discussed the relationship between a team's payroll and its winning percentage. We will create plots from his analysis in the following problems using the dataset [mlb_relative_payrolls.csv](data/mlb_relative_payrolls.csv), which you should download into the "data" folder of your working directory. You should save all of the code for this analysis in an R script called "ps2_mlb_payroll.R".
 
 1. Read the data in from the file and save it as a tbl called "relative_payroll"
 
@@ -29,20 +27,20 @@ relative_payroll <- read_csv(file = "data/mlb_relative_payrolls.csv")
 ```{r q2 solution}
 # solution
 ggplot(data = relative_payroll) +
-  geom_histogram(mapping = aes(x = Winning_Percentage, y = ..density..))
+  geom_histogram(aes(x = Winning_Percentage, y = ..density..))
 
 ggplot(data = relative_payroll) +
-  geom_histogram(mapping = aes(x = Winning_Percentage, y = ..density..), binwidth = 0.05)
+  geom_histogram(aes(x = Winning_Percentage, y = ..density..), binwidth = 0.05)
 
 ggplot(data = relative_payroll) +
-  geom_histogram(mapping = aes(x = Winning_Percentage, y = ..density..), binwidth = 0.01)
+  geom_histogram(aes(x = Winning_Percentage, y = ..density..), binwidth = 0.01)
 ```
 
 3. Make a histogram of the relative payrolls.
 ```{r q3 solution}
 # solution
 ggplot(data = relative_payroll) +
-  geom_histogram(mapping = aes(x = Relative_Payroll, y = ..density..))
+  geom_histogram(aes(x = Relative_Payroll, y = ..density..))
 ```
 
 4. Make a scatterplot with relative payroll on the horizontal axis and winning percentage on the vertical axis. 
@@ -50,7 +48,7 @@ ggplot(data = relative_payroll) +
 ```{r q4 solution}
 # solution
 ggplot(data = relative_payroll) +
-  geom_point(mapping = aes(x = Relative_Payroll, y = Winning_Percentage))
+  geom_point(aes(x = Relative_Payroll, y = Winning_Percentage))
 ```
 
 5. Without executing the code below, discuss with your group and see if you can figure out what it is doing.
