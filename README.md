@@ -1,5 +1,5 @@
 # Wharton-Moneyball.github.io
 
-This repository contains all of the programming/data analysis course material for the Summer 2021 (online) edition of the Wharton Moneyball Academy.
+This repository contains all of the programming/data analysis course material for the Summer 2022 editions of the Wharton Moneyball Academy & Training Camp.
 
 The course website is here: https://wharton-moneyball.github.io/
