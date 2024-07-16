@@ -39,6 +39,7 @@ batting_2014_2015 <-
   spread(yearID, BA) %>%
   rename(BA_2014 = `2014`,
          BA_2015 = `2015`)
+batting_2014_2015
 ```
 
 When we print out `batting_2014_2015` now, we notice that it is easier to read in this proper "tidy" format. Moreover, many of the `tidyverse` functions that we've covered and will continue to learn are much simpler to implement when used on data of this form. We'll continue to see examples of how to "tidy" up our data as we go through the lectures and problem sets.
@@ -54,6 +55,7 @@ Now what if we also told you this extra player's 2014 batting average? Can we im
 batting_2014_2015 <-
   batting_2014_2015 %>% 
   mutate(yhat_0 = mean(BA_2015))
+batting_2014_2015
 ```
 
 If the 2014 batting average had no predictive power at all, then this overall mean will be the best prediction model possible, given what data we have. Plotting the 2015 batting averages against the 2014 batting averages allows us to assess visually whether there is any relationship between the two variables.We have added dashed red horizontal and vertical lines at the overall means of the 2014 and 2015 data, respectively.
@@ -86,6 +88,7 @@ batting_2014_2015 <-
   mutate(yhat_1 = mean(BA_2015)) %>%
   ungroup() %>%
   select(-bins)
+batting_2014_2015
 ```
 
 When we run this code and print out our tbl, we see that there is a new column called "yhat_1" that contains our new predictions. Before proceeding, we should talk a bit about the syntax use in `cut()`. The first argument is the variable we want to discretize. The next argument, `breaks = ` is a vector that tells R where the endpoints of these intervals are. These are often called "cut points" In this particular case, we wanted to divide the players into those with below average batting averages in 2014 and above average batting averages in 2015. The first element of the cut point vector, 0.15 is much less than the smallest BA_2014 value, whereas the second elements, 0.272, is the overall mean of the BA_2014 values. The last element, 0.40 is much greater than the largest BA_2014 value.
@@ -118,6 +121,7 @@ batting_2014_2015 <-
   mutate(yhat_2 = mean(BA_2015)) %>%
   ungroup() %>%
   select(-bins)
+batting_2014_2015
 ```
 
 We can also visualize our new predictions, this time with blue triangles.
