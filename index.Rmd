@@ -44,12 +44,16 @@ Professor Abraham (Adi) Wyner is Professor of Statistics and Data Science,  chai
 <!---
 Ryan Gross is a third year Ph.D. student in the Statistics Department at Wharton, interested in Bayesian statistics and sports analytics. Prior to Penn, he graduated from Rutgers University Honors College with a double major in Math and Statistics and minor in Economics, where he also ran cross country and track. Growing up in New Jersey, Ryan is a lifelong fan of the New York Jets, Knicks, and Yankees, along with Rutgers football and basketball. 
 --->
-
+<!---
 Ryan Brill is a fifth year Ph.D. student in the Applied Mathematics & Computational Science at Penn. Having grown up in Los Angeles, he graduated from UC Berkeley and roots for the Lakers and Dodgers. His academic interests span probability, statistics, and sports analytics, while also enjoying playing golf/tennis/basketball/snowboarding, poker, strategy games, and music.
-
+--->
+<!---
 Joey Rudoler is an second year Ph.D. student in Statistics and Data Science at Wharton. He previously studied Physics (B.A.) and Data Science (M.S.E.) at Penn. Joey studies machine learning and applications in computational neuroscience.
+--->
+Jonathan Pipping (JP) is a second-year Ph.D. student in Statistics and Data Science at Wharton. His research interests include causal inference, machine learning, and Bayesian modeling, with applications in economics, public health, and sports analytics. In his free time, he enjoys playing music, running, and watching sports.
 
-Jonathan Pipping is an incoming first year Ph.D. student in Statistics and Data Science at Wharton, and is affiliated with the Wharton Sports Analytics and Business Initiative (WSABI). He previously got his B.S. in Statistics at the University of Florida.
+Victoria Lee is a senior in the VIPER program, studying Physics and Materials Science Engineering. She's an avid football fan and also enjoys rock climbing as well as creating dance choreography.
+
 <!---
 Having also went to Penn for his undergrad and masters, and having grown up in Philly, he roots for the Eagles, Phillies, and Sixers.
 --->
