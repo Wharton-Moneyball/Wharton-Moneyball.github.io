@@ -82,7 +82,7 @@ Add another column to the tbl for TSP
 nba_shooting <- mutate(nba_shooting, TSP = PTS/(2*(FGA+.44*FTA)))
 ```
 
-8. Arrange your tbl so that the players are sorted in increasing order of true shooting percentage. Which player has the best true shooting percentage?
+8. Arrange your tbl so that the players are sorted in decreasing order of true shooting percentage. Which player has the best true shooting percentage?
 
 ```{r pt2 q8 solution}
 # solution
