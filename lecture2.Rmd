@@ -217,12 +217,12 @@ Let's take a minute to unpack the code above. Within `mutate()`, we have started
 
 ## Summarizing Individual Columns
 
-Among eligible players, what was the average field goal percentage in the 2015-16 season? To answer this, we can use `filter()` to create a new tbl containing the data only for this season. Then we can use the dplyr verb `summarize()` as follows:
+Among eligible players, what was the average field goal percentage in the 2015-16 season? To answer this, we can use `filter()` to create a new tbl containing the data only for this season. Then we can use the dplyr verb `reframe()` as follows:
 
 ```{r summarize}
 nba_shooting_2016 <- filter(nba_shooting, SEASON == 2016)
-summarize(nba_shooting_2016, FGP = mean(FGP))
-summarize(nba_shooting_2016, FGP = mean(FGP), TPP = mean(TPP), FTP = mean(FTP))
+reframe(nba_shooting_2016, FGP = mean(FGP))
+reframe(nba_shooting_2016, FGP = mean(FGP), TPP = mean(TPP), FTP = mean(FTP))
 ```
 
 In the first line, we compute the average field goal percentage and in the second example, we compute the average field goal, three point, and free throw percentages.
