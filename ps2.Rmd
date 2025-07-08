@@ -303,7 +303,7 @@ ggplot(batting_recent) +
   geom_point(mapping = aes(x=KP, y=wOBA))
 ```
 
-13. Explore the distribution of the ratings for the statistics introduced in Problem 9 using bar plots. Hint: You may need to use `factor(BBP_rating, levels = c(Awful, Poor...))` to ensure the ratings are plotted in the correct order.
+13. Explore the distribution of the ratings for the statistics introduced in Problem 9 using bar plots. *Hint: You may need to mutate the rating columns with `factor(BBP_rating, levels = c(Awful, Poor...))` to ensure the ratings are plotted in the correct order.*
 
 ```{r pt 2 q 13 solution}
 #solution
