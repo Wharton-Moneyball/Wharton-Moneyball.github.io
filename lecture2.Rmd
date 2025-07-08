@@ -215,6 +215,15 @@ nba_shooting <- mutate(nba_shooting,
 Let's take a minute to unpack the code above. Within `mutate()`, we have started like we always did, with the name of the new variable on the left hand side of an equal sign. Then we called the `case_when()` function. Within this function, we have a new line for each of the values of the new variable "Classification". On each line we have an expression with a tilde (`~`). On the left of the `~`, we have put a logical expression and on the right we have written the value of "Clasification."
 
 
+### Selecting Columns
+
+Oftentimes, the dataset you load into R contains many, many more columns than you need. We can use `select()` to pull out the columns we want to use in our subsequent analyses. For instance, we may want to only focus on the columns SEASON, FGP, TPP, FTP, eFGP, PTS, and TSP and ignore the rest of the columns.
+
+```{r select}
+select(nba_shooting, PLAYER, SEASON, FGP, TPP, FTP, eFGP, PTS, TSP)
+```
+
+
 ## Summarizing Individual Columns
 
 Among eligible players, what was the average field goal percentage in the 2015-16 season? To answer this, we can use `filter()` to create a new tbl containing the data only for this season. Then we can use the dplyr verb `reframe()` as follows:
@@ -235,15 +244,6 @@ The following functions are quite useful for summarizing several aspects of the 
 * Count: `n()`, `n_distinct()`
 
 We will have much more to say about `reframe()` in [Lecture 3](lecture3.html) when we discuss grouped manipulations.
-
-
-### Selecting Columns
-
-Oftentimes, the dataset you load into R contains many, many more columns than you need. We can use `select()` to pull out the columns we want to use in our subsequent analyses. For instance, we may want to only focus on the columns SEASON, FGP, TPP, FTP, eFGP, PTS, and TSP and ignore the rest of the columns.
-
-```{r select}
-select(nba_shooting, PLAYER, SEASON, FGP, TPP, FTP, eFGP, PTS, TSP)
-```
 
 
 ## Saving our work
