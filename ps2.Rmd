@@ -118,11 +118,11 @@ arrange(hitting_qualified, yearID)
 arrange(hitting_qualified, desc(yearID))
 ```
 
-3. Use `summarize()` to find out the first and last season for which we have data. *Hint, you only need one line of code to do this*
+3. Use `reframe()` to find out the first and last season for which we have data. *Hint, you only need one line of code to do this*
 
 ```{r pt2 q3 solution}
 # solution
-summarize(hitting_qualified, first_year= min(yearID), last_year= max(yearID))
+reframe(hitting_qualified, first_year= min(yearID), last_year= max(yearID))
 ```
 
 
