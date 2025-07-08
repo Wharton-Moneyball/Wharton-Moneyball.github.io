@@ -234,7 +234,7 @@ The following functions are quite useful for summarizing several aspects of the 
 * Range: `min()`, `max()`
 * Count: `n()`, `n_distinct()`
 
-We will have much more to say about `summarize()` in [Lecture 3](lecture3.html) when we discuss grouped manipulations.
+We will have much more to say about `reframe()` in [Lecture 3](lecture3.html) when we discuss grouped manipulations.
 
 
 ### Selecting Columns
