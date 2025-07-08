@@ -102,10 +102,11 @@ ggplot(data = pitching) +
   geom_point(mapping = aes(x = yearID, y = ERA), size = 0.3)
 ```
 
-Looking at the plot, it appears that some of the pitchers from the first few decades of baseball had the lowest ERA. Using `arrange()`, we can see which pitcher had the best season according to ERA. 
+Looking at the plot, it appears that some of the pitchers from the first few decades of baseball had the lowest ERA. Using `arrange()` and `slice_head()`, we can see the 10 best pitchers. 
 
 ```{r arrange ERA}
-arrange(pitching, ERA)
+arrange(pitching, ERA) %>%
+  slice_head(n = 10)
 ```
 
 It would appear that the best pitching season of all time was [Dutch Leonard's](https://en.wikipedia.org/wiki/Dutch_Leonard_(left-handed_pitcher)) 1914 season with the Red Sox. The next best was [Mordecai Brown](https://en.wikipedia.org/wiki/Mordecai_Brown)'s 1906 season with the Cubs. How much better was Leonard's 0.96 ERA than Brown's 1.04 ERA?

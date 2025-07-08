@@ -13,7 +13,7 @@
 
 <title>Lecture 3: Piping &amp; Grouped Comparisons</title>
 
-<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
@@ -30,8 +30,8 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -53,9 +53,8 @@
   }
 </style>
 <style type="text/css" data-origin="pandoc">
-html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -66,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -644,10 +643,11 @@ can plot the ERAs by year.</p>
 <p><img src="lecture3_files/figure-html/plot%20ERAs%20year-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Looking at the plot, it appears that some of the pitchers from the
 first few decades of baseball had the lowest ERA. Using
-<code>arrange()</code>, we can see which pitcher had the best season
-according to ERA.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">arrange</span>(pitching, ERA)</span></code></pre></div>
-<pre><code>## # A tibble: 9,688 × 6
+<code>arrange()</code> and <code>slice_head()</code>, we can see the 10
+best pitchers.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">arrange</span>(pitching, ERA) <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 6
 ##    playerID  yearID teamID lgID     IP   ERA
 ##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;
 ##  1 leonadu01   1914 BOS    AL     225.  0.96
@@ -659,8 +659,7 @@ according to ERA.</p>
 ##  7 jossad01    1908 CLE    AL     325   1.16
 ##  8 lundgca01   1907 CHN    NL     207   1.17
 ##  9 alexape01   1915 PHI    NL     376.  1.22
-## 10 bradlge01   1876 SL3    NL     573   1.23
-## # ℹ 9,678 more rows</code></pre>
+## 10 bradlge01   1876 SL3    NL     573   1.23</code></pre>
 <p>It would appear that the best pitching season of all time was <a
 href="https://en.wikipedia.org/wiki/Dutch_Leonard_(left-handed_pitcher)">Dutch
 Leonard’s</a> 1914 season with the Red Sox. The next best was <a
