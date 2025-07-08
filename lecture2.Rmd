@@ -105,14 +105,16 @@ To get an even better idea, we can make a *heatmap*, which you can think of as a
 
 ```{r heatmap}
 ggplot(data = raw_shooting) +
-  geom_bin2d(aes(x = FGP, y = FTP))
+  geom_bin2d(aes(x = FGP, y = FTP)) +
+  scale_fill_viridis_c(option = "plasma", direction = 1)
 ```
 
 We can increase the number of bins to get a much more high-resolution view of our data.
 
 ```{r heatmap bins}
 ggplot(data = raw_shooting) + 
-  geom_bin2d(mapping = aes(x = FGP, y = FTP), bins = 100)
+  geom_bin2d(mapping = aes(x = FGP, y = FTP), bins = 100) +
+  scale_fill_viridis_c(option = "plasma", direction = 1)
 ```
 
 Now we are starting to get some sense that there are some outliers in our data. We can confirm this visually in another way.
