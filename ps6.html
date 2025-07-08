@@ -491,11 +491,11 @@ href="data/Ironman%20Data.csv">Ironman Data</a> and save it to our
 <p>Let’s read in the data and take a look at the variables.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&#39;data/Ironman Data.csv&#39;</span>)</span></code></pre></div>
 <pre><code>## Rows: 22124 Columns: 389
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr  (103): Source Table, Name, Country, Gender, Division, Swim, Bike, Run, Overall, Division Rank, Swim Total Pace, Bike 28.2 mi...
-## dbl  (102): BIB, Gender Rank, Overall Rank, Log Rank, Bike 28.2 mi Distance, Bike 50.4 mi Distance, Bike 68.6 mi Distance, Bike 8...
-## time (184): Swim Total Split Time, Swim Total Race Time, T1, Bike 28.2 mi Split Time, Bike 28.2 mi Race Time, Bike 50.4 mi Split ...
+## chr  (103): Source Table, Name, Country, Gender, Division, Swim, Bike, Run, Overall, Division Ra...
+## dbl  (102): BIB, Gender Rank, Overall Rank, Log Rank, Bike 28.2 mi Distance, Bike 50.4 mi Distan...
+## time (184): Swim Total Split Time, Swim Total Race Time, T1, Bike 28.2 mi Split Time, Bike 28.2 ...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
@@ -688,7 +688,7 @@ which is lower.</li>
 <pre><code>## # A tibble: 1 × 2
 ##   rmse.run_bike rmse.run_bike2
 ##           &lt;dbl&gt;          &lt;dbl&gt;
-## 1          37.3           36.5</code></pre>
+## 1        37.266         36.524</code></pre>
 <ul>
 <li>In fact, it does appear that the quadratic model appears to fit our
 data better!</li>
@@ -747,7 +747,7 @@ time). But let’s verify this computationally.</li>
 <pre><code>## # A tibble: 1 × 2
 ##   rmse.run_bike rmse.run_bike_gender
 ##           &lt;dbl&gt;                &lt;dbl&gt;
-## 1          37.3                 35.5</code></pre>
+## 1        37.266               35.511</code></pre>
 <ul>
 <li>Indeed! We will have lower residuals on average by making
 predictions from our gender-included model than with our simple linear

@@ -496,20 +496,20 @@ values are designated <code>NA</code>. To see some of these, we can run
 the following code:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>batting <span class="sc">%&gt;%</span> </span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, teamID, AB, BB, HBP, SH, SF, IBB, GIDP)</span></code></pre></div>
-<pre><code>## # A tibble: 110,495 × 10
+<pre><code>## # A tibble: 113,799 × 10
 ##    playerID  yearID teamID    AB    BB   HBP    SH    SF   IBB  GIDP
 ##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-##  1 abercda01   1871 TRO        4     0    NA    NA    NA    NA     0
-##  2 addybo01    1871 RC1      118     4    NA    NA    NA    NA     0
-##  3 allisar01   1871 CL1      137     2    NA    NA    NA    NA     1
-##  4 allisdo01   1871 WS3      133     0    NA    NA    NA    NA     0
-##  5 ansonca01   1871 RC1      120     2    NA    NA    NA    NA     0
-##  6 armstbo01   1871 FW1       49     0    NA    NA    NA    NA     0
-##  7 barkeal01   1871 RC1        4     1    NA    NA    NA    NA     0
-##  8 barnero01   1871 BS1      157    13    NA    NA    NA    NA     1
-##  9 barrebi01   1871 FW1        5     0    NA    NA    NA    NA     0
-## 10 barrofr01   1871 BS1       86     0    NA    NA    NA    NA     0
-## # … with 110,485 more rows</code></pre>
+##  1 aardsda01   2004 SFN        0     0     0     0     0     0     0
+##  2 aardsda01   2006 CHN        2     0     0     1     0     0     0
+##  3 aardsda01   2007 CHA        0     0     0     0     0     0     0
+##  4 aardsda01   2008 BOS        1     0     0     0     0     0     0
+##  5 aardsda01   2009 SEA        0     0     0     0     0     0     0
+##  6 aardsda01   2010 SEA        0     0     0     0     0     0     0
+##  7 aardsda01   2012 NYA        0     0     0     0     0     0     0
+##  8 aardsda01   2013 NYN        0     0     0     0     0     0     0
+##  9 aardsda01   2015 ATL        1     0     0     0     0     0     0
+## 10 aaronha01   1954 ML1      468    28     3     6     4    NA    13
+## # ℹ 113,789 more rows</code></pre>
 <p>A common convention for dealing with the missing values when
 computing <span class="math inline">\(\text{PA}\)</span> is to replace
 the <code>NA</code> with a <code>0</code>. To do this, we can use the
@@ -518,20 +518,20 @@ function <code>replace_na()</code> within a pipe as follows.</p>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  batting <span class="sc">%&gt;%</span> </span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">IBB =</span> <span class="dv">0</span>, <span class="at">HBP =</span> <span class="dv">0</span>, <span class="at">SH =</span> <span class="dv">0</span>, <span class="at">SF =</span> <span class="dv">0</span>, <span class="at">GIDP =</span> <span class="dv">0</span>))</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>batting <span class="sc">%&gt;%</span> <span class="fu">select</span>(playerID, yearID, teamID, AB, BB, HBP, SH, SF, IBB)</span></code></pre></div>
-<pre><code>## # A tibble: 110,495 × 9
+<pre><code>## # A tibble: 113,799 × 9
 ##    playerID  yearID teamID    AB    BB   HBP    SH    SF   IBB
 ##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-##  1 abercda01   1871 TRO        4     0     0     0     0     0
-##  2 addybo01    1871 RC1      118     4     0     0     0     0
-##  3 allisar01   1871 CL1      137     2     0     0     0     0
-##  4 allisdo01   1871 WS3      133     0     0     0     0     0
-##  5 ansonca01   1871 RC1      120     2     0     0     0     0
-##  6 armstbo01   1871 FW1       49     0     0     0     0     0
-##  7 barkeal01   1871 RC1        4     1     0     0     0     0
-##  8 barnero01   1871 BS1      157    13     0     0     0     0
-##  9 barrebi01   1871 FW1        5     0     0     0     0     0
-## 10 barrofr01   1871 BS1       86     0     0     0     0     0
-## # … with 110,485 more rows</code></pre>
+##  1 aardsda01   2004 SFN        0     0     0     0     0     0
+##  2 aardsda01   2006 CHN        2     0     0     1     0     0
+##  3 aardsda01   2007 CHA        0     0     0     0     0     0
+##  4 aardsda01   2008 BOS        1     0     0     0     0     0
+##  5 aardsda01   2009 SEA        0     0     0     0     0     0
+##  6 aardsda01   2010 SEA        0     0     0     0     0     0
+##  7 aardsda01   2012 NYA        0     0     0     0     0     0
+##  8 aardsda01   2013 NYN        0     0     0     0     0     0
+##  9 aardsda01   2015 ATL        1     0     0     0     0     0
+## 10 aaronha01   1954 ML1      468    28     3     6     4     0
+## # ℹ 113,789 more rows</code></pre>
 <p>The syntax for <code>replace_na()</code> is a bit involved but the
 basic idea is you have to specify the value you want to replace each
 <code>NA</code>. When using <code>replace_na()</code> it is very

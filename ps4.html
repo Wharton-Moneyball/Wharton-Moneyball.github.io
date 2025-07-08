@@ -605,11 +605,11 @@ look at the relative frequencies of the teams using the
 the frequencies of each unique value.</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>raw_boxscore <span class="sc">%&gt;%</span> <span class="fu">select</span>(Tm) <span class="sc">%&gt;%</span> <span class="fu">table</span>()</span></code></pre></div>
-<pre><code>## .
-##  ATL  BOS  BRK  CHA  CHH  CHI  CHO  CLE  DAL  DEN  DET  GSW  HOU  IND  LAC  LAL  MEM  MIA  MIL  MIN  NJN  NOH  NOK  NOP  NYK  OKC 
-##  347  350   72  183  101  335   34  359  356  354  321  355  359  319  347  319  271  348  337  328  298  161   34   63  345  144 
-##  ORL  PHI  PHO  POR  SAC  SAS  SEA  TOR  TOT  UTA  VAN  WAS  WSB 
-##  340  352  348  338  332  342  195  366 1047  309   80  333   15</code></pre>
+<pre><code>## Tm
+##  ATL  BOS  BRK  CHA  CHH  CHI  CHO  CLE  DAL  DEN  DET  GSW  HOU  IND  LAC  LAL  MEM  MIA  MIL  MIN 
+##  347  350   72  183  101  335   34  359  356  354  321  355  359  319  347  319  271  348  337  328 
+##  NJN  NOH  NOK  NOP  NYK  OKC  ORL  PHI  PHO  POR  SAC  SAS  SEA  TOR  TOT  UTA  VAN  WAS  WSB 
+##  298  161   34   63  345  144  340  352  348  338  332  342  195  366 1047  309   80  333   15</code></pre>
 <ul>
 <li>Looking at the list of teams you may see a few that you don’t
 recognize. For instance, there are 15 players listed as playing on
@@ -618,24 +618,24 @@ players.</li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>raw_boxscore <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">&quot;WSB&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 15 × 22
-##    Season Player    Pos     Age Tm        G    GS    MP   FGM   FGA   TPM   TPA   FTM   FTA   ORB   DRB   AST   STL   BLK   TOV    PF
-##     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1   1997 Ashraf A… PF       25 WSB      31     0   144    12    40     1     1    15    28    19    33     3     7     3    10    29
-##  2   1997 Calbert … SG       25 WSB      79    79  2411   369   730     4    30    95   137    70   198   114    77    18    94   226
-##  3   1997 Matt Fish C        27 WSB       5     0     7     1     3     0     0     0     0     1     4     0     0     0     2     2
-##  4   1997 Harvey G… PF       31 WSB      78    25  1604   129   314    28    89    30    39    63   193    68    46    48    30   167
-##  5   1997 Juwan Ho… SF       23 WSB      82    82  3324   638  1313     0     2   294   389   202   450   311    93    23   246   259
-##  6   1997 Jaren Ja… SG       29 WSB      75     0  1133   134   329    53   158    53    69    31   101    65    45    16    60   131
-##  7   1997 Tim Legl… SG       30 WSB      15     0   182    15    48     8    29     6     7     0    21     7     3     5     9    21
-##  8   1997 Gheorghe… C        25 WSB      73    69  1849   327   541     0     0   123   199   141   340    29    43    96   117   230
-##  9   1997 Tracy Mu… SF       25 WSB      82     1  1814   288   678   106   300   135   161    84   169    78    69    19    86   150
-## 10   1997 Gaylon N… SG       27 WSB       1     0     6     1     3     0     1     0     0     0     1     0     1     0     1     0
-## 11   1997 Rod Stri… PG       30 WSB      82    81  2997   515  1105    13    77   367   497    95   240   727   143    14   270   166
-## 12   1997 Ben Wall… PF       22 WSB      34     0   197    16    46     0     0     6    20    25    33     2     8    11    18    27
-## 13   1997 Chris We… PF       23 WSB      72    72  2806   604  1167    60   151   177   313   238   505   331   122   137   230   258
-## 14   1997 Chris Wh… PG       25 WSB      82     1  1117   139   330    58   163    94   113    13    91   182    49     4    68   100
-## 15   1997 Lorenzo … C        27 WSB      19     0   264    20    31     0     0     5     7    28    41     4     6     8    18    49
-## # … with 1 more variable: PTS &lt;dbl&gt;</code></pre>
+##    Season Player Pos     Age Tm        G    GS    MP   FGM   FGA   TPM   TPA   FTM   FTA   ORB   DRB
+##     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1   1997 Ashra… PF       25 WSB      31     0   144    12    40     1     1    15    28    19    33
+##  2   1997 Calbe… SG       25 WSB      79    79  2411   369   730     4    30    95   137    70   198
+##  3   1997 Matt … C        27 WSB       5     0     7     1     3     0     0     0     0     1     4
+##  4   1997 Harve… PF       31 WSB      78    25  1604   129   314    28    89    30    39    63   193
+##  5   1997 Juwan… SF       23 WSB      82    82  3324   638  1313     0     2   294   389   202   450
+##  6   1997 Jaren… SG       29 WSB      75     0  1133   134   329    53   158    53    69    31   101
+##  7   1997 Tim L… SG       30 WSB      15     0   182    15    48     8    29     6     7     0    21
+##  8   1997 Gheor… C        25 WSB      73    69  1849   327   541     0     0   123   199   141   340
+##  9   1997 Tracy… SF       25 WSB      82     1  1814   288   678   106   300   135   161    84   169
+## 10   1997 Gaylo… SG       27 WSB       1     0     6     1     3     0     1     0     0     0     1
+## 11   1997 Rod S… PG       30 WSB      82    81  2997   515  1105    13    77   367   497    95   240
+## 12   1997 Ben W… PF       22 WSB      34     0   197    16    46     0     0     6    20    25    33
+## 13   1997 Chris… PF       23 WSB      72    72  2806   604  1167    60   151   177   313   238   505
+## 14   1997 Chris… PG       25 WSB      82     1  1117   139   330    58   163    94   113    13    91
+## 15   1997 Loren… C        27 WSB      19     0   264    20    31     0     0     5     7    28    41
+## # ℹ 6 more variables: AST &lt;dbl&gt;, STL &lt;dbl&gt;, BLK &lt;dbl&gt;, TOV &lt;dbl&gt;, PF &lt;dbl&gt;, PTS &lt;dbl&gt;</code></pre>
 <ul>
 <li><p>These fifteen players during the 1996-97 season on the Washington
 Bullets, which was renamed the Washington Wizards at the end of that

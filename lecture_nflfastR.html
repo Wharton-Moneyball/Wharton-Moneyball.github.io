@@ -616,7 +616,8 @@ of the distributions</p>
 <span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">&quot;Team&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Team&quot;</span>,</span>
 <span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Comparison of NE and PHI yards gained per play by type and down&quot;</span>) <span class="sc">+</span></span>
 <span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>  <span class="fu">theme_bw</span>() </span></code></pre></div>
-<pre><code>## Warning: Groups with fewer than two data points have been dropped.</code></pre>
+<pre><code>## Warning: Groups with fewer than two datapoints have been dropped.
+## ℹ Set `drop = FALSE` to consider such groups for position adjustment purposes.</code></pre>
 <p><img src="lecture_nflfastR_files/figure-html/beeswarm-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="win-probability-impact" class="section level2">
@@ -639,19 +640,25 @@ understanding of what impacted the game.</p>
 <span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">&quot;Team&quot;</span>,</span>
 <span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Comparison of NE and PHI WPA by type and down&quot;</span>) <span class="sc">+</span></span>
 <span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<pre><code>## Warning: Groups with fewer than two data points have been dropped.</code></pre>
+<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
+<pre><code>## Warning: Groups with fewer than two datapoints have been dropped.
+## ℹ Set `drop = FALSE` to consider such groups for position adjustment purposes.</code></pre>
 <p><img src="lecture_nflfastR_files/figure-html/wpa%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now we see a big difference between the Eagles and Patriots,
 especially on those fourth down passing attempts… which plays are
 those?</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>super_bowl_pbp <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">group_by</span>(posteam) <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">filter</span>(posteam <span class="sc">==</span> <span class="st">&quot;PHI&quot;</span>,</span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>         play_type <span class="sc">==</span> <span class="st">&quot;pass&quot;</span>,</span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(down)) <span class="sc">%&gt;%</span></span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(wpa)) <span class="sc">%&gt;%</span></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>  <span class="fu">select</span>(desc, wpa, down, qtr) <span class="sc">%&gt;%</span></span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>super_bowl_pbp <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="fu">group_by</span>(posteam) <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="fu">filter</span>(posteam <span class="sc">==</span> <span class="st">&quot;PHI&quot;</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>         play_type <span class="sc">==</span> <span class="st">&quot;pass&quot;</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(down)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(wpa)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>  <span class="fu">select</span>(desc, wpa, down, qtr) <span class="sc">%&gt;%</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## Adding missing grouping variables: `posteam`</code></pre>
 <pre><code>## # A tibble: 3 × 5
 ## # Groups:   posteam [1]
@@ -668,39 +675,39 @@ famous Philly Special!</p>
 <h2>Win probability chart</h2>
 <p>Finally, we can wrap up this analysis with a win probability chart
 that shows the overall story of the game.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># Let&#39;s put this all together to display a win probability chart:</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>pbp_2017 <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="co"># Only grab the Super Bowl</span></span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>  <span class="fu">filter</span>(old_game_id <span class="sc">==</span> <span class="dv">2018020400</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(home_wp),</span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(away_wp),</span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>         timeout <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>  <span class="fu">select</span>(game_seconds_remaining,</span>
-<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a>         home_wp,</span>
-<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>         away_wp) <span class="sc">%&gt;%</span></span>
-<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>  <span class="co"># Rather than having separate columns for each team&#39;s win probability,</span></span>
-<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>  <span class="co"># we can gather them into one column:</span></span>
-<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a>  <span class="fu">gather</span>(team, wpa, <span class="sc">-</span>game_seconds_remaining) <span class="sc">%&gt;%</span></span>
-<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> game_seconds_remaining, <span class="at">y =</span> wpa, <span class="at">color =</span> team)) <span class="sc">+</span></span>
-<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;PHI&quot;</span>, <span class="st">&quot;NE&quot;</span>),</span>
-<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a>                     <span class="at">values =</span> <span class="fu">c</span>(phi_color, ne_color),</span>
-<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a>                     <span class="at">guide =</span> <span class="st">&#39;none&#39;</span>) <span class="sc">+</span></span>
-<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a>  <span class="fu">scale_x_reverse</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">3600</span>, <span class="dv">300</span>)) <span class="sc">+</span> </span>
-<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">3000</span>, <span class="at">y =</span> .<span class="dv">80</span>, <span class="at">label =</span> <span class="st">&quot;PHI&quot;</span>, <span class="at">color =</span> phi_color, <span class="at">size =</span> <span class="dv">8</span>) <span class="sc">+</span> </span>
-<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">3000</span>, <span class="at">y =</span> .<span class="dv">20</span>, <span class="at">label =</span> <span class="st">&quot;NE&quot;</span>, <span class="at">color =</span> ne_color, <span class="at">size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">900</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1800</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb16-25"><a href="#cb16-25" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">2700</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb16-26"><a href="#cb16-26" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb16-27"><a href="#cb16-27" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb16-28"><a href="#cb16-28" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Time Remaining (seconds)&quot;</span>,</span>
-<span id="cb16-29"><a href="#cb16-29" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Win Probability&quot;</span>,</span>
-<span id="cb16-30"><a href="#cb16-30" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Super Bowl LII Win Probability Chart&quot;</span>,</span>
-<span id="cb16-31"><a href="#cb16-31" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;New England Patriots vs Philadelphia Eagles&quot;</span>,</span>
-<span id="cb16-32"><a href="#cb16-32" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;Data from nflscrapR&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb16-33"><a href="#cb16-33" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># Let&#39;s put this all together to display a win probability chart:</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>pbp_2017 <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="co"># Only grab the Super Bowl</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>  <span class="fu">filter</span>(old_game_id <span class="sc">==</span> <span class="dv">2018020400</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(home_wp),</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(away_wp),</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>         timeout <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>  <span class="fu">select</span>(game_seconds_remaining,</span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a>         home_wp,</span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a>         away_wp) <span class="sc">%&gt;%</span></span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a>  <span class="co"># Rather than having separate columns for each team&#39;s win probability,</span></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a>  <span class="co"># we can gather them into one column:</span></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a>  <span class="fu">gather</span>(team, wpa, <span class="sc">-</span>game_seconds_remaining) <span class="sc">%&gt;%</span></span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> game_seconds_remaining, <span class="at">y =</span> wpa, <span class="at">color =</span> team)) <span class="sc">+</span></span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;PHI&quot;</span>, <span class="st">&quot;NE&quot;</span>),</span>
+<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a>                     <span class="at">values =</span> <span class="fu">c</span>(phi_color, ne_color),</span>
+<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a>                     <span class="at">guide =</span> <span class="st">&#39;none&#39;</span>) <span class="sc">+</span></span>
+<span id="cb17-20"><a href="#cb17-20" tabindex="-1"></a>  <span class="fu">scale_x_reverse</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">3600</span>, <span class="dv">300</span>)) <span class="sc">+</span> </span>
+<span id="cb17-21"><a href="#cb17-21" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">3000</span>, <span class="at">y =</span> .<span class="dv">80</span>, <span class="at">label =</span> <span class="st">&quot;PHI&quot;</span>, <span class="at">color =</span> phi_color, <span class="at">size =</span> <span class="dv">8</span>) <span class="sc">+</span> </span>
+<span id="cb17-22"><a href="#cb17-22" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">3000</span>, <span class="at">y =</span> .<span class="dv">20</span>, <span class="at">label =</span> <span class="st">&quot;NE&quot;</span>, <span class="at">color =</span> ne_color, <span class="at">size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb17-23"><a href="#cb17-23" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">900</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb17-24"><a href="#cb17-24" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1800</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb17-25"><a href="#cb17-25" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">2700</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb17-26"><a href="#cb17-26" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb17-27"><a href="#cb17-27" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb17-28"><a href="#cb17-28" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Time Remaining (seconds)&quot;</span>,</span>
+<span id="cb17-29"><a href="#cb17-29" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Win Probability&quot;</span>,</span>
+<span id="cb17-30"><a href="#cb17-30" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Super Bowl LII Win Probability Chart&quot;</span>,</span>
+<span id="cb17-31"><a href="#cb17-31" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;New England Patriots vs Philadelphia Eagles&quot;</span>,</span>
+<span id="cb17-32"><a href="#cb17-32" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;Data from nflscrapR&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb17-33"><a href="#cb17-33" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="lecture_nflfastR_files/figure-html/wp%20game%20chart-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Congratulations, you now have what it takes to cover NFL games for
 the Athletic!</p>

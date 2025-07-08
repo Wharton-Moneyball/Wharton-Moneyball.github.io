@@ -7,11 +7,8 @@ purrr
 dplyr
 stringr
 forcats
-Lahman
-baseballr
-nbastatR
+lubridate
 nflfastR
-ggimage
-plotly
-modelr
 ggbeeswarm
+Lahman
+ggimage

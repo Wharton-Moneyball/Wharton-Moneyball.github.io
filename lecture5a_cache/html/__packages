@@ -8,4 +8,8 @@ dplyr
 stringr
 forcats
 lubridate
+nflfastR
+ggbeeswarm
+Lahman
+ggimage
 plotly

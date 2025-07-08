@@ -490,7 +490,7 @@ shortly, we are going to call our tbl <code>raw_shooting</code>.</p>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co"># Read in data</span></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>raw_shooting <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;data/nba_shooting.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 7447 Columns: 8
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (1): PLAYER
 ## dbl (7): SEASON, FGM, FGA, TPM, TPA, FTM, FTA
@@ -558,6 +558,11 @@ frequency histogram. This is because the areas of the density histogram
 boxes always sums to 1 no matter how much data you have.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGP, <span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">50</span>)</span></code></pre></div>
+<pre><code>## Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
+## ℹ Please use `after_stat(density)` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <p><img src="lecture2_files/figure-html/hist%20density-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Visually, the histograms look identical but now the vertical (y) axis
 has a different scale.</p>
@@ -575,8 +580,8 @@ free throw percentage (FTP) is related to his field goal percentage
 <p>To make a scatterplot in R, we can run the following code. Notice
 that it is very similar to the code used to make histograms, but with a
 few important differences</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGP, <span class="at">y =</span> FTP))</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGP, <span class="at">y =</span> FTP))</span></code></pre></div>
 <p><img src="lecture2_files/figure-html/scatter-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Just like the code used to produce the histograms above, we began by
 calling <code>ggplot(data = nba_shooting)</code>. Now, however, instead
@@ -601,8 +606,8 @@ ones?</p>
 <p>One way to address this is to use <em>alpha-blending</em> to change
 the transparency of each point. When there are many points plotted in
 the same region, that region will appear darker.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGP, <span class="at">y =</span> FTP), <span class="at">alpha =</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGP, <span class="at">y =</span> FTP), <span class="at">alpha =</span> <span class="fl">0.1</span>)</span></code></pre></div>
 <p><img src="lecture2_files/figure-html/scatter%20alpha-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now we can start to distinguish the number of players represented by
 each point. The fact that the point at (0.00, 0.50) is much darker than
@@ -619,26 +624,29 @@ conceptually make the bins any shape you want, there are two popular
 conventions: rectangular binning and hexagonal binning. For the purposes
 of this course, we will focus on rectangular binning, using the
 <code>geom_bin2d()</code> function.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>(<span class="fu">aes</span>(<span class="at">x =</span> FGP, <span class="at">y =</span> FTP))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>(<span class="fu">aes</span>(<span class="at">x =</span> FGP, <span class="at">y =</span> FTP)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">&quot;plasma&quot;</span>, <span class="at">direction =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="lecture2_files/figure-html/heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We can increase the number of bins to get a much more high-resolution
 view of our data.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span> </span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGP, <span class="at">y =</span> FTP), <span class="at">bins =</span> <span class="dv">100</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span> </span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGP, <span class="at">y =</span> FTP), <span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">&quot;plasma&quot;</span>, <span class="at">direction =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="lecture2_files/figure-html/heatmap%20bins-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now we are starting to get some sense that there are some outliers in
 our data. We can confirm this visually in another way.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGA, <span class="at">y =</span> FGP), <span class="at">alpha =</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> FGA, <span class="at">y =</span> FGP), <span class="at">alpha =</span> <span class="fl">0.1</span>)</span></code></pre></div>
 <p><img src="lecture2_files/figure-html/scatter%20outliers-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Sometimes, we don’t want to look at the entire range of the data and
 only want to plot a smaller window. We can do this by changing the x and
 y limits of the plotting region.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> FGA, <span class="at">y =</span> FGP)) <span class="sc">+</span> </span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">200</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 5346 rows containing missing values (geom_point).</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> raw_shooting) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> FGA, <span class="at">y =</span> FGP)) <span class="sc">+</span> </span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">200</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 5346 rows containing missing values or values outside the scale range
+## (`geom_point()`).</code></pre>
 <p><img src="lecture2_files/figure-html/scatter%20xlim-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="filtering" class="section level2">
@@ -668,21 +676,22 @@ than or equal to”</li>
 </ul>
 <p>The code below filters out all of the players with at least 100 field
 goals in a single season.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">filter</span>(raw_shooting, FGA <span class="sc">&gt;</span> <span class="dv">100</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">filter</span>(raw_shooting, FGA <span class="sc">&gt;</span> <span class="dv">100</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 6,295 × 14
-##    PLAYER         SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
-##    &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Chris Wilcox     2013   110   153     0     1    39    58 0.719 0     0.672 0.719   259 0.725
-##  2 Tyson Chandler   2012   241   355     0     2   217   315 0.679 0     0.689 0.679   699 0.708
-##  3 Kyle Korver      2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671   911 0.699
-##  4 Steve Novak      2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675   477 0.684
-##  5 Chris Andersen   2014   177   275     3    12   120   169 0.644 0.25  0.710 0.649   477 0.683
-##  6 Jeremy Evans     2011    76   115     0     1    26    37 0.661 0     0.703 0.661   178 0.678
-##  7 Carlos Rogers    2001    75   110     0     1    29    52 0.682 0     0.558 0.682   179 0.674
-##  8 Mason Plumlee    2014   199   302     0     3   122   195 0.659 0     0.626 0.659   520 0.670
-##  9 Stephen Curry    2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
-## 10 Brent Barry      2004   215   427   114   252    91   110 0.504 0.452 0.827 0.637   635 0.668
-## # … with 6,285 more rows</code></pre>
+##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Chris Wil…   2013   110   153     0     1    39    58 0.719 0     0.672 0.719
+##  2 Tyson Cha…   2012   241   355     0     2   217   315 0.679 0     0.689 0.679
+##  3 Kyle Korv…   2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671
+##  4 Steve Nov…   2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675
+##  5 Chris And…   2014   177   275     3    12   120   169 0.644 0.25  0.710 0.649
+##  6 Jeremy Ev…   2011    76   115     0     1    26    37 0.661 0     0.703 0.661
+##  7 Carlos Ro…   2001    75   110     0     1    29    52 0.682 0     0.558 0.682
+##  8 Mason Plu…   2014   199   302     0     3   122   195 0.659 0     0.626 0.659
+##  9 Stephen C…   2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630
+## 10 Brent Bar…   2004   215   427   114   252    91   110 0.504 0.452 0.827 0.637
+## # ℹ 6,285 more rows
+## # ℹ 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
 <p>When we run this code, you’ll notice that R prints out a tbl with
 6,295 rows.</p>
 <p>We can also filter on more complicated conditions constructed using
@@ -690,38 +699,40 @@ the AND, OR, and NOT operators: <code>&amp;</code>, <code>|</code>, and
 <code>!</code>. For instance, to filter observations with at least 100
 field goal attempts OR 50 three point attempts, we would do the
 following:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">filter</span>(raw_shooting, FGA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">|</span> TPA <span class="sc">&gt;=</span> <span class="dv">50</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">filter</span>(raw_shooting, FGA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">|</span> TPA <span class="sc">&gt;=</span> <span class="dv">50</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 6,328 × 14
-##    PLAYER         SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
-##    &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Chris Wilcox     2013   110   153     0     1    39    58 0.719 0     0.672 0.719   259 0.725
-##  2 Tyson Chandler   2012   241   355     0     2   217   315 0.679 0     0.689 0.679   699 0.708
-##  3 Kyle Korver      2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671   911 0.699
-##  4 Steve Novak      2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675   477 0.684
-##  5 Chris Andersen   2014   177   275     3    12   120   169 0.644 0.25  0.710 0.649   477 0.683
-##  6 Jeremy Evans     2011    76   115     0     1    26    37 0.661 0     0.703 0.661   178 0.678
-##  7 Carlos Rogers    2001    75   110     0     1    29    52 0.682 0     0.558 0.682   179 0.674
-##  8 Brian Cardinal   2011    43   100    42    87    17    18 0.43  0.483 0.944 0.64    145 0.672
-##  9 Mason Plumlee    2014   199   302     0     3   122   195 0.659 0     0.626 0.659   520 0.670
-## 10 Stephen Curry    2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
-## # … with 6,318 more rows</code></pre>
+##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Chris Wil…   2013   110   153     0     1    39    58 0.719 0     0.672 0.719
+##  2 Tyson Cha…   2012   241   355     0     2   217   315 0.679 0     0.689 0.679
+##  3 Kyle Korv…   2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671
+##  4 Steve Nov…   2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675
+##  5 Chris And…   2014   177   275     3    12   120   169 0.644 0.25  0.710 0.649
+##  6 Jeremy Ev…   2011    76   115     0     1    26    37 0.661 0     0.703 0.661
+##  7 Carlos Ro…   2001    75   110     0     1    29    52 0.682 0     0.558 0.682
+##  8 Brian Car…   2011    43   100    42    87    17    18 0.43  0.483 0.944 0.64 
+##  9 Mason Plu…   2014   199   302     0     3   122   195 0.659 0     0.626 0.659
+## 10 Stephen C…   2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630
+## # ℹ 6,318 more rows
+## # ℹ 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
 <p>We may combine these constraints by enclosing them in
 parentheses.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">filter</span>(raw_shooting, (FGA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">&amp;</span> TPA <span class="sc">&gt;=</span> <span class="dv">50</span>) <span class="sc">|</span> (FGP <span class="sc">&gt;=</span> <span class="fl">0.45</span> <span class="sc">&amp;</span> FGP <span class="sc">&lt;=</span> <span class="fl">0.5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">filter</span>(raw_shooting, (FGA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">&amp;</span> TPA <span class="sc">&gt;=</span> <span class="dv">50</span>) <span class="sc">|</span> (FGP <span class="sc">&gt;=</span> <span class="fl">0.45</span> <span class="sc">&amp;</span> FGP <span class="sc">&lt;=</span> <span class="fl">0.5</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 4,837 × 14
-##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
-##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Keith Bogans            2014     3     6     3     6     3     3 0.5   0.5   1     0.75     12 0.820
-##  2 Kyle Korver             2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671   911 0.699
-##  3 Aleksandar Djordjevic   1997     8    16     5     7     4     5 0.5   0.714 0.8   0.656    25 0.687
-##  4 Steve Novak             2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675   477 0.684
-##  5 Brian Cardinal          2011    43   100    42    87    17    18 0.43  0.483 0.944 0.64    145 0.672
-##  6 Stephen Curry           2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
-##  7 Brent Barry             2004   215   427   114   252    91   110 0.504 0.452 0.827 0.637   635 0.668
-##  8 Manu Ginobili           2012   150   285    52   126    88   101 0.526 0.413 0.871 0.618   440 0.668
-##  9 Steve Kerr              1997   249   467   110   237    54    67 0.533 0.464 0.806 0.651   662 0.667
-## 10 Brent Barry             2007   202   425   128   287   103   117 0.475 0.446 0.880 0.626   635 0.666
-## # … with 4,827 more rows</code></pre>
+##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Keith Bog…   2014     3     6     3     6     3     3 0.5   0.5   1     0.75 
+##  2 Kyle Korv…   2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671
+##  3 Aleksanda…   1997     8    16     5     7     4     5 0.5   0.714 0.8   0.656
+##  4 Steve Nov…   2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675
+##  5 Brian Car…   2011    43   100    42    87    17    18 0.43  0.483 0.944 0.64 
+##  6 Stephen C…   2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630
+##  7 Brent Bar…   2004   215   427   114   252    91   110 0.504 0.452 0.827 0.637
+##  8 Manu Gino…   2012   150   285    52   126    88   101 0.526 0.413 0.871 0.618
+##  9 Steve Kerr   1997   249   467   110   237    54    67 0.533 0.464 0.806 0.651
+## 10 Brent Bar…   2007   202   425   128   287   103   117 0.475 0.446 0.880 0.626
+## # ℹ 4,827 more rows
+## # ℹ 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
 <p>What if we wanted to pull out the observations corresponding to the
 2015-16 and 2014-15 season? We could do something like
 <code>filter(raw_shooting, (SEASON == 2016) | (SEASON == 2015))</code>,
@@ -729,63 +740,66 @@ which would be perfectly fine. However, what if we wanted data from
 1998-99, 2011-12, and 2015-16? Typing a lot of expressions like
 <code>SEASON == ...</code> would be rather tedious. The
 <code>%in%</code> operator lets us avoid this tedium:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">filter</span>(raw_shooting, SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>, <span class="dv">2016</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">filter</span>(raw_shooting, SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>, <span class="dv">2016</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1,150 × 14
-##    PLAYER          SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
-##    &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Tyson Wheeler     1999     1     1     1     1     1     2 1     1     0.5   1.5       4 1.06 
-##  2 Tyson Chandler    2012   241   355     0     2   217   315 0.679 0     0.689 0.679   699 0.708
-##  3 Jorge Gutierrez   2016     6    11     0     2    10    11 0.545 0     0.909 0.545    22 0.694
-##  4 Steve Novak       2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675   477 0.684
-##  5 Sam Jacobson      1999     3     5     0     1     2     2 0.6   0     1     0.6       8 0.680
-##  6 Stephen Curry     2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
-##  7 Manu Ginobili     2012   150   285    52   126    88   101 0.526 0.413 0.871 0.618   440 0.668
-##  8 James Harden      2012   309   629   114   292   312   369 0.491 0.390 0.846 0.582  1044 0.660
-##  9 Steve Novak       2016     8    18     7    15     1     1 0.444 0.467 1     0.639    24 0.651
-## 10 Brad Miller       1999    78   138     1     2    81   102 0.565 0.5   0.794 0.569   238 0.651
-## # … with 1,140 more rows</code></pre>
+##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Tyson Whe…   1999     1     1     1     1     1     2 1     1     0.5   1.5  
+##  2 Tyson Cha…   2012   241   355     0     2   217   315 0.679 0     0.689 0.679
+##  3 Jorge Gut…   2016     6    11     0     2    10    11 0.545 0     0.909 0.545
+##  4 Steve Nov…   2012   161   337   133   282    22    26 0.478 0.472 0.846 0.675
+##  5 Sam Jacob…   1999     3     5     0     1     2     2 0.6   0     1     0.6  
+##  6 Stephen C…   2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630
+##  7 Manu Gino…   2012   150   285    52   126    88   101 0.526 0.413 0.871 0.618
+##  8 James Har…   2012   309   629   114   292   312   369 0.491 0.390 0.846 0.582
+##  9 Steve Nov…   2016     8    18     7    15     1     1 0.444 0.467 1     0.639
+## 10 Brad Mill…   1999    78   138     1     2    81   102 0.565 0.5   0.794 0.569
+## # ℹ 1,140 more rows
+## # ℹ 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
 <p>We could also filter out data from the two lockout-shortened seasons,
 1998-99 and 2011-12 using a combination of the NOT <code>!</code>
 operator and <code>%in%</code>.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">filter</span>(raw_shooting, <span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">filter</span>(raw_shooting, <span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 6,721 × 14
-##    PLAYER                SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
-##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Dajuan Wagner           2007     1     1     1     1     1     2 1     1     0.5   1.5       4 1.06 
-##  2 Amir Johnson            2006     7    10     2     3     4     4 0.7   0.667 1     0.8      20 0.850
-##  3 Keith Bogans            2014     3     6     3     6     3     3 0.5   0.5   1     0.75     12 0.820
-##  4 Steve Novak             2011    35    67    26    46     8     8 0.522 0.565 1     0.716   104 0.737
-##  5 Chris Crawford          2003     8    13     1     3     7     8 0.615 0.333 0.875 0.654    24 0.726
-##  6 Chris Wilcox            2013   110   153     0     1    39    58 0.719 0     0.672 0.719   259 0.725
-##  7 Maceo Baston            2007    49    76     3     7    37    47 0.645 0.429 0.787 0.664   138 0.714
-##  8 Kyle Korver             2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671   911 0.699
-##  9 Jorge Gutierrez         2016     6    11     0     2    10    11 0.545 0     0.909 0.545    22 0.694
-## 10 Aleksandar Djordjevic   1997     8    16     5     7     4     5 0.5   0.714 0.8   0.656    25 0.687
-## # … with 6,711 more rows</code></pre>
+##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Dajuan Wa…   2007     1     1     1     1     1     2 1     1     0.5   1.5  
+##  2 Amir John…   2006     7    10     2     3     4     4 0.7   0.667 1     0.8  
+##  3 Keith Bog…   2014     3     6     3     6     3     3 0.5   0.5   1     0.75 
+##  4 Steve Nov…   2011    35    67    26    46     8     8 0.522 0.565 1     0.716
+##  5 Chris Cra…   2003     8    13     1     3     7     8 0.615 0.333 0.875 0.654
+##  6 Chris Wil…   2013   110   153     0     1    39    58 0.719 0     0.672 0.719
+##  7 Maceo Bas…   2007    49    76     3     7    37    47 0.645 0.429 0.787 0.664
+##  8 Kyle Korv…   2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671
+##  9 Jorge Gut…   2016     6    11     0     2    10    11 0.545 0     0.909 0.545
+## 10 Aleksanda…   1997     8    16     5     7     4     5 0.5   0.714 0.8   0.656
+## # ℹ 6,711 more rows
+## # ℹ 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
 <p>For the remainder of this module, we will focus on the players who
 attempted at least 100 field goals, 100 free throws, 50 three pointers
 in the non-lockout seasons.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>nba_shooting <span class="ot">&lt;-</span> </span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  <span class="fu">filter</span>(raw_shooting, </span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>         (FGA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">&amp;</span> </span>
-<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>           FTA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">&amp;</span> </span>
-<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>           TPA <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> </span>
-<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>           <span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>)))</span>
-<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>nba_shooting</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>nba_shooting <span class="ot">&lt;-</span> </span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>  <span class="fu">filter</span>(raw_shooting, </span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>         (FGA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">&amp;</span> </span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>           FTA <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">&amp;</span> </span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a>           TPA <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> </span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>           <span class="sc">!</span>SEASON <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2012</span>)))</span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a>nba_shooting</span></code></pre></div>
 <pre><code>## # A tibble: 2,254 × 14
-##    PLAYER        SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP   PTS   TSP
-##    &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Kyle Korver     2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671   911 0.699
-##  2 Stephen Curry   2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630  2375 0.670
-##  3 Brent Barry     2004   215   427   114   252    91   110 0.504 0.452 0.827 0.637   635 0.668
-##  4 Brent Barry     2007   202   425   128   287   103   117 0.475 0.446 0.880 0.626   635 0.666
-##  5 Fred Hoiberg    2005   139   284    70   145    89   102 0.489 0.483 0.873 0.613   437 0.664
-##  6 Mario Elie      1997   291   585   120   286   207   231 0.497 0.420 0.896 0.6     909 0.662
-##  7 Brent Barry     2001   198   401   109   229    84   103 0.494 0.476 0.816 0.630   589 0.660
-##  8 John Stockton   1997   416   759    76   180   275   325 0.548 0.422 0.846 0.598  1183 0.656
-##  9 Steve Nash      2007   517   971   156   343   222   247 0.532 0.455 0.899 0.613  1412 0.654
-## 10 Brent Barry     2002   401   790   164   387   198   234 0.508 0.424 0.846 0.611  1164 0.652
-## # … with 2,244 more rows</code></pre>
+##    PLAYER     SEASON   FGM   FGA   TPM   TPA   FTM   FTA   FGP   TPP   FTP  eFGP
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Kyle Korv…   2015   292   600   221   449   106   118 0.487 0.492 0.898 0.671
+##  2 Stephen C…   2016   805  1597   402   887   363   400 0.504 0.453 0.908 0.630
+##  3 Brent Bar…   2004   215   427   114   252    91   110 0.504 0.452 0.827 0.637
+##  4 Brent Bar…   2007   202   425   128   287   103   117 0.475 0.446 0.880 0.626
+##  5 Fred Hoib…   2005   139   284    70   145    89   102 0.489 0.483 0.873 0.613
+##  6 Mario Elie   1997   291   585   120   286   207   231 0.497 0.420 0.896 0.6  
+##  7 Brent Bar…   2001   198   401   109   229    84   103 0.494 0.476 0.816 0.630
+##  8 John Stoc…   1997   416   759    76   180   275   325 0.548 0.422 0.846 0.598
+##  9 Steve Nash   2007   517   971   156   343   222   247 0.532 0.455 0.899 0.613
+## 10 Brent Bar…   2002   401   790   164   387   198   234 0.508 0.424 0.846 0.611
+## # ℹ 2,244 more rows
+## # ℹ 2 more variables: PTS &lt;dbl&gt;, TSP &lt;dbl&gt;</code></pre>
 </div>
 <div id="creating-categorical-variables" class="section level2">
 <h2>Creating Categorical Variables</h2>
@@ -804,13 +818,13 @@ three-point shooting prowess as follows:</p>
 <p>In order to add a column to <code>nba_shooting</code> that includes
 these classifications, we can use the <code>case_when()</code>
 function.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>nba_shooting <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nba_shooting,</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>                       <span class="at">Classification =</span> <span class="fu">case_when</span>(</span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>                         TPP <span class="sc">&lt;</span> <span class="fl">0.2</span> <span class="sc">~</span>  <span class="st">&quot;Hopeless&quot;</span>,</span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>                         <span class="fl">0.2</span> <span class="sc">&lt;=</span> TPP <span class="sc">&amp;</span> TPP <span class="sc">&lt;</span> <span class="fl">0.3</span> <span class="sc">~</span> <span class="st">&quot;Below Average&quot;</span>,</span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>                         <span class="fl">0.3</span> <span class="sc">&lt;=</span> TPP <span class="sc">&amp;</span> TPP <span class="sc">&lt;</span> <span class="fl">0.35</span> <span class="sc">~</span>  <span class="st">&quot;Average&quot;</span>,</span>
-<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>                         <span class="fl">0.35</span> <span class="sc">&lt;=</span> TPP <span class="sc">&amp;</span> TPP <span class="sc">&lt;</span> <span class="fl">0.4</span> <span class="sc">~</span> <span class="st">&quot;Above Average&quot;</span>,</span>
-<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>                         <span class="fl">0.4</span> <span class="sc">&lt;=</span> TPP <span class="sc">~</span> <span class="st">&quot;Elite&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>nba_shooting <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nba_shooting,</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>                       <span class="at">Classification =</span> <span class="fu">case_when</span>(</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>                         TPP <span class="sc">&lt;</span> <span class="fl">0.2</span> <span class="sc">~</span>  <span class="st">&quot;Hopeless&quot;</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>                         <span class="fl">0.2</span> <span class="sc">&lt;=</span> TPP <span class="sc">&amp;</span> TPP <span class="sc">&lt;</span> <span class="fl">0.3</span> <span class="sc">~</span> <span class="st">&quot;Below Average&quot;</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a>                         <span class="fl">0.3</span> <span class="sc">&lt;=</span> TPP <span class="sc">&amp;</span> TPP <span class="sc">&lt;</span> <span class="fl">0.35</span> <span class="sc">~</span>  <span class="st">&quot;Average&quot;</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>                         <span class="fl">0.35</span> <span class="sc">&lt;=</span> TPP <span class="sc">&amp;</span> TPP <span class="sc">&lt;</span> <span class="fl">0.4</span> <span class="sc">~</span> <span class="st">&quot;Above Average&quot;</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>                         <span class="fl">0.4</span> <span class="sc">&lt;=</span> TPP <span class="sc">~</span> <span class="st">&quot;Elite&quot;</span>))</span></code></pre></div>
 <p>Let’s take a minute to unpack the code above. Within
 <code>mutate()</code>, we have started like we always did, with the name
 of the new variable on the left hand side of an equal sign. Then we
@@ -827,13 +841,13 @@ logical expression and on the right we have written the value of
 the 2015-16 season? To answer this, we can use <code>filter()</code> to
 create a new tbl containing the data only for this season. Then we can
 use the dplyr verb <code>summarize()</code> as follows:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>nba_shooting_2016 <span class="ot">&lt;-</span> <span class="fu">filter</span>(nba_shooting, SEASON <span class="sc">==</span> <span class="dv">2016</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">summarize</span>(nba_shooting_2016, <span class="at">FGP =</span> <span class="fu">mean</span>(FGP))</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>nba_shooting_2016 <span class="ot">&lt;-</span> <span class="fu">filter</span>(nba_shooting, SEASON <span class="sc">==</span> <span class="dv">2016</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="fu">summarize</span>(nba_shooting_2016, <span class="at">FGP =</span> <span class="fu">mean</span>(FGP))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##     FGP
 ##   &lt;dbl&gt;
 ## 1 0.438</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">summarize</span>(nba_shooting_2016, <span class="at">FGP =</span> <span class="fu">mean</span>(FGP), <span class="at">TPP =</span> <span class="fu">mean</span>(TPP), <span class="at">FTP =</span> <span class="fu">mean</span>(FTP))</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">summarize</span>(nba_shooting_2016, <span class="at">FGP =</span> <span class="fu">mean</span>(FGP), <span class="at">TPP =</span> <span class="fu">mean</span>(TPP), <span class="at">FTP =</span> <span class="fu">mean</span>(FTP))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 3
 ##     FGP   TPP   FTP
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -859,7 +873,7 @@ columns than you need. We can use <code>select()</code> to pull out the
 columns we want to use in our subsequent analyses. For instance, we may
 want to only focus on the columns SEASON, FGP, TPP, FTP, eFGP, PTS, and
 TSP and ignore the rest of the columns.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">select</span>(nba_shooting, PLAYER, SEASON, FGP, TPP, FTP, eFGP, PTS, TSP)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">select</span>(nba_shooting, PLAYER, SEASON, FGP, TPP, FTP, eFGP, PTS, TSP)</span></code></pre></div>
 <pre><code>## # A tibble: 2,254 × 8
 ##    PLAYER        SEASON   FGP   TPP   FTP  eFGP   PTS   TSP
 ##    &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -873,7 +887,7 @@ TSP and ignore the rest of the columns.</p>
 ##  8 John Stockton   1997 0.548 0.422 0.846 0.598  1183 0.656
 ##  9 Steve Nash      2007 0.532 0.455 0.899 0.613  1412 0.654
 ## 10 Brent Barry     2002 0.508 0.424 0.846 0.611  1164 0.652
-## # … with 2,244 more rows</code></pre>
+## # ℹ 2,244 more rows</code></pre>
 </div>
 </div>
 <div id="saving-our-work" class="section level2">
@@ -885,10 +899,10 @@ when data analyses become more complicated, it is helpful to save these
 objects. R has its own special file format for efficiently saving data
 on your computer.</p>
 <p>We will use the <code>save()</code> command.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">save</span>(nba_shooting, <span class="at">file =</span> <span class="st">&quot;data/nba_shooting.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">save</span>(nba_shooting, <span class="at">file =</span> <span class="st">&quot;data/nba_shooting.RData&quot;</span>)</span></code></pre></div>
 <p>When we want to <em>load</em> the data back into R, we can use the
 <code>load()</code> function</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/nba_shooting.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/nba_shooting.RData&quot;</span>)</span></code></pre></div>
 </div>
 <div id="thinking-ahead-for-tomorrow" class="section level2">
 <h2>Thinking Ahead for Tomorrow</h2>
