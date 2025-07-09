@@ -188,7 +188,7 @@ Here, we can see that some of the orange points are directly on top of the actua
 We now have a couple of different ways of predicting BA_2015. Qualitatively, the predictions in yellow (formed by binning BA_2014 into very small intervals) appear to fit the observed data better than the blue, green, and red predictions. To assess the predictions quantitatively, we often rely on the root mean square error or RMSE. This is the square root of the mean square error (MSE), which is computed by averaging the squared difference between the actual values and the predicted values.
 
 ```{r summarize rmse}
-summarize(batting_2014_2015, 
+reframe(batting_2014_2015, 
           rmse_0 = sqrt(mean((BA_2015 - yhat_0)^2)),
           rmse_1 = sqrt(mean((BA_2015 - yhat_1)^2)),
           rmse_2 = sqrt(mean((BA_2015 - yhat_2)^2)),

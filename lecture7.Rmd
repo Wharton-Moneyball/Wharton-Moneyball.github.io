@@ -111,7 +111,7 @@ $$
 Looking at the formula, we see that the Brier score is just the mean square error of our forecasts. Using code that is very nearly identical to that used to compute RSME in [Lecture 4](lecture4.html), we can compute the Brier score of each of our prediction models.
 
 ```{r fg_train Brier}
-summarize(fg_train,
+reframe(fg_train,
           phat_all = mean( (Success - phat_all)^2),
           phat_kicker = mean( (Success - phat_kicker)^2),
           phat_dist_10 = mean( (Success - phat_dist_10)^2),
@@ -127,7 +127,7 @@ Before assessing how well our models predict *out-of-sample*, it will be useful 
 phat_kicker <- 
   fg_train %>%
   group_by(Kicker) %>%
-  summarize(phat_kicker = mean(Success))
+  reframe(phat_kicker = mean(Success))
 ```
 
 Create similar tibbles for phat_dist_10, phat_dist_5, and phat_dist_2.
@@ -136,15 +136,15 @@ Create similar tibbles for phat_dist_10, phat_dist_5, and phat_dist_2.
 phat_dist_10 <- 
   fg_train %>%
   group_by(Dist_10) %>%
-  summarize(phat_dist_10 = mean(Success))
+  reframe(phat_dist_10 = mean(Success))
 phat_dist_5 <- 
   fg_train %>%
   group_by(Dist_5) %>%
-  summarize(phat_dist_5 = mean(Success))
+  reframe(phat_dist_5 = mean(Success))
 phat_dist_2 <- 
   fg_train %>%
   group_by(Dist_2) %>%
-  summarize(phat_dist_2 = mean(Success))
+  reframe(phat_dist_2 = mean(Success))
 ```
 
 The file "nfl_fg_test.csv" contains additional data on more field goals kicked between 2005 and 2015. Since we have not used the data in this file to train our models, we can get a sense of the *out-of-sample* predictive performance of our models by looking at how well they predict these field goals. We first load the data into a tbl called `fg_test`.

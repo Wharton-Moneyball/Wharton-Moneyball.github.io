@@ -153,7 +153,7 @@ pitching <-
   group_by(yearID)
 ```
 
-When we print out `pitching` now, we notice an extra line that tells us the grouping variable. Now when we pass this tibble on to subsequent calculations, these calculations will be done on each group. Recall from earlier that the code `pitching %>% summarize(mean = mean(ERA))` returned a single row containing the average of ERA over all players and year. If we now run the same code again, we actually get a tibble with one row per year that lists the mean and standard deviation of ERA *within each year*. We will save this tibble as `pitching_summary`:
+When we print out `pitching` now, we notice an extra line that tells us the grouping variable. Now when we pass this tibble on to subsequent calculations, these calculations will be done on each group. Recall from earlier that the code `pitching %>% reframe(mean = mean(ERA))` returned a single row containing the average of ERA over all players and year. If we now run the same code again, we actually get a tibble with one row per year that lists the mean and standard deviation of ERA *within each year*. We will save this tibble as `pitching_summary`:
 
 ```{r pitching_summary}
 pitching_summary <- 
@@ -161,7 +161,7 @@ pitching_summary <-
   reframe(mean = mean(ERA), sd = sd(ERA))
 ```
 
-In [Lecture 2](lecture2.html), we listed a few useful functions to be used within `summarize()`. One of them, `n()`, returns counts and is especially useful when used on a grouped tibble. We can, for instance, count the number of pitchers in our dataset within each year using `n()`.
+In [Lecture 2](lecture2.html), we listed a few useful functions to be used within `reframe()`. One of them, `n()`, returns counts and is especially useful when used on a grouped tibble. We can, for instance, count the number of pitchers in our dataset within each year using `n()`.
 
 ```{r pitching_summary n}
 pitching %>% 
@@ -189,7 +189,7 @@ pitching %>% arrange(zERA_year)
 
 ### Ungrouping and Grouping on Multiple Variables
 
-As we just saw, when we add a grouping to a tbl, it affects how verbs like `summarize()` and `mutate()` operate on our data. It is sometimes the case that we wish to remove the grouping and let these verbs (and others) operate on the entire dataset again. To remove the grouping, we have to use the `ungroup()` function. Remember, as with the other dplyr verbs we've learned, we need to save the result if we want the tbl to remain ungrouped!
+As we just saw, when we add a grouping to a tbl, it affects how verbs like `reframe()` and `mutate()` operate on our data. It is sometimes the case that we wish to remove the grouping and let these verbs (and others) operate on the entire dataset again. To remove the grouping, we have to use the `ungroup()` function. Remember, as with the other dplyr verbs we've learned, we need to save the result if we want the tbl to remain ungrouped!
 
 ```{r ungroup}
 pitching <- 

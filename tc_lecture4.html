@@ -13,7 +13,7 @@
 
 <title>Lecture 4: Defining custom functions and standardizing data</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
@@ -30,8 +30,8 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -635,12 +635,12 @@ that tells us the grouping variable. Now when we pass this dataset on to
 subsequent calculations, these calculations will be done on each
 group.</p>
 <p>We can now summarize each season using another <code>tidyverse</code>
-function called… <code>summarize()</code>! This convenient function will
+function called… <code>reframe()</code>! This convenient function will
 compute summary statistics that we specify with respect to the groups
 from <code>group_by()</code>. For instance, we can compute the average
 ERA in each year in the following way:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">ave_ERA =</span> <span class="fu">mean</span>(ERA))</span></code></pre></div>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">ave_ERA =</span> <span class="fu">mean</span>(ERA))</span></code></pre></div>
 <pre><code>## # A tibble: 147 × 2
 ##    yearID ave_ERA
 ##     &lt;int&gt;   &lt;dbl&gt;
@@ -667,14 +667,14 @@ aspects of the distribution of the variables in our dataset:</p>
 contains the mean and standard deviation of ERA <strong>within each
 year</strong>:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>pitching_summary <span class="ot">&lt;-</span> pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), </span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), </span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
 <p>One of the most commonly used functions, <code>n()</code>, returns
 counts and is especially useful when used on a grouped dataset We can,
 for instance, count the number of pitchers in our dataset within each
 year using <code>n()</code>.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
 <span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  <span class="fu">arrange</span>(count)</span></code></pre></div>
 <pre><code>## # A tibble: 147 × 2
 ##    yearID count
@@ -713,7 +713,7 @@ year using <code>n()</code>.</p>
 <p><strong>Exercise</strong>: Describe, in words, what the following
 code does.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
 <span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>  <span class="fu">filter</span>(count <span class="sc">&gt;=</span> <span class="dv">90</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(count))</span></code></pre></div>
 <p>Once we add a grouping to our dataset, it also changes the way
@@ -742,7 +742,7 @@ z_era_year.</p>
 class="section level3">
 <h3>Ungrouping and grouping on multiple variables</h3>
 <p>As we just saw, when we add a grouping to a dataset, it affects how
-verbs like <code>summarize()</code> and <code>mutate()</code> operate on
+verbs like <code>reframe()</code> and <code>mutate()</code> operate on
 our data. It is sometimes the case that we wish to remove the grouping
 and let these verbs (and others) operate on the entire dataset again. To
 remove the grouping, we have to use the <code>ungroup()</code> function.
@@ -753,7 +753,7 @@ ungrouped!</p>
 <span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 <p>To verify that we’ve indeed removed the grouping, let’s re-run the
 code from above to compute the mean and standard deviation of ERA.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">reframe</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 2
 ##     mean      sd
 ##    &lt;dbl&gt;   &lt;dbl&gt;

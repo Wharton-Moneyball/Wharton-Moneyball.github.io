@@ -47,7 +47,7 @@ Looking at the plot, things look quite reasonable -- short field goals are nearl
 fg_train <- fg_train %>% 
   add_predictions(model = logit_distance, var = "phat_dist_logit", type = "response")
 
-summarize(fg_train,
+reframe(fg_train,
           phat_all = mean( (Success - phat_all)^2),
           phat_kicker = mean( (Success - phat_kicker)^2),
           phat_dist_10 = mean( (Success - phat_dist_10)^2),
@@ -62,7 +62,7 @@ Looking at the Brier scores, we see that our new logistic model fits the data mu
 fg_test <- fg_test %>%
   add_predictions(model = logit_distance, var = "phat_dist_logit", type = "response")
 
-summarize(fg_test,
+reframe(fg_test,
           phat_all = mean( (Success - phat_all)^2),
           phat_kicker = mean( (Success - phat_kicker)^2),
           phat_dist_10 = mean( (Success - phat_dist_10)^2),
@@ -104,7 +104,7 @@ Just like we did above, we can also assess the in-sample and out-of-sample predi
 fg_train <- fg_train %>%
   add_predictions(model = logit_dist_kicker, type = "response", var = "phat_dist_kick_logit")
 
-summarize(fg_train,
+reframe(fg_train,
           phat_all = mean( (Success - phat_all)^2),
           phat_kicker = mean( (Success - phat_kicker)^2),
           phat_dist_10 = mean( (Success - phat_dist_10)^2),
@@ -118,7 +118,7 @@ summarize(fg_train,
 fg_test <- fg_test %>%
   add_predictions(model = logit_dist_kicker, type = "response", var = "phat_dist_kick_logit")
 
-summarize(fg_test,
+reframe(fg_test,
           phat_all = mean( (Success - phat_all)^2),
           phat_kicker = mean( (Success - phat_kicker)^2),
           phat_dist_10 = mean( (Success - phat_dist_10)^2),

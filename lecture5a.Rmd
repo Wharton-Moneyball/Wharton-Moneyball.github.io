@@ -67,7 +67,7 @@ data <- data %>%
 # Calculate the average wOBA for each year
 yearly_avg_wOBA <- data %>%
   group_by(yearID) %>%
-  summarize(average_wOBA = mean(wOBA, na.rm = TRUE))
+  reframe(average_wOBA = mean(wOBA, na.rm = TRUE))
 
 # Join the average wOBA for each year back to the original data
 data <- data %>%
@@ -80,7 +80,7 @@ data <- data %>%
 # Compute the proportion of players on each team with an above-average wOBA for their specific year
 proportion_above_average_wOBA <- data %>%
   group_by(teamID, yearID) %>%
-  summarize(proportion = mean(above_average_wOBA, na.rm = TRUE))
+  reframe(proportion = mean(above_average_wOBA, na.rm = TRUE))
 
 # Display the result
 proportion_above_average_wOBA
@@ -126,7 +126,7 @@ mlb_payrolls <- read.csv("data/mlb_payrolls.csv", encoding = "latin1")
 # Filter for a few selected teams (e.g., top 5 teams based on average payroll)
 selected_teams <- mlb_payrolls %>%
   group_by(Team) %>%
-  summarize(Average_Payroll = mean(Team_Payroll, na.rm = TRUE)) %>%
+  reframe(Average_Payroll = mean(Team_Payroll, na.rm = TRUE)) %>%
   top_n(5, Average_Payroll) %>%
   pull(Team)
 
@@ -196,7 +196,7 @@ mlb_payrolls_filtered <- mlb_payrolls %>%
 # Calculate average payroll for each team
 average_payrolls <- mlb_payrolls_filtered %>%
   group_by(Team) %>%
-  summarize(Average_Payroll = mean(Team_Payroll))
+  reframe(Average_Payroll = mean(Team_Payroll))
 
 # Merge average payrolls back into the main dataset
 mlb_payrolls_filtered <- mlb_payrolls_filtered %>%
