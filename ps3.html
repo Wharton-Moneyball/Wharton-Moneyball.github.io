@@ -518,8 +518,7 @@ On-Base Average (wOBA). Note that the formula for plate appearances is
 \text{HBP} + \text{SH} + \text{SF}.\)</span> Formulae for the remaining
 statistics are given in <a href="ps2.html">Problem Set 2</a>.</li>
 <li>Pulling out only those rows of players with at least 502 plate
-appearances <strong>and</strong> who played in either the AL or NL with
-<code>filter()</code></li>
+appearances with <code>filter()</code></li>
 <li>Select the following columns: playerID, yearID, lgID, teamID, PA,
 BA, OBP, OPS, wOBA.
 <p/></li>
@@ -573,8 +572,9 @@ for each team as a separate column. To get some additional practice with
 dplyr, we will read in a different dataset and re-compute these relative
 payrolls.</p>
 <ol style="list-style-type: decimal">
-<li>Remember the function we wrote in <a href="lecture3.html">Lecture
-3</a> to standardize various statistics? It is reproduced below:</li>
+<li>In <a href="lecture3.html">Lecture 3</a> we utilized scale to
+compute z-scores. We can manually recreate this code with a function, as
+reproduced below:</li>
 </ol>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>standardize <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
