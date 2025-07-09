@@ -373,6 +373,9 @@ $(document).ready(function () {
     <li>
       <a href="lecture2.html">Lecture 2</a>
     </li>
+    <li>
+      <a href="lecture3.html">Lecture 3</a>
+    </li>
     <li class="divider"></li>
     <li>
       <a href="ps1.html">Problem Set 1</a>
@@ -450,7 +453,7 @@ average ERA in each year.</p>
 ERA in each year. In <a href="lecture2.html">Lecture 2</a>, we computed
 average statistics for a single NBA season in two steps. First, we used
 <code>filter()</code> to create a new tbl containing only the data from
-that particular season. Then we used <code>summarize()</code> to compute
+that particular season. Then we used <code>reframe()</code> to compute
 the desired averages. To compute the mean ERA in each season, we
 certainly could proceed in a similar way. But this would be incredibly
 tedious. Luckily there is an easier way in dplyr.</p>
@@ -679,7 +682,7 @@ deviation of ERAs within each season.</p>
 <h2>Grouped Calculations</h2>
 <p>Before proceeding, let’s think for a minute about what the following
 code does:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">reframe</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
 <p>Very often in a data analysis, instead of performing a calculation on
 the entire data set, you’ll want to first <em>split</em> the data into
 smaller subsets, <em>apply</em> the same calculation on every subset,
@@ -707,14 +710,14 @@ each year</em>. We will save this tibble as
 <code>pitching_summary</code>:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>pitching_summary <span class="ot">&lt;-</span> </span>
 <span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
 <p>In <a href="lecture2.html">Lecture 2</a>, we listed a few useful
 functions to be used within <code>summarize()</code>. One of them,
 <code>n()</code>, returns counts and is especially useful when used on a
 grouped tibble. We can, for instance, count the number of pitchers in
 our dataset within each year using <code>n()</code>.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
 <span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="fu">arrange</span>(count)</span></code></pre></div>
 <pre><code>## # A tibble: 147 × 2
 ##    yearID count
@@ -733,7 +736,7 @@ our dataset within each year using <code>n()</code>.</p>
 <p><strong>Exercise</strong>: Describe, in words, what the following
 code does.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> </span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
 <span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>  <span class="fu">filter</span>(count <span class="sc">&gt;=</span> <span class="dv">90</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(count))</span></code></pre></div>
 <p>Once we add a grouping to our tibble, it also changes the way
@@ -774,7 +777,7 @@ the result if we want the tbl to remain ungrouped!</p>
 <span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 <p>To verify that we’ve indeed removed the grouping, let’s re-run the
 code from above to compute the mean and standard deviation of ERA.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>pitching <span class="sc">%&gt;%</span> <span class="fu">reframe</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 2
 ##    mean    sd
 ##   &lt;dbl&gt; &lt;dbl&gt;
