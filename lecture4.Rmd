@@ -24,14 +24,7 @@ load("data/batting_2014_2015.RData")
 batting_2014_2015
 ```
 
-Let's say we want to study the relationship between a player's 2014 batting average and his 2015 batting average. In this case, each observation is a player, and that player has two associated variables; batting average in 2014, and batting average in 2015. Thus, it will be more convenient to store the data as below.
-
-```{r spread, echo=FALSE}
-batting_2014_2015 %>%
-  spread(yearID, BA)
-```
-
-In this format, we have a row for each player and two columns for his batting averages, one for 2014 and one for 2015. In order to convert our tbl into this format, we use the `pivot_wider` function. The `names_from` argument indicates which column will now become the column names instead of indicating values in the table - in this case `yearID`. The `values_from` argument indicates which columns' values will be compressed into a single column - in this case `BA`. We can use the `names_prefix` argument to easily rename the columns with `BA_` so that our columns don't start with numbers.
+Let's say we want to study the relationship between a player's 2014 batting average and his 2015 batting average. In this case, each observation is a player, and that player has two associated variables; batting average in 2014, and batting average in 2015. We can do this with the `pivot_wider` function. The `names_from` argument indicates the new column(s) in the table - in this case `yearID`. The `values_from` then indicates what values go in our new columns - in this case `BA`. We can use the `names_prefix` argument to easily rename the columns with `BA_` so that our columns don't start with numbers.
 
 ```{r pivot_wider batting_2014_2015}
 batting_2014_2015 <- batting_2014_2015 %>%
@@ -43,7 +36,7 @@ batting_2014_2015 <- batting_2014_2015 %>%
 head(batting_2014_2015)
 ```
 
-When we print out `batting_2014_2015_wide`, we notice that it is easier to read in this proper "tidy" format. Moreover, many of the `tidyverse` functions that we've covered and will continue to learn are much simpler to implement when used on data of this form. We'll continue to see examples of how to "tidy" up our data as we go through the lectures and problem sets.
+When we print out `batting_2014_2015`, we notice that it is easier to read in this proper "tidy" format. Moreover, many of the `tidyverse` functions that we've covered and will continue to learn are much simpler to implement when used on data of this form. We'll continue to see examples of how to "tidy" up our data as we go through the lectures and problem sets.
 
 It can also be helpful to work with the original, "long" format of the data when making visualizations. We can easily revert back to this form with pivot longer, which will take the compact version and unpack it back into one row per year. `cols` represents the column titles that are instead being converted into a new column - in this case `BA_2014` and `BA_2015`. The `names_to` argument indicates the name of the new column that will contain these values, and the `values_to` argument indicates the name of the new column that will contain the values themselves. We can then mutate to remove the `BA_` prefix and then see that our table looks like our original data. 
 ```{r pivot_longer batting_2014_2015}
@@ -58,7 +51,7 @@ batting_2014_2015_long <- batting_2014_2015 %>%
 head(batting_2014_2015_long)
 ```
 
-We can use this `batting_2014_2015_long` tbl to make visualizations, such as the one below, which shows the batting averages of each player in 2014 and 2015.
+We can use this `batting_2014_2015_long` tbl to make a bar plot with `geom_col` which shows the batting averages of each player in 2014 and 2015.
 ```{r}
 batting_2014_2015_slice <- batting_2014_2015_long %>%
   slice_head(n=20) #take the first 10 players alphabetically 
