@@ -31,18 +31,18 @@ batting_2014_2015 %>%
   spread(yearID, BA)
 ```
 
-In this format, we have a row for each player and two columns for his batting averages, one for 2014 and one for 2015. In order to convert our tbl into this format, we use the `spread` function. Also we rename the new columns "BA_2014" and "BA_2015" so that they don't begin with numbers, which can cause problems.
-
-```{r spread batting_2014_2015}
-batting_2014_2015 <-
-  batting_2014_2015 %>%
-  spread(yearID, BA) %>%
-  rename(BA_2014 = `2014`,
-         BA_2015 = `2015`)
-batting_2014_2015
+In this format, we have a row for each player and two columns for his batting averages, one for 2014 and one for 2015. In order to convert our tbl into this format, we use the `pivot_wider` function. 
+```{r pivot_wider batting_2014_2015}
+batting_2014_2015_wide <- batting_2014_2015 %>%
+  pivot_wider(
+    names_from = yearID,
+    values_from = BA,
+    names_prefix = "BA_"
+  )
+head(batting_2014_2015_wide)
 ```
 
-When we print out `batting_2014_2015` now, we notice that it is easier to read in this proper "tidy" format. Moreover, many of the `tidyverse` functions that we've covered and will continue to learn are much simpler to implement when used on data of this form. We'll continue to see examples of how to "tidy" up our data as we go through the lectures and problem sets.
+When we print out `batting_2014_2015_wide`, we notice that it is easier to read in this proper "tidy" format. Moreover, many of the `tidyverse` functions that we've covered and will continue to learn are much simpler to implement when used on data of this form. We'll continue to see examples of how to "tidy" up our data as we go through the lectures and problem sets.
 
 
 ## Predicting Batting Averages
@@ -52,16 +52,16 @@ Imagine there's one more player who played in both 2014 and 2015 but who is not 
 Now what if we also told you this extra player's 2014 batting average? Can we improve on this simple prediction? In this section, we will propose several different ways of predicting 2015 batting average using 2014 batting average. In order to pick the best one, we can assess how well each method predicts the actual 2015 batting averages in our tbl.  We will add columns to our tbl containing these predictions. To get things started, let's add a column containing the overall mean of the 2015 batting averages. It turns out that this mean is 0.273, whereas the mean 2014 batting average is 0.272.
 
 ```{r batting yhat_0}
-batting_2014_2015 <-
-  batting_2014_2015 %>% 
+batting_2014_2015_wide <-
+  batting_2014_2015_wide %>% 
   mutate(yhat_0 = mean(BA_2015))
-batting_2014_2015
+batting_2014_2015_wide
 ```
 
 If the 2014 batting average had no predictive power at all, then this overall mean will be the best prediction model possible, given what data we have. Plotting the 2015 batting averages against the 2014 batting averages allows us to assess visually whether there is any relationship between the two variables.We have added dashed red horizontal and vertical lines at the overall means of the 2014 and 2015 data, respectively.
 
 ```{r plot batting yhat_0}
-ggplot(batting_2014_2015) +
+ggplot(batting_2014_2015_wide) +
   geom_point(aes(x = BA_2014, y = BA_2015), col = 'black', shape = 16, size = 0.9) +
   geom_hline(yintercept = 0.273, col = 'red', lty = 2) +
   geom_vline(xintercept = 0.272, col = 'red', lty = 2)

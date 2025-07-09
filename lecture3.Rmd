@@ -14,7 +14,7 @@ On day 4 of the morning lectures (Lecture 8), you see a graph of Earned Run Aver
 
 ![](figures/lecture3_era.png)
 
-In order to create this figure we need to be able to compute the mean ERA in each year. In [Lecture 2](lecture2.html), we computed average statistics for a single NBA season in two steps. First, we used `filter()` to create a new tbl containing only the data from that particular season. Then we used `summarize()` to compute the desired averages. To compute the mean ERA in each season, we certainly could proceed in a similar way. But this would be incredibly tedious. Luckily there is an easier way in dplyr.
+In order to create this figure we need to be able to compute the mean ERA in each year. In [Lecture 2](lecture2.html), we computed average statistics for a single NBA season in two steps. First, we used `filter()` to create a new tbl containing only the data from that particular season. Then we used `reframe()` to compute the desired averages. To compute the mean ERA in each season, we certainly could proceed in a similar way. But this would be incredibly tedious. Luckily there is an easier way in dplyr.
 
 In order to reproduce this image, we will work with the [Lahman Baseball Database](http://www.seanlahman.com/baseball-database.html). As it turns out, there is an R package that includes the entire database (up until the 2016 season). We will load that into R along with the tidyverse packages when we begin our analysis. 
 
@@ -140,7 +140,7 @@ Of course, you might argue that comparing the raw ERAs across the various years 
 Before proceeding, let's think for a minute about what the following code does:
 
 ```{r pitching summarize, eval=FALSE}
-pitching %>% summarise(mean = mean(ERA), sd = sd(ERA))
+pitching %>% reframe(mean = mean(ERA), sd = sd(ERA))
 ```
 
 Very often in a data analysis, instead of performing a calculation on the entire data set, you'll want to first *split* the data into smaller subsets, *apply* the same calculation on every subset, and then *combine* the results from each subset. For example, in order to replicate the figure above from Prof. Wyner's lecture, we need to split our pitching dataset based on the year, compute the average ERA within each year, and then combine these into a single tibble. 
@@ -158,21 +158,21 @@ When we print out `pitching` now, we notice an extra line that tells us the grou
 ```{r pitching_summary}
 pitching_summary <- 
   pitching %>% 
-  summarize(mean = mean(ERA), sd = sd(ERA))
+  reframe(mean = mean(ERA), sd = sd(ERA))
 ```
 
 In [Lecture 2](lecture2.html), we listed a few useful functions to be used within `summarize()`. One of them, `n()`, returns counts and is especially useful when used on a grouped tibble. We can, for instance, count the number of pitchers in our dataset within each year using `n()`.
 
 ```{r pitching_summary n}
 pitching %>% 
-  summarize(count = n()) %>%
+  reframe(count = n()) %>%
   arrange(count)
 ```
 
 **Exercise**: Describe, in words, what the following code does.
 ```{r pitching exercise, eval = FALSE}
 pitching %>% 
-  summarize(count = n()) %>%
+  reframe(count = n()) %>%
   filter(count >= 90) %>%
   arrange(desc(count))
 ```
@@ -200,7 +200,7 @@ pitching <-
 To verify that we've indeed removed the grouping, let's re-run the code from above to compute the mean and standard deviation of ERA.
 
 ```{r ungroup summarize}
-pitching %>% summarize(mean = mean(ERA), sd = sd(ERA))
+pitching %>% reframe(mean = mean(ERA), sd = sd(ERA))
 ```
 
 Up to this point, we have only grouped on a single variable. It is sometimes desirable to group on multiple variables at once. For instance, we may want to standardize ERA not only within each year but also within each league (AL and NL). That is, we may want to standardize each individual pitcher's ERA using only the data from the other pitchers who pitched in the same league and in the same season. We also add a column called count_year_lg to record the number of pitchers included in each year-league combination.
