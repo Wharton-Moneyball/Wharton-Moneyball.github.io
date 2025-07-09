@@ -256,6 +256,8 @@ batting <- batting %>%
          zOPS_hist = standardize(OPS),
          zwOBA_hist = standardize(wOBA))
 
+head(batting)
+
 batting %>% 
   arrange(zBA_hist) %>%
   head(5)
