@@ -3,7 +3,10 @@
 #######################
 
 live-lectures
-ps[3-6].html
+
+# remaining lectures, problem sets
+lecture[4-8].html
+ps[3-8].html
 
 #########
 ### R ###
