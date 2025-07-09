@@ -10,7 +10,7 @@ library(tidyverse)
 
 ## Introduction
 
-On day 4 of the morning lectures (Lecture 8), you see a graph of Earned Run Average (ERA) against year along with a line connecting the average ERA in each year.
+Consider the following graph, which plots each pitcher's Earned Run Average (ERA) by year, along with a line showing the average ERA for each year.
 
 ![](figures/lecture3_era.png)
 
