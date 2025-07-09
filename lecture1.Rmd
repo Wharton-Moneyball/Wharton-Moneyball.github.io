@@ -86,7 +86,9 @@ my.data <- data.frame("PLAYER" = c("Stephen Curry", "Damian Lillard", "Jimmy But
                       "FTM" = c(363, 414, 395, 720, 447, 359, 250, 296, 476, 203),
                       "FTA" = c(400, 464, 475, 837, 498, 491, 280, 409, 663, 245))
 
-knitr::kable(my.data)
+knitr::kable(my.data, format = "html", 
+             table.attr = "class='table table-striped table-bordered table-hover'",
+             align = c('l', 'c', 'r', 'r', 'r', 'r', 'r', 'r'))
 ```
 
 Within the tidyverse, the standard way to store and manipulate tabular data like this is to use what is known as a tbl (pronounced "tibble"). At a high-level, a tbl is a two-dimensional array whose columns can be of different data types. That is, the first column might be characters (e.g. the names of athletes) and the second column can be numeric (e.g. the number of points scored).
