@@ -319,7 +319,7 @@ Recall from [Problem Set 2](ps2.html), we plotted the relative payroll of MLB te
 In that problem set, we read in a file that had included the relative payroll for each team as a separate column.
 To get some additional practice with dplyr, we will read in a different dataset and re-compute these relative payrolls.
 
-1. In [Lecture 3](lecture3.html) we utilized scale to compute z-scores. We can manually recreate this code with a function, as reproduced below:
+1. In [Lecture 3](lecture3.html) we utilized `scale()` to compute z-scores. We can manually recreate this code with a function, as reproduced below:
 
 ```{r standardize fn, include=TRUE}
 standardize <- function(x){

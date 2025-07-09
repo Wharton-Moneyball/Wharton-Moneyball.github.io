@@ -13,7 +13,7 @@
 
 <title>Problem Set 3</title>
 
-<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
@@ -30,8 +30,8 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -572,9 +572,9 @@ for each team as a separate column. To get some additional practice with
 dplyr, we will read in a different dataset and re-compute these relative
 payrolls.</p>
 <ol style="list-style-type: decimal">
-<li>In <a href="lecture3.html">Lecture 3</a> we utilized scale to
-compute z-scores. We can manually recreate this code with a function, as
-reproduced below:</li>
+<li>In <a href="lecture3.html">Lecture 3</a> we utilized
+<code>scale()</code> to compute z-scores. We can manually recreate this
+code with a function, as reproduced below:</li>
 </ol>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>standardize <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
