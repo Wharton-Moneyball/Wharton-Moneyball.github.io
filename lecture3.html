@@ -13,7 +13,7 @@
 
 <title>Lecture 3: Piping &amp; Grouped Comparisons</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
@@ -30,8 +30,8 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -702,17 +702,17 @@ follows.</p>
 that tells us the grouping variable. Now when we pass this tibble on to
 subsequent calculations, these calculations will be done on each group.
 Recall from earlier that the code
-<code>pitching %&gt;% summarize(mean = mean(ERA))</code> returned a
-single row containing the average of ERA over all players and year. If
-we now run the same code again, we actually get a tibble with one row
-per year that lists the mean and standard deviation of ERA <em>within
-each year</em>. We will save this tibble as
+<code>pitching %&gt;% reframe(mean = mean(ERA))</code> returned a single
+row containing the average of ERA over all players and year. If we now
+run the same code again, we actually get a tibble with one row per year
+that lists the mean and standard deviation of ERA <em>within each
+year</em>. We will save this tibble as
 <code>pitching_summary</code>:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>pitching_summary <span class="ot">&lt;-</span> </span>
 <span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  pitching <span class="sc">%&gt;%</span> </span>
 <span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ERA), <span class="at">sd =</span> <span class="fu">sd</span>(ERA))</span></code></pre></div>
 <p>In <a href="lecture2.html">Lecture 2</a>, we listed a few useful
-functions to be used within <code>summarize()</code>. One of them,
+functions to be used within <code>reframe()</code>. One of them,
 <code>n()</code>, returns counts and is especially useful when used on a
 grouped tibble. We can, for instance, count the number of pitchers in
 our dataset within each year using <code>n()</code>.</p>
@@ -766,7 +766,7 @@ called zERA_year.</p>
 class="section level3">
 <h3>Ungrouping and Grouping on Multiple Variables</h3>
 <p>As we just saw, when we add a grouping to a tbl, it affects how verbs
-like <code>summarize()</code> and <code>mutate()</code> operate on our
+like <code>reframe()</code> and <code>mutate()</code> operate on our
 data. It is sometimes the case that we wish to remove the grouping and
 let these verbs (and others) operate on the entire dataset again. To
 remove the grouping, we have to use the <code>ungroup()</code> function.

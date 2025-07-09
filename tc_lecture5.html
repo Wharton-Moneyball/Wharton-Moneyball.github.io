@@ -13,7 +13,7 @@
 
 <title>Lecture 5: Correlation, Linear Regression and Prediction</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
@@ -30,8 +30,8 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -456,7 +456,7 @@ describe what this code is doing?</strong></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>batting_2017_2018 <span class="ot">&lt;-</span> batting <span class="sc">%&gt;%</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2017</span>, <span class="dv">2018</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="fu">group_by</span>(playerID, yearID) <span class="sc">%&gt;%</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">H =</span> <span class="fu">sum</span>(H), <span class="at">AB =</span> <span class="fu">sum</span>(AB)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">H =</span> <span class="fu">sum</span>(H), <span class="at">AB =</span> <span class="fu">sum</span>(AB)) <span class="sc">%&gt;%</span></span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="fu">filter</span>(AB <span class="sc">&gt;=</span> <span class="dv">300</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">BA =</span> H <span class="sc">/</span> AB) <span class="sc">%&gt;%</span></span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>

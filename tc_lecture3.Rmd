@@ -229,11 +229,11 @@ nba_shooting <- nba_shooting %>%
 
 When we print out `nba_shooting` now, we notice an extra line that tells us the grouping variable. Now when we pass this `tbl` on to subsequent calculations, these calculations will be done on each group.
 
-We can now summarize each season using another `tidyverse` function called... `summarize()`! This convenient function will compute summary statistics that we specify with respect to the groups from `group_by()`. For instance, we can compute the average three-point shot rate for each season in the following way:
+We can now summarize each season using another `tidyverse` function called... `reframe()`! This convenient function will compute summary statistics that we specify with respect to the groups from `group_by()`. For instance, we can compute the average three-point shot rate for each season in the following way:
 
 ```{r summarize}
 nba_shooting %>%
-  summarize(ave_tp_shot_rate = mean(three_point_fg_rate))
+  reframe(ave_tp_shot_rate = mean(three_point_fg_rate))
 ```
 
 The following functions are quite useful for summarizing several aspects of the distribution of the variables in our dataset:
@@ -247,7 +247,7 @@ Now we'll make a dataset that provides us with both the mean and **standard devi
 
 ```{r summarize mean sd}
 nba_shooting_summary <- nba_shooting %>%
-  summarize(ave_tp_shot_rate = mean(three_point_fg_rate),
+  reframe(ave_tp_shot_rate = mean(three_point_fg_rate),
             sd_tp_shot_rate = sd(three_point_fg_rate))
 ```
 

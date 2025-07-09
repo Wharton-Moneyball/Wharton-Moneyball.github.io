@@ -118,11 +118,11 @@ nba_shooting <- nba_shooting %>%
 
 # compute average 3PT proportion for each season
 nba_shooting %>%
-  summarize(ave_TPP = mean(TPP))
+  reframe(ave_TPP = mean(TPP))
 
 # new dataset with mean and SD of 3PT proportion each year
 nba_shooting_summary <- nba_shooting %>%
-  summarize(ave_TPP = mean(TPP),
+  reframe(ave_TPP = mean(TPP),
             sd_TPP = sd(TPP))
 
 # scatterplot of mean +/- SD for 3PT proportion each year 

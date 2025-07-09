@@ -100,7 +100,7 @@ Now that we have read in our dataset, we're ready to begin analyzing it. Very of
 - creating new variables that are functions of existing variables with `mutate()`,
 - identify observations satisfying certain conditions with `filter()`,
 - picking a subset of variables by names with `select()`,
-- generating simple summaries of the data with `summarize()`.
+- generating simple summaries of the data with `reframe()`.
 
 ### Arranging Data
 The `arrange()` function works by taking a tbl and a set of column names and sorting the data according to the values in these columns.

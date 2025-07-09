@@ -83,7 +83,7 @@ To get a sense of whether a particular country's judges are biased, it would be 
 
 ```{r facet_wrap median}
 median_score <- diving %>% 
-  summarize(med = median(JScore)) %>%
+  reframe(med = median(JScore)) %>%
   pull(med)
 diving_hist <- 
   diving_hist + 
@@ -286,7 +286,7 @@ There is an incredible amount of data here going up through the 2021 season (it 
 ```{r Lahman strikeouts year}
 Teams %>%
   group_by(yearID) %>%
-  summarize(n_so = sum(SO, na.rm = TRUE)) %>%
+  reframe(n_so = sum(SO, na.rm = TRUE)) %>%
   ggplot() +
   geom_line(aes(x = yearID, y = n_so)) +
   labs(x = "Year", y = "Number of strikeouts",

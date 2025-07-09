@@ -178,7 +178,7 @@ ggplot(results_2017) +
 4. Now, we can determine if our quadratic model fits the data better than our linear model. To do this, we can compute the RMSEs of both models (as discussed in [Lecture 4](lecture4.html)) and see which is lower.
 
 ```{r pt2 q4, include=TRUE}
-summarize(results_2017,
+reframe(results_2017,
           rmse.run_bike = sqrt(mean(lm.run_bike$residuals^2)),
           rmse.run_bike2 = sqrt(mean(lm.run_bike2$residuals^2)))
 ```
@@ -217,7 +217,7 @@ ggplot(results_2017) +
 3. We can probably guess that the model with the gender effect fits the data better than our simple linear regression (i.e. knowing the gender of a racer and their run time allows us to better predict their bike time). But let's verify this computationally.
 
 ```{r pt3 q3, include=TRUE}
-summarize(results_2017,
+reframe(results_2017,
           rmse.run_bike = sqrt(mean(lm.run_bike$residuals^2)),
           rmse.run_bike_gender = sqrt(mean(lm.run_bike_gender$residuals^2)))
 ```

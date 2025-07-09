@@ -103,7 +103,7 @@ super_bowl_pbp %>%
   group_by(posteam, down, play_type) %>%
   filter(!is.na(down)) %>%
   # Now use the summarise function, generate the average yards gained:
-  summarize(yards_per_play = mean(yards_gained)) %>%
+  reframe(yards_per_play = mean(yards_gained)) %>%
   ggplot(aes(x = play_type, y = yards_per_play, fill = posteam)) +
   geom_bar(stat = "identity", position = "dodge") +
   facet_wrap(~down, ncol = 4) +

@@ -13,7 +13,7 @@
 
 <title>Super Bowl Analysis with nflfastR</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
@@ -30,8 +30,8 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -547,7 +547,7 @@ yards-gained:</p>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">group_by</span>(posteam, down, play_type) <span class="sc">%&gt;%</span></span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(down)) <span class="sc">%&gt;%</span></span>
 <span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="co"># Now use the summarise function, generate the average yards gained:</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">yards_per_play =</span> <span class="fu">mean</span>(yards_gained)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">yards_per_play =</span> <span class="fu">mean</span>(yards_gained)) <span class="sc">%&gt;%</span></span>
 <span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> play_type, <span class="at">y =</span> yards_per_play, <span class="at">fill =</span> posteam)) <span class="sc">+</span></span>
 <span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
 <span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>down, <span class="at">ncol =</span> <span class="dv">4</span>) <span class="sc">+</span></span>

@@ -107,7 +107,7 @@ raw_boxscore %>% filter(Tm == "WSB")
 
 * One of the teams listed is "TOT". This does not refer any specific team. Instead these rows record the *total* statistics recorded by a player if he played for multiple teams in a single season. For the purposes of understanding how team shooting statistics changed over time, we will not want to include these rows in our analysis.
 
-2. Use `filter()`, `group_by()`, `summarize()`, and `mutate()` to create a new tbl called `team_boxscore` that does the following:
+2. Use `filter()`, `group_by()`, `reframe()`, and `mutate()` to create a new tbl called `team_boxscore` that does the following:
 
     * removes the rows corresponding to player totals (i.e. `Tm == "TOT"`)
     * groups the tbl according to Season and Tm. **Note: it is important to group on season first and team second **

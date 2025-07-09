@@ -365,13 +365,13 @@ ggplot(data = mlb_payrolls) +
   geom_point(mapping = aes(x = Relative_Payroll, y = Winning_Percentage))
 ```
 
-5. Using the `summarize()` function, compute the average team payroll and relative payroll for each year. Save these results in a new tbl called `payroll_avg`. 
+5. Using the `reframe()` function, compute the average team payroll and relative payroll for each year. Save these results in a new tbl called `payroll_avg`. 
 
 ```{r pt2 q5 solution}
 # solution
 payroll_avg <-
   mlb_payrolls %>% 
-  summarize(avg_team_payroll = mean(Team_Payroll), 
+  reframe(avg_team_payroll = mean(Team_Payroll), 
             avg_team_relative_payroll = mean(Relative_Payroll))
 ```
 
@@ -395,7 +395,7 @@ ggplot(data = mlb_payrolls) +
 ```{r pt2 q7 solution}
 # solution
 mlb_payrolls %>%
-  summarize(cor = cor(Winning_Percentage, Relative_Payroll))
+  reframe(cor = cor(Winning_Percentage, Relative_Payroll))
 ```
 
 ## A Challenge Question

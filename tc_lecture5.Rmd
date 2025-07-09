@@ -25,7 +25,7 @@ In the code below we'll create a dataset to use that has player batting averages
 batting_2017_2018 <- batting %>%
   filter(yearID %in% c(2017, 2018)) %>%
   group_by(playerID, yearID) %>%
-  summarize(H = sum(H), AB = sum(AB)) %>%
+  reframe(H = sum(H), AB = sum(AB)) %>%
   filter(AB >= 300) %>%
   mutate(BA = H / AB) %>%
   ungroup() %>%

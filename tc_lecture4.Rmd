@@ -112,11 +112,11 @@ pitching <- pitching %>%
 
 When we print out `pitching` now, we notice an extra line that tells us the grouping variable. Now when we pass this dataset on to subsequent calculations, these calculations will be done on each group. 
 
-We can now summarize each season using another `tidyverse` function called... `summarize()`! This convenient function will compute summary statistics that we specify with respect to the groups from `group_by()`. For instance, we can compute the average ERA in each year in the following way:
+We can now summarize each season using another `tidyverse` function called... `reframe()`! This convenient function will compute summary statistics that we specify with respect to the groups from `group_by()`. For instance, we can compute the average ERA in each year in the following way:
 
 ```{r summarize mean}
 pitching %>%
-  summarize(ave_ERA = mean(ERA))
+  reframe(ave_ERA = mean(ERA))
 ```
 
 The following functions are quite useful for summarizing several aspects of the distribution of the variables in our dataset:
@@ -130,7 +130,7 @@ We'll now create a dataset, `pitching_summary`, that contains the mean and stand
 
 ```{r summarize mean sd}
 pitching_summary <- pitching %>% 
-  summarize(mean = mean(ERA), 
+  reframe(mean = mean(ERA), 
             sd = sd(ERA))
 ```
 
@@ -138,7 +138,7 @@ One of the most commonly used functions, `n()`, returns counts and is especially
 
 ```{r arrange}
 pitching %>% 
-  summarize(count = n()) %>%
+  reframe(count = n()) %>%
   arrange(count)
 ```
 
@@ -156,7 +156,7 @@ What's the difference between the two approaches above?
 
 ```{r exercise, eval = FALSE}
 pitching %>% 
-  summarize(count = n()) %>%
+  reframe(count = n()) %>%
   filter(count >= 90) %>%
   arrange(desc(count))
 ```
@@ -172,7 +172,7 @@ pitching %>% arrange(z_era_year)
 
 ### Ungrouping and grouping on multiple variables
 
-As we just saw, when we add a grouping to a dataset, it affects how verbs like `summarize()` and `mutate()` operate on our data. It is sometimes the case that we wish to remove the grouping and let these verbs (and others) operate on the entire dataset again.
+As we just saw, when we add a grouping to a dataset, it affects how verbs like `reframe()` and `mutate()` operate on our data. It is sometimes the case that we wish to remove the grouping and let these verbs (and others) operate on the entire dataset again.
 To remove the grouping, we have to use the `ungroup()` function.
 Remember, as with the other `tidyverse` verbs we've learned, we need to store the result if we want the dataset to remain ungrouped!
 
@@ -184,7 +184,7 @@ pitching <- pitching %>%
 To verify that we've indeed removed the grouping, let's re-run the code from above to compute the mean and standard deviation of ERA.
 
 ```{r rerun ungrouped}
-pitching %>% summarize(mean = mean(ERA), sd = sd(ERA))
+pitching %>% reframe(mean = mean(ERA), sd = sd(ERA))
 ```
 
 Up to this point, we have only grouped on a single variable. It is sometimes desirable to group on multiple variables at once. For instance, we may want to standardize ERA not only within each year but also within each leauge (AL and NL). That is, we may want to standardize each individual pitcher's ERA using only the data from the other pitchers who pitched in the same league and in the same season. We also add a column called `count_year_lg` to record the number of pitchers included in each year-league combination.
