@@ -79,7 +79,7 @@ diving_hist <-
 diving_hist
 ```
 
-To get a sense of whether a particular country's judges are biased, it would be useful to add a reference line at the median score over all judges and countries to each facet. So, we must first calculate the overall median score, which we can do using the summarize function. Then. we can display this median on our plots this with `geom_vline()`, which adds a vertical line. 
+To get a sense of whether a particular country's judges are biased, it would be useful to add a reference line at the median score over all judges and countries to each facet. So, we must first calculate the overall median score, which we can do using the summarize function. Then, we can display this median on our plots this with `geom_vline()`, which adds a vertical line. We can also pass in a custom color argument to this line so that it will easily stand out from the rest of our values. This website provides a look at all the build-in color arguments to R: [R colors](https://sites.stat.columbia.edu/tzheng/files/Rcolor.pdf)
 
 ```{r facet_wrap median}
 median_score <- diving %>% 
@@ -87,14 +87,14 @@ median_score <- diving %>%
   pull(med)
 diving_hist <- 
   diving_hist + 
-  geom_vline(xintercept = median_score, color = "red")
+  geom_vline(xintercept = median_score, color = "lightcoral")
 diving_hist
 ```
 
 Note that when calculating our `median_score`, the `summarize` function returns a tbl rather than a single value. To "pull" out the single median value from our tbl, we use the `pull` function.
 
 
-### Boxplots
+### Boxplots and violin plots
 
 Boxplots are also an important visualization tool. We now create boxplots of the judges' scores, separated by diving round. We can also color our boxplots according to the `Round` variable by including the `fill` argument within the `aes()` function. Note that if we included the `fill` argument outside of the `aes()` function, we would only be able to color all boxplots the same color (by putting `fill` inside of the aesthetic, we are able to "map" the variable `Round` to the fill color of the plot based on the values of `Round`).
 
@@ -113,6 +113,17 @@ diving_box <- diving_box +
 diving_box
 ```
 
+We can also plot this data as violin plots, which takes in the same arguments as `geom_boxplot` but instead with `geom_violin`. We can also change the "look" of our plots by setting the theme. `theme_minimal()` is frequently used for a much cleaner look. 
+```{r}
+diving_violin <- ggplot(data = diving) + 
+  geom_violin(aes(x = Round, y = JScore, fill = Round)) +
+  labs(title = "Diving scores by round", x = "", y = "Judge Score", fill = "Round") +
+  theme_minimal()
+
+diving_violin
+```
+
+We can see that the boxplots provide more information about statistical features, such as the median and quartiles, but the violin plots provide a better sense of how the data is distributed. We can see the effect of smaller rounds having more binned scores, whereas they are spread much more evenly in the first round. 
 
 ### Barplots
 
@@ -148,7 +159,7 @@ scatter <- scatter +
 scatter
 ```
 
-*Note*: `geom_abline` is different from `geom_line`: `geom_line` "connects the dots" between your data and so doesn't have to be a straight line, whereas `geom_abline` draws a straight line with the specified slope and y-intercept.
+*Note*: `geom_abline` is different from `geom_line`: `geom_line` "connects the dots" between your data and so doesn't have to be a straight line, whereas `geom_abline` draws a straight line with the specified slope and y-intercept. A common usage can be when comparing predictions to actual values, where a line with slope 1 and intercept 0 indicates perfect predictions.
 
 Other `geom` for lines are:
 
@@ -173,13 +184,18 @@ judges <- ggplot(data = diving, aes(x = Judge, y = JScore)) +
 judges
 ```
 
-We can see that the judges' names are bunched together... ideally we would want their names to be horizontal to make it easier to read. Luckily, `ggplot` has an easy fix for this!
+We can see that the judges' names are bunched together... we can make them much more readable by rotating the x-axis labels by 45 degrees using the `theme` layer:
+```{r}
+judges_rotate <- judges + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+judges_rotate
+```
 
+We can also completely flip the coordinates to make a horizontal plot!
 ```{r coord_flip}
 judges <- judges + coord_flip()
 judges
 ```
-
 
 ### Scales
 
@@ -214,8 +230,7 @@ From the 2D histogram, we can see that the higher ranked divers attempt both mor
 
 ### ColorBrewer
 
-The palettes used in this module, including "OrRd" and "Spectral", come from [ColorBrewer](http://colorbrewer2.org/). You can take a look at the website and use some of these color palettes in your plots!
-
+The palettes used in this module, including "OrRd" and "Spectral", come from [ColorBrewer](http://colorbrewer2.org/). You can take a look at the website and use some of these color palettes in your plots! 
 
 # Other Data Sources
 

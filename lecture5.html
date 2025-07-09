@@ -13,7 +13,7 @@
 
 <title>Lecture 5: Advanced Visualization and Other Data Sources</title>
 
-<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
@@ -30,8 +30,8 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -373,6 +373,9 @@ $(document).ready(function () {
     <li>
       <a href="lecture2.html">Lecture 2</a>
     </li>
+    <li>
+      <a href="lecture3.html">Lecture 3</a>
+    </li>
     <li class="divider"></li>
     <li>
       <a href="ps1.html">Problem Set 1</a>
@@ -527,14 +530,19 @@ display the graphs.</p>
 it would be useful to add a reference line at the median score over all
 judges and countries to each facet. So, we must first calculate the
 overall median score, which we can do using the summarize function.
-Then. we can display this median on our plots this with
-<code>geom_vline()</code>, which adds a vertical line.</p>
+Then, we can display this median on our plots this with
+<code>geom_vline()</code>, which adds a vertical line. We can also pass
+in a custom color argument to this line so that it will easily stand out
+from the rest of our values. This website provides a look at all the
+build-in color arguments to R: <a
+href="https://sites.stat.columbia.edu/tzheng/files/Rcolor.pdf">R
+colors</a></p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>median_score <span class="ot">&lt;-</span> diving <span class="sc">%&gt;%</span> </span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">med =</span> <span class="fu">median</span>(JScore)) <span class="sc">%&gt;%</span></span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">pull</span>(med)</span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>diving_hist <span class="ot">&lt;-</span> </span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  diving_hist <span class="sc">+</span> </span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> median_score, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> median_score, <span class="at">color =</span> <span class="st">&quot;lightcoral&quot;</span>)</span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>diving_hist</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/facet_wrap%20median-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Note that when calculating our <code>median_score</code>, the
@@ -542,8 +550,8 @@ Then. we can display this median on our plots this with
 value. To “pull” out the single median value from our tbl, we use the
 <code>pull</code> function.</p>
 </div>
-<div id="boxplots" class="section level3">
-<h3>Boxplots</h3>
+<div id="boxplots-and-violin-plots" class="section level3">
+<h3>Boxplots and violin plots</h3>
 <p>Boxplots are also an important visualization tool. We now create
 boxplots of the judges’ scores, separated by diving round. We can also
 color our boxplots according to the <code>Round</code> variable by
@@ -566,15 +574,32 @@ layer:</p>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(), <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(), <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>())</span>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>diving_box</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/boxplot%20theme-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We can also plot this data as violin plots, which takes in the same
+arguments as <code>geom_boxplot</code> but instead with
+<code>geom_violin</code>. We can also change the “look” of our plots by
+setting the theme. <code>theme_minimal()</code> is frequently used for a
+much cleaner look.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>diving_violin <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diving) <span class="sc">+</span> </span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">x =</span> Round, <span class="at">y =</span> JScore, <span class="at">fill =</span> Round)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Diving scores by round&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Judge Score&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Round&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>diving_violin</span></code></pre></div>
+<p><img src="lecture5_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We can see that the boxplots provide more information about
+statistical features, such as the median and quartiles, but the violin
+plots provide a better sense of how the data is distributed. We can see
+the effect of smaller rounds having more binned scores, whereas they are
+spread much more evenly in the first round.</p>
 </div>
 <div id="barplots" class="section level3">
 <h3>Barplots</h3>
 <p>We can also create barplots using <code>geom_bar</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>bar <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diving) <span class="sc">+</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> JCountry, <span class="at">fill =</span> JCountry)) <span class="sc">+</span> </span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Judge Country&quot;</span>) <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>bar</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>bar <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diving) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> JCountry, <span class="at">fill =</span> JCountry)) <span class="sc">+</span> </span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Judge Country&quot;</span>) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>bar</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/barplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="scatterplots" class="section level3">
@@ -583,9 +608,9 @@ layer:</p>
 href="lecture2.html">Lecture 2</a>. We plot judges’ score versus rank of
 the diver. As we expect, the higher the divers’ rank, the higher their
 score.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>scatter <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diving) <span class="sc">+</span> </span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Rank, <span class="at">y =</span> JScore, <span class="at">color =</span> Country))</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>scatter</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>scatter <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diving) <span class="sc">+</span> </span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Rank, <span class="at">y =</span> JScore, <span class="at">color =</span> Country))</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>scatter</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/scatterplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="lines" class="section level3">
@@ -593,15 +618,17 @@ score.</p>
 <p>We can also add an <code>abline</code> to our scatterplot–that is, a
 line where we specify the y-intercept (<code>intercept</code>) and the
 slope (<code>slope</code>):</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>scatter <span class="ot">&lt;-</span> scatter <span class="sc">+</span> </span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">8.1</span>, <span class="at">slope =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>scatter</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>scatter <span class="ot">&lt;-</span> scatter <span class="sc">+</span> </span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">8.1</span>, <span class="at">slope =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>scatter</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/scatter%20abline-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><em>Note</em>: <code>geom_abline</code> is different from
 <code>geom_line</code>: <code>geom_line</code> “connects the dots”
 between your data and so doesn’t have to be a straight line, whereas
 <code>geom_abline</code> draws a straight line with the specified slope
-and y-intercept.</p>
+and y-intercept. A common usage can be when comparing predictions to
+actual values, where a line with slope 1 and intercept 0 indicates
+perfect predictions.</p>
 <p>Other <code>geom</code> for lines are:</p>
 <ul>
 <li><code>geom_vline</code>: to add a vertical line to a plot</li>
@@ -630,16 +657,22 @@ specifying <code>data = diving</code> and then providing the
 <code>aes</code>. In this case, we want the judge on the
 <code>x</code>-axis and their scores on the <code>y</code>-axis. We then
 add our <code>stat_summary</code> layer.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>judges <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diving, <span class="fu">aes</span>(<span class="at">x =</span> Judge, <span class="at">y =</span> JScore)) <span class="sc">+</span> </span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_se) <span class="sc">+</span> </span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Judge Score&quot;</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>judges</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>judges <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diving, <span class="fu">aes</span>(<span class="at">x =</span> Judge, <span class="at">y =</span> JScore)) <span class="sc">+</span> </span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_se) <span class="sc">+</span> </span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Judge Score&quot;</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>judges</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/stat_summary-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>We can see that the judges’ names are bunched together… ideally we
-would want their names to be horizontal to make it easier to read.
-Luckily, <code>ggplot</code> has an easy fix for this!</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>judges <span class="ot">&lt;-</span> judges <span class="sc">+</span> <span class="fu">coord_flip</span>()</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>judges</span></code></pre></div>
+<p>We can see that the judges’ names are bunched together… we can make
+them much more readable by rotating the x-axis labels by 45 degrees
+using the <code>theme</code> layer:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>judges_rotate <span class="ot">&lt;-</span> judges <span class="sc">+</span> </span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>judges_rotate</span></code></pre></div>
+<p><img src="lecture5_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We can also completely flip the coordinates to make a horizontal
+plot!</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>judges <span class="ot">&lt;-</span> judges <span class="sc">+</span> <span class="fu">coord_flip</span>()</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>judges</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/coord_flip-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="scales" class="section level3">
@@ -655,20 +688,20 @@ depending on the <code>aes</code> we want to change.</p>
 <p>The third word is <code>distiller</code>, which we use because our
 <code>color</code> variable, <code>Difficulty</code>, is continuous. If
 it were discrete, we would write <code>brewer</code> instead.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>scatter <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diving) <span class="sc">+</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Rank, <span class="at">y =</span> JScore, <span class="at">color =</span> Difficulty)) <span class="sc">+</span></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;OrRd&quot;</span>, <span class="at">direction =</span> <span class="dv">1</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>scatter</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>scatter <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diving) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Rank, <span class="at">y =</span> JScore, <span class="at">color =</span> Difficulty)) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;OrRd&quot;</span>, <span class="at">direction =</span> <span class="dv">1</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>scatter</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/scales%20scatter-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Interestingly, it seems that some of the highest ranked divers
 perform most of the less difficult dives, but perform these easy dives
 very well.</p>
 <p>To further investigate, we plot a 2D histogram of Rank vs
 Difficulty.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>hist <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diving)  <span class="sc">+</span> </span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>(<span class="fu">aes</span>(<span class="at">x =</span> Rank, <span class="at">y =</span> Difficulty)) <span class="sc">+</span> </span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;Spectral&quot;</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>hist</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>hist <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diving)  <span class="sc">+</span> </span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>(<span class="fu">aes</span>(<span class="at">x =</span> Rank, <span class="at">y =</span> Difficulty)) <span class="sc">+</span> </span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;Spectral&quot;</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>hist</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/scales%20hist-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Note that we use <code>fill</code> instead of <code>color</code> in
 <code>scale_fill_distiller</code> to control the fill of the histogram
@@ -701,25 +734,25 @@ historical data going back to 1871. Rather than having to access the
 database directly via complicated computing procedures, there is an R
 package we can install to access the data instead. The following code
 installs the package from the CRAN:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;Lahman&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;Lahman&quot;</span>)</span></code></pre></div>
 <p>Next we load the package, and check out what datasets are
 available:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">data</span>(<span class="at">package =</span> <span class="st">&quot;Lahman&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">data</span>(<span class="at">package =</span> <span class="st">&quot;Lahman&quot;</span>)</span></code></pre></div>
 <p>There is an incredible amount of data here going up through the 2021
 season (it updates following the end of each season). As an example,
 let’s access the Teams dataset, use a <code>group_by</code> operation to
 calculate the number of strikeouts each year since 1871, and plot the
 line over time:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>Teams <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID) <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_so =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> n_so)) <span class="sc">+</span></span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of strikeouts&quot;</span>,</span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Total number of strikeouts in each baseball season since 1871&quot;</span>,</span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data courtesy of Lahman&quot;</span>) <span class="sc">+</span></span>
-<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>Teams <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_so =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> n_so)) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of strikeouts&quot;</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Total number of strikeouts in each baseball season since 1871&quot;</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data courtesy of Lahman&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/Lahman%20strikeouts%20year-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Note that rather than supplying the data as an argument to the
 <code>ggplot()</code> function, we can start with a dataset, make
@@ -742,14 +775,14 @@ tutorial</a> on the main functions and data available within the
 package. To get started, we install the package below. Let’s also
 install the <code>ggimage</code> package, which will allow us to plot
 the team logos for more intriguing visualizations.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;nflfastR&quot;</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggimage&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;nflfastR&quot;</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggimage&quot;</span>)</span></code></pre></div>
 <p>Next, we load these packages.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">library</span>(nflfastR)</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">library</span>(ggimage)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">library</span>(nflfastR)</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="fu">library</span>(ggimage)</span></code></pre></div>
 <p>Now we can use <code>nflfastR</code> to gather play-by-play data for
 the 2021 season.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>pbp_2021 <span class="ot">&lt;-</span> <span class="fu">load_pbp</span>(<span class="dv">2021</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>pbp_2021 <span class="ot">&lt;-</span> <span class="fu">load_pbp</span>(<span class="dv">2021</span>)</span></code></pre></div>
 <p>With this data, we can summarize the performance of all NFL teams
 using the expected points added (EPA) per game on offense and defense.
 EPA tells us how much value the team provided relative to an average
@@ -759,36 +792,36 @@ code chunk below we multiply the defensive values by -1 so it’s similar
 to offensive performance higher values meaning better performance. The
 following code uses this data to create offensive and defensive
 summaries that we will join together to plot:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>offense_epa_21 <span class="ot">&lt;-</span> pbp_2021 <span class="sc">%&gt;%</span></span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(posteam)) <span class="sc">%&gt;%</span></span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>  <span class="fu">group_by</span>(posteam) <span class="sc">%&gt;%</span></span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_games =</span> <span class="fu">length</span>(<span class="fu">unique</span>(game_id)), <span class="at">off_total_epa =</span> <span class="fu">sum</span>(epa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">off_epa_per_game =</span> off_total_epa <span class="sc">/</span> n_games)</span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>defense_epa_21 <span class="ot">&lt;-</span> pbp_2021 <span class="sc">%&gt;%</span></span>
-<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(defteam)) <span class="sc">%&gt;%</span></span>
-<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>  <span class="fu">group_by</span>(defteam) <span class="sc">%&gt;%</span></span>
-<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_games =</span> <span class="fu">length</span>(<span class="fu">unique</span>(game_id)), <span class="at">def_total_epa =</span> <span class="fu">sum</span>(epa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a>  <span class="co"># This time multiply by -1, since negative values are better for defense:</span></span>
-<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">def_epa_per_game =</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">*</span> def_total_epa <span class="sc">/</span> n_games)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>offense_epa_21 <span class="ot">&lt;-</span> pbp_2021 <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(posteam)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>  <span class="fu">group_by</span>(posteam) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_games =</span> <span class="fu">length</span>(<span class="fu">unique</span>(game_id)), <span class="at">off_total_epa =</span> <span class="fu">sum</span>(epa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">off_epa_per_game =</span> off_total_epa <span class="sc">/</span> n_games)</span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>defense_epa_21 <span class="ot">&lt;-</span> pbp_2021 <span class="sc">%&gt;%</span></span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(defteam)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>  <span class="fu">group_by</span>(defteam) <span class="sc">%&gt;%</span></span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_games =</span> <span class="fu">length</span>(<span class="fu">unique</span>(game_id)), <span class="at">def_total_epa =</span> <span class="fu">sum</span>(epa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a>  <span class="co"># This time multiply by -1, since negative values are better for defense:</span></span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">def_epa_per_game =</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">*</span> def_total_epa <span class="sc">/</span> n_games)</span></code></pre></div>
 <p>Next, we join together the offensive and defensive EPA datasets, then
 pass this new dataset into <code>ggplot</code>, where we make a plot of
 offensive EPA per game vs. defensive EPA per game for all teams in the
 2021 season.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="co"># Create the data frame to be used for all of the charts:</span></span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>offense_epa_21 <span class="sc">%&gt;%</span></span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>  <span class="fu">inner_join</span>(defense_epa_21, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;posteam&quot;</span> <span class="ot">=</span> <span class="st">&quot;defteam&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>  <span class="fu">left_join</span>(teams_colors_logos, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;posteam&quot;</span> <span class="ot">=</span> <span class="st">&quot;team_abbr&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> off_epa_per_game, <span class="at">y =</span> def_epa_per_game)) <span class="sc">+</span></span>
-<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>  <span class="fu">geom_image</span>(<span class="fu">aes</span>(<span class="at">image =</span> team_logo_espn), <span class="at">size =</span> <span class="fl">0.05</span>) <span class="sc">+</span></span>
-<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Offensive EPA per game&quot;</span>,</span>
-<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Defensive EPA per game&quot;</span>,</span>
-<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data accessed via nflfastR&quot;</span>,</span>
-<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Offensive and defensive EPA per game for each team in the 2021 NFL season&quot;</span>) <span class="sc">+</span></span>
-<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a>  <span class="co"># Add reference lines at 0</span></span>
-<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="co"># Create the data frame to be used for all of the charts:</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>offense_epa_21 <span class="sc">%&gt;%</span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>  <span class="fu">inner_join</span>(defense_epa_21, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;posteam&quot;</span> <span class="ot">=</span> <span class="st">&quot;defteam&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>  <span class="fu">left_join</span>(teams_colors_logos, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;posteam&quot;</span> <span class="ot">=</span> <span class="st">&quot;team_abbr&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> off_epa_per_game, <span class="at">y =</span> def_epa_per_game)) <span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>  <span class="fu">geom_image</span>(<span class="fu">aes</span>(<span class="at">image =</span> team_logo_espn), <span class="at">size =</span> <span class="fl">0.05</span>) <span class="sc">+</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Offensive EPA per game&quot;</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Defensive EPA per game&quot;</span>,</span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data accessed via nflfastR&quot;</span>,</span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Offensive and defensive EPA per game for each team in the 2021 NFL season&quot;</span>) <span class="sc">+</span></span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a>  <span class="co"># Add reference lines at 0</span></span>
+<span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb26-14"><a href="#cb26-14" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/join%20epa%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The top right displays the teams that excelled at both offense and
 defense, while the lower right shows teams that had the best offenses
@@ -805,7 +838,7 @@ because they are on the CRAN, there are a variety of popular
 only available through GitHub. In order to access these packages, we
 first need to install them using a package called <code>devtools</code>.
 The code below installs the <code>devtools</code> package:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span></code></pre></div>
 <p>The <code>devtools</code> package has a function,
 <code>install_github</code> that we will use for installing the
 remaining packages used below.</p>
@@ -826,37 +859,37 @@ data available from <a
 href="https://baseballsavant.mlb.com/">baseball-savant</a>.</p>
 <p>We first install the package using the <code>devtools</code> package
 explained above, and then load its functions:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;BillPetti/baseballr&quot;</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="fu">library</span>(baseballr)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;BillPetti/baseballr&quot;</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">library</span>(baseballr)</span></code></pre></div>
 <p>Using the <code>baseballr</code> package we can access all pitches
 thrown to a hitter in the current season, giving us Statcast data like
 exit velocity and launch angle. We first use the
 <code>playerid_lookup</code> function to find the Statcast ID for
 Yankees star (and potential AL MVP) Aaron Judge:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">playerid_lookup</span>(<span class="at">last_name =</span> <span class="st">&quot;Judge&quot;</span>, <span class="at">first_name =</span> <span class="st">&quot;Aaron&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">playerid_lookup</span>(<span class="at">last_name =</span> <span class="st">&quot;Judge&quot;</span>, <span class="at">first_name =</span> <span class="st">&quot;Aaron&quot;</span>)</span></code></pre></div>
 <p>This will load up a look-up table with all identifiers joining
 various sources together (it may take a couple minutes to run and don’t
 worry about the warning messages). We find that Aaron Judge’s unique
 <code>mlbam_id</code> is 592450. Using this id, we can grab all pitches
 thrown to Judge in the current MLB season so far:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>judge_statcast_data <span class="ot">&lt;-</span> <span class="fu">scrape_statcast_savant_batter</span>(<span class="at">start_date =</span> <span class="st">&quot;2022-01-01&quot;</span>, </span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>                                                    <span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, </span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>                                                    <span class="at">batterid =</span> <span class="dv">592450</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>judge_statcast_data <span class="ot">&lt;-</span> <span class="fu">scrape_statcast_savant_batter</span>(<span class="at">start_date =</span> <span class="st">&quot;2022-01-01&quot;</span>, </span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>                                                    <span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, </span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>                                                    <span class="at">batterid =</span> <span class="dv">592450</span>)</span></code></pre></div>
 <p>This dataset contains many columns; for now we will look at the
 relationship between the distance traveled of Aaron Judge’s batted balls
 (denoted by <code>type == "X"</code>) and the launch angle
 (<code>launch_angle</code>) as well as the exit velocity
 (<code>launch_speed</code>):</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>judge_statcast_data <span class="sc">%&gt;%</span></span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">&quot;X&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> launch_speed, <span class="at">y =</span> launch_angle, </span>
-<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>             <span class="at">color =</span> hit_distance_sc)) <span class="sc">+</span></span>
-<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">&quot;A&quot;</span>) <span class="sc">+</span></span>
-<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Exit velocity (MPH)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Launch angle (degrees)&quot;</span>, </span>
-<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Distance (feet)&quot;</span>,</span>
-<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Aaron Judge&#39;s launch angle, exit velocity, and distance traveled&quot;</span>,</span>
-<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data accessed via baseballr&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>judge_statcast_data <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">&quot;X&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> launch_speed, <span class="at">y =</span> launch_angle, </span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>             <span class="at">color =</span> hit_distance_sc)) <span class="sc">+</span></span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">&quot;A&quot;</span>) <span class="sc">+</span></span>
+<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Exit velocity (MPH)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Launch angle (degrees)&quot;</span>, </span>
+<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Distance (feet)&quot;</span>,</span>
+<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Aaron Judge&#39;s launch angle, exit velocity, and distance traveled&quot;</span>,</span>
+<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data accessed via baseballr&quot;</span>)</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/Judge%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><em>Note that this plot has been updated through July 15th of the
 2022 season. Pitches thrown to Judge after this date will not appear on
@@ -877,25 +910,25 @@ package</a> created by Alex Bresler is analogous to the
 <code>baseballr</code> package as it provides many different functions
 for accessing NBA data from a variety of websites. Again to be able to
 use the package you need to install it from GitHub:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;abresler/nbastatR&quot;</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="fu">library</span>(nbastatR)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;abresler/nbastatR&quot;</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="fu">library</span>(nbastatR)</span></code></pre></div>
 <p><strong>There will likely be several messages that appear when
 installing this package, please let us know if you encounter any strange
 issues.</strong> The code below demonstrates how to get all shot
 attempts by the 2022 NBA champions, the Golden State Warriors, in the
 past season using this package:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>warriors_shots <span class="ot">&lt;-</span> <span class="fu">teams_shots</span>(<span class="at">teams =</span> <span class="st">&quot;Golden State Warriors&quot;</span>, </span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>                             <span class="at">seasons =</span> <span class="fu">c</span>(<span class="dv">2022</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>warriors_shots <span class="ot">&lt;-</span> <span class="fu">teams_shots</span>(<span class="at">teams =</span> <span class="st">&quot;Golden State Warriors&quot;</span>, </span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>                             <span class="at">seasons =</span> <span class="fu">c</span>(<span class="dv">2022</span>))</span></code></pre></div>
 <p>Using this shot data, we can view the all shot attempts by the
 Warriors throughout the season colored by whether or not they made the
 shot.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>warriors_shots <span class="sc">%&gt;%</span></span>
-<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> locationX, <span class="at">y =</span> locationY, <span class="at">color =</span> isShotMade)) <span class="sc">+</span></span>
-<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#FFC72C&quot;</span>, <span class="st">&quot;#1D428A&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Shot attempts by Golden State Warriors in 2021-22 NBA season&quot;</span>,</span>
-<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data accessed via nbastatR&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>warriors_shots <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> locationX, <span class="at">y =</span> locationY, <span class="at">color =</span> isShotMade)) <span class="sc">+</span></span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#FFC72C&quot;</span>, <span class="st">&quot;#1D428A&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Shot attempts by Golden State Warriors in 2021-22 NBA season&quot;</span>,</span>
+<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data accessed via nbastatR&quot;</span>)</span></code></pre></div>
 <p><img src="lecture5_files/figure-html/Warriors%20shots%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>It’s apparent from this chart the effect of the three-point line of
 their shot selection.</p>
