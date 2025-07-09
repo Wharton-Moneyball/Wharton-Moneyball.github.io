@@ -115,12 +115,12 @@ Now that we have two different ways of predicting 2015 batting averages, let us 
 
 ```{r plot batting yhat_1}
 ggplot(batting_2014_2015) +
-  geom_point(aes(x = BA_2014, y = BA_2015), col = 'black', shape = 16, size = 0.9) +
-  geom_point(aes(x = BA_2014, y = yhat_0), col = 'red', shape = 3, size = 0.75) + 
-  geom_point(aes(x = BA_2014, y = yhat_1), col = 'green', shape = 15, size = 0.75)
+  geom_point(aes(x = BA_2014, y = BA_2015), col = 'black', shape = 16, size = 2) +
+  geom_point(aes(x = BA_2014, y = yhat_0), col = 'lightcoral', size = 2) + 
+  geom_point(aes(x = BA_2014, y = yhat_1), col = 'lightblue', size = 2)
 ```
 
-Visually it appears that the green squares (corresponding to yhat_1) are a bit closer to the actual values than the red crosses (corresponding to yhat_0).  This would suggest that dividing the players into the two bins according to their 2014 batting average and using the average BA_2015 value within each bin as our forecast was better than using the overall average BA_2015 value for all players.
+Visually it appears that the blue points (corresponding to yhat_1) are a bit closer to the actual values than the red points (corresponding to yhat_0).  This would suggest that dividing the players into the two bins according to their 2014 batting average and using the average BA_2015 value within each bin as our forecast was better than using the overall average BA_2015 value for all players.
 
 Of course, we can continue with this line of reasoning and divide the players into even more bins. When we do that, instead of hand-coding the vector of cut points, we can use the function `seq()` which generates a vector of equally spaced numbers. To demonstrate, suppose we wanted to divide the interval [0,1] into 10 equally sized intervals: (0,0.1], (0.1, 0.2], ..., (0.9, 1].  To get the vector of cutpoints, we need to tell `seq()` either how many points we wanted or the spacing between the points:
 
@@ -142,19 +142,19 @@ batting_2014_2015 <-
 batting_2014_2015
 ```
 
-We can also visualize our new predictions, this time with blue triangles.
+We can also visualize our new predictions, this time with green points.
 
 ```{r plot batting yhat_2}
 ggplot(batting_2014_2015) +
-  geom_point(aes(x = BA_2014, y = BA_2015), shape = 16, size = 0.9) + 
-  geom_point(aes(x = BA_2014, y = yhat_0), col = 'red', shape = 3, size = 0.75) + 
-  geom_point(aes(x = BA_2014, y = yhat_1), col = 'green', shape = 15, size = 0.75) +
-  geom_point(aes(x = BA_2014, y = yhat_2), col = 'blue', shape = 17, size = 0.75)
+  geom_point(aes(x = BA_2014, y = BA_2015), shape = 16, size = 2) + 
+  geom_point(aes(x = BA_2014, y = yhat_0), col = 'lightcoral', size = 2, alpha = 0.8) + 
+  geom_point(aes(x = BA_2014, y = yhat_1), col = 'lightblue',  size = 2, alpha = 0.8) +
+  geom_point(aes(x = BA_2014, y = yhat_2), col = 'darkseagreen3', size = 2, alpha = 0.8)
 ```
 
 It appears that we are able to perfectly predict the 2015 batting average of the player with the lowest batting average in 2014. Why do you think this was the case?
 
-Let's add two more predictions in which we divide the 2014 batting averages into bins of length 0.005 and 0.001. The code below generates these predictions, saves them to columns called "yhat_3" and "yhat_4" in our tbl, and then adds the predictions to the plot in purple and orange.
+Let's add two more predictions in which we divide the 2014 batting averages into bins of length 0.005 and 0.001. The code below generates these predictions, saves them to columns called "yhat_3" and "yhat_4" in our tbl, and then adds the predictions to the plot in pink and orange.
 
 ```{r batting yhat_3 yhat_4 plot}
 batting_2014_2015 <- 
@@ -174,18 +174,18 @@ batting_2014_2015 <-
   select(-bins)
 
 ggplot(batting_2014_2015) +
-  geom_point(aes(x = BA_2014, y = BA_2015), shape = 16, size = 0.9) + 
-  geom_point(aes(x = BA_2014, y = yhat_0), col = 'red', shape = 3, size = 0.75) + 
-  geom_point(aes(x = BA_2014, y = yhat_1), col = 'green', shape = 15, size = 0.75) +
-  geom_point(aes(x = BA_2014, y = yhat_2), col = 'blue', shape = 17, size = 0.75) + 
-  geom_point(aes(x = BA_2014, y = yhat_3), col = 'purple', shape = 8, size = 0.75) + 
-  geom_point(aes(x = BA_2014, y = yhat_4), col = 'orange', shape = 10, size = 0.75)
+  geom_point(aes(x = BA_2014, y = BA_2015), size = 2) + 
+  geom_point(aes(x = BA_2014, y = yhat_0), col = 'lightcoral', size = 2) + 
+  geom_point(aes(x = BA_2014, y = yhat_1), col = 'lightblue', size = 2) +
+  geom_point(aes(x = BA_2014, y = yhat_2), col = 'darkseagreen3', size = 2) +
+  geom_point(aes(x = BA_2014, y = yhat_3), col = 'hotpink', size = 2) + 
+  geom_point(aes(x = BA_2014, y = yhat_4), col = 'darkorange', size = 1.5, alpha = .7) 
 ```
-
+Here, we can see that some of the orange points are directly on top of the actual values.
 
 ## Assessing Predictive Performance
 
-We now have a couple of different ways of predicting BA_2015. Qualitatively, the predictions in purple (formed by binning BA_2014 into very small intervals) appear to fit the observed data better than the blue, green, and red predictions. To assess the predictions quantitatively, we often rely on the root mean square error or RMSE. This is the square root of the mean square error (MSE), which is computed by averaging the squared difference between the actual values and the predicted values.
+We now have a couple of different ways of predicting BA_2015. Qualitatively, the predictions in yellow (formed by binning BA_2014 into very small intervals) appear to fit the observed data better than the blue, green, and red predictions. To assess the predictions quantitatively, we often rely on the root mean square error or RMSE. This is the square root of the mean square error (MSE), which is computed by averaging the squared difference between the actual values and the predicted values.
 
 ```{r summarize rmse}
 summarize(batting_2014_2015, 
