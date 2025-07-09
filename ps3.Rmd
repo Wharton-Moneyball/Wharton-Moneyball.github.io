@@ -412,7 +412,7 @@ batting_2014_2015 <-
   arrange(playerID)
 ```
 
-Now, run the code above and save the tbl `batting_2014_2015.RData` to the file "data/batting_2014_2015.RData" using the `write_csv()` function. We will return to this dataset in [Lecture 4](lecture4.html).
+Now, run the code above and save the tbl `batting_2014_2015` to the file "data/batting_2014_2015.csv" using the `write_csv()` function. We will return to this dataset in [Lecture 4](lecture4.html).
 
 ```{r challenge Q solution}
 # solution
@@ -423,5 +423,5 @@ batting_2014_2015 <-
   filter(n() == 2) %>% 
   select(playerID, yearID, BA) %>%
   arrange(playerID)
-#save(batting_2014_2015, file = 'data/batting_2014_2015.RData')
+write_csv(batting_2014_2015, file = 'data/batting_2014_2015.csv')
 ```
