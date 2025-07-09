@@ -67,7 +67,7 @@ my.data <- data.frame("PLAYER" = c("Stephen Curry", "Damian Lillard", "Jimmy But
                       "FTM" = c(363, 414, 395, 720, 447, 359, 250, 296, 476, 203),
                       "FTA" = c(400, 464, 475, 837, 498, 491, 280, 409, 663, 245))
 
-my.data %>% knitr::kable() %>% kableExtra::kable_styling(full_width = F)
+knitr::kable(my.data)
 ```
 
 Within the tidyverse, the standard way to store and manipulate tabular data like this is to use what is known as a `tbl` (pronounced _tibble_), synonymous with a spreadsheet or `data.frame`. At a high-level, a `tbl` is a two-dimensional array whose columns can be of different data types. That is, the first column might be characters (e.g. the names of athletes) and the second column can be numeric (e.g. the number of points scored).
