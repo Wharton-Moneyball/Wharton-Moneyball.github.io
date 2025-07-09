@@ -82,7 +82,7 @@ batting <-
 ```
 
 
-3. Standardize each of BA, OBP, OPS, and wOBA using data from all of the years. Name the columns containing these new standardized values `zBA_all`, `zOPB_all`, etc. *Remember, you must re-define the `standardize()` function we wrote in [Lecture 3](lecture3.html)* Who were the best and worst batters according to these four metrics?
+3. Standardize each of BA, OBP, OPS, and wOBA using data from all of the years. Name the columns containing these new standardized values `zBA_all`, `zOPB_all`, etc. *Remember, you can do this with the `scale()` function from [Lecture 3](lecture3.html)* Who were the best and worst batters according to these four metrics?
 
 ```{r pt1 q3 solution}
 # solution
