@@ -11,7 +11,7 @@
 
 
 
-<title>Problem Set 0</title>
+<title>Problem Set 3</title>
 
 <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -440,145 +440,198 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Problem Set 0</h1>
+<h1 class="title toc-ignore">Problem Set 3</h1>
 
 </div>
 
 
-<p>Please try to work through this first problem set. You will have time
-on Day 1 to discuss any questions you have with the TAs.</p>
-<div id="basic-usage" class="section level2">
-<h2>Basic Usage</h2>
-<p>When you open RStudio for the first time, it should open up a new
-window that looks something like this: <img
-src="figures/ps0_fig1.png" /></p>
-<p>The RStudio window is divided into three panes. For now, we will
-focus only on the big pane on the left, the <strong>Console</strong>
-pane. At the top of the <strong>Console</strong> pane, there is a bit of
-introductory text that shows the version of R that we are using and the
-license. Below that, you should see a <code>&gt;</code>, which is the
-<em>R prompt</em>. As we mentioned earlier, at its core, R uses a
-command-line interface which means that you interact with the software
-by typing commands and hitting <kbd>Enter</kbd> or
-<kbd>Return</kbd>.</p>
-<p>The simplest thing we can do is to use R as a calculator. For
-instance, we can type <code>2 + 3 * (6 - 4)^5</code> after the
-<code>&gt;</code> and then hit <kbd>Enter</kbd>. Below, is a code-chunk
-showing the output of typing <code>2 + 3 * (6 - 4)^5</code> after the
-<code>&gt;</code> and then hitting <kdb>Enter</kbd>. Throughout the
-course, you should try to replicate the code and output in these code
-chunks.</p>
-<p>We see that R returns the value of the expression <span
-class="math inline">\(2 + 3 \times (6 - 4)^5\)</span> immediately
-underneath and the answer is preceded by a [1]. For now, don’t worry
-about this ``[1]’’; we’ll return to it later.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> (<span class="dv">6</span> <span class="sc">-</span> <span class="dv">4</span>)<span class="sc">^</span><span class="dv">5</span></span></code></pre></div>
-<pre><code>## [1] 98</code></pre>
-<p>Like any scientific calculator, R comes with a number of built-in
-functions</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">4</span>)</span></code></pre></div>
-<pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">10</span>)</span></code></pre></div>
-<pre><code>## [1] 2.302585</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">cos</span>(pi)</span></code></pre></div>
-<pre><code>## [1] -1</code></pre>
-</div>
-<div id="assignment" class="section level2">
-<h2>Assignment</h2>
-<p>When you enter expressions like those above, R evaluates them, prints
-them, and then immediately discards them. Oftentimes, however, you’ll
-want to store a value as a named variable and use it in subsequent
-calculations. For instance, let’s say that we want to store the value of
-<span class="math inline">\(2 + 3\times (6 - 4)^5\)</span> as <span
-class="math inline">\(x\)</span> and then compute the following: <span
-class="math inline">\(1/x, x + 1,\)</span> and <span
-class="math inline">\(\sqrt{x}.\)</span> To <em>assign</em> the value of
-the expression <code>2 + 3*(6 - 4)^5</code> to the variable
-<code>x</code> we use the <em>assignment operator</em>
-<code>&lt;-</code>. The assignment operator evaluates the expression
-immediately to the right of it and stores that value in an object whose
-name is whatever text came to the left of the operator.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>(<span class="dv">6-4</span>)<span class="sc">^</span><span class="dv">5</span></span></code></pre></div>
-<p>Now when we execute this expression, R does not auotmatically print
-anything like it did in an earlier example. However, if you look closely
-at the <strong>Environment</strong> pane (top right-hand side of the
-RStudio window), you’ll see that it now lists x and its value 98. <img
-src="figures/ps0_fig2.png" /></p>
-<p>This pane will show every variable that we have defined. As we start
-creating more and more variables, this list will be really helpful to
-keep track of what we’ve defined. Now that we have created the variable
-x, we can use the symbol ``x’’ in more expressions. For example, we can
-compute <span class="math inline">\(1/x, x + 1,\)</span> and <span
-class="math inline">\(\sqrt{x}\)</span> as follows:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>x</span></code></pre></div>
-<pre><code>## [1] 98</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>x</span></code></pre></div>
-<pre><code>## [1] 0.01020408</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>x <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div>
-<pre><code>## [1] 99</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">sqrt</span>(x)</span></code></pre></div>
-<pre><code>## [1] 9.899495</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">3.14159</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>## [1] 3.14</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">3.14159</span>, <span class="at">digits =</span> <span class="dv">4</span>)</span></code></pre></div>
-<pre><code>## [1] 3.1416</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(x), <span class="at">digits =</span> <span class="dv">4</span>)</span></code></pre></div>
-<pre><code>## [1] 9.8995</code></pre>
-<p>In the last three examples, we used the function
-<code>round()</code>, which takes 2 arguments (entered inside the
-parantheses). The first argument is the number that we want to round and
-the second argument (following the comma) is the number of digits to
-which we want to round the first argument. This is our first example of
-a multi-argument function and we’ll be seeing a lot more of them later
-on. In the last example above, we didn’t give <code>round</code> an
-explicit number to round. Instead, R first evaluated
-<code>sqrt(x)</code> and then rounded it. R follows the conventional
-order of operations, in that it evaluates the inner-most expression
-first and then works its way out.</p>
-<p>If we try to evaluate an expression using the name of a variable that
-we haven’t defined yet, R will throw an error. For instance, in the code
-below, if we try to add 5 to a previously undeclared variable, we get an
-error.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>y <span class="sc">+</span> <span class="dv">5</span></span></code></pre></div>
-<pre><code>##  [1] 5.596900 5.059829 5.047764 5.060890 5.521040 5.078748 5.962378 5.286117 5.110335 5.000812
-## [11] 5.149910 5.008091 5.188819 5.717184 5.172531 5.455073 5.182802 5.217490 5.392570 5.286812
-## [21] 5.134524 5.155720 5.464999 5.846415 5.316295 5.385886 5.002641 5.687766 5.439158 5.825299
-## [31] 5.007712 5.220549 5.152612 5.000214 5.406799 5.269715 5.357011 5.232691 5.968848 5.377862
-## [41] 5.011378 5.085739 5.141640 5.059360 5.115913 5.000016 5.125450 5.000901 5.262290 5.281876</code></pre>
-</div>
-<div id="exercises" class="section level2">
-<h2>Exercises</h2>
+<div id="mlb-batting-statistics" class="section level2">
+<h2>MLB Batting Statistics</h2>
+<p>In this problem set, you will practice using the pipe
+<code>%&gt;%</code> and grouped calculations with batting statistics
+taken from the Lahman dataset. We will compute the same statistics as we
+did in <a href="ps2.html">Problem Set 2</a> and also standardize these
+statistics within year, year and league, and also historical era.</p>
+<p>To load the batting data into R, we can do the following:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>batting <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(Batting)</span></code></pre></div>
+<p>Unfortunately, some statistics like hit-by-pitch (HBP) were not
+recorded in the earlier decades of baseball. In the tbl, these missing
+values are designated <code>NA</code>. To see some of these, we can run
+the following code:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>batting <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, teamID, AB, BB, HBP, SH, SF, IBB, GIDP)</span></code></pre></div>
+<pre><code>## # A tibble: 113,799 × 10
+##    playerID  yearID teamID    AB    BB   HBP    SH    SF   IBB  GIDP
+##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1 aardsda01   2004 SFN        0     0     0     0     0     0     0
+##  2 aardsda01   2006 CHN        2     0     0     1     0     0     0
+##  3 aardsda01   2007 CHA        0     0     0     0     0     0     0
+##  4 aardsda01   2008 BOS        1     0     0     0     0     0     0
+##  5 aardsda01   2009 SEA        0     0     0     0     0     0     0
+##  6 aardsda01   2010 SEA        0     0     0     0     0     0     0
+##  7 aardsda01   2012 NYA        0     0     0     0     0     0     0
+##  8 aardsda01   2013 NYN        0     0     0     0     0     0     0
+##  9 aardsda01   2015 ATL        1     0     0     0     0     0     0
+## 10 aaronha01   1954 ML1      468    28     3     6     4    NA    13
+## # ℹ 113,789 more rows</code></pre>
+<p>A common convention for dealing with the missing values when
+computing <span class="math inline">\(\text{PA}\)</span> is to replace
+the <code>NA</code> with a <code>0</code>. To do this, we can use the
+function <code>replace_na()</code> within a pipe as follows.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>batting <span class="ot">&lt;-</span> </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  batting <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">IBB =</span> <span class="dv">0</span>, <span class="at">HBP =</span> <span class="dv">0</span>, <span class="at">SH =</span> <span class="dv">0</span>, <span class="at">SF =</span> <span class="dv">0</span>, <span class="at">GIDP =</span> <span class="dv">0</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>batting <span class="sc">%&gt;%</span> <span class="fu">select</span>(playerID, yearID, teamID, AB, BB, HBP, SH, SF, IBB)</span></code></pre></div>
+<pre><code>## # A tibble: 113,799 × 9
+##    playerID  yearID teamID    AB    BB   HBP    SH    SF   IBB
+##    &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1 aardsda01   2004 SFN        0     0     0     0     0     0
+##  2 aardsda01   2006 CHN        2     0     0     1     0     0
+##  3 aardsda01   2007 CHA        0     0     0     0     0     0
+##  4 aardsda01   2008 BOS        1     0     0     0     0     0
+##  5 aardsda01   2009 SEA        0     0     0     0     0     0
+##  6 aardsda01   2010 SEA        0     0     0     0     0     0
+##  7 aardsda01   2012 NYA        0     0     0     0     0     0
+##  8 aardsda01   2013 NYN        0     0     0     0     0     0
+##  9 aardsda01   2015 ATL        1     0     0     0     0     0
+## 10 aaronha01   1954 ML1      468    28     3     6     4     0
+## # ℹ 113,789 more rows</code></pre>
+<p>The syntax for <code>replace_na()</code> is a bit involved but the
+basic idea is you have to specify the value you want to replace each
+<code>NA</code>. When using <code>replace_na()</code> it is very
+important to remember to include the <code>list(...)</code> bit.</p>
 <ol style="list-style-type: decimal">
-<li>Save the value of <code>8/5 + 3^3</code> as a new variable
-<code>y</code>.</li>
-<li>Save the values of <code>y/x</code> as a new variable
-<code>z</code>.</li>
-<li>Compute the square root of <code>x</code>, <code>y</code> and
-<code>z</code>.</li>
-<li>Round these values to 3 decimal points.</li>
+<li><p>Load the Lahman data and run the above code to create the tbl
+<code>Batting</code>, which has replaced all of the <code>NA</code>’ in
+the columns <code>IBB, HBP, SH, SF</code> and GIDP`.</p></li>
+<li><p>Using the pipe <code>%&gt;%</code>, <code>mutate()</code>,
+<code>filter()</code>, and <code>select()</code>, create a tbl
+<code>batting</code> by:</p>
+<ul>
+<li>Adding columns (with <code>mutate()</code>) for plate appearances
+(PA), unintentional walks (uBB), singles (X1B), batting average (BA),
+on-base percentage (OBP), on-base plus slugging (OPS), and weighted
+On-Base Average (wOBA). Note that the formula for plate appearances is
+<span class="math inline">\(\text{PA} = \text{AB} + \text{BB} +
+\text{HBP} + \text{SH} + \text{SF}.\)</span> Formulae for the remaining
+statistics are given in <a href="ps2.html">Problem Set 2</a>.</li>
+<li>Pulling out only those rows of players with at least 502 plate
+appearances <strong>and</strong> who played in either the AL or NL with
+<code>filter()</code></li>
+<li>Select the following columns: playerID, yearID, lgID, teamID, PA,
+BA, OBP, OPS, wOBA.
+<p/></li>
+</ul></li>
+<li><p>Standardize each of BA, OBP, OPS, and wOBA using data from all of
+the years. Name the columns containing these new standardized values
+<code>zBA_all</code>, <code>zOPB_all</code>, etc. <em>Remember, you must
+re-define the <code>standardize()</code> function we wrote in <a
+href="lecture3.html">Lecture 3</a></em> Who were the best and worst
+batters according to these four metrics?</p></li>
+<li><p>Group <code>batting</code> by year and compute the standardized
+BA, OBP, OPS, and wOBA within each year. Name the columns containing
+these new standardized values <code>zBA_year</code>,
+<code>zOBP_year</code>, etc. Now who are the best and worst batters
+according to the four measures?</p></li>
+<li><p>Remove the grouping by year and instead group by year and league.
+Once again, standardize OBP, OPS, and wOBA within each league-year
+combination, and name the columns containing these new standardized
+values <code>zBA_year_lg</code>, <code>zOBP_year_lg</code>, etc. Are the
+best and worst batters still the same?</p></li>
+<li><p>Remove the grouping you created in Problem 4. Bill James <a
+href="https://www.billjamesonline.com/dividing_baseball_history_into_eras/">divided
+baseball history into several eras</a> as follows:</p>
+<ul>
+<li>Pioneer Era: 1871 – 1892</li>
+<li>Spitball Era: 1893 – 1919</li>
+<li>Landis Era: 1920 – 1946</li>
+<li>Baby Boomer Era: 1947 – 1968</li>
+<li>Artifical Turf Era: 1969 – 1992</li>
+<li>Camden Yards Era: 1993 – present
+<p/></li>
+</ul>
+<p>Use <code>mutate()</code> and <code>case_when()</code> (just like we
+did in <a href="lecture2.html">Lecture 2</a>) to add a column called
+Hist_era to <code>batting</code> that records the historical
+era.</p></li>
+<li><p>Group <code>batting</code> by Hist_era and standardize BA, OBP,
+OPS, and wOBA within historical era. Who are the best and worst batters
+now? Name the columns containing these new standardized values
+<code>zBA_hist</code>, <code>zOBP_hist</code>, etc.</p></li>
+<li><p>Optional: choose one historical statistic calculated in question
+7 and plot the top 10 players for this statistic.</p></li>
 </ol>
-<p>If you’ve finished these exercises and would like to keep playing
-with R, you can check out the <a href="lecture1.html">first day’s R
-Lecture</a>.</p>
 </div>
-<div id="discussion-questions" class="section level2">
-<h2>Discussion Questions</h2>
-<p>Prior to starting any type of statistical analysis, it is important
-for statisticians, analysts, etc., to learn how to propose research
-questions and develop unbiased strategies for answering them. Before
-getting into the real content of these lectures, we’d like you to think
-about the following questions:</p>
+<div id="mlb-payroll-and-winnings" class="section level2">
+<h2>MLB Payroll and Winnings</h2>
+<p>Recall from <a href="ps2.html">Problem Set 2</a>, we plotted the
+relative payroll of MLB teams against their winning percentage. In that
+problem set, we read in a file that had included the relative payroll
+for each team as a separate column. To get some additional practice with
+dplyr, we will read in a different dataset and re-compute these relative
+payrolls.</p>
 <ol style="list-style-type: decimal">
-<li><p>In the 2016-17 NBA regular season, Stephen Curry’s field goal
-percentage was 46.8%. DeAndre Jordan’s field goal percentage was 71.7%.
-One could argue, then, that Jordan is a much better shooter than Curry;
-after all, he makes a much higher percentage of shots. What is wrong
-with this argument (if anything)?</p></li>
-<li><p>The racehorse Secretariat won the Belmont Stakes by a total of 31
-lengths. Ted Williams hit .406 in the 1941 baseball season. Which do you
-think was a more unusual outcome? How can we begin to compare the two
-events?</p></li>
+<li>Remember the function we wrote in <a href="lecture3.html">Lecture
+3</a> to standardize various statistics? It is reproduced below:</li>
 </ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>standardize <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="fu">return</span>( (x <span class="sc">-</span> mu)<span class="sc">/</span>sigma)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>}</span></code></pre></div>
+<ul>
+<li>We need to write another function in order to compute “relative
+payroll”. This function will take in a vector <code>x</code>, compute
+its median, and then divides every element of <code>x</code> by the
+median.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Read in the <a href="data/mlb_payrolls.csv">MLB Payroll Data</a>
+and load it into a tibble called <code>mlb_payrolls</code>.</p></li>
+<li><p>Using the pipe <code>%&gt;%</code>, <code>group_by()</code>, and
+<code>mutate()</code>, add a column to <code>mlb_payrolls</code> that
+contains the relative payroll for each team.</p></li>
+<li><p>Make a scatterplot of winning percentage against relative
+payrolls. Comment on the relationship. Your scatterplot should be
+identical to one you made in <a href="ps2.html">Problem Set
+2</a>.</p></li>
+<li><p>Using the <code>reframe()</code> function, compute the average
+team payroll and relative payroll for each year. Save these results in a
+new tbl called <code>payroll_avg</code>.</p></li>
+<li><p>Make a scatterplot that shows how team payrolls have evolved over
+the year. Similar to what we did in <a href="lecture3.html">Lecture
+3</a>, add a line to this scatterplot that shows the average team
+payroll. Do the same thing for relative payroll. What do you notice
+about the average team payroll and relative payroll?</p></li>
+<li><p>As you will see in coming lectures, correlation is a measure of
+the strength of the <em>linear</em> relationship between two variables.
+The closer to +1 or -1 the correlation between two variables is, the
+more predictable they are of each other. We can compute it using the
+<code>cor()</code> function. Using <code>summary()</code> and
+<code>cor()</code>, compute the correlation between relative payroll and
+winning percentage within each year. What do you notice about how the
+relationship between winning percentage and relative payroll changes
+year to year?</p></li>
+</ol>
+</div>
+<div id="a-challenge-question" class="section level2">
+<h2>A Challenge Question</h2>
+<p>Without running the code, work with your teammates to see if you can
+figure out what the code below is doing.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>batting_2014_2015 <span class="ot">&lt;-</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  batting <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2014</span>, <span class="dv">2015</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="fu">group_by</span>(playerID) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, BA) <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  <span class="fu">arrange</span>(playerID)</span></code></pre></div>
+<p>Now, run the code above and save the tbl
+<code>batting_2014_2015.RData</code> to the file
+“data/batting_2014_2015.RData” using the <code>save()</code> function.
+We will return to this dataset in <a href="lecture4.html">Lecture
+4</a>.</p>
 </div>
 
 

@@ -289,7 +289,7 @@ batting %>%
   head(5)
 ```
 
-8. Choose one historical statistic calculated in question 7 and plot the top 10 players for this statistic. 
+8. Optional: choose one historical statistic calculated in question 7 and plot the top 10 players for this statistic. 
 
 ```{r pt1 q8 solution}
 # solution

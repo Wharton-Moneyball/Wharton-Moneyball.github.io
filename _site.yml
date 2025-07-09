@@ -40,8 +40,8 @@ navbar:
           href: ps1.html
         - text: "Problem Set 2"
           href: ps2.html
-        # - text: "Problem Set 3"
-        #   href: ps3.html
+        - text: "Problem Set 3"
+          href: ps3.html
         # - text: "Problem Set 4"
         #   href: ps4.html
         # - text: "Problem Set 5"
