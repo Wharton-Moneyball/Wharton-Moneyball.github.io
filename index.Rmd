@@ -1,5 +1,5 @@
 ---
-title: "Wharton Moneyball Camps 2024"
+title: "Wharton Moneyball Camps 2025"
 output: 
   html_document:
     code_folding: none
