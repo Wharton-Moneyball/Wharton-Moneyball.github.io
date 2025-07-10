@@ -88,9 +88,9 @@ ggplot(data = called_pitches) +
 
 ## NBA Team Shooting Statistics
 
-The file "nba_boxscore.csv" lists detailed box score information about every NBA player in every season ranging from 1996--97 season and 2015-16 season. We will look at team shooting statistics over this 20-season span. 
+The file [nba_boxscore.csv](data/nba_boxscore.csv) lists detailed box score information about every NBA player in every season ranging from 1996--97 season and 2015-16 season. We will look at team shooting statistics over this 20-season span. 
 
-1. Load the data into a tbl called `raw_boxscore`. 
+1. Download the nba_boxscore data above, save it in your data folder, and add load it into a tbl called `raw_boxscore`. 
 
 ```{r pt2 q1 solution}
 # solution
