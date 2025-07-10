@@ -37,10 +37,10 @@ called_pitches <- pitches %>%
     Description == "Ball" ~ 0))
 ```
 
-3. To get started, we will create a plot and then add to it sequentially:
+3. To get started, we will first initialize our plot. Since we are not telling it to plot anything, it will just be blank.
 
 ```{r pt1 q3, include=TRUE}
-g <- ggplot(data = called_pitches)
+ggplot(data = called_pitches)
 ```
 
 4. To estimate the probability of a called strike given the pitch location, we will use a strategy similar to what we used to make heatmaps in [Lecture 2](lecture2.html). Essentially, we divide the plane into several small rectangular bins and compute the proportion of called strikes within each bin. To compute this, we use the `stat_summary_2d()` function, which takes three aesthetics:
@@ -48,37 +48,43 @@ g <- ggplot(data = called_pitches)
     * y: variable on vertical axis
     * z: variable that is passed to the summary function.
     
-    By default, `stat_summary_2d()` divides the plane into rectangles based on the aesthetics x and y, and then computes the average value of z for observations in the bin. We can add this layer to our plot `g` as follows and obtain the following plot.
+    By default, `stat_summary_2d()` divides the plane into rectangles based on the aesthetics x and y, and then computes the average value of z for observations in the bin. We can add this layer to our plot as follows and obtain the following plot. 
     
 ```{r pt1 q4, include=TRUE}
-g <- g + stat_summary_2d(mapping = aes(x = X, y = Z, z = Call))
-g
+ggplot(data = called_pitches) +
+  stat_summary_2d(mapping = aes(x = X, y = Z, z = Call))
 ```
 
 5. You'll notice in the plot above that `stat_summary_2d()` has added a legend to our plot. However, the title of the legend is a somewhat non-informative. Moreover, the color scheme does not distinguish between different values particularly well. We can change both the title of the legend and the color scheme inside a function called `scale_fill_distiller`. Don't worry too much about what this function means for now; we will cover it in more depth in [Lecture 5](lecture5.html). 
 
 ```{r pt1 q5, include=TRUE}
-g <- g + scale_fill_distiller("P(Called Strike)", palette = "RdBu")
-g
+ggplot(data = called_pitches) +
+  stat_summary_2d(mapping = aes(x = X, y = Z, z = Call)) +
+  scale_fill_distiller("P(Called Strike)", palette = "RdBu")
 ```
 
 6. According to the official rule book, the strike zone is a rectangular region that spans the width of home plate and extends vertically from the batter's knee to the middle of his chest. From the plot above, we see that the region in which the strike zone probability is higher than 90% is definitely not rectangular. To better visualize the discrepancy, we can add another layer to plot which delimits an approximation of the rule book strike zone. The code below does just that. The `xmin` and `xmax` arguments give the horizontal limits of the strike zone (in this case, the coordinates of the edges of the strike zone) and the `ymin` and `ymax` arguments are the average vertical limits measured by PITCHf/x. **Note: these values were pre-computed using a much larger dataset**
 
 ```{r pt1 q6, include=TRUE}
-g <- g + annotate("rect", xmin = -8.5, xmax = 8.5, ymin = 19, ymax = 41.5, alpha = 0, color = "black")
-g
+ggplot(data = called_pitches) +
+  stat_summary_2d(mapping = aes(x = X, y = Z, z = Call)) +
+  scale_fill_distiller("P(Called Strike)", palette = "RdBu") +
+  annotate("rect", xmin = -8.5, xmax = 8.5, ymin = 19, ymax = 41.5, alpha = 0, color = "black")
+
 ```
 
-* We can additionally make the plot a bit more attractive visually as follows:
+* We can additionally make the plot a bit more attractive visually by setting the theme to be minimal for a plain white background, removing the axis titles, and adding an overall title. 
 
 ```{r pt1 q7, include=TRUE}
-g <- g + theme_classic() + 
+ggplot(data = called_pitches) +
+  stat_summary_2d(mapping = aes(x = X, y = Z, z = Call)) +
+  scale_fill_distiller("P(Called Strike)", palette = "RdBu") +
+  annotate("rect", xmin = -8.5, xmax = 8.5, ymin = 19, ymax = 41.5, alpha = 0, color = "black") +
+  theme_minimal() + 
   theme(axis.title.x = element_blank(), 
         axis.title.y = element_blank()) + 
   labs(title = "Estimated Strike Zone")
-g
 ```
-
 
 ## NBA Team Shooting Statistics
 
@@ -175,10 +181,11 @@ Choose from some of the following datasets to take a look at:
 * [batting_tto.csv](data/batting_tto.csv)
 
 1. Load in the one of the datasets and inspect their features with the `head()` function.
-```{r read in data, include=TRUE}
+```{r read in data}
 batting_tto <- read_csv("data/batting_tto.csv")
 ```
-2. Try to make some visualizations with ggplot that explore the data. For example, plotting batting time through the order versus their event wOBA for the pitch. If you are working with the TTO data, try exploring something other than the examples for your problem set. 
+
+2. Try to make some visualizations with ggplot that explore the data. For example, plotting batting time through the order versus their event wOBA for the pitch. If you are working with the TTO data, try exploring something other than this for your problem set. 
 
 ```{r visualizations}
 ggplot(batting_tto, aes(x = ORDER_CT, y = EVENT_WOBA_19)) +
