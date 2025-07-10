@@ -197,11 +197,14 @@ ggplot(batting_tto, aes(x = ORDER_CT, y = EVENT_WOBA_19)) +
 ```
 3. Next, try mutating your data with `reframe()`, utilizing `pivot()`, or computing correlation with `cor()` to generate another visualization. For example, plotting the mean event wOBA with `geom_col()`.
 
-```{r geom col, include=TRUE}
+```{r grouping}
 batting_tto_grouped <- batting_tto %>% 
   group_by(ORDER_CT) %>%
   reframe(mean_wOBA = mean(EVENT_WOBA_19, na.rm = TRUE))
+```
 
+
+```{r geom col, include=TRUE}
 ggplot(batting_tto_grouped, aes(x = ORDER_CT, y = mean_wOBA)) +
   geom_col(fill = "lightblue") +
   labs(title = "Mean Event wOBA by Batter Sequence",

@@ -685,16 +685,12 @@ utilizing <code>pivot()</code>, or computing correlation with
 <code>cor()</code> to generate another visualization. For example,
 plotting the mean event wOBA with <code>geom_col()</code>.</p></li>
 </ol>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>batting_tto_grouped <span class="ot">&lt;-</span> batting_tto <span class="sc">%&gt;%</span> </span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">group_by</span>(ORDER_CT) <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">mean_wOBA =</span> <span class="fu">mean</span>(EVENT_WOBA_19, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="fu">ggplot</span>(batting_tto_grouped, <span class="fu">aes</span>(<span class="at">x =</span> ORDER_CT, <span class="at">y =</span> mean_wOBA)) <span class="sc">+</span></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Mean Event wOBA by Batter Sequence&quot;</span>,</span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Batter TTO&quot;</span>,</span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Mean Event wOBA&quot;</span>) <span class="sc">+</span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">ggplot</span>(batting_tto_grouped, <span class="fu">aes</span>(<span class="at">x =</span> ORDER_CT, <span class="at">y =</span> mean_wOBA)) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Mean Event wOBA by Batter Sequence&quot;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Batter TTO&quot;</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Mean Event wOBA&quot;</span>) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="ps4_files/figure-html/geom%20col-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Try computing some averages with <code>reframe()</code> and test
