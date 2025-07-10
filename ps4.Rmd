@@ -134,7 +134,7 @@ team_boxscore <-
   ungroup()
 ```
 
-3. Use `filter()` to create a new tbl called `reduced_boxscore` that pulls out the rows of `team_boxscore` corresponding to the following teams: BOS, CLE, DAL, DET, GSW, LAL, MIA, and SAS. Then create a plot of these teams' three point percentage in each season. Be sure to color the points according to the team (*Hint*: to map the `Tm` variable to the points as colors, use the `color =` argument within the `aes` function. We will learn more about this in [Lecture 5](lecture5.html)). What patterns do you notice?
+3. Use `filter()` to create a new tbl called `reduced_boxscore` that pulls out the rows of `team_boxscore` corresponding to the following teams: BOS, CLE, DAL, DET, GSW, LAL, MIA, and SAS. Then create a line plot of these teams' three point percentage in each season. Be sure to color the points according to the team (*Hint*: to map the `Tm` variable to the points as colors, use the `color =` argument within the `aes` function. We will learn more about this in [Lecture 5](lecture5.html)). What patterns do you notice?
 
 ```{r pt2 q3 solution}
 # solution
@@ -143,8 +143,7 @@ reduced_boxscore <-
   filter(Tm %in% c('BOS', 'CLE', 'DAL', 'DET', 'GSW', 'LAL', 'MIA', 'SAS'))
 
 ggplot(data = reduced_boxscore) +
-  geom_point(mapping = aes(x = Season, y = TPP, color = Tm), size = 2, alpha = .5) +
-  scale_color_manual(values = c('green', 'dark red', 'blue', 'red', 'yellow', 'purple', 'dark red', 'dark gray'))
+  geom_line(mapping = aes(x = Season, y = TPP, color = Tm), size = 1) 
 ```
 
 4. Use `pivot_long()` on `reduced_boxscore` to create separate rows for each team's FGP, TPP, and FTP. Create a tibble filtered on one team only and visualize how their FGP, TPP, and FTP have all evolved over time on one plot. *Challenge: use `facet_wrap()` with teams on the entire `reduced_boxscore` table to visualize the percentages for all 8 teams at once. 
@@ -167,4 +166,41 @@ ggplot(boxscore_long, aes(x = Season, y = Percentage, color = Statistic)) +
 
 ## Work with new data
 
-Once you finish reviewing the material from earlier this week, we'd like you to use some of the tools we introduced in [Lecture 4](lecture4.html) to read in new data into R. Then, using the skills you've learned in the first four lectures, we'd like to you do some type of analysis with this data. It doesn't need to be sophisticated -- even making a few interesting visualizations or computing some interesting summaries is enough. We just want you to get some practice working with some data that you've collected yourselves!
+Once you finish reviewing the material from earlier this week, we'd like you to use some of the tools we introduced in [Lecture 4](lecture4.html) to read data into R.
+
+Choose from some of the following datasets to take a look at:
+
+* [Ironman data.csv](data/Ironman Data.csv)
+* [bad-drivers.csv](data/bad-drivers.csv)
+* [batting_tto.csv](data/batting_tto.csv)
+
+1. Load in the one of the datasets and inspect their features with the `head()` function.
+```{r read in data, include=TRUE}
+batting_tto <- read_csv("data/batting_tto.csv")
+```
+2. Try to make some visualizations with ggplot that explore the data. For example, plotting batting time through the order versus their event wOBA for the pitch. If you are working with the TTO data, try exploring something other than the examples for your problem set. 
+
+```{r visualizations}
+ggplot(batting_tto, aes(x = ORDER_CT, y = EVENT_WOBA_19)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Batter TTO vs Event wOBA",
+       x = "Batter TTO",
+       y = "Event wOBA") +
+  theme_minimal()
+```
+3. Next, try mutating your data with `reframe()`, utilizing `pivot()`, or computing correlation with `cor()` to generate another visualization. For example, plotting the mean event wOBA with `geom_col()`.
+
+```{r geom col, include=TRUE}
+batting_tto_grouped <- batting_tto %>% 
+  group_by(ORDER_CT) %>%
+  reframe(mean_wOBA = mean(EVENT_WOBA_19, na.rm = TRUE))
+
+ggplot(batting_tto_grouped, aes(x = ORDER_CT, y = mean_wOBA)) +
+  geom_col(fill = "lightblue") +
+  labs(title = "Mean Event wOBA by Batter Sequence",
+       x = "Batter TTO",
+       y = "Mean Event wOBA") +
+  theme_minimal()
+```
+
+4. Try computing some averages with `reframe()` and test their predictive power on the dataset!
