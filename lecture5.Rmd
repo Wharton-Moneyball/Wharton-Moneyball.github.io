@@ -260,6 +260,12 @@ From the 2D histogram, we can see that the higher ranked divers attempt both mor
 
 The palettes used in this module, including "OrRd" and "Spectral", come from [ColorBrewer](http://colorbrewer2.org/). You can take a look at the website and use some of these color palettes in your plots! 
 
+### External Links 
+
+This [ggplot guide](https://r-graph-gallery.com/ggplot2-package.html) is highly recommended to bookmark as a quick reference on how to plot virtually anything. It has multiple examples for each plot, each one going more in depth on specific ways to add information to a plot. 
+
+Additionally, you can access all the colors you've ever wanted with this [alphabetical color guide to R colors](https://sites.stat.columbia.edu/tzheng/files/Rcolor.pdf)!
+
 # Other Data Sources
 
 So far in this course you've worked with data that we had already prepared for you. It turns out that there are many R packages and tools that you can use to get data from a variety of different sources. Below, we will provide a brief walkthrough of just a few of these resources. 
