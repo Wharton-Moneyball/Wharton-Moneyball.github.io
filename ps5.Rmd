@@ -105,7 +105,7 @@ ggplot(pbp_grouped, aes(x = attempts, y = avg_yards_gained)) +
   theme_minimal()
 ```
 
-8. Next, add an abline to the plot using `geom_abline()` to see how linear the data may be. Use the `slope` and `intercept` arguments to set the slope to 0.006 and the intercept to 5. Set the linetype to dashed, and the color to black. Note: This line was arbitrarily made with a slope and intercept that "looks best" but in lecture 6, you will learn how to fit regression models to the data mathematically to make a line of best fit.
+8. Next, add an abline to the plot using `geom_abline()` to see how linear the data may be. Use the `slope` and `intercept` arguments to set the slope to 0.005 and the intercept to 5. Set the linetype to dashed, and the color to black. Note: This line was arbitrarily made with a slope and intercept that "looks best", but in lecture 6, you will learn how to fit regression models to the data mathematically to make a line of best fit.
 
 ```{r}
 ggplot(pbp_grouped, aes(x = attempts, y = avg_yards_gained)) +
@@ -170,3 +170,93 @@ ggplot(pbp_grouped_2, aes(x = passer_player_name, y = value, fill = metric)) +
 
 ```
 
+Let's do one more small case study on explosive plays. 
+
+11. First, start by filtering the data as below to get the appropriate columns. 
+```{r explosive filtering, include = TRUE}
+pbp_explosive <- pbp_2023 %>%
+  filter(play_type %in% c("pass", "run"),
+         !is.na(yards_gained),
+         !is.na(defteam),
+         !is.na(down),
+         !is.na(yardline_100)) %>%
+  mutate(
+    explosive = case_when(
+      play_type == "run"  & yards_gained >= 10 ~ 1,
+      play_type == "pass" & yards_gained >= 20 ~ 1,
+      TRUE ~ 0
+    )
+  ) %>% 
+  select(
+    game_id,
+    play_id,
+    defteam,          # defensive team
+    play_type,        # pass or run
+    ydstogo,          # yards to go for first down
+    yardline_100,     # field position (how far from opponent's end zone)
+    yards_gained,     # actual yards gained on play
+    explosive         # your new indicator (1 or 0)
+  )
+
+head(pbp_explosive)
+```
+12. Let's visualize the distribution of explosive plays by defensive team. Use `geom_bar()` to create a bar plot of the number of explosive plays by `defteam`. Use `fill = defteam` to color the bars by team and use `labs()` to set the axis and plot titles.
+```{r}
+ggplot(pbp_explosive, aes(x = defteam, fill = defteam)) +
+  geom_bar() +
+  labs(
+    title = "Distribution of Explosive Plays by Defensive Team",
+    x = "Defensive Team",
+    y = "Number of Explosive Plays"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+13. Let's take a closer look at the worst defenses against explosive plays. Group by defensive team and play type, then use reframe to obtain the number of explosive plays in each category, and `slice_max()` to obtain the top 10 teams. Replot the bar graphs and facet by pass or run plays. *Hint: to create a column counting the number of rows, use `n()` with `reframe()`. Additionally, use `scales = 'free'` with `facet_wrap()` to allow each facet to have its own y-axis scale.*
+
+```{r}
+pbp_explosive_slice <- pbp_explosive %>%
+  filter(explosive == 1) %>%  # only explosive plays
+  group_by(defteam, play_type) %>%
+  reframe(n_explosive = n()) %>%
+  group_by(play_type) %>%
+  slice_max(n_explosive, n = 10)
+
+ggplot(pbp_explosive_slice, aes(x = reorder(defteam, -n_explosive), y = n_explosive, fill = defteam)) +
+  geom_col() +
+  labs(
+    title = "Top 10 Teams Allowing Explosive Plays (by Play Type)",
+    x = "Defensive Team",
+    y = "Number of Explosive Plays"
+  ) +
+  theme_minimal() +
+  facet_wrap(~play_type, scales = 'free') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "none")
+```
+
+14. *Challenge*: Finally, let's visualize the relationship between explosive plays and yards to go with a heat map. This time, group by defensive team and *down* and use `reframe()` to obtain the explosive play rate in each category. Then, use `geom_tile()` to create a heat map with `defteam` on the x-axis, `down` on the y-axis, and fill based on the explosive play rate. Set a color gradient to your liking.
+```{r}
+explosive_rate <- pbp_explosive %>%
+  group_by(defteam, ydstogo) %>%
+  reframe(
+    n_plays = n(),
+    n_explosive = sum(explosive),
+    explosive_rate = n_explosive / n_plays,
+  )
+
+
+ggplot(explosive_rate, aes(x = ydstogo, y = reorder(defteam, -explosive_rate), fill = explosive_rate)) +
+  geom_tile(color = "white") +
+  scale_fill_viridis_c(option = "C", direction = -1, name = "Explosive Rate") +
+  labs(
+    title = "Explosive Plays Allowed by Down and Defensive Team",
+    x = "Yards to Go",
+    y = "Defensive Team"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 10))
+```
+
+Discuss with fellow students possible conclusions that can be drawn from the visualizations in this section. How are teams' defenses stacking up against explosive plays? Are some of the teams allowing many explosive plays actually because the offense is sitting at 20+ yards to go or are they allowing many explosive plays across the board?
